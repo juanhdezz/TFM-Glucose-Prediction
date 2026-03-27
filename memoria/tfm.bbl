@@ -1,0 +1,31 @@
+\begin{thebibliography}{1}
+
+\bibitem{el2021write}
+H.~El-Chaarani and Z.~El-Abiad, ``How to write a master thesis,'' {\em Journal of Contemporary Research in Business Administration and Economic Sciences}, 2021.
+
+\bibitem{evans2011write}
+D.~Evans, P.~Gruba, and J.~Zobel, {\em How to write a better thesis}.
+\newblock Melbourne Univ. Publishing, 2011.
+
+\bibitem{duke2018postgraduate}
+T.~Duke, ``How to do a postgraduate research project and write a minor thesis,'' {\em Archives of Disease in Childhood}, vol.~103, no.~9, pp.~820--827, 2018.
+
+\bibitem{wiese2023write}
+A.~Wiese, ``How to write a bachelor/master thesis,'' 2023.
+
+\bibitem{foley1994introduction}
+J.~D. Foley, A.~Van~Dam, S.~K. Feiner, J.~F. Hughes, and R.~L. Phillips, {\em Introduction to computer graphics}, vol.~55.
+\newblock Addison-Wesley Reading, 1994.
+
+\bibitem{schwarz2007modeling}
+M.~Schwarz, T.~Isenberg, K.~Mason, and S.~Carpendale, ``Modeling with rendering primitives: an interactive non-photorealistic canvas,'' in {\em Proceedings of the 5th international symposium on Non-photorealistic animation and rendering}, pp.~15--22, 2007.
+
+\bibitem{wikipediaComputerGraphics}
+``{C}omputer graphics - {W}ikipedia --- en.wikipedia.org.'' \url{https://en.wikipedia.org/wiki/Computer_graphics}.
+\newblock [Accessed 07-06-2024].
+
+\bibitem{getbibtexBibTeXGenerator}
+K.~Dzialowski, ``{U}{R}{L} to {B}ib{T}e{X} generator - get {B}ib{T}e{X} for any website --- getbibtex.com.'' \url{https://www.getbibtex.com/}.
+\newblock [Accessed 07-06-2024].
+
+\end{thebibliography}

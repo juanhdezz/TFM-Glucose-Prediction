@@ -1,0 +1,142 @@
+\chapter*{}
+%\thispagestyle{empty}
+%\cleardoublepage
+
+%\thispagestyle{empty}
+
+%\cleardoublepage
+\thispagestyle{empty}
+
+\begin{center}
+{\large\bfseries \tituloTFM: \subtituloTFM}\\
+\end{center}
+\begin{center}
+\estudiante\\
+\end{center}
+
+%\vspace{0.7cm}
+\noindent{\textbf{Palabras clave}: \palabrasClave}\\
+
+\vspace{0.7cm}
+\noindent{\textbf{Resumen}}\\
+
+\input{resumen.tex}
+
+%\cleardoublepage
+
+
+\thispagestyle{empty}
+
+
+\begin{center}
+{\large\bfseries \titleMT: \subtitleMT}\\
+\end{center}
+\begin{center}
+\estudiante\\
+\end{center}
+
+%\vspace{0.7cm}
+\noindent{\textbf{Keywords}: \keywords}\\
+
+\vspace{0.7cm}
+\noindent{\textbf{Abstract}}\\
+
+\input{resumen-en.tex}
+
+\chapter*{}
+\thispagestyle{empty}
+
+\noindent\rule[-1ex]{\textwidth}{2pt}\\[4.5ex]
+
+Yo, \textbf{\estudiante}, alumno del \textbf{MÁSTER DE DESARROLLO DEL SOFTWARE}, con DNI \textbf{\dni}, autorizo la ubicación de la siguiente copia de mi Trabajo Fin de Máster en la biblioteca del centro para que pueda ser consultada por las personas que lo deseen.
+
+\vspace{6cm}
+
+\noindent Fdo: \emph{\estudiante}
+
+\vspace{2cm}
+
+\begin{flushright}
+Granada a \today.
+\end{flushright}
+
+
+\chapter*{}
+\thispagestyle{empty}
+
+\noindent\rule[-1ex]{\textwidth}{2pt}\\[4.5ex]
+
+D. \textbf{\tutorA}, Profesor del Área de {\areaA} del Departamento {\departamentoA} de la Universidad de Granada.
+
+\vspace{0.5cm}
+
+\ifthenelse{\equal{\tutorB}{}}{
+}{
+    D. \textbf{\tutorB}, Profesor del Área de {\areaB} del Departamento de {\departamentoB} de la Universidad de Granada.
+}
+
+\vspace{0.5cm}
+
+\ifthenelse{\equal{\tutorB}{}}{
+  \textbf{Informa:}
+}{
+  \textbf{Informan:}
+}
+
+\vspace{0.5cm}
+
+Que el presente trabajo, titulado \textit{\textbf{\tituloTFM, \subtituloTFM}},
+ha sido realizado bajo su supervisión por \textbf{\estudiante}, y autorizamos la defensa de dicho trabajo ante el tribunal
+que corresponda.
+
+\vspace{0.5cm}
+
+Y para que conste, expiden y firman el presente informe en Granada a \today.
+
+\vspace{1cm}
+
+\ifthenelse{\equal{\tutorB}{}}{
+  \textbf{El director:}
+}{
+  \textbf{Los directores:}
+}
+
+\vspace{5cm}
+
+\ifthenelse{\equal{\tutorB}{}}{
+  \noindent \textbf{\tutorA}
+}{
+  \noindent \begin{tabular}{@{} lr @{}}
+    \textbf{\tutorA} & \textbf{\tutorB} \\
+  \end{tabular}
+}
+
+
+\chapter*{}
+\thispagestyle{empty}
+
+\noindent\rule[-1ex]{\textwidth}{2pt}\\[4.5ex]
+
+Yo, \textbf{\estudiante}, alumno del \textbf{MÁSTER DE DESARROLLO DEL SOFTWARE} de la \textbf{Escuela Técnica Superior de Ingenierías Informática y de Telecomunicación de la Universidad de Granada}, con DNI \textbf{\dni}, \underline{declaro explícitamente} que el trabajo presentado es original, entendido en el sentido que no he utilizado ninguna fuente sin citarla debidamente.
+
+\vspace{6cm}
+
+\noindent Fdo: \textbf{\estudiante}
+
+\vspace{2cm}
+
+\begin{flushright}
+Granada, \today.
+\end{flushright}
+
+
+
+
+
+\chapter*{Agradecimientos}
+\thispagestyle{empty}
+
+\vspace{1cm}
+
+\input{agradecimientos}
+

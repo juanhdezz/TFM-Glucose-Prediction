@@ -1,0 +1,33 @@
+\chapter{Resultados y discusión}\label{chapter:resultados}
+
+Aquí se discutirán los resultados, tablas de datos y gráficas.
+
+Por ejemplo, la Tabla \ref{tab:mi-tabla-grande}, muestra un ejemplo de como introducir tablas de forma limpia en el texto.
+
+\input{tablas/tabla-ejemplo-de-tabla.tex}
+
+Fíjate que tanto tablas como imágenes, deben estar previamente referenciadas en el texto, y no deben separarse mucho de éste. Fíjate también en como se crean títulos reducidos para que el texto del pie de tabla no ocupe demasiado en el índice.
+
+Las tablas enormes como la Tabla \ref{tab:mi-tabla-enorme}, deben intentar colocarse en una página aparte.
+
+\input{tablas/tabla-poblacion.tex}
+
+Lo mismo se puede hacer con las gráficas. Pero ten cuidado de que las gráficas no se vayan lejos del texto tampoco. Vamos a poner un ejemplo para que no nos moleste la tabla anterior, vamos a forzar una nueva página.
+
+\newpage
+
+Se deben evitar imágenes ``por poner''\footnote{Por cierto, fíjate en cómo van las comillas. Aunque es mejor usar cursivas. Las palabras en inglés, por ejemplo, deberían ir en \emph{cursiva}, como por ejemplo \emph{buffer}.}, como la Figura \ref{fig:logo}. Que es un logotipo. 
+
+\input{imagenes/figura-ejemplo.tex}
+
+Por ejemplo, la Figura \ref{fig:grafica} sí que está correcta, y va de la misma forma que la tabla, y ahora está cerca del texto. Hemos sacrificado un poco de espacio al final de la página anterior a cambio de acercar la figura al texto. Esto solo debe hacerse en casos en que tengamos tablas y figuras que ocupen la página completa.
+
+\input{imagenes/figura-ejemplo2.tex}
+
+El tipo de extensiones ya está definido, así que no deben usarse a la hora de referenciar imágenes. Por defecto el orden es:
+
+\begin{enumerate}
+    \item PDF: Son gráficos vectoriales con máxima calidad, bueno para esquemas y tablas.
+    \item PNG: Son gráficos que no pierden calidad, aunque son gráficos \emph{raster} o matriciales. Utilízalos cuando los tonos sean planos, como en esquemas, en sustitución de los PDF cuando no tenemos opción a usar gráficos vectoriales.
+    \item JPEG: Con extensión \textbf{.jpg}, se suelen usar cuando son fotografías, principalmente, ya que pueden contener \emph{artifacts}.
+\end{enumerate}
