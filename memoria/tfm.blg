@@ -3,47 +3,44 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: tfm.aux
 The style file: ieeetr.bst
 Database file #1: bibliografia.bib
-Warning--I didn't find a database entry for "autordesconocido"
-Warning--empty journal in wiese2023write
-You've used 8 entries,
+You've used 46 entries,
             1876 wiz_defined-function locations,
-            523 strings with 4826 characters,
-and the built_in function-call counts, 1578 in all, are:
-= -- 146
-> -- 63
+            676 strings with 9938 characters,
+and the built_in function-call counts, 8289 in all, are:
+= -- 721
+> -- 366
 < -- 0
-+ -- 25
-- -- 17
-* -- 95
-:= -- 232
-add.period$ -- 12
-call.type$ -- 8
-change.case$ -- 6
++ -- 141
+- -- 95
+* -- 492
+:= -- 1262
+add.period$ -- 46
+call.type$ -- 46
+change.case$ -- 46
 chr.to.int$ -- 0
-cite$ -- 9
-duplicate$ -- 79
-empty$ -- 175
-format.name$ -- 17
-if$ -- 386
+cite$ -- 46
+duplicate$ -- 470
+empty$ -- 945
+format.name$ -- 95
+if$ -- 2006
 int.to.chr$ -- 0
-int.to.str$ -- 8
-missing$ -- 8
-newline$ -- 31
-num.names$ -- 7
-pop$ -- 44
+int.to.str$ -- 46
+missing$ -- 38
+newline$ -- 141
+num.names$ -- 46
+pop$ -- 219
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 38
+skip$ -- 200
 stack$ -- 0
-substring$ -- 56
-swap$ -- 19
+substring$ -- 222
+swap$ -- 98
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
-warning$ -- 1
-while$ -- 13
-width$ -- 9
-write$ -- 73
-(There were 2 warnings)
+warning$ -- 0
+while$ -- 65
+width$ -- 48
+write$ -- 388

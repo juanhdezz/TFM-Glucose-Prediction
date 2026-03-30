@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.25)  27 MAR 2026 14:20
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.25)  30 MAR 2026 12:26
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -137,23 +137,87 @@ Package: array 2025/09/25 v2.6n Tabular extension package (FMi)
 \extratabsurround=\skip54
 \backup@length=\skip55
 \ar@cellbox=\box56
+) (c:/texlive/2026/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2025/07/09 v2.17z AMS math features
+\@mathmargin=\skip56
+
+For additional information on amsmath, use the `?' option.
+(c:/texlive/2026/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2024/11/17 v2.01 AMS text
+ (c:/texlive/2026/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks20
+\ex@=\dimen178
+)) (c:/texlive/2026/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen179
+) (c:/texlive/2026/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2022/04/08 v2.04 operator names
+)
+\inf@bad=\count302
+LaTeX Info: Redefining \frac on input line 233.
+\uproot@=\count303
+\leftroot@=\count304
+LaTeX Info: Redefining \overline on input line 398.
+LaTeX Info: Redefining \colon on input line 409.
+\classnum@=\count305
+\DOTSCASE@=\count306
+LaTeX Info: Redefining \ldots on input line 495.
+LaTeX Info: Redefining \dots on input line 498.
+LaTeX Info: Redefining \cdots on input line 619.
+\Mathstrutbox@=\box57
+\strutbox@=\box58
+LaTeX Info: Redefining \big on input line 721.
+LaTeX Info: Redefining \Big on input line 722.
+LaTeX Info: Redefining \bigg on input line 723.
+LaTeX Info: Redefining \Bigg on input line 724.
+\big@size=\dimen180
+LaTeX Font Info:    Redeclaring font encoding OML on input line 742.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 743.
+\macc@depth=\count307
+LaTeX Info: Redefining \bmod on input line 904.
+LaTeX Info: Redefining \pmod on input line 909.
+LaTeX Info: Redefining \smash on input line 939.
+LaTeX Info: Redefining \relbar on input line 969.
+LaTeX Info: Redefining \Relbar on input line 970.
+\c@MaxMatrixCols=\count308
+\dotsspace@=\muskip17
+\c@parentequation=\count309
+\dspbrk@lvl=\count310
+\tag@help=\toks21
+\row@=\count311
+\column@=\count312
+\maxfields@=\count313
+\andhelp@=\toks22
+\eqnshift@=\dimen181
+\alignsep@=\dimen182
+\tagshift@=\dimen183
+\tagwidth@=\dimen184
+\totwidth@=\dimen185
+\lineht@=\dimen186
+\@envbody=\toks23
+\multlinegap=\skip57
+\multlinetaggap=\skip58
+\mathdisplay@stack=\toks24
+LaTeX Info: Redefining \[ on input line 2950.
+LaTeX Info: Redefining \] on input line 2951.
 ) (c:/texlive/2026/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
 Package: fancyhdr 2025/02/07 v5.2 Extensive control of page headers and footers
-\f@nch@headwidth=\skip56
-\f@nch@offset@elh=\skip57
-\f@nch@offset@erh=\skip58
-\f@nch@offset@olh=\skip59
-\f@nch@offset@orh=\skip60
-\f@nch@offset@elf=\skip61
-\f@nch@offset@erf=\skip62
-\f@nch@offset@olf=\skip63
-\f@nch@offset@orf=\skip64
-\f@nch@height=\skip65
-\f@nch@footalignment=\skip66
-\f@nch@widthL=\skip67
-\f@nch@widthC=\skip68
-\f@nch@widthR=\skip69
-\@temptokenb=\toks20
+\f@nch@headwidth=\skip59
+\f@nch@offset@elh=\skip60
+\f@nch@offset@erh=\skip61
+\f@nch@offset@olh=\skip62
+\f@nch@offset@orh=\skip63
+\f@nch@offset@elf=\skip64
+\f@nch@offset@erf=\skip65
+\f@nch@offset@olf=\skip66
+\f@nch@offset@orf=\skip67
+\f@nch@height=\skip68
+\f@nch@footalignment=\skip69
+\f@nch@widthL=\skip70
+\f@nch@widthC=\skip71
+\f@nch@widthR=\skip72
+\@temptokenb=\toks25
 ) (c:/texlive/2026/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2024/12/31 v1.2e Enhanced LaTeX Graphics (DPC,SPQR)
  (c:/texlive/2026/texmf-dist/tex/latex/graphics/graphics.sty
@@ -167,31 +231,31 @@ Package graphics Info: Driver file: pdftex.def on input line 106.
  (c:/texlive/2026/texmf-dist/tex/latex/graphics-def/pdftex.def
 File: pdftex.def 2025/09/29 v1.2d Graphics/color driver for pdftex
 ))
-\Gin@req@height=\dimen178
-\Gin@req@width=\dimen179
+\Gin@req@height=\dimen187
+\Gin@req@width=\dimen188
 ) (c:/texlive/2026/texmf-dist/tex/latex/tools/afterpage.sty
 Package: afterpage 2023/07/04 v1.08 After-Page Package (DPC)
-\AP@output=\toks21
-\AP@partial=\box57
-\AP@footins=\box58
+\AP@output=\toks26
+\AP@partial=\box59
+\AP@footins=\box60
 ) (c:/texlive/2026/texmf-dist/tex/latex/tools/longtable.sty
 Package: longtable 2025-10-13 v4.24 Multi-page Table package (DPC)
-\LTleft=\skip70
-\LTright=\skip71
-\LTpre=\skip72
-\LTpost=\skip73
-\LTchunksize=\count302
-\LTcapwidth=\dimen180
-\LT@head=\box59
-\LT@firsthead=\box60
-\LT@foot=\box61
-\LT@lastfoot=\box62
-\LT@gbox=\box63
-\LT@cols=\count303
-\LT@rows=\count304
-\c@LT@tables=\count305
-\c@LT@chunks=\count306
-\LT@p@ftn=\toks22
+\LTleft=\skip73
+\LTright=\skip74
+\LTpre=\skip75
+\LTpost=\skip76
+\LTchunksize=\count314
+\LTcapwidth=\dimen189
+\LT@head=\box61
+\LT@firsthead=\box62
+\LT@foot=\box63
+\LT@lastfoot=\box64
+\LT@gbox=\box65
+\LT@cols=\count315
+\LT@rows=\count316
+\c@LT@tables=\count317
+\c@LT@chunks=\count318
+\LT@p@ftn=\toks27
 ) (c:/texlive/2026/texmf-dist/tex/latex/colortbl/colortbl.sty
 Package: colortbl 2024/10/29 v1.0k Color table columns (DPC)
  (c:/texlive/2026/texmf-dist/tex/latex/graphics/color.sty
@@ -201,9 +265,9 @@ File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package color Info: Driver file: pdftex.def on input line 149.
  (c:/texlive/2026/texmf-dist/tex/latex/graphics/mathcolor.ltx))
-\everycr=\toks23
-\minrowclearance=\skip74
-\rownum=\count307
+\everycr=\toks28
+\minrowclearance=\skip77
+\rownum=\count319
 ) (c:/texlive/2026/texmf-dist/tex/latex/pdflscape/pdflscape.sty
 Package: pdflscape 2025-06-23 v0.14 Display of landscape pages in PDF
  (c:/texlive/2026/texmf-dist/tex/latex/pdflscape/pdflscape-nometadata.sty
@@ -216,15 +280,15 @@ Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
 Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 )) (c:/texlive/2026/texmf-dist/tex/latex/graphics/rotating.sty
 Package: rotating 2025/01/14 v2.16e rotated objects in LaTeX
-\c@r@tfl@t=\count308
-\rotFPtop=\skip75
-\rotFPbot=\skip76
-\rot@float@box=\box64
-\rot@mess@toks=\toks24
+\c@r@tfl@t=\count320
+\rotFPtop=\skip78
+\rotFPbot=\skip79
+\rot@float@box=\box66
+\rot@mess@toks=\toks29
 ) (c:/texlive/2026/texmf-dist/tex/latex/footmisc/footmisc.sty
 Package: footmisc 2025/05/09 v7.0b a miscellany of footnote facilities
-\FN@temptoken=\toks25
-\footnotemargin=\dimen181
+\FN@temptoken=\toks30
+\footnotemargin=\dimen190
 Package footmisc Info: Declaring symbol style bringhurst on input line 549.
 Package footmisc Info: Declaring symbol style chicago on input line 557.
 Package footmisc Info: Declaring symbol style wiley on input line 566.
@@ -236,18 +300,18 @@ Package: geometry 2026/03/07 v6.0 Page Geometry
  (c:/texlive/2026/texmf-dist/tex/generic/iftex/ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 )
-\Gm@cnth=\count309
-\Gm@cntv=\count310
-\c@Gm@tempcnt=\count311
-\Gm@bindingoffset=\dimen182
-\Gm@wd@mp=\dimen183
-\Gm@odd@mp=\dimen184
-\Gm@even@mp=\dimen185
-\Gm@layoutwidth=\dimen186
-\Gm@layoutheight=\dimen187
-\Gm@layouthoffset=\dimen188
-\Gm@layoutvoffset=\dimen189
-\Gm@dimlist=\toks26
+\Gm@cnth=\count321
+\Gm@cntv=\count322
+\c@Gm@tempcnt=\count323
+\Gm@bindingoffset=\dimen191
+\Gm@wd@mp=\dimen192
+\Gm@odd@mp=\dimen193
+\Gm@even@mp=\dimen194
+\Gm@layoutwidth=\dimen195
+\Gm@layoutheight=\dimen196
+\Gm@layouthoffset=\dimen197
+\Gm@layoutvoffset=\dimen198
+\Gm@dimlist=\toks31
 )
 
 Package geometry Warning: Over-specification in `h'-direction.
@@ -261,21 +325,21 @@ Package geometry Warning: Over-specification in `v'-direction.
 Package: expl3 2026-01-19 L3 programming layer (loader) 
  (c:/texlive/2026/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count312
+\l__color_backend_stack_int=\count324
 ))
 Package: l3keys2e 2025-10-09 LaTeX2e option processing using LaTeX3 keys
 )
 Package: lipsum 2021-09-20 v2.7 150 paragraphs of Lorem Ipsum dummy text
-\g__lipsum_par_int=\count313
-\l__lipsum_a_int=\count314
-\l__lipsum_b_int=\count315
+\g__lipsum_par_int=\count325
+\l__lipsum_a_int=\count326
+\l__lipsum_b_int=\count327
  (c:/texlive/2026/texmf-dist/tex/latex/lipsum/lipsum.ltd.tex)) (c:/texlive/2026/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2024/02/08 v1.3d Input encoding file
-\inpenc@prehook=\toks27
-\inpenc@posthook=\toks28
+\inpenc@prehook=\toks32
+\inpenc@posthook=\toks33
 ) (c:/texlive/2026/texmf-dist/tex/generic/babel/babel.sty
 Package: babel 2026/03/08 v26.4 The multilingual framework for LuaLaTeX, pdfLaTeX and XeLaTeX
-\babel@savecnt=\count316
+\babel@savecnt=\count328
 LaTeX Encoding Info:    Redeclaring text command \ij (encoding OT1) on input line 2078.
 LaTeX Encoding Info:    Redeclaring text command \IJ (encoding OT1) on input line 2080.
 LaTeX Encoding Info:    Redeclaring text command \ij (encoding T1) on input line 2082.
@@ -283,25 +347,25 @@ LaTeX Encoding Info:    Redeclaring text command \IJ (encoding T1) on input line
 LaTeX Encoding Info:    Ignoring declaration for text command \ij (encoding ?) on input line 2084.
 LaTeX Encoding Info:    Ignoring declaration for text command \IJ (encoding ?) on input line 2086.
 LaTeX Encoding Info:    Ignoring declaration for text command \SS (encoding ?) on input line 2111.
-\U@D=\dimen190
+\U@D=\dimen199
 \l@unhyphenated=\language91
  (c:/texlive/2026/texmf-dist/tex/generic/babel/txtbabel.def)
 \bbl@readstream=\read2
-\bbl@dirlevel=\count317
+\bbl@dirlevel=\count329
  (c:/texlive/2026/texmf-dist/tex/generic/babel/locale/es/babel-spanish.tex)
 Package babel Info: Importing font and identification data for spanish
 (babel)             from babel-es.ini. Reported on input line 4330.
  (c:/texlive/2026/texmf-dist/tex/generic/babel-spanish/spanish.ldf
 Language: spanish.ldf 2021/05/27 v5.0q Spanish support from the babel system
-\es@quottoks=\toks29
-\es@quotdepth=\count318
+\es@quottoks=\toks34
+\es@quotdepth=\count330
 Package babel Info: Making " an active character on input line 570.
 Package babel Info: Making . an active character on input line 675.
 Package babel Info: Making < an active character on input line 722.
 Package babel Info: Making > an active character on input line 722.
 ))
-LaTeX Encoding Info:    Redeclaring text command \guillemotleft (encoding OT1) on input line 40.
-LaTeX Encoding Info:    Redeclaring text command \guillemotright (encoding OT1) on input line 40.
+LaTeX Encoding Info:    Redeclaring text command \guillemotleft (encoding OT1) on input line 41.
+LaTeX Encoding Info:    Redeclaring text command \guillemotright (encoding OT1) on input line 41.
  (c:/texlive/2026/texmf-dist/tex/latex/tools/dcolumn.sty
 Package: dcolumn 2025/10/21 v1.06 decimal alignment package (DPC)
 ) (c:/texlive/2026/texmf-dist/tex/latex/hyperref/hyperref.sty
@@ -319,13 +383,13 @@ Package pdftexcmds Info: \pdfdraftmode found.
 Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
 ) (c:/texlive/2026/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 Package: etoolbox 2025/10/02 v2.5m e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count319
+\etb@tempcnta=\count331
 ) (c:/texlive/2026/texmf-dist/tex/generic/stringenc/stringenc.sty
 Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
 )
-\@linkdim=\dimen191
-\Hy@linkcounter=\count320
-\Hy@pagecounter=\count321
+\@linkdim=\dimen256
+\Hy@linkcounter=\count332
+\Hy@pagecounter=\count333
  (c:/texlive/2026/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2026-01-29 v7.01p Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
@@ -333,17 +397,12 @@ Now handling font encoding PD1 ...
 ) (c:/texlive/2026/texmf-dist/tex/generic/intcalc/intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 )
-\Hy@SavedSpaceFactor=\count322
+\Hy@SavedSpaceFactor=\count334
  (c:/texlive/2026/texmf-dist/tex/latex/hyperref/puenc.def
 File: puenc.def 2026-01-29 v7.01p Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
 )
-
-Package hyperref Warning: Invalid value `000'
-(hyperref)                for option `pdfborder'.
-(hyperref)                Option setting is ignored on input line 4072.
-
 Package hyperref Info: Hyper figures OFF on input line 4201.
 Package hyperref Info: Link nesting OFF on input line 4206.
 Package hyperref Info: Hyper index ON on input line 4209.
@@ -351,21 +410,21 @@ Package hyperref Info: Plain pages OFF on input line 4216.
 Package hyperref Info: Backreferencing OFF on input line 4221.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4468.
-\c@Hy@tempcnt=\count323
-(c:/texlive/2026/texmf-dist/tex/latex/url/url.sty
-\Urlmuskip=\muskip17
+\c@Hy@tempcnt=\count335
+ (c:/texlive/2026/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip18
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 4807.
-\XeTeXLinkMargin=\dimen192
+\XeTeXLinkMargin=\dimen257
  (c:/texlive/2026/texmf-dist/tex/generic/bitset/bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
  (c:/texlive/2026/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
 ))
-\Fld@menulength=\count324
-\Field@Width=\dimen193
-\Fld@charsize=\dimen194
+\Fld@menulength=\count336
+\Field@Width=\dimen258
+\Fld@charsize=\dimen259
 Package hyperref Info: Hyper figures OFF on input line 6084.
 Package hyperref Info: Link nesting OFF on input line 6089.
 Package hyperref Info: Hyper index ON on input line 6092.
@@ -373,15 +432,15 @@ Package hyperref Info: backreferencing OFF on input line 6099.
 Package hyperref Info: Link coloring OFF on input line 6104.
 Package hyperref Info: Link coloring with OCG OFF on input line 6109.
 Package hyperref Info: PDF/A mode OFF on input line 6114.
-\Hy@abspage=\count325
-\c@Item=\count326
-\c@Hfootnote=\count327
+\Hy@abspage=\count337
+\c@Item=\count338
+\c@Hfootnote=\count339
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
  (c:/texlive/2026/texmf-dist/tex/latex/hyperref/hpdftex.def
 File: hpdftex.def 2026-01-29 v7.01p Hyperref driver for pdfTeX
-\Fld@listcount=\count328
-\c@bookmark@seq@number=\count329
+\Fld@listcount=\count340
+\c@bookmark@seq@number=\count341
  (c:/texlive/2026/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
 Package: rerunfilecheck 2025-06-21 v1.11 Rerun checks for auxiliary files (HO)
  (c:/texlive/2026/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
@@ -389,33 +448,33 @@ Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 )
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 284.
 )
-\Hy@SectionHShift=\skip77
+\Hy@SectionHShift=\skip80
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 62.
-\c@teorema=\count330
-\c@ejemplo=\count331
-\c@definicion=\count332
+Package hyperref Info: Option `colorlinks' set `true' on input line 63.
+\c@teorema=\count342
+\c@ejemplo=\count343
+\c@definicion=\count344
  (c:/texlive/2026/texmf-dist/tex/latex/pdfpages/pdfpages.sty
 Package: pdfpages 2025/07/23 v0.6g Insert pages of external PDF documents (AM)
  (c:/texlive/2026/texmf-dist/tex/latex/eso-pic/eso-pic.sty
 Package: eso-pic 2025/12/10 v3.0d eso-pic (RN)
-\ESO@tempdima=\dimen195
-\ESO@tempdimb=\dimen196
+\ESO@tempdima=\dimen260
+\ESO@tempdimb=\dimen261
 )
-\AM@pagewidth=\dimen197
-\AM@pageheight=\dimen198
-\AM@fboxrule=\dimen199
+\AM@pagewidth=\dimen262
+\AM@pageheight=\dimen263
+\AM@fboxrule=\dimen264
  (c:/texlive/2026/texmf-dist/tex/latex/pdfpages/pppdftex.def
 File: pppdftex.def 2025/07/23 v0.6g Pdfpages driver for pdfTeX (AM)
 )
-\pdfpages@includegraphics@status=\count333
-\AM@pagebox=\box65
-\AM@global@opts=\toks30
-\AM@pagecnt=\count334
-\AM@toc@title=\toks31
-\AM@lof@heading=\toks32
-\c@AM@survey=\count335
-\AM@templatesizebox=\box66
+\pdfpages@includegraphics@status=\count345
+\AM@pagebox=\box67
+\AM@global@opts=\toks35
+\AM@pagecnt=\count346
+\AM@toc@title=\toks36
+\AM@lof@heading=\toks37
+\c@AM@survey=\count347
+\AM@templatesizebox=\box68
 ) (./tfm.aux
 LaTeX Info: Redefining \. on input line 11.
 LaTeX Info: Redefining \% on input line 11.
@@ -424,25 +483,25 @@ Package babel Info: 'spanish' activates 'spanish' shorthands.
 )
 \openout1 = `tfm.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 189.
-LaTeX Font Info:    ... okay on input line 189.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 189.
-LaTeX Font Info:    ... okay on input line 189.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 189.
-LaTeX Font Info:    ... okay on input line 189.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 189.
-LaTeX Font Info:    ... okay on input line 189.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 189.
-LaTeX Font Info:    ... okay on input line 189.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 189.
-LaTeX Font Info:    ... okay on input line 189.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 189.
-LaTeX Font Info:    ... okay on input line 189.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 189.
-LaTeX Font Info:    ... okay on input line 189.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 189.
-LaTeX Font Info:    ... okay on input line 189.
-\c@lstlisting=\count336
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 190.
+LaTeX Font Info:    ... okay on input line 190.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 190.
+LaTeX Font Info:    ... okay on input line 190.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 190.
+LaTeX Font Info:    ... okay on input line 190.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 190.
+LaTeX Font Info:    ... okay on input line 190.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 190.
+LaTeX Font Info:    ... okay on input line 190.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 190.
+LaTeX Font Info:    ... okay on input line 190.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 190.
+LaTeX Font Info:    ... okay on input line 190.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 190.
+LaTeX Font Info:    ... okay on input line 190.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 190.
+LaTeX Font Info:    ... okay on input line 190.
+\c@lstlisting=\count348
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: longtable package is loaded.
@@ -453,17 +512,17 @@ Package caption Info: rotating package is loaded.
 Package caption Info: End \AtBeginDocument code.
  (c:/texlive/2026/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count337
-\scratchdimen=\dimen256
-\scratchbox=\box67
-\nofMPsegments=\count338
-\nofMParguments=\count339
-\everyMPshowfont=\toks33
-\MPscratchCnt=\count340
-\MPscratchDim=\dimen257
-\MPnumerator=\count341
-\makeMPintoPDFobject=\count342
-\everyMPtoPDFconversion=\toks34
+\scratchcounter=\count349
+\scratchdimen=\dimen265
+\scratchbox=\box69
+\nofMPsegments=\count350
+\nofMParguments=\count351
+\everyMPshowfont=\toks38
+\MPscratchCnt=\count352
+\MPscratchDim=\dimen266
+\MPnumerator=\count353
+\makeMPintoPDFobject=\count354
+\everyMPtoPDFconversion=\toks39
 ) (c:/texlive/2026/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
@@ -486,8 +545,8 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 * \textheight=674.33032pt
 * \oddsidemargin=13.08827pt
 * \evensidemargin=-15.36449pt
-* \topmargin=-35.23828pt
-* \headheight=0.0pt
+* \topmargin=-50.23828pt
+* \headheight=15.0pt
 * \headsep=19.8738pt
 * \topskip=11.0pt
 * \footskip=27.46295pt
@@ -504,16 +563,16 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Info: Redefining \. on input line 189.
-LaTeX Info: Redefining \% on input line 189.
-Package hyperref Info: Link coloring ON on input line 189.
+LaTeX Info: Redefining \. on input line 190.
+LaTeX Info: Redefining \% on input line 190.
+Package hyperref Info: Link coloring ON on input line 190.
 (./tfm.out) (./tfm.out)
 \@outlinefile=\write3
 \openout3 = `tfm.out'.
 
  (./portada/portada.tex
-\centeroffset=\skip78
-<imagenes_plantilla/logo_ugrfin.jpg, id=160, 687.0468pt x 244.7544pt>
+\centeroffset=\skip81
+<imagenes_plantilla/logo_ugrfin.jpg, id=289, 687.0468pt x 244.7544pt>
 File: imagenes_plantilla/logo_ugrfin.jpg Graphic file (type jpg)
 <use imagenes_plantilla/logo_ugrfin.jpg>
 Package pdftex.def Info: imagenes_plantilla/logo_ugrfin.jpg  used on input line 11.
@@ -523,13 +582,7 @@ Overfull \hbox (45.52718pt too wide) in paragraph at lines 11--11
  [][] 
  []
 
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 22.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 22.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 22.
-<imagenes_plantilla/etsiit_logo.jpg, id=161, 230.8625pt x 84.315pt>
+<imagenes_plantilla/etsiit_logo.jpg, id=290, 230.8625pt x 84.315pt>
 File: imagenes_plantilla/etsiit_logo.jpg Graphic file (type jpg)
 <use imagenes_plantilla/etsiit_logo.jpg>
 Package pdftex.def Info: imagenes_plantilla/etsiit_logo.jpg  used on input line 39.
@@ -540,7 +593,7 @@ Package pdftex.def Info: imagenes_plantilla/etsiit_logo.jpg  used on input line 
 {c:/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./imagenes_plantilla/logo_ugrfin.jpg> <./imagenes_plantilla/etsiit_logo.jpg>]) (./portada/portada_2.tex [2
 
 ]
-<imagenes/logo.png, id=175, 123.46124pt x 45.92157pt>
+<imagenes/logo.png, id=304, 123.46124pt x 45.92157pt>
 File: imagenes/logo.png Graphic file (type png)
 <use imagenes/logo.png>
 Package pdftex.def Info: imagenes/logo.png  used on input line 18.
@@ -625,23 +678,16 @@ LaTeX Info: Redefining \% on input line 1.
 
 
 LaTeX Font Warning: Font shape `OT1/cmr/bx/sc' undefined
-(Font)              using `OT1/cmr/bx/n' instead on input line 197.
+(Font)              using `OT1/cmr/bx/n' instead on input line 198.
 
 
 Package spanish Warning: Replacing `OT1/cmr/bx/sc' by 
-(spanish)                faked small caps on input line 197.
+(spanish)                faked small caps on input line 198.
 
-LaTeX Info: Redefining \. on input line 197.
-LaTeX Info: Redefining \% on input line 197.
+LaTeX Info: Redefining \. on input line 198.
+LaTeX Info: Redefining \% on input line 198.
 Package babel Info: 'spanish' activates 'spanish' shorthands.
-(babel)             Reported on input line 197.
-
-Package fancyhdr Warning: \headheight is too small (0.0pt): 
-(fancyhdr)                Make it at least 14.4521pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.4521pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-14.4521pt}.
-
+(babel)             Reported on input line 198.
 [2] (./tfm.lof
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
@@ -675,54 +721,25 @@ l.29 \section
              {Objetivos}\label{section:objetivos} [1
 
 
-]
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <9> on input line 39.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 39.
-)
-LaTeX Info: Redefining \. on input line 210.
-LaTeX Info: Redefining \% on input line 210.
-
-
-Package fancyhdr Warning: \headheight is too small (0.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-13.59999pt}.
-
+])
+LaTeX Info: Redefining \. on input line 211.
+LaTeX Info: Redefining \% on input line 211.
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.210 \input{capitulos/01_Introduccion}
+l.211 \input{capitulos/01_Introduccion}
                                         [2]
-LaTeX Info: Redefining \. on input line 210.
-LaTeX Info: Redefining \% on input line 210.
-
-
-Package fancyhdr Warning: \headheight is too small (0.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-13.59999pt}.
-
+LaTeX Info: Redefining \. on input line 211.
+LaTeX Info: Redefining \% on input line 211.
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.3}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.210 \input{capitulos/01_Introduccion}
+l.211 \input{capitulos/01_Introduccion}
                                         [3] (./capitulos/02_Estado_del_arte.tex
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
-
-
-Package fancyhdr Warning: \headheight is too small (0.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-13.59999pt}.
-
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.4}) has been already used, duplicate ignored
 <to be read again> 
@@ -734,31 +751,83 @@ Cap\'{\i }tulo 2.
 pdfTeX warning (ext4): destination with the same identifier (name{page.5}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.28     \item P
-                ara capítulos de libros y congresos: Se indica el título d... [5
+l.24 
+      [5
 
 
-{c:/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
-
-LaTeX Warning: Citation `autordesconocido' on page 6 undefined on input line 41.
-
-) (./capitulos/03_Desarrollo_del_TFM.tex
-LaTeX Info: Redefining \. on input line 1.
-LaTeX Info: Redefining \% on input line 1.
-
-
-Package fancyhdr Warning: \headheight is too small (0.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-13.59999pt}.
-
+]
+LaTeX Info: Redefining \. on input line 50.
+LaTeX Info: Redefining \% on input line 50.
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.6}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1 \chapter
-            {Desarrollo del TFM}\label{chapter:desarrollo} [6]
+l.50 
+      [6]
+LaTeX Info: Redefining \. on input line 76.
+LaTeX Info: Redefining \% on input line 76.
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.7}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.76 \end{equation}
+                    [7]
+Overfull \hbox (15.82309pt too wide) in paragraph at lines 96--97
+\OT1/cmr/m/n/10.95 vi-dad sig-ni-fi-ca-ti-va: en cla-si-fi-ca-ci^^Son de ra-dio-graf^^S^^Pas de t^^Sorax pa-ra neu-mon^^S^^Pa bacteriana/viral/COVID-
+ []
+
+LaTeX Info: Redefining \. on input line 103.
+LaTeX Info: Redefining \% on input line 103.
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.8}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.103 \end{equation}
+                     [8]
+LaTeX Info: Redefining \. on input line 129.
+LaTeX Info: Redefining \% on input line 129.
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.9}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.129 
+       [9]
+LaTeX Info: Redefining \. on input line 163.
+LaTeX Info: Redefining \% on input line 163.
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.10}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.163 
+       [10]
+LaTeX Info: Redefining \. on input line 203.
+LaTeX Info: Redefining \% on input line 203.
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.11}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.203 
+       [11]
+LaTeX Info: Redefining \. on input line 227.
+LaTeX Info: Redefining \% on input line 227.
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.12}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.227 \begin{equation}
+                       [12]
+LaTeX Info: Redefining \. on input line 259.
+LaTeX Info: Redefining \% on input line 259.
+ [13]
+LaTeX Info: Redefining \. on input line 289.
+LaTeX Info: Redefining \% on input line 289.
+ [14]
+LaTeX Info: Redefining \. on input line 313.
+LaTeX Info: Redefining \% on input line 313.
+ [15]) (./capitulos/03_Desarrollo_del_TFM.tex
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
+ [16]
 Cap\'{\i }tulo 3.
 LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 11.
 (c:/texlive/2026/texmf-dist/tex/latex/base/omscmr.fd
@@ -767,54 +836,26 @@ File: omscmr.fd 2024/11/19 v2.5n Standard LaTeX font definitions
 LaTeX Font Info:    Font shape `OMS/cmr/bx/n' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/b/n' tried instead on input line 11.
 ) (./capitulos/04_Resultados_y_Discusion.tex
-Overfull \hbox (9.64139pt too wide) in paragraph at lines 13--1
+Overfull \hbox (9.64503pt too wide) in paragraph at lines 13--1
 []\OT1/cmr/m/n/10.95 Revisa es-ta web pa-ra m^^Sas in-for-ma-ci^^Son: [][]$\OT1/cmtt/m/n/10.95 https : / / www . overleaf . com / learn / latex / Positioning _
  []
 
-
-pdfTeX warning (ext4): destination with the same identifier (name{page.7}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.1 \chapter
-            {Resultados y discusión}\label{chapter:resultados} [7
+[17
 
 
-]
-pdfTeX warning (ext4): destination with the same identifier (name{page.8}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.1 \chapter
-            {Resultados y discusión}\label{chapter:resultados} [8
+] [18
 
 ]
 Cap\'{\i }tulo 4.
-(./tablas/tabla-ejemplo-de-tabla.tex) (./tablas/tabla-poblacion.tex)
-pdfTeX warning (ext4): destination with the same identifier (name{page.9}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.17 \newpage
-              [9
+(./tablas/tabla-ejemplo-de-tabla.tex) (./tablas/tabla-poblacion.tex) [19
 
-]
-
-Package fancyhdr Warning: \headheight is too small (0.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-13.59999pt}.
-
-
-pdfTeX warning (ext4): destination with the same identifier (name{page.10}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.17 \newpage
-              [10] (./imagenes/figura-ejemplo.tex
+] [20] (./imagenes/figura-ejemplo.tex
 File: imagenes/logo.png Graphic file (type png)
 <use imagenes/logo.png>
 Package pdftex.def Info: imagenes/logo.png  used on input line 3.
 (pdftex.def)             Requested size: 227.62206pt x 84.66907pt.
 ) (./imagenes/figura-ejemplo2.tex
-<imagenes/test-distribuciones.pdf, id=391, 1134.63902pt x 693.5997pt>
+<imagenes/test-distribuciones.pdf, id=742, 1134.63902pt x 693.5997pt>
 File: imagenes/test-distribuciones.pdf Graphic file (type pdf)
 <use imagenes/test-distribuciones.pdf>
 Package pdftex.def Info: imagenes/test-distribuciones.pdf  used on input line 3.
@@ -822,150 +863,95 @@ Package pdftex.def Info: imagenes/test-distribuciones.pdf  used on input line 3.
 )
 LaTeX Info: Redefining \. on input line 32.
 LaTeX Info: Redefining \% on input line 32.
-
-
-Package fancyhdr Warning: \headheight is too small (0.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-13.59999pt}.
-
-
-pdfTeX warning (ext4): destination with the same identifier (name{page.11}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.32     \item J
-                PEG: Con extensión \textbf{.jpg}, se suelen usar cuando son... [11 <./imagenes/test-distribuciones.pdf>]) (./capitulos/05_Conclusiones.tex
-
-Package fancyhdr Warning: \headheight is too small (0.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-13.59999pt}.
-
-
-pdfTeX warning (ext4): destination with the same identifier (name{page.12}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.1 \chapter
-            {Conclusiones}\label{chapter:conclusiones} [12]
+ [21 <./imagenes/test-distribuciones.pdf>]) (./capitulos/05_Conclusiones.tex [22]
 Cap\'{\i }tulo 5.
-) (./tfm.bbl [13
+) (./tfm.bbl [23
 
 
-] [14
+] [24
 
-]) [15
+]
+Underfull \hbox (badness 10000) in paragraph at lines 13--17
+[]\OT1/cmr/m/n/10.95 J. Brown-lee, ``Ran-dom over-sam-pling and un-der-sam-pling for im-
+ []
 
-] [16
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--17
+\OT1/cmr/m/n/10.95 ba-lan-ced clas-si-fi-ca-tion.'' [][]$\OT1/cmtt/m/n/10.95 https : / / machinelearningmastery . com /
+ []
+
+[25
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 91--94
+[]\OT1/cmr/m/n/10.95 J. Brown-lee, ``Th-reshold mo-ving for im-ba-lan-ced clas-si-fi-ca-tion.'' [][]$\OT1/cmtt/m/n/10.95 https : / /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 91--94
+\OT1/cmtt/m/n/10.95 machinelearningmastery . com / threshold-[]moving-[]for-[]imbalanced-[]classification/$[][]\OT1/cmr/m/n/10.95 ,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 120--123
+\OT1/cmtt/m/n/10.95 gretel . ai / blog / create-[]synthetic-[]time-[]series-[]with-[]doppelganger-[]and-[]pytorch$[][]\OT1/cmr/m/n/10.95 ,
+ []
+
+
+Underfull \hbox (badness 2460) in paragraph at lines 144--146
+[]\OT1/cmr/m/n/10.95 Anonymous, ``A gradient-penalized con-di-tio-nal ti-me-gan com-bi-ned with multi-scale
+ []
+
+LaTeX Info: Redefining \. on input line 167.
+LaTeX Info: Redefining \% on input line 167.
+[26])
+LaTeX Info: Redefining \. on input line 228.
+LaTeX Info: Redefining \% on input line 228.
+ [27] [28
 
 ] (./anexos/gestion.tex
 Ap\'{e}ndice A.
 )
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [17
+ [29
 
 
 ]
-LaTeX Info: Redefining \. on input line 233.
-LaTeX Info: Redefining \% on input line 233.
-
-
-Package fancyhdr Warning: \headheight is too small (0.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-13.59999pt}.
-
-[18]
-LaTeX Info: Redefining \. on input line 233.
-LaTeX Info: Redefining \% on input line 233.
-
-
-Package fancyhdr Warning: \headheight is too small (0.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-13.59999pt}.
-
-[19] (./anexos/innovacion.tex
+LaTeX Info: Redefining \. on input line 234.
+LaTeX Info: Redefining \% on input line 234.
+ [30]
+LaTeX Info: Redefining \. on input line 234.
+LaTeX Info: Redefining \% on input line 234.
+ [31] (./anexos/innovacion.tex
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
-
-
-Package fancyhdr Warning: \headheight is too small (0.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-13.59999pt}.
-
-[20]
+ [32]
 Ap\'{e}ndice B.
-[21
+[33
 
 
 ])
-LaTeX Info: Redefining \. on input line 234.
-LaTeX Info: Redefining \% on input line 234.
-
-
-Package fancyhdr Warning: \headheight is too small (0.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-13.59999pt}.
-
-[22]
-LaTeX Info: Redefining \. on input line 234.
-LaTeX Info: Redefining \% on input line 234.
-
-
-Package fancyhdr Warning: \headheight is too small (0.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-13.59999pt}.
-
-[23] (./anexos/manual_usuario.tex
+LaTeX Info: Redefining \. on input line 235.
+LaTeX Info: Redefining \% on input line 235.
+ [34]
+LaTeX Info: Redefining \. on input line 235.
+LaTeX Info: Redefining \% on input line 235.
+ [35] (./anexos/manual_usuario.tex
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
-
-
-Package fancyhdr Warning: \headheight is too small (0.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-13.59999pt}.
-
-[24]
+ [36]
 Ap\'{e}ndice C.
-) [25
+) [37
 
 
 ]
-LaTeX Info: Redefining \. on input line 235.
-LaTeX Info: Redefining \% on input line 235.
-
-
-Package fancyhdr Warning: \headheight is too small (0.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-13.59999pt}.
-
-[26]
-LaTeX Info: Redefining \. on input line 243.
-LaTeX Info: Redefining \% on input line 243.
-
-
-Package fancyhdr Warning: \headheight is too small (0.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-13.59999pt}.
-
-[27] [28
+LaTeX Info: Redefining \. on input line 236.
+LaTeX Info: Redefining \% on input line 236.
+ [38]
+LaTeX Info: Redefining \. on input line 244.
+LaTeX Info: Redefining \% on input line 244.
+ [39] [40
 
 ] (./tfm.aux
 LaTeX Info: Redefining \. on input line 11.
@@ -979,25 +965,22 @@ L3 programming layer <2026-01-19>
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-
-LaTeX Warning: There were undefined references.
-
 Package rerunfilecheck Info: File `tfm.out' has not changed.
-(rerunfilecheck)             Checksum: 970E6C7F9F54D83CF4332CA50969D695;7220.
+(rerunfilecheck)             Checksum: 6A85EB25115E06D02F9C977F39575B48;14597.
  ) 
 Here is how much of TeX's memory you used:
- 15998 strings out of 467525
- 262309 string characters out of 5423209
- 791798 words of memory out of 5000000
- 44522 multiletter control sequences out of 15000+600000
- 636827 words of font info for 70 fonts, out of 8000000 for 9000
+ 16870 strings out of 467525
+ 274122 string characters out of 5423209
+ 807263 words of memory out of 5000000
+ 45273 multiletter control sequences out of 15000+600000
+ 638541 words of font info for 77 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 73i,13n,81p,1280b,791s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
-Output written on tfm.pdf (48 pages, 661225 bytes).
+ 73i,13n,81p,1851b,800s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on tfm.pdf (60 pages, 782493 bytes).
 PDF statistics:
- 592 PDF objects out of 1000 (max. 8388607)
- 493 compressed objects within 5 object streams
- 105 named destinations out of 1000 (max. 500000)
- 333 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1004 PDF objects out of 1200 (max. 8388607)
+ 879 compressed objects within 9 object streams
+ 205 named destinations out of 1000 (max. 500000)
+ 589 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -21,88 +21,256 @@
 \newlabel{section:estructura}{{1.3}{2}{Estructura del trabajo}{section.1.3}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {1.4}Ejemplo de texto largo}{2}{section.1.4}\protected@file@percent }
 \newlabel{chapter:estado-arte}{{1.4}{4}{Ejemplo de texto largo}{section.1.4}{}}
+\citation{chawla2002smote}
+\citation{goodfellow2014generative}
+\citation{brownlee2020imbalanced}
+\citation{brownlee2020imbalanced}
 \@writefile{toc}{\contentsline {chapter}{\numberline {2}Estado del arte}{5}{chapter.2}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {2.1}Formato general}{5}{section.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2.2}Estructura de las referencias}{5}{section.2.2}\protected@file@percent }
-\citation{el2021write}
-\citation{evans2011write}
-\citation{duke2018postgraduate}
-\citation{wiese2023write}
-\citation{el2021write}
-\citation{evans2011write}
-\citation{duke2018postgraduate}
-\citation{autordesconocido}
-\citation{el2021write}
-\citation{foley1994introduction}
-\citation{schwarz2007modeling}
-\citation{wikipediaComputerGraphics}
-\citation{getbibtexBibTeXGenerator}
-\@writefile{toc}{\contentsline {section}{\numberline {2.3}Otros detalles}{6}{section.2.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2.4}Descripción del capítulo}{6}{section.2.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {3}Desarrollo del TFM}{7}{chapter.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2.1}Introducción}{5}{section.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2.2}Métodos Tradicionales de Remuestreo}{5}{section.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.1}Random Oversampling y Undersampling}{5}{subsection.2.2.1}\protected@file@percent }
+\citation{brownlee2020imbalanced}
+\citation{chawla2002smote}
+\citation{blagus2013smote}
+\citation{blagus2013smote}
+\citation{han2005borderline}
+\citation{he2008adasyn}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.2}SMOTE y sus Variantes}{6}{subsection.2.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{SMOTE Clásico}{6}{section*.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Borderline-SMOTE}{6}{section*.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{ADASYN}{6}{section*.11}\protected@file@percent }
+\citation{brandt2021comparison}
+\citation{brandt2021comparison}
+\citation{zhao2022tsmote}
+\citation{zhao2022tsmote}
+\citation{fonseca2022tsmote}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.3}Métodos SMOTE Específicos para Series Temporales}{7}{subsection.2.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{T-SMOTE}{7}{section*.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{tSMOTE (Time Sliced SMOTE)}{7}{section*.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2.3}Métodos Algorítmicos: Cost-Sensitive Learning}{7}{section.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.1}Class Weights (Ponderación de Clases)}{7}{subsection.2.3.1}\protected@file@percent }
+\citation{omdena2021timeseries}
+\citation{lin2017focal}
+\citation{wang2021focal}
+\citation{cyclicalfocal2022}
+\citation{cyclicalfocal2022}
+\citation{wang2021focal}
+\citation{wang2024cshn}
+\citation{wang2024cshn}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.2}Focal Loss}{8}{subsection.2.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.3}Cost-Sensitive Hybrid Networks}{8}{subsection.2.3.3}\protected@file@percent }
+\citation{wang2024cshn}
+\citation{roychoudhury2017cost}
+\citation{roychoudhury2017cost}
+\citation{liu2009exploratory}
+\citation{phuong2021imbalanced}
+\citation{phuong2021imbalanced}
+\citation{spelmen2018balancecascade}
+\citation{phuong2021imbalanced}
+\citation{wang2017bebs}
+\@writefile{toc}{\contentsline {section}{\numberline {2.4}Métodos Ensemble para Datos Desbalanceados}{9}{section.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.1}EasyEnsemble}{9}{subsection.2.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.2}BalanceCascade}{9}{subsection.2.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.3}BEBS (Bagging of Extrapolation Borderline-SMOTE SVM)}{9}{subsection.2.4.3}\protected@file@percent }
+\citation{wang2017bebs}
+\citation{brownlee2020threshold}
+\citation{riniker2021ghost}
+\citation{riniker2021ghost}
+\citation{iwana2021empirical}
+\citation{iwana2021empirical}
+\citation{iwana2021empirical}
+\@writefile{toc}{\contentsline {section}{\numberline {2.5}Threshold Moving (Ajuste de Umbral de Decisión)}{10}{section.2.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2.6}Data Augmentation para Series Temporales}{10}{section.2.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.6.1}Survey Empírico Fundamental}{10}{subsection.2.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.6.2}Técnicas Específicas}{10}{subsection.2.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Time Warping}{10}{section*.14}\protected@file@percent }
+\citation{iwana2021empirical}
+\citation{iwana2021empirical}
+\citation{iwana2021empirical}
+\citation{esteban2017rgan}
+\citation{esteban2017rgan}
+\citation{esteban2017rgan}
+\citation{lin2020doppelganger}
+\citation{mckinney2024doppelganger}
+\@writefile{toc}{\contentsline {subsubsection}{Magnitude Warping}{11}{section*.15}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Window Slicing}{11}{section*.16}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Jittering}{11}{section*.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2.7}Modelos Generativos: GANs}{11}{section.2.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.7.1}RGAN/RCGAN: Baseline Clásico}{11}{subsection.2.7.1}\protected@file@percent }
+\citation{gretelai2022doppelganger}
+\citation{yoon2019timegan}
+\citation{liu2024ctimegan}
+\citation{liu2024ctimegan}
+\citation{zhang2022ccgan}
+\citation{demirel2025mctimegan}
+\citation{ctganmsin2025}
+\citation{ctganmsin2025}
+\citation{bing2022healthgen}
+\citation{bing2022healthgen}
+\citation{bing2022healthgen}
+\citation{isasa2024wgangp}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.7.2}DoppelGANger: Estado del Arte}{12}{subsection.2.7.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.7.3}C-TimeGAN/Conditional TimeGAN}{12}{subsection.2.7.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.7.4}HealthGen: Equidad en Datos Médicos}{12}{subsection.2.7.4}\protected@file@percent }
+\citation{isasa2024wgangp}
+\citation{isasa2024wgangp}
+\citation{isasa2024wgangp}
+\citation{liu2025hracgan}
+\citation{fadlon2025diffusion}
+\citation{rasul2021timegrad}
+\citation{alcaraz2022sssd}
+\citation{nikolentzos2023vgae}
+\citation{nikolentzos2023vgae}
+\citation{nikolentzos2023vgae}
+\citation{ijaia2025vae}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.7.5}WGAN-GP para Series Temporales Médicas}{13}{subsection.2.7.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2.8}Modelos de Difusión}{13}{section.2.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2.9}Variational Autoencoders (VAEs)}{13}{section.2.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.9.1}VGAE para EHRs}{13}{subsection.2.9.1}\protected@file@percent }
+\citation{ijaia2025vae}
+\citation{multitaskvae2024}
+\citation{bashiri2024variable}
+\citation{bashiri2024variable}
+\citation{wei2023coformer}
+\citation{wei2023coformer}
+\citation{li2023vitst}
+\citation{li2023vitst}
+\citation{qian2024dsttn}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.9.2}VAE Framework para Healthcare}{14}{subsection.2.9.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2.10}Arquitecturas para Series de Longitud/Frecuencia Variable}{14}{section.2.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.10.1}Variable-Length LSTM/GRU}{14}{subsection.2.10.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.10.2}CoFormer (Compatible Transformer)}{14}{subsection.2.10.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.10.3}ViTST (Vision Transformer for Irregular Time Series)}{14}{subsection.2.10.3}\protected@file@percent }
+\citation{rubanova2019latentode}
+\citation{kidger2020ncde}
+\citation{esteban2017rgan}
+\citation{yoon2019timegan}
+\citation{liu2024ctimegan}
+\citation{demirel2025mctimegan}
+\citation{lin2020doppelganger}
+\citation{bing2022healthgen}
+\citation{isasa2024wgangp}
+\citation{ctganmsin2025}
+\citation{iwana2021empirical}
+\citation{bashiri2024variable}
+\citation{qian2024dsttn}
+\citation{wei2023coformer}
+\citation{rubanova2019latentode}
+\citation{fadlon2025diffusion}
+\citation{lin2017focal}
+\citation{wang2024cshn}
+\citation{liu2009exploratory}
+\citation{spelmen2018balancecascade}
+\citation{zhao2022tsmote}
+\citation{liu2024ctimegan}
+\citation{brownlee2020threshold}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.10.4}DSTTN (Dense Spatio-Temporal Transformer)}{15}{subsection.2.10.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2.11}Neural ODEs y Continuous-Time Models}{15}{section.2.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.11.1}Latent ODEs}{15}{subsection.2.11.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.11.2}Neural CDEs}{15}{subsection.2.11.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2.12}Comparación y Recomendaciones}{15}{section.2.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {3}Desarrollo del TFM}{17}{chapter.3}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{chapter:desarrollo}{{3}{7}{Desarrollo del TFM}{chapter.3}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.1}Cómo colocar tablas y figuras}{7}{section.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {4}Resultados y discusión}{9}{chapter.4}\protected@file@percent }
+\newlabel{chapter:desarrollo}{{3}{17}{Desarrollo del TFM}{chapter.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.1}Cómo colocar tablas y figuras}{17}{section.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {4}Resultados y discusión}{19}{chapter.4}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{chapter:resultados}{{4}{9}{Resultados y discusión}{chapter.4}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces Tabla grande}}{9}{table.caption.9}\protected@file@percent }
+\newlabel{chapter:resultados}{{4}{19}{Resultados y discusión}{chapter.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces Tabla grande}}{19}{table.caption.18}\protected@file@percent }
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{tab:mi-tabla-grande}{{4.1}{9}{Tabla grande}{table.caption.9}{}}
-\newlabel{RF1}{10}
-\@writefile{lot}{\contentsline {table}{\numberline {4.2}{\ignorespaces Tabla enorme}}{10}{table.caption.10}\protected@file@percent }
-\newlabel{tab:mi-tabla-enorme}{{4.2}{10}{Tabla enorme}{table.caption.10}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Mi logo}}{11}{figure.caption.11}\protected@file@percent }
-\newlabel{fig:logo}{{4.1}{11}{Mi logo}{figure.caption.11}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces Lista de distribuciones}}{11}{figure.caption.12}\protected@file@percent }
-\newlabel{fig:grafica}{{4.2}{11}{Lista de distribuciones}{figure.caption.12}{}}
+\newlabel{tab:mi-tabla-grande}{{4.1}{19}{Tabla grande}{table.caption.18}{}}
+\newlabel{RF1}{20}
+\@writefile{lot}{\contentsline {table}{\numberline {4.2}{\ignorespaces Tabla enorme}}{20}{table.caption.19}\protected@file@percent }
+\newlabel{tab:mi-tabla-enorme}{{4.2}{20}{Tabla enorme}{table.caption.19}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Mi logo}}{21}{figure.caption.20}\protected@file@percent }
+\newlabel{fig:logo}{{4.1}{21}{Mi logo}{figure.caption.20}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces Lista de distribuciones}}{21}{figure.caption.21}\protected@file@percent }
+\newlabel{fig:grafica}{{4.2}{21}{Lista de distribuciones}{figure.caption.21}{}}
 \bibdata{bibliografia}
-\@writefile{toc}{\contentsline {chapter}{\numberline {5}Conclusiones}{13}{chapter.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {5}Conclusiones}{23}{chapter.5}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{chapter:conclusiones}{{5}{13}{Conclusiones}{chapter.5}{}}
-\bibcite{el2021write}{1}
-\bibcite{evans2011write}{2}
-\bibcite{duke2018postgraduate}{3}
-\bibcite{wiese2023write}{4}
-\bibcite{foley1994introduction}{5}
-\bibcite{schwarz2007modeling}{6}
-\bibcite{wikipediaComputerGraphics}{7}
-\bibcite{getbibtexBibTeXGenerator}{8}
+\newlabel{chapter:conclusiones}{{5}{23}{Conclusiones}{chapter.5}{}}
+\bibcite{chawla2002smote}{1}
+\bibcite{goodfellow2014generative}{2}
+\bibcite{brownlee2020imbalanced}{3}
+\bibcite{blagus2013smote}{4}
+\bibcite{han2005borderline}{5}
+\bibcite{he2008adasyn}{6}
+\bibcite{brandt2021comparison}{7}
+\bibcite{zhao2022tsmote}{8}
+\bibcite{fonseca2022tsmote}{9}
+\bibcite{omdena2021timeseries}{10}
+\bibcite{lin2017focal}{11}
+\bibcite{wang2021focal}{12}
+\bibcite{cyclicalfocal2022}{13}
+\bibcite{wang2024cshn}{14}
+\bibcite{roychoudhury2017cost}{15}
+\bibcite{liu2009exploratory}{16}
+\bibcite{phuong2021imbalanced}{17}
+\bibcite{spelmen2018balancecascade}{18}
+\bibcite{wang2017bebs}{19}
+\bibcite{brownlee2020threshold}{20}
+\bibcite{riniker2021ghost}{21}
+\bibcite{iwana2021empirical}{22}
+\bibcite{esteban2017rgan}{23}
+\bibcite{lin2020doppelganger}{24}
+\bibcite{mckinney2024doppelganger}{25}
+\bibcite{gretelai2022doppelganger}{26}
+\bibcite{yoon2019timegan}{27}
+\bibcite{liu2024ctimegan}{28}
+\bibcite{zhang2022ccgan}{29}
+\bibcite{demirel2025mctimegan}{30}
+\bibcite{ctganmsin2025}{31}
+\bibcite{bing2022healthgen}{32}
+\bibcite{isasa2024wgangp}{33}
+\bibcite{liu2025hracgan}{34}
+\bibcite{fadlon2025diffusion}{35}
+\bibcite{rasul2021timegrad}{36}
+\bibcite{alcaraz2022sssd}{37}
+\bibcite{nikolentzos2023vgae}{38}
+\bibcite{ijaia2025vae}{39}
+\bibcite{multitaskvae2024}{40}
+\bibcite{bashiri2024variable}{41}
+\bibcite{wei2023coformer}{42}
+\bibcite{li2023vitst}{43}
+\bibcite{qian2024dsttn}{44}
+\bibcite{rubanova2019latentode}{45}
+\bibcite{kidger2020ncde}{46}
 \bibstyle{ieeetr}
-\@writefile{toc}{\contentsline {chapter}{Bibliografía}{15}{chapter*.13}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {A}Ejemplo de anexo: Planificación y gestión del proyecto (opcional)}{17}{appendix.Alph1}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Bibliografía}{27}{chapter*.22}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {A}Ejemplo de anexo: Planificación y gestión del proyecto (opcional)}{29}{appendix.Alph1}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {A.1}Metodología/Ciclo de vida}{18}{section.Alph1.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {A.2}Herramientas y plataformas utilizadas para el desarrollo del proyecto}{18}{section.Alph1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {A.3}Costes del proyecto}{18}{section.Alph1.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {A.4}Gestión del proyecto. Planificación temporal. Diagrama de Gantt}{18}{section.Alph1.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {A.5}Texto añadido}{18}{section.Alph1.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {B}Ejemplo de anexo: Innovación (opcional)}{21}{appendix.Alph2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {A.1}Metodología/Ciclo de vida}{30}{section.Alph1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {A.2}Herramientas y plataformas utilizadas para el desarrollo del proyecto}{30}{section.Alph1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {A.3}Costes del proyecto}{30}{section.Alph1.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {A.4}Gestión del proyecto. Planificación temporal. Diagrama de Gantt}{30}{section.Alph1.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {A.5}Texto añadido}{30}{section.Alph1.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {B}Ejemplo de anexo: Innovación (opcional)}{33}{appendix.Alph2}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {B.1}Estudio del Mercado}{21}{section.Alph2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {B.1.1}Segmentos de Clientes}{21}{subsection.Alph2.1.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {B.1.2}Competidores}{21}{subsection.Alph2.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.2}Propuesta de Valor}{21}{section.Alph2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.3}Recursos Clave}{21}{section.Alph2.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.4}Actividades Clave}{21}{section.Alph2.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.5}Socios y Alianzas Clave}{21}{section.Alph2.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.6}Estructura de Costes Prevista}{22}{section.Alph2.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.7}Vías de Ingresos}{22}{section.Alph2.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.8}Canales de Distribución}{22}{section.Alph2.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.9}Relación con los Clientes}{22}{section.Alph2.9}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.10}Descripción del Producto Mínimo Viable}{22}{section.Alph2.10}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.11}Roadmap de Desarrollo}{22}{section.Alph2.11}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.12}Aspectos Legales}{22}{section.Alph2.12}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.13}Texto añadido}{22}{section.Alph2.13}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {C}Ejemplo de anexo: Manual de usuario (opcional)}{25}{appendix.Alph3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B.1}Estudio del Mercado}{33}{section.Alph2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.1.1}Segmentos de Clientes}{33}{subsection.Alph2.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.1.2}Competidores}{33}{subsection.Alph2.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B.2}Propuesta de Valor}{33}{section.Alph2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B.3}Recursos Clave}{33}{section.Alph2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B.4}Actividades Clave}{33}{section.Alph2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B.5}Socios y Alianzas Clave}{33}{section.Alph2.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B.6}Estructura de Costes Prevista}{34}{section.Alph2.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B.7}Vías de Ingresos}{34}{section.Alph2.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B.8}Canales de Distribución}{34}{section.Alph2.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B.9}Relación con los Clientes}{34}{section.Alph2.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B.10}Descripción del Producto Mínimo Viable}{34}{section.Alph2.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B.11}Roadmap de Desarrollo}{34}{section.Alph2.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B.12}Aspectos Legales}{34}{section.Alph2.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B.13}Texto añadido}{34}{section.Alph2.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {C}Ejemplo de anexo: Manual de usuario (opcional)}{37}{appendix.Alph3}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {C.1}Texto añadido}{25}{section.Alph3.1}\protected@file@percent }
-\gdef \@abspage@last{48}
+\@writefile{toc}{\contentsline {section}{\numberline {C.1}Texto añadido}{37}{section.Alph3.1}\protected@file@percent }
+\gdef \@abspage@last{60}

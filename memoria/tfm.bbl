@@ -1,31 +1,213 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
-\bibitem{el2021write}
-H.~El-Chaarani and Z.~El-Abiad, ``How to write a master thesis,'' {\em Journal of Contemporary Research in Business Administration and Economic Sciences}, 2021.
+\bibitem{chawla2002smote}
+N.~V. Chawla, K.~W. Bowyer, L.~O. Hall, and W.~P. Kegelmeyer, ``Smote:
+  Synthetic minority over-sampling technique,'' {\em Journal of Artificial
+  Intelligence Research}, vol.~16, pp.~321--357, 2002.
 
-\bibitem{evans2011write}
-D.~Evans, P.~Gruba, and J.~Zobel, {\em How to write a better thesis}.
-\newblock Melbourne Univ. Publishing, 2011.
+\bibitem{goodfellow2014generative}
+I.~Goodfellow {\em et~al.}, ``Generative adversarial nets,'' {\em arXiv
+  preprint arXiv:1406.2661}, 2014.
 
-\bibitem{duke2018postgraduate}
-T.~Duke, ``How to do a postgraduate research project and write a minor thesis,'' {\em Archives of Disease in Childhood}, vol.~103, no.~9, pp.~820--827, 2018.
+\bibitem{brownlee2020imbalanced}
+J.~Brownlee, ``Random oversampling and undersampling for imbalanced
+  classification.''
+  \url{https://machinelearningmastery.com/random-oversampling-and-undersampling-for-imbalanced-classification/},
+  2020.
 
-\bibitem{wiese2023write}
-A.~Wiese, ``How to write a bachelor/master thesis,'' 2023.
+\bibitem{blagus2013smote}
+R.~Blagus and L.~Lusa, ``Smote for high-dimensional class-imbalanced data,''
+  {\em BMC Bioinformatics}, vol.~14, no.~1, p.~106, 2013.
 
-\bibitem{foley1994introduction}
-J.~D. Foley, A.~Van~Dam, S.~K. Feiner, J.~F. Hughes, and R.~L. Phillips, {\em Introduction to computer graphics}, vol.~55.
-\newblock Addison-Wesley Reading, 1994.
+\bibitem{han2005borderline}
+H.~Han, W.-Y. Wang, and B.-H. Mao, ``Borderline-smote: A new over-sampling
+  method in imbalanced data sets learning,'' in {\em Advances in Intelligent
+  Computing}, pp.~878--887, 2005.
 
-\bibitem{schwarz2007modeling}
-M.~Schwarz, T.~Isenberg, K.~Mason, and S.~Carpendale, ``Modeling with rendering primitives: an interactive non-photorealistic canvas,'' in {\em Proceedings of the 5th international symposium on Non-photorealistic animation and rendering}, pp.~15--22, 2007.
+\bibitem{he2008adasyn}
+H.~He, Y.~Bai, E.~A. Garcia, and S.~Li, ``Adasyn: Adaptive synthetic sampling
+  approach for imbalanced learning,'' in {\em Proceedings of the IEEE
+  International Joint Conference on Neural Networks (IJCNN)}, pp.~1322--1328,
+  2008.
 
-\bibitem{wikipediaComputerGraphics}
-``{C}omputer graphics - {W}ikipedia --- en.wikipedia.org.'' \url{https://en.wikipedia.org/wiki/Computer_graphics}.
-\newblock [Accessed 07-06-2024].
+\bibitem{brandt2021comparison}
+J.~Brandt, ``Comparison of smote and adasyn for imbalanced learning,'' {\em
+  DIVA Portal}, 2021.
 
-\bibitem{getbibtexBibTeXGenerator}
-K.~Dzialowski, ``{U}{R}{L} to {B}ib{T}e{X} generator - get {B}ib{T}e{X} for any website --- getbibtex.com.'' \url{https://www.getbibtex.com/}.
-\newblock [Accessed 07-06-2024].
+\bibitem{zhao2022tsmote}
+Z.~Zhao {\em et~al.}, ``T-smote: Temporal-oriented synthetic minority
+  oversampling technique for imbalanced time series classification,'' in {\em
+  Proceedings of the 31st International Joint Conference on Artificial
+  Intelligence (IJCAI)}, pp.~2423--2429, 2022.
+
+\bibitem{fonseca2022tsmote}
+J.~Fonseca {\em et~al.}, ``Time sliced smote for imbalanced time series with
+  missing data,'' {\em arXiv preprint arXiv:2201.05634}, 2022.
+
+\bibitem{omdena2021timeseries}
+{Omdena}, ``Time series classification model tutorial.''
+  \url{https://www.omdena.com/blog/time-series-classification-model-tutorial},
+  2021.
+
+\bibitem{lin2017focal}
+T.-Y. Lin, P.~Goyal, R.~Girshick, K.~He, and P.~Dollar, ``Focal loss for dense
+  object detection,'' in {\em Proceedings of the IEEE International Conference
+  on Computer Vision (ICCV)}, pp.~2980--2988, 2017.
+
+\bibitem{wang2021focal}
+L.~Wang {\em et~al.}, ``Focal loss for medical image classification,'' {\em
+  PMC}, 2021.
+
+\bibitem{cyclicalfocal2022}
+Anonymous, ``Cyclical focal loss,'' {\em arXiv preprint arXiv:2202.08978},
+  2022.
+
+\bibitem{wang2024cshn}
+Z.~Wang {\em et~al.}, ``Cost-sensitive hybrid network for anomaly detection in
+  imbalanced time series,'' {\em Expert Systems with Applications}, 2024.
+
+\bibitem{roychoudhury2017cost}
+S.~Roychoudhury {\em et~al.}, ``Cost sensitive time-series classification,'' in
+  {\em Proceedings of the European Conference on Machine Learning}, 2017.
+
+\bibitem{liu2009exploratory}
+X.-Y. Liu, J.~Wu, and Z.-H. Zhou, ``Exploratory undersampling for
+  class-imbalance learning,'' {\em IEEE Transactions on Systems, Man, and
+  Cybernetics, Part B}, vol.~39, no.~2, pp.~539--550, 2009.
+
+\bibitem{phuong2021imbalanced}
+T.~M. Phuong, ``Imbalanced learning: Sampling techniques.''
+  \url{https://tungmphung.com/imbalanced-learning-sampling-techniques/}, 2021.
+
+\bibitem{spelmen2018balancecascade}
+V.~S. Spelmen and R.~Porkodi, ``A review on handling imbalanced data,'' {\em
+  PMC}, 2018.
+
+\bibitem{wang2017bebs}
+Q.~Wang {\em et~al.}, ``Bebs: Bagging of extrapolation borderline-smote svm,''
+  {\em PMC}, 2017.
+
+\bibitem{brownlee2020threshold}
+J.~Brownlee, ``Threshold moving for imbalanced classification.''
+  \url{https://machinelearningmastery.com/threshold-moving-for-imbalanced-classification/},
+  2020.
+
+\bibitem{riniker2021ghost}
+S.~Riniker {\em et~al.}, ``Ghost: Adjusting the decision threshold to handle
+  imbalanced data in machine learning,'' {\em Journal of Chemical Information
+  and Modeling}, 2021.
+
+\bibitem{iwana2021empirical}
+B.~K. Iwana and S.~Uchida, ``An empirical survey of data augmentation for time
+  series classification with neural networks,'' {\em PLOS ONE}, vol.~16, no.~7,
+  2021.
+
+\bibitem{esteban2017rgan}
+C.~Esteban, S.~L. Hyland, and G.~Raetsch, ``Real-valued (medical) time series
+  generation with recurrent conditional gans,'' {\em arXiv preprint
+  arXiv:1706.02633}, 2017.
+
+\bibitem{lin2020doppelganger}
+Z.~Lin {\em et~al.}, ``Using gans for sharing networked time series data:
+  Challenges, initial promise, and open questions,'' {\em arXiv preprint
+  arXiv:1909.13403}, 2020.
+
+\bibitem{mckinney2024doppelganger}
+Anonymous, ``Doppelganger: Auto-normalization and mode collapse.''
+  \url{https://arxiv.org/html/2405.20959v1}, 2024.
+
+\bibitem{gretelai2022doppelganger}
+{Gretel AI}, ``Create synthetic time series with doppelganger and pytorch.''
+  \url{https://www.gretel.ai/blog/create-synthetic-time-series-with-doppelganger-and-pytorch},
+  2022.
+
+\bibitem{yoon2019timegan}
+J.~Yoon, D.~Jarrett, and M.~van~der Schaar, ``Time-series generative
+  adversarial networks,'' in {\em Advances in Neural Information Processing
+  Systems (NeurIPS)}, 2019.
+
+\bibitem{liu2024ctimegan}
+Z.~Liu {\em et~al.}, ``Conditional-timegan for realistic and high-quality
+  appliance trajectories generation,'' {\em ResearchGate}, 2024.
+
+\bibitem{zhang2022ccgan}
+Y.~Zhang {\em et~al.}, ``Continuous conditional gans with generator
+  regularization.''
+  \url{https://openreview.net/pdf/a314da3379d678f622a913c79365c620d5d935e5.pdf},
+  2022.
+
+\bibitem{demirel2025mctimegan}
+B.~Demirel {\em et~al.}, ``Mc-timegan: Multivariate conditional timegan.''
+  GitHub, 2025.
+
+\bibitem{ctganmsin2025}
+Anonymous, ``A gradient-penalized conditional timegan combined with multi-scale
+  importance-aware network,'' {\em arXiv preprint}, 2025.
+
+\bibitem{bing2022healthgen}
+A.~Bing {\em et~al.}, ``Healthgen: Equitable synthetic ehr generation,'' {\em
+  PMC}, 2022.
+
+\bibitem{isasa2024wgangp}
+I.~Isasa {\em et~al.}, ``Wgan-gp for medical time series synthesis with
+  alignment loss,'' {\em BMC Medical Informatics and Decision Making}, 2024.
+
+\bibitem{liu2025hracgan}
+Z.~Liu {\em et~al.}, ``Hr-acgan: High reliability auxiliary classifier gan for
+  imbalanced time series,'' {\em Entropy}, vol.~27, no.~2, 2025.
+
+\bibitem{fadlon2025diffusion}
+Y.~Fadlon {\em et~al.}, ``Diffusion models for irregular time series
+  generation,'' {\em arXiv preprint arXiv:2510.06699}, 2025.
+
+\bibitem{rasul2021timegrad}
+K.~Rasul {\em et~al.}, ``Autoregressive denoising diffusion models for
+  multivariate probabilistic time series forecasting,'' in {\em Proceedings of
+  the International Conference on Machine Learning (ICML)}, 2021.
+
+\bibitem{alcaraz2022sssd}
+J.~M. Alcaraz and N.~Strodthoff, ``Diffusion-based time series imputation and
+  forecasting with structured state space models,'' {\em arXiv preprint}, 2022.
+
+\bibitem{nikolentzos2023vgae}
+G.~Nikolentzos {\em et~al.}, ``Synthetic ehr generation with variational graph
+  autoencoders,'' {\em npj Digital Medicine}, 2023.
+
+\bibitem{ijaia2025vae}
+Anonymous, ``Vae framework for synthetic healthcare data generation,'' {\em
+  International Journal of Artificial Intelligence \& Applications}, vol.~16,
+  no.~3, 2025.
+
+\bibitem{multitaskvae2024}
+Anonymous, ``Multitask vae for glucose forecasting with missing data,'' {\em
+  arXiv preprint arXiv:2410.00015}, 2024.
+
+\bibitem{bashiri2024variable}
+M.~Bashiri {\em et~al.}, ``Clinical prediction models from variable-length ehr
+  time series,'' {\em PubMed}, 2024.
+
+\bibitem{wei2023coformer}
+T.~Wei {\em et~al.}, ``Coformer: Compatible transformer for irregularly sampled
+  multivariate time series,'' {\em arXiv preprint arXiv:2310.11022}, 2023.
+
+\bibitem{li2023vitst}
+Z.~Li {\em et~al.}, ``Vitst: Time series classification by rethinking visual
+  statistical features,'' in {\em Advances in Neural Information Processing
+  Systems (NeurIPS)}, 2023.
+
+\bibitem{qian2024dsttn}
+J.~Qian {\em et~al.}, ``Dsttn: Dense spatio-temporal transformer network for
+  time series imputation,'' {\em Mathematical Biosciences and Engineering},
+  2024.
+
+\bibitem{rubanova2019latentode}
+Y.~Rubanova, R.~T.~Q. Chen, and D.~Duvenaud, ``Latent ordinary differential
+  equations for irregularly-sampled time series,'' in {\em Advances in Neural
+  Information Processing Systems (NeurIPS)}, 2019.
+
+\bibitem{kidger2020ncde}
+P.~Kidger, J.~Morrill, J.~Foster, and T.~Lyons, ``Neural controlled
+  differential equations for irregular time series,'' {\em arXiv preprint
+  arXiv:2005.08926}, 2020.
 
 \end{thebibliography}

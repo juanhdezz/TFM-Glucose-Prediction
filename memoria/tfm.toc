@@ -5,36 +5,77 @@
 \contentsline {section}{\numberline {1.3}Estructura del trabajo}{2}{section.1.3}%
 \contentsline {section}{\numberline {1.4}Ejemplo de texto largo}{2}{section.1.4}%
 \contentsline {chapter}{\numberline {2}Estado del arte}{5}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Formato general}{5}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Estructura de las referencias}{5}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Otros detalles}{6}{section.2.3}%
-\contentsline {section}{\numberline {2.4}Descripción del capítulo}{6}{section.2.4}%
-\contentsline {chapter}{\numberline {3}Desarrollo del TFM}{7}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Cómo colocar tablas y figuras}{7}{section.3.1}%
-\contentsline {chapter}{\numberline {4}Resultados y discusión}{9}{chapter.4}%
-\contentsline {chapter}{\numberline {5}Conclusiones}{13}{chapter.5}%
-\contentsline {chapter}{Bibliografía}{15}{chapter*.13}%
-\contentsline {chapter}{\numberline {A}Ejemplo de anexo: Planificación y gestión del proyecto (opcional)}{17}{appendix.Alph1}%
-\contentsline {section}{\numberline {A.1}Metodología/Ciclo de vida}{18}{section.Alph1.1}%
-\contentsline {section}{\numberline {A.2}Herramientas y plataformas utilizadas para el desarrollo del proyecto}{18}{section.Alph1.2}%
-\contentsline {section}{\numberline {A.3}Costes del proyecto}{18}{section.Alph1.3}%
-\contentsline {section}{\numberline {A.4}Gestión del proyecto. Planificación temporal. Diagrama de Gantt}{18}{section.Alph1.4}%
-\contentsline {section}{\numberline {A.5}Texto añadido}{18}{section.Alph1.5}%
-\contentsline {chapter}{\numberline {B}Ejemplo de anexo: Innovación (opcional)}{21}{appendix.Alph2}%
-\contentsline {section}{\numberline {B.1}Estudio del Mercado}{21}{section.Alph2.1}%
-\contentsline {subsection}{\numberline {B.1.1}Segmentos de Clientes}{21}{subsection.Alph2.1.1}%
-\contentsline {subsection}{\numberline {B.1.2}Competidores}{21}{subsection.Alph2.1.2}%
-\contentsline {section}{\numberline {B.2}Propuesta de Valor}{21}{section.Alph2.2}%
-\contentsline {section}{\numberline {B.3}Recursos Clave}{21}{section.Alph2.3}%
-\contentsline {section}{\numberline {B.4}Actividades Clave}{21}{section.Alph2.4}%
-\contentsline {section}{\numberline {B.5}Socios y Alianzas Clave}{21}{section.Alph2.5}%
-\contentsline {section}{\numberline {B.6}Estructura de Costes Prevista}{22}{section.Alph2.6}%
-\contentsline {section}{\numberline {B.7}Vías de Ingresos}{22}{section.Alph2.7}%
-\contentsline {section}{\numberline {B.8}Canales de Distribución}{22}{section.Alph2.8}%
-\contentsline {section}{\numberline {B.9}Relación con los Clientes}{22}{section.Alph2.9}%
-\contentsline {section}{\numberline {B.10}Descripción del Producto Mínimo Viable}{22}{section.Alph2.10}%
-\contentsline {section}{\numberline {B.11}Roadmap de Desarrollo}{22}{section.Alph2.11}%
-\contentsline {section}{\numberline {B.12}Aspectos Legales}{22}{section.Alph2.12}%
-\contentsline {section}{\numberline {B.13}Texto añadido}{22}{section.Alph2.13}%
-\contentsline {chapter}{\numberline {C}Ejemplo de anexo: Manual de usuario (opcional)}{25}{appendix.Alph3}%
-\contentsline {section}{\numberline {C.1}Texto añadido}{25}{section.Alph3.1}%
+\contentsline {section}{\numberline {2.1}Introducción}{5}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Métodos Tradicionales de Remuestreo}{5}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Random Oversampling y Undersampling}{5}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}SMOTE y sus Variantes}{6}{subsection.2.2.2}%
+\contentsline {subsubsection}{SMOTE Clásico}{6}{section*.9}%
+\contentsline {subsubsection}{Borderline-SMOTE}{6}{section*.10}%
+\contentsline {subsubsection}{ADASYN}{6}{section*.11}%
+\contentsline {subsection}{\numberline {2.2.3}Métodos SMOTE Específicos para Series Temporales}{7}{subsection.2.2.3}%
+\contentsline {subsubsection}{T-SMOTE}{7}{section*.12}%
+\contentsline {subsubsection}{tSMOTE (Time Sliced SMOTE)}{7}{section*.13}%
+\contentsline {section}{\numberline {2.3}Métodos Algorítmicos: Cost-Sensitive Learning}{7}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Class Weights (Ponderación de Clases)}{7}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Focal Loss}{8}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}Cost-Sensitive Hybrid Networks}{8}{subsection.2.3.3}%
+\contentsline {section}{\numberline {2.4}Métodos Ensemble para Datos Desbalanceados}{9}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}EasyEnsemble}{9}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}BalanceCascade}{9}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.3}BEBS (Bagging of Extrapolation Borderline-SMOTE SVM)}{9}{subsection.2.4.3}%
+\contentsline {section}{\numberline {2.5}Threshold Moving (Ajuste de Umbral de Decisión)}{10}{section.2.5}%
+\contentsline {section}{\numberline {2.6}Data Augmentation para Series Temporales}{10}{section.2.6}%
+\contentsline {subsection}{\numberline {2.6.1}Survey Empírico Fundamental}{10}{subsection.2.6.1}%
+\contentsline {subsection}{\numberline {2.6.2}Técnicas Específicas}{10}{subsection.2.6.2}%
+\contentsline {subsubsection}{Time Warping}{10}{section*.14}%
+\contentsline {subsubsection}{Magnitude Warping}{11}{section*.15}%
+\contentsline {subsubsection}{Window Slicing}{11}{section*.16}%
+\contentsline {subsubsection}{Jittering}{11}{section*.17}%
+\contentsline {section}{\numberline {2.7}Modelos Generativos: GANs}{11}{section.2.7}%
+\contentsline {subsection}{\numberline {2.7.1}RGAN/RCGAN: Baseline Clásico}{11}{subsection.2.7.1}%
+\contentsline {subsection}{\numberline {2.7.2}DoppelGANger: Estado del Arte}{12}{subsection.2.7.2}%
+\contentsline {subsection}{\numberline {2.7.3}C-TimeGAN/Conditional TimeGAN}{12}{subsection.2.7.3}%
+\contentsline {subsection}{\numberline {2.7.4}HealthGen: Equidad en Datos Médicos}{12}{subsection.2.7.4}%
+\contentsline {subsection}{\numberline {2.7.5}WGAN-GP para Series Temporales Médicas}{13}{subsection.2.7.5}%
+\contentsline {section}{\numberline {2.8}Modelos de Difusión}{13}{section.2.8}%
+\contentsline {section}{\numberline {2.9}Variational Autoencoders (VAEs)}{13}{section.2.9}%
+\contentsline {subsection}{\numberline {2.9.1}VGAE para EHRs}{13}{subsection.2.9.1}%
+\contentsline {subsection}{\numberline {2.9.2}VAE Framework para Healthcare}{14}{subsection.2.9.2}%
+\contentsline {section}{\numberline {2.10}Arquitecturas para Series de Longitud/Frecuencia Variable}{14}{section.2.10}%
+\contentsline {subsection}{\numberline {2.10.1}Variable-Length LSTM/GRU}{14}{subsection.2.10.1}%
+\contentsline {subsection}{\numberline {2.10.2}CoFormer (Compatible Transformer)}{14}{subsection.2.10.2}%
+\contentsline {subsection}{\numberline {2.10.3}ViTST (Vision Transformer for Irregular Time Series)}{14}{subsection.2.10.3}%
+\contentsline {subsection}{\numberline {2.10.4}DSTTN (Dense Spatio-Temporal Transformer)}{15}{subsection.2.10.4}%
+\contentsline {section}{\numberline {2.11}Neural ODEs y Continuous-Time Models}{15}{section.2.11}%
+\contentsline {subsection}{\numberline {2.11.1}Latent ODEs}{15}{subsection.2.11.1}%
+\contentsline {subsection}{\numberline {2.11.2}Neural CDEs}{15}{subsection.2.11.2}%
+\contentsline {section}{\numberline {2.12}Comparación y Recomendaciones}{15}{section.2.12}%
+\contentsline {chapter}{\numberline {3}Desarrollo del TFM}{17}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Cómo colocar tablas y figuras}{17}{section.3.1}%
+\contentsline {chapter}{\numberline {4}Resultados y discusión}{19}{chapter.4}%
+\contentsline {chapter}{\numberline {5}Conclusiones}{23}{chapter.5}%
+\contentsline {chapter}{Bibliografía}{27}{chapter*.22}%
+\contentsline {chapter}{\numberline {A}Ejemplo de anexo: Planificación y gestión del proyecto (opcional)}{29}{appendix.Alph1}%
+\contentsline {section}{\numberline {A.1}Metodología/Ciclo de vida}{30}{section.Alph1.1}%
+\contentsline {section}{\numberline {A.2}Herramientas y plataformas utilizadas para el desarrollo del proyecto}{30}{section.Alph1.2}%
+\contentsline {section}{\numberline {A.3}Costes del proyecto}{30}{section.Alph1.3}%
+\contentsline {section}{\numberline {A.4}Gestión del proyecto. Planificación temporal. Diagrama de Gantt}{30}{section.Alph1.4}%
+\contentsline {section}{\numberline {A.5}Texto añadido}{30}{section.Alph1.5}%
+\contentsline {chapter}{\numberline {B}Ejemplo de anexo: Innovación (opcional)}{33}{appendix.Alph2}%
+\contentsline {section}{\numberline {B.1}Estudio del Mercado}{33}{section.Alph2.1}%
+\contentsline {subsection}{\numberline {B.1.1}Segmentos de Clientes}{33}{subsection.Alph2.1.1}%
+\contentsline {subsection}{\numberline {B.1.2}Competidores}{33}{subsection.Alph2.1.2}%
+\contentsline {section}{\numberline {B.2}Propuesta de Valor}{33}{section.Alph2.2}%
+\contentsline {section}{\numberline {B.3}Recursos Clave}{33}{section.Alph2.3}%
+\contentsline {section}{\numberline {B.4}Actividades Clave}{33}{section.Alph2.4}%
+\contentsline {section}{\numberline {B.5}Socios y Alianzas Clave}{33}{section.Alph2.5}%
+\contentsline {section}{\numberline {B.6}Estructura de Costes Prevista}{34}{section.Alph2.6}%
+\contentsline {section}{\numberline {B.7}Vías de Ingresos}{34}{section.Alph2.7}%
+\contentsline {section}{\numberline {B.8}Canales de Distribución}{34}{section.Alph2.8}%
+\contentsline {section}{\numberline {B.9}Relación con los Clientes}{34}{section.Alph2.9}%
+\contentsline {section}{\numberline {B.10}Descripción del Producto Mínimo Viable}{34}{section.Alph2.10}%
+\contentsline {section}{\numberline {B.11}Roadmap de Desarrollo}{34}{section.Alph2.11}%
+\contentsline {section}{\numberline {B.12}Aspectos Legales}{34}{section.Alph2.12}%
+\contentsline {section}{\numberline {B.13}Texto añadido}{34}{section.Alph2.13}%
+\contentsline {chapter}{\numberline {C}Ejemplo de anexo: Manual de usuario (opcional)}{37}{appendix.Alph3}%
+\contentsline {section}{\numberline {C.1}Texto añadido}{37}{section.Alph3.1}%
