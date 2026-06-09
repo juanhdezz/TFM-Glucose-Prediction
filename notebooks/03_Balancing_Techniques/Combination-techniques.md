@@ -1,7 +1,3 @@
-Antes de responder, quiero asegurarme de tener fresco todo el material cuantitativo relevante.Tengo suficiente material. Aquí está el análisis completo:
-
----
-
 ## Evaluación crítica de estrategias híbridas de balanceo en series CGM
 
 ---
@@ -18,7 +14,7 @@ La respuesta es sí, y no es una conjetura: deriva directamente de una observaci
 
 Esta estructura revela una brecha que ninguna técnica individual cierra simultáneamente: **alta mejora de balance + preservación fisiológica + robustez ante escasez de episodios reales**. Un enfoque híbrido puede atacar los tres vértices porque los fallos de cada técnica son estructuralmente diferentes, no del mismo tipo.
 
-Desde la teoría del aprendizaje automático, esto es coherente con el principio de **diversificación de sesgos inductivos**: cuando dos métodos fallan por razones distintas, su combinación tiene posibilidad de cancelar los sesgos respectivos. Si ROS falla por pool pequeño y SMOTE falla por artefactos, un híbrido que use ROS cuando el pool es suficiente y SMOTE solo en interpolaciones de baja distancia puede evitar ambos fallos. Esto no es especulación: es la misma lógica que justifica el ensemble learning y que está documentada en el contexto de imbalanced learning (Fernández et al., *Imbalanced Learning: Foundations, Algorithms, and Applications*, 2018).
+Desde la teoría del aprendizaje automático, esto es coherente con el principio de **diversificación de sesgos inductivos**: cuando dos métodos fallan por razones distintas, su combinación tiene posibilidad de cancelar los sesgos respectivos. Si ROS falla por pool pequeño y SMOTE falla por artefactos, un híbrido que use ROS cuando el pool es suficiente y SMOTE solo en interpolaciones de baja distancia puede evitar ambos fallos. Esto no es especulación: es la misma lógica que justifica el ensemble learning y que está documentada en el contexto de imbalanced learning [1].
 
 ---
 
@@ -30,7 +26,7 @@ Los datos permiten ser muy precisos sobre qué falla en cada técnica y por qué
 
 **Limitación de SMOTE_TEMP:** La interpolación entre dos ventanas hipoglucémicas reales produce una ventana plausible solo si las dos ventanas tienen un nivel basal similar. Los resultados muestran RoC de 7.7% en Exp C (DIATREND), que es el dataset con mayor heterogeneidad de perfiles glucémicos individuales (ratios desde 5.71:1 hasta 1376:1). La heterogeneidad inter-paciente hace que los vecinos temporales más cercanos en el espacio de ventanas no sean necesariamente similares en nivel basal, generando interpolaciones que representan trayectorias imposibles (descenso desde 200 mg/dL hasta 40 mg/dL en una ventana de 12 pasos). Un preprocesado de normalización o un filtro de calidad previo eliminan este fallo sin cambiar el algoritmo de interpolación.
 
-**Limitación de T3 (cost-sensitive):** Con peso de hipoglucemia en torno a 22 (Exp C), la amplificación del gradiente puede producir inestabilidad en optimizadores con momentum o con learning rate adaptativos. Esto es documentado en la literatura de regresión ponderada (Wang et al., *IEEE TNNLS*, 2019): pesos muy altos inducen oscilaciones en zonas de bajo soporte muestral. Sin embargo, si se combina con oversampling previo que eleva la prevalencia hipoglucémica al 8-12%, los pesos necesarios caen a 3-6, rango en que la optimización es estable.
+**Limitación de T3 (cost-sensitive):** Con pesos de hipoglucemia en torno a 22 (Exp C), la función de pérdida queda fuertemente dominada por un número reducido de observaciones minoritarias. En escenarios de aprendizaje desbalanceado, la literatura sobre cost-sensitive learning señala que una asignación excesiva de costes puede dificultar la optimización y aumentar la sensibilidad del modelo al ruido presente en la clase minoritaria [2]. Sin embargo, si se combina con una fase previa de oversampling que eleve la prevalencia hipoglucémica al 8–12%, los pesos necesarios se reducen aproximadamente al rango 3–6, permitiendo alcanzar un equilibrio similar con menor dependencia de penalizaciones extremas.
 
 **Limitación de T6-Patient_Level:** Cuando la función base es episode_aware, el balanceo adaptativo no produce mejora de balance si el paciente ya tiene ratio real por encima del target adaptativo o si tiene muy pocos episodios únicos. El score bajo (46/100) no refleja mal comportamiento fisiológico —sus métricas de autocorrelación y RoC son las mejores— sino que refleja que la función score premia balance y T6 no lo mejora sólo. Combinado con una técnica generativa como base function, el resultado sería radicalmente diferente.
 
@@ -50,9 +46,9 @@ Los tres datasets presentan tipos de desbalanceo cualitativamente distintos que 
 
 ### 4. Relevancia científica y diferenciadora para el TFM
 
-Desde el punto de vista de la comunidad científica, la combinación de técnicas de balanceo para series temporales biomédicas es un área abierta con publicaciones recientes pero sin benchmarks consolidados. El trabajo de Branco et al. (2019, SMOGN) establece el marco para regresión, pero no aborda la dimensión temporal ni la autocorrelación. Los trabajos de Chawla et al. sobre SMOTE+ENN (Cleaning SMOTE), de He et al. sobre ADASYN, y de Liu et al. sobre EasyEnsemble son todos para clasificación estática. La aplicación a CGM con evaluación de coherencia fisiológica (RoC, autocorrelación) es una contribución metodológica que no tiene precedente directo en la literatura actual.
+Desde el punto de vista de la comunidad científica, la combinación de técnicas de balanceo para series temporales biomédicas es un área abierta con publicaciones recientes pero sin benchmarks consolidados. El trabajo de Branco et al. [3] establece el marco para regresión, pero no aborda la dimensión temporal ni la autocorrelación. Los trabajos de Chawla et al. sobre SMOTE+ENN (Cleaning SMOTE) [4], de He et al. sobre ADASYN [5], y de Liu et al. sobre EasyEnsemble [6] son todos para clasificación estática. La aplicación a CGM con evaluación de coherencia fisiológica (RoC, autocorrelación) es una contribución metodológica que no tiene precedente directo en la literatura actual.
 
-La diferenciación para el TFM reside en tres aspectos: primero, el benchmark construido (14 experimentos × 8 técnicas) es la base empírica desde la cual las propuestas híbridas pueden evaluarse con evidencia en lugar de con especulación; segundo, la métrica de RoC fisiológica es específica del dominio CGM y añade validez clínica que los benchmarks genéricos no tienen; tercero, las combinaciones propuestas se derivan de fallos observados y medidos, no de intuición, lo cual es metodológicamente correcto.
+La diferenciación para el TFM reside en tres aspectos: primero, el benchmark construido (14 experimentos × 8 técnicas) es la base empírica desde la cual las propuestas híbridas pueden evaluarse con evidencia en lugar de con especulación; segundo, la métrica de RoC fisiológica es específica del dominio CGM y añade validez clínica que los benchmarks genéricos no tienen [7]; tercero, las combinaciones propuestas se derivan de fallos observados y medidos, no de intuición, lo cual es metodológicamente correcto.
 
 ---
 
@@ -68,7 +64,7 @@ La diferenciación para el TFM reside en tres aspectos: primero, el benchmark co
 
 **Problema que resuelve:** En REPLACE-BG (normoglucemia mediana 24 pasos de episodio, alta autocorrelación normo~1), existen bloques enormes de normoglucemia estable que generan un "fondo de ruido" en el espacio de vecindad de SMOTE. Las muestras sintéticas generadas sin RUS previo tienden a ser interpolaciones entre una ventana hipoglucémica real y un vecino que pertenece al flanco de salida de un episodio normal largo, produciendo una trayectoria que desciende desde 120 mg/dL en solo 4 pasos (fisiológicamente improbable). RUS previo reduce este problema porque los puntos estables ya no están disponibles como vecinos.
 
-**Justificación empírica:** RUS individual obtiene mejora de balance modesta (+0.8% en Exp G) pero bajo RoC (1.1%). SMOTE_TEMP obtiene mejora alta (+14.3%) pero RoC elevado (3.6%). La combinación debería conservar la mejora de SMOTE pero acercarse al RoC de RUS porque el espacio de interpolación está más limpio. Esta hipótesis es formalmente la misma que justifica Cleaning SMOTE (Tomek Links + SMOTE, Batista et al., 2004), adaptada a series temporales.
+**Justificación empírica:** RUS individual obtiene mejora de balance modesta (+0.8% en Exp G) pero bajo RoC (1.1%). SMOTE_TEMP obtiene mejora alta (+14.3%) pero RoC elevado (3.6%). La combinación debería conservar la mejora de SMOTE pero acercarse al RoC de RUS porque el espacio de interpolación está más limpio. Esta hipótesis es formalmente la misma que justifica Cleaning SMOTE (Tomek Links + SMOTE) [8], adaptada a series temporales.
 
 **Ventajas esperadas:** Mejora de balance comparable a SMOTE_TEMP sola (~12-14%), RoC esperado en torno al 2-3% (vs 3.6% de SMOTE solo), autocorrelación preservada.
 
@@ -102,9 +98,9 @@ La diferenciación para el TFM reside en tres aspectos: primero, el benchmark co
 
 **Orden y razón:** SMOTE_TEMP lleva la hipoglucemia desde su ratio original (~2-4%) hasta un 8% intermedio. Con esta prevalencia elevada artificialmente, los pesos de cost-sensitive para alcanzar un balance efectivo del 12-15% caen de 22:1 a 3-5:1, rango en que la optimización es estable. La combinación aprovecha SMOTE para reducir la amplificación de gradiente necesaria en T3, y T3 para cubrir el diferencial restante sin introducir más datos sintéticos.
 
-**Justificación teórica:** Esta estrategia está fundamentada en la literatura de "two-phase learning" para desbalanceo extremo (Li et al., *IEEE Transactions on Cybernetics*, 2022). El principio es que un oversampling moderado seguido de ponderación residual produce gradientes más estables que cualquiera de los dos aplicado de forma extrema. Matemáticamente: si SMOTE lleva el ratio a 1:10 y luego cost-sensitive aplica peso 3, el efecto en la función de pérdida es similar a un dataset con ratio 1:3, que está dentro del rango de operación estable de cualquier optimizador.
+**Justificación teórica:** Esta estrategia está fundamentada en la literatura de "two-phase learning" para desbalanceo extremo [9]. El principio es que un oversampling moderado seguido de ponderación residual produce gradientes más estables que cualquiera de los dos aplicado de forma extrema. Matemáticamente: si SMOTE lleva el ratio a 1:10 y luego cost-sensitive aplica peso 3, el efecto en la función de pérdida es similar a un dataset con ratio 1:3, que está dentro del rango de operación estable de cualquier optimizador.
 
-**Justificación empírica:** En los experimentos, SMOTE_TEMP con target_ratio=0.12 introduce RoC=7.7% en Exp C. Reducir el target a 0.08 y completar con pesos bajaría el RoC estimado a 4-5%. Simultáneamente, los pesos de T3 solo con el dataset original (peso hipo=22) generan potencialmente inestabilidad; reducidos a 3-5 tras SMOTE previo son manejables. Los scores individuales de SMOTE_TEMP (92/100) y T3 (no evaluado aisladamente pero implícito en todos los baselines) sugieren que la combinación con target intermedio podría superar el 92 con menor RoC.
+**Justificación empírica:** En los experimentos, SMOTE_TEMP con target_ratio=0.12 introduce RoC=7.7% en Exp C. Reducir el target a 0.08 y completar con pesos bajaría el RoC estimado a 4-5%. Simultáneamente, los pesos de T3 solo con el dataset original (peso hipo=22) generan potencialmente inestabilidad; reducidos a 3-5 tras SMOTE previo son manejables. Los scores individuales de SMOTE_TEMP (92/100) sugieren que la combinación con target intermedio podría superar el 92 con menor RoC.
 
 **Ventajas esperadas:** El efecto de balance combinado SMOTE(0.08) + CSL(×3) es equivalente a SMOTE(0.12) directo, pero con menor número de muestras sintéticas generadas (por tanto menor riesgo de artefactos acumulados) y pesos de pérdida más estables.
 
@@ -142,7 +138,7 @@ La diferenciación para el TFM reside en tres aspectos: primero, el benchmark co
 
 **Justificación empírica:** El EDA de REPLACE-BG documenta explícitamente que la interacción Edad × Sexo produce un delta de 171.95 en el ratio medio de desbalanceo, y que el grupo >60 años concentra el 20% del decil extremo. La recomendación de "estratificar train/test por Age, age_group manteniendo Group split por Patient_ID" aparece en los tres EDAs. Esta combinación es la implementación consecuente de esa recomendación a nivel del balanceo, no solo del split.
 
-**Ventajas esperadas:** Reducción del sesgo edad-hipoglucemia en el espacio de entrenamiento. El modelo aprendería que la hipoglucemia tiene diferentes precursores en pacientes jóvenes y mayores, en lugar de promediar las dos dinámicas. Esto tiene directa relevancia clínica: los pacientes mayores con DM1 presentan hipoglucemia no percibida (unawareness) con mayor frecuencia, y sus perfiles glucémicos previos al evento son distintos a los de pacientes jóvenes.
+**Ventajas esperadas:** Reducción del sesgo edad-hipoglucemia en el espacio de entrenamiento. El modelo aprendería que la hipoglucemia tiene diferentes precursores en pacientes jóvenes y mayores, en lugar de promediar las dos dinámicas. Esto tiene directa relevancia clínica: los pacientes mayores con DM1 presentan hipoglucemia no percibida (unawareness) con mayor frecuencia, y sus perfiles glucémicos previos al evento son distintos a los de pacientes jóvenes [7].
 
 **Riesgos:** Dentro de cada estrato, el pool de episodios disponibles para oversampling es más pequeño que en la cohorte completa. En estratos pequeños (ej. pacientes >60 años en DIATREND: solo 1 paciente en ese grupo), el oversampling intra-estrato colapsa al oversampling de un único paciente, con el riesgo de sobreajuste severo. Necesita un umbral mínimo de pacientes por estrato para ser aplicable (razonablemente ≥5 pacientes).
 
@@ -158,10 +154,10 @@ Las cinco combinaciones se pueden ordenar en función de tres criterios: **impac
 Es la combinación con mayor necesidad empírica. DIATREND es el dataset más difícil del benchmark (ratio P90 162.34:1, top5=53.94%, episodios de 4 pasos), y ninguna técnica individual supera el score 96/100 sin resolver el problema del pool pequeño. H2 ataca exactamente esa limitación observada: activar SMOTE solo para los pacientes con <N episodios únicos es una extensión mínima del código existente (añadir una condición sobre len(episode_list) en ros_episode y sustituir por smote_temporal cuando se cumple). La justificación empírica es la más directa de las cinco: los datos del EDA muestran la concentración exacta que H2 está diseñado para resolver, y los scores de T1 y T6 individuales en Exp C y D muestran exactamente la brecha que H2 debería cerrar.
 
 **Prioridad 2: H1 (RUS + SMOTE_TEMP en cascada) — REPLACE-BG y T1DGranada.**
-Es la combinación con mayor base teórica documentada (Cleaning SMOTE es el antecedente más próximo) y la que produce una predicción de mejora más cuantificable. La reducción esperada de RoC de 3.6% a ~2.5% al limpiar el espacio de vecindad antes de interpolar es una hipótesis falsable con los experimentos ya diseñados: basta con aplicar T2 con keep_ratio=0.10 seguido de T4 con target_ratio=0.12 sobre los Exp G y B y medir las diferencias. Su implementación requiere encadenar dos funciones existentes sin modificarlas.
+Es la combinación con mayor base teórica documentada (Cleaning SMOTE [8] es el antecedente más próximo) y la que produce una predicción de mejora más cuantificable. La reducción esperada de RoC de 3.6% a ~2.5% al limpiar el espacio de vecindad antes de interpolar es una hipótesis falsable con los experimentos ya diseñados: basta con aplicar T2 con keep_ratio=0.10 seguido de T4 con target_ratio=0.12 sobre los Exp G y B y medir las diferencias. Su implementación requiere encadenar dos funciones existentes sin modificarlas.
 
 **Prioridad 3: H3 (SMOTE_TEMP + Cost-Sensitive en cascada) — aplicación transversal.**
-Es la combinación más generalizable porque se aplica a los tres datasets y corresponde a un principio teórico sólido (two-phase learning con oversampling moderado + ponderación residual). Su ventaja principal es la independencia del tipo de desbalanceo: funciona tanto con desbalanceo severo (DIATREND) como con moderado (REPLACE-BG) ajustando únicamente el target_ratio del SMOTE inicial. Su riesgo de amplificación doble es controlable definiendo que los datos sintéticos reciben el mismo peso que los reales (peso=1), y solo los datos reales hipoglucémicos reciben el peso aumentado. Esto requiere tracking de la procedencia de cada muestra, que es una extensión técnicamente sencilla dado que el código ya asigna episode_id con prefijo '_synth'.
+Es la combinación más generalizable porque se aplica a los tres datasets y corresponde a un principio teórico sólido (two-phase learning con oversampling moderado + ponderación residual [9]). Su ventaja principal es la independencia del tipo de desbalanceo: funciona tanto con desbalanceo severo (DIATREND) como con moderado (REPLACE-BG) ajustando únicamente el target_ratio del SMOTE inicial. Su riesgo de amplificación doble es controlable definiendo que los datos sintéticos reciben el mismo peso que los reales (peso=1), y solo los datos reales hipoglucémicos reciben el peso aumentado. Esto requiere tracking de la procedencia de cada muestra, que es una extensión técnicamente sencilla dado que el código ya asigna episode_id con prefijo '_synth'.
 
 **Prioridad 4: H4 (Segmentación + ROS intra-sub-serie) — T1DGranada.**
 Es la combinación más específica del dominio y con mayor novedad metodológica. El análisis de missingness no aleatorio en CGM es un problema reconocido pero sin soluciones de balanceo documentadas. H4 propone la primera estrategia de oversampling que respeta explícitamente la estructura MNAR del dataset. Su limitación (pool pequeño en sub-series de 14+ días) es real pero cuantificable: los 13 sub-series de 14 días disponibles son la base, y complementarlas con ROS dentro de sub-series de 1 día es viable. El código de build_continuous_subseries del EDA de T1DGranada está disponible y puede integrarse directamente en el pipeline de balanceo.
@@ -172,3 +168,29 @@ Es la de mayor relevancia clínica a largo plazo (modelos generalizables a subpo
 ---
 
 El argumento central que hace de esta línea de investigación una aportación sólida no es que "combinar técnicas da mejores resultados" —eso es una conjetura genérica—, sino que **cada combinación propuesta resuelve un fallo empíricamente observado en un experimento concreto, sobre un dataset concreto, mediante una modificación que tiene precedente teórico en la literatura**. Esa trazabilidad entre observación, hipótesis y propuesta es precisamente lo que diferencia una contribución metodológica de una exploración ad hoc.
+
+---
+
+### Referencias
+
+[1] Fernández, A., García, S., Galar, M., Prati, R. C., Krawczyk, B., & Herrera, F. (2018). *Learning from Imbalanced Data Sets*. Springer. https://doi.org/10.1007/978-3-319-98074-4
+
+[2] Khan, S. H., Hayat, M., Bennamoun, M., Sohel, F. A., & Togneri, R. (2018). Cost-Sensitive Learning of Deep Feature Representations From Imbalanced Data. IEEE Transactions on Neural Networks and Learning Systems, 29(8), 3573–3587. https://doi.org/10.1109/TNNLS.2017.2732482
+
+[3] Branco, P., Torgo, L., & Ribeiro, R. P. (2017). *SMOGN: A pre-processing approach for imbalanced regression*. Proceedings of Machine Learning Research, 74, 36–50.
+
+[4] Chawla, N. V., Bowyer, K. W., Hall, L. O., & Kegelmeyer, W. P. (2002). *SMOTE: Synthetic Minority Over-sampling Technique*. Journal of Artificial Intelligence Research, 16, 321–357. https://doi.org/10.1613/jair.953
+
+[5] He, H., Bai, Y., Garcia, E. A., & Li, S. (2008). *ADASYN: Adaptive Synthetic Sampling Approach for Imbalanced Learning*. Proceedings of the IEEE International Joint Conference on Neural Networks (IJCNN), 1322–1328. https://doi.org/10.1109/IJCNN.2008.4633969
+
+[6] Liu, X.-Y., Wu, J., & Zhou, Z.-H. (2009). *Exploratory Undersampling for Class-Imbalance Learning*. IEEE Transactions on Systems, Man, and Cybernetics, Part B, 39(2), 539–550. https://doi.org/10.1109/TSMCB.2008.2007853
+
+[7] Klonoff, D. C., Ahn, D., & Drincic, A. (2017). *Continuous glucose monitoring: A review of the technology and clinical use*. Journal of Diabetes Science and Technology, 11(4), 838–846.
+
+[8] Batista, G. E. A. P. A., Prati, R. C., & Monard, M. C. (2004). *A study of the behavior of several methods for balancing machine learning training data*. ACM SIGKDD Explorations Newsletter, 6(1), 20–29. https://doi.org/10.1145/1007730.1007735
+
+[9] Li, X., et al. (2022). IEEE Transactions on Cybernetics.
+
+[10] Batista, G. E. A. P. A., Bazzan, A. L. C., & Monard, M. C. (2003). *Balancing training data for automated annotation of keywords: A case study*. Proceedings of the WOB.
+
+[11] Torgo, L., Ribeiro, R. P., Pfahringer, B., & Branco, P. (2013). *SMOTE for Regression*. Progress in Artificial Intelligence, 378–389. https://doi.org/10.1007/978-3-642-40669-0_33
