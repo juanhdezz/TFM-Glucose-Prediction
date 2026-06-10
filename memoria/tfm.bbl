@@ -1,213 +1,167 @@
 \begin{thebibliography}{10}
 
+\bibitem{battelino2019clinical}
+T.~Battelino, T.~Danne, R.~M. Bergenstal, {\em et~al.}, ``Clinical targets for continuous glucose monitoring data interpretation: recommendations from the international consensus on time in range,'' {\em Diabetes Care}, vol.~42, no.~8, pp.~1593--1603, 2019.
+
+\bibitem{atkinson2014type1}
+M.~A. Atkinson, G.~S. Eisenbarth, and A.~W. Michels, ``Type 1 diabetes,'' {\em The Lancet}, vol.~383, no.~9911, pp.~69--82, 2014.
+
+\bibitem{diabeloop2022prevalence}
+L.~Journel, C.~Franc, {\em et~al.}, ``Real-world use of a closed-loop insulin delivery system in patients with type 1 diabetes,'' {\em Diabetes \& Metabolism}, vol.~48, no.~3, 2022.
+
+\bibitem{soriguer2012prevalence}
+F.~Soriguer, A.~Goday, A.~Bosch-Comas, {\em et~al.}, ``Prevalence of diabetes mellitus and impaired glucose regulation in spain,'' {\em Diabetologia}, vol.~55, no.~1, pp.~88--93, 2012.
+
+\bibitem{dcct1993effect}
+{DCCT Research Group}, ``The effect of intensive treatment of diabetes on the development and progression of long-term complications in insulin-dependent diabetes mellitus,'' {\em New England Journal of Medicine}, vol.~329, no.~14, pp.~977--986, 1993.
+
+\bibitem{foster2019state}
+N.~C. Foster, R.~W. Beck, K.~M. Miller, {\em et~al.}, ``State of type 1 diabetes management and outcomes from the {T1D Exchange} in 2016--2018,'' {\em Diabetes Technology \& Therapeutics}, vol.~21, no.~2, pp.~66--72, 2019.
+
+\bibitem{cryer2012hypoglycemia}
+P.~E. Cryer, ``Severe hypoglycemia predicts mortality in diabetes,'' {\em Diabetes Care}, vol.~35, no.~9, pp.~1814--1816, 2012.
+
+\bibitem{wolfsdorf2014diabetic}
+J.~I. Wolfsdorf, N.~Glaser, and M.~A. Sperling, ``Diabetic ketoacidosis in infants, children, and adolescents,'' {\em Diabetes Care}, vol.~29, no.~5, pp.~1150--1159, 2014.
+
+\bibitem{kovatchev2019metrics}
+B.~Kovatchev, ``Metrics for glycaemic control — from {HbA1c} to continuous glucose monitoring,'' {\em Nature Reviews Endocrinology}, vol.~13, no.~7, pp.~425--436, 2019.
+
+\bibitem{oviedo2017review}
+S.~Oviedo, J.~Veh{\'i}, R.~Calm, and J.~Armengol, ``A review of personalized blood glucose prediction strategies for {T1DM} patients,'' {\em International Journal for Numerical Methods in Biomedical Engineering}, vol.~33, no.~6, 2017.
+
+\bibitem{klonoff2017cgm}
+D.~C. Klonoff, D.~Ahn, and A.~Drincic, ``Continuous glucose monitoring: a review of the technology and clinical use,'' {\em Diabetes Research and Clinical Practice}, vol.~133, pp.~178--192, 2017.
+
+\bibitem{sterne2009multiple}
+J.~A. Sterne, I.~R. White, J.~B. Carlin, {\em et~al.}, ``Multiple imputation for missing data in epidemiological and clinical research: potential and pitfalls,'' {\em BMJ}, vol.~338, 2009.
+
+\bibitem{little2019statistical}
+R.~J.~A. Little and D.~B. Rubin, {\em Statistical Analysis with Missing Data}.
+\newblock Wiley, 3rd~ed., 2019.
+
+\bibitem{marling2020ohiot1dm}
+C.~Marling and R.~Bunescu, ``The {OhioT1DM} dataset for blood glucose level prediction: update 2020,'' 2020.
+
+\bibitem{sun2023diatrend}
+Q.~Sun, T.~S. Bhatt, R.~Nambhore, {\em et~al.}, ``{DIATREND}: A multivariate longitudinal clinical dataset of type 1 diabetes patients to advance glucose forecasting,'' {\em Scientific Data}, vol.~10, no.~1, p.~612, 2023.
+
+\bibitem{aleppo2017replace}
+G.~Aleppo, K.~L. Ruedy, T.~T. Riddlesworth, {\em et~al.}, ``{REPLACE-BG}: A randomized trial comparing continuous glucose monitoring with and without routine blood glucose monitoring in adults with well-controlled type 1 diabetes,'' {\em Diabetes Care}, vol.~40, no.~4, pp.~538--545, 2017.
+
+\bibitem{diaz2023t1dgranada}
+J.~D. D{\'i}az-L{\'o}pez, R.~Capel-Delgado, {\em et~al.}, ``T1diabetesgranada dataset,'' 2023.
+
+\bibitem{dubosson2018d1namo}
+F.~Dubosson, J.-E. Ranvier, S.~Bromuri, {\em et~al.}, ``The open {D1NAMO} dataset: a multi-modal dataset for research on non-invasive type 1 diabetes management,'' {\em Informatics in Medicine Unlocked}, vol.~13, pp.~92--100, 2018.
+
+\bibitem{rodriguez2023diatrend}
+J.~D. D{\'i}az-L{\'o}pez, C.~Rodriguez-Mañas, {\em et~al.}, ``Glucose variability patterns in type 1 diabetes using {CGM} {Dexcom} devices,'' {\em arXiv preprint}, 2023.
+
+\bibitem{sparacino2007glucose}
+G.~Sparacino, F.~Zanderigo, S.~Corazza, {\em et~al.}, ``Glucose concentration can be predicted ahead in time from continuous glucose monitoring sensor time-series,'' {\em IEEE Transactions on Biomedical Engineering}, vol.~54, no.~5, pp.~931--937, 2007.
+
+\bibitem{kovatchev2004evaluating}
+B.~P. Kovatchev, E.~Otto, D.~Cox, {\em et~al.}, ``Evaluation of a new measure of blood glucose variability in diabetes,'' {\em Diabetes Care}, vol.~29, no.~11, pp.~2433--2438, 2004.
+
+\bibitem{parkes2000new}
+J.~L. Parkes, S.~L. Slatin, S.~Pardo, and B.~H. Ginsberg, ``A new consensus error grid to evaluate the clinical significance of inaccuracies in the measurement of blood glucose,'' {\em Diabetes Care}, vol.~23, no.~8, pp.~1143--1148, 2000.
+
+\bibitem{hochreiter1997long}
+S.~Hochreiter and J.~Schmidhuber, ``Long short-term memory,'' {\em Neural Computation}, vol.~9, no.~8, pp.~1735--1780, 1997.
+
+\bibitem{mirshekarian2019using}
+S.~Mirshekarian, H.~Shen, R.~Bunescu, and C.~Marling, ``Lstms and neural attention models for blood glucose prediction: comparative experiments on real and synthetic data,'' 2019.
+
+\bibitem{bai2018empirical}
+S.~Bai, J.~Z. Kolter, and V.~Koltun, ``An empirical evaluation of generic convolutional and recurrent networks for sequence modeling,'' {\em arXiv preprint arXiv:1803.01271}, 2018.
+
+\bibitem{li2019convolutional}
+K.~Li, C.~Liu, T.~Zhu, P.~Herrero, and P.~Georgiou, ``Glunet: a deep learning framework for accurate glucose forecasting,'' {\em IEEE Journal of Biomedical and Health Informatics}, vol.~24, no.~2, pp.~414--423, 2019.
+
+\bibitem{vaswani2017attention}
+A.~Vaswani, N.~Shazeer, N.~Parmar, {\em et~al.}, ``Attention is all you need,'' in {\em Advances in Neural Information Processing Systems (NeurIPS)}, vol.~30, 2017.
+
+\bibitem{lim2021temporal}
+B.~Lim, S.~{\"O}. Ar{\i}k, N.~Loeff, and T.~Pfister, ``Temporal fusion transformers for interpretable multi-horizon time series forecasting,'' {\em International Journal of Forecasting}, vol.~37, no.~4, pp.~1748--1764, 2021.
+
+\bibitem{zhou2021informer}
+H.~Zhou, S.~Zhang, J.~Peng, {\em et~al.}, ``Informer: Beyond efficient transformer for long sequence time-series forecasting,'' in {\em Proceedings of AAAI}, vol.~35, 2021.
+
+\bibitem{mhaskar2017deep}
+H.~Mhaskar, Q.~Liao, and T.~Poggio, ``When and why are deep networks better than shallow networks?,'' {\em Proceedings of AAAI}, 2017.
+
+\bibitem{sun2018predicting}
+Q.~Sun, M.~V. Jankovic, J.~Bally, {\em et~al.}, ``Predicting blood glucose with an {LSTM} and bi-directional {LSTM} using multi-sensor data,'' 2018.
+
+\bibitem{gu2020predicting}
+W.~Gu, P.~J. Zhou, M.~Chen, {\em et~al.}, ``Predicting hypoglycemia in type 1 diabetes using {CGM}-based deep learning models with asymmetric loss,'' {\em IEEE Journal of Biomedical and Health Informatics}, vol.~24, no.~11, pp.~3093--3101, 2020.
+
+\bibitem{cobelli2011artificial}
+C.~Cobelli, E.~Renard, and B.~Kovatchev, ``Artificial pancreas: past, present, future,'' {\em Diabetes}, vol.~60, no.~11, pp.~2672--2682, 2011.
+
+\bibitem{doyle2014closed}
+F.~J. Doyle, L.~M. Huyett, J.~B. Lee, {\em et~al.}, ``Closed-loop artificial pancreas systems: engineering the algorithms,'' {\em Diabetes Care}, vol.~37, no.~5, pp.~1191--1197, 2014.
+
 \bibitem{chawla2002smote}
-N.~V. Chawla, K.~W. Bowyer, L.~O. Hall, and W.~P. Kegelmeyer, ``Smote:
-  Synthetic minority over-sampling technique,'' {\em Journal of Artificial
-  Intelligence Research}, vol.~16, pp.~321--357, 2002.
+N.~V. Chawla, K.~W. Bowyer, L.~O. Hall, and W.~P. Kegelmeyer, ``Smote: Synthetic minority over-sampling technique,'' {\em Journal of Artificial Intelligence Research}, vol.~16, pp.~321--357, 2002.
 
-\bibitem{goodfellow2014generative}
-I.~Goodfellow {\em et~al.}, ``Generative adversarial nets,'' {\em arXiv
-  preprint arXiv:1406.2661}, 2014.
+\bibitem{he2009learning}
+H.~He and E.~A. Garcia, ``Learning from imbalanced data,'' {\em IEEE Transactions on Knowledge and Data Engineering}, vol.~21, no.~9, pp.~1263--1284, 2009.
 
-\bibitem{brownlee2020imbalanced}
-J.~Brownlee, ``Random oversampling and undersampling for imbalanced
-  classification.''
-  \url{https://machinelearningmastery.com/random-oversampling-and-undersampling-for-imbalanced-classification/},
-  2020.
+\bibitem{fernandez2018learning}
+A.~Fern{\'a}ndez, S.~Garc{\'i}a, M.~Galar, R.~C. Prati, B.~Krawczyk, and F.~Herrera, {\em Learning from Imbalanced Data Sets}.
+\newblock Springer, 2018.
 
-\bibitem{blagus2013smote}
-R.~Blagus and L.~Lusa, ``Smote for high-dimensional class-imbalanced data,''
-  {\em BMC Bioinformatics}, vol.~14, no.~1, p.~106, 2013.
+\bibitem{branco2017smogn}
+P.~Branco, L.~Torgo, and R.~P. Ribeiro, ``{SMOGN}: a pre-processing approach for imbalanced regression,'' {\em Proceedings of Machine Learning Research}, vol.~74, pp.~36--50, 2017.
+
+\bibitem{torgo2013smote}
+L.~Torgo, R.~P. Ribeiro, B.~Pfahringer, and P.~Branco, ``{SMOTE} for regression,'' in {\em Progress in Artificial Intelligence}, pp.~378--389, 2013.
+
+\bibitem{dixit2019asymmetric}
+S.~Dixit and R.~B. Grover, ``Asymmetric loss functions for learning with noisy labels,'' {\em arXiv preprint arXiv:2003.03103}, 2019.
+
+\bibitem{batista2004study}
+G.~E. A. P.~A. Batista, R.~C. Prati, and M.~C. Monard, ``A study of the behavior of several methods for balancing machine learning training data,'' {\em ACM SIGKDD Explorations Newsletter}, vol.~6, no.~1, pp.~20--29, 2004.
 
 \bibitem{han2005borderline}
-H.~Han, W.-Y. Wang, and B.-H. Mao, ``Borderline-smote: A new over-sampling
-  method in imbalanced data sets learning,'' in {\em Advances in Intelligent
-  Computing}, pp.~878--887, 2005.
+H.~Han, W.-Y. Wang, and B.-H. Mao, ``Borderline-smote: A new over-sampling method in imbalanced data sets learning,'' in {\em Advances in Intelligent Computing}, pp.~878--887, 2005.
 
 \bibitem{he2008adasyn}
-H.~He, Y.~Bai, E.~A. Garcia, and S.~Li, ``Adasyn: Adaptive synthetic sampling
-  approach for imbalanced learning,'' in {\em Proceedings of the IEEE
-  International Joint Conference on Neural Networks (IJCNN)}, pp.~1322--1328,
-  2008.
+H.~He, Y.~Bai, E.~A. Garcia, and S.~Li, ``Adasyn: Adaptive synthetic sampling approach for imbalanced learning,'' in {\em Proceedings of the IEEE International Joint Conference on Neural Networks (IJCNN)}, pp.~1322--1328, 2008.
 
 \bibitem{brandt2021comparison}
-J.~Brandt, ``Comparison of smote and adasyn for imbalanced learning,'' {\em
-  DIVA Portal}, 2021.
+J.~Brandt, ``Comparison of smote and adasyn for imbalanced learning,'' {\em DIVA Portal}, 2021.
 
 \bibitem{zhao2022tsmote}
-Z.~Zhao {\em et~al.}, ``T-smote: Temporal-oriented synthetic minority
-  oversampling technique for imbalanced time series classification,'' in {\em
-  Proceedings of the 31st International Joint Conference on Artificial
-  Intelligence (IJCAI)}, pp.~2423--2429, 2022.
+Z.~Zhao {\em et~al.}, ``T-smote: Temporal-oriented synthetic minority oversampling technique for imbalanced time series classification,'' in {\em Proceedings of the 31st International Joint Conference on Artificial Intelligence (IJCAI)}, pp.~2423--2429, 2022.
 
-\bibitem{fonseca2022tsmote}
-J.~Fonseca {\em et~al.}, ``Time sliced smote for imbalanced time series with
-  missing data,'' {\em arXiv preprint arXiv:2201.05634}, 2022.
+\bibitem{elkan2001foundations}
+C.~Elkan, ``The foundations of cost-sensitive learning,'' pp.~973--978, 2001.
 
-\bibitem{omdena2021timeseries}
-{Omdena}, ``Time series classification model tutorial.''
-  \url{https://www.omdena.com/blog/time-series-classification-model-tutorial},
-  2021.
+\bibitem{khan2018cost}
+S.~H. Khan, M.~Hayat, M.~Bennamoun, {\em et~al.}, ``Cost-sensitive learning of deep feature representations from imbalanced data,'' {\em IEEE Transactions on Neural Networks and Learning Systems}, vol.~29, no.~8, pp.~3573--3587, 2018.
 
 \bibitem{lin2017focal}
-T.-Y. Lin, P.~Goyal, R.~Girshick, K.~He, and P.~Dollar, ``Focal loss for dense
-  object detection,'' in {\em Proceedings of the IEEE International Conference
-  on Computer Vision (ICCV)}, pp.~2980--2988, 2017.
+T.-Y. Lin, P.~Goyal, R.~Girshick, K.~He, and P.~Dollar, ``Focal loss for dense object detection,'' in {\em Proceedings of the IEEE International Conference on Computer Vision (ICCV)}, pp.~2980--2988, 2017.
 
 \bibitem{wang2021focal}
-L.~Wang {\em et~al.}, ``Focal loss for medical image classification,'' {\em
-  PMC}, 2021.
+L.~Wang {\em et~al.}, ``Focal loss for medical image classification,'' {\em PMC}, 2021.
 
-\bibitem{cyclicalfocal2022}
-Anonymous, ``Cyclical focal loss,'' {\em arXiv preprint arXiv:2202.08978},
-  2022.
-
-\bibitem{wang2024cshn}
-Z.~Wang {\em et~al.}, ``Cost-sensitive hybrid network for anomaly detection in
-  imbalanced time series,'' {\em Expert Systems with Applications}, 2024.
-
-\bibitem{roychoudhury2017cost}
-S.~Roychoudhury {\em et~al.}, ``Cost sensitive time-series classification,'' in
-  {\em Proceedings of the European Conference on Machine Learning}, 2017.
+\bibitem{galar2012review}
+M.~Galar, A.~Fern{\'a}ndez, E.~Barrenechea, {\em et~al.}, ``A review on ensembles for the class imbalance problem,'' {\em IEEE Transactions on Systems, Man, and Cybernetics, Part C}, vol.~42, no.~4, pp.~463--484, 2012.
 
 \bibitem{liu2009exploratory}
-X.-Y. Liu, J.~Wu, and Z.-H. Zhou, ``Exploratory undersampling for
-  class-imbalance learning,'' {\em IEEE Transactions on Systems, Man, and
-  Cybernetics, Part B}, vol.~39, no.~2, pp.~539--550, 2009.
+X.-Y. Liu, J.~Wu, and Z.-H. Zhou, ``Exploratory undersampling for class-imbalance learning,'' {\em IEEE Transactions on Systems, Man, and Cybernetics, Part B}, vol.~39, no.~2, pp.~539--550, 2009.
 
-\bibitem{phuong2021imbalanced}
-T.~M. Phuong, ``Imbalanced learning: Sampling techniques.''
-  \url{https://tungmphung.com/imbalanced-learning-sampling-techniques/}, 2021.
+\bibitem{branco2019pre}
+P.~Branco, L.~Torgo, and R.~P. Ribeiro, ``Pre-processing approaches for imbalanced distributions in regression,'' in {\em Neurocomputing}, vol.~343, pp.~76--99, 2019.
 
-\bibitem{spelmen2018balancecascade}
-V.~S. Spelmen and R.~Porkodi, ``A review on handling imbalanced data,'' {\em
-  PMC}, 2018.
+\bibitem{li2022two}
+X.~Li {\em et~al.}, ``Two-phase learning for imbalanced multiclass classification,'' {\em IEEE Transactions on Cybernetics}, 2022.
 
-\bibitem{wang2017bebs}
-Q.~Wang {\em et~al.}, ``Bebs: Bagging of extrapolation borderline-smote svm,''
-  {\em PMC}, 2017.
-
-\bibitem{brownlee2020threshold}
-J.~Brownlee, ``Threshold moving for imbalanced classification.''
-  \url{https://machinelearningmastery.com/threshold-moving-for-imbalanced-classification/},
-  2020.
-
-\bibitem{riniker2021ghost}
-S.~Riniker {\em et~al.}, ``Ghost: Adjusting the decision threshold to handle
-  imbalanced data in machine learning,'' {\em Journal of Chemical Information
-  and Modeling}, 2021.
-
-\bibitem{iwana2021empirical}
-B.~K. Iwana and S.~Uchida, ``An empirical survey of data augmentation for time
-  series classification with neural networks,'' {\em PLOS ONE}, vol.~16, no.~7,
-  2021.
-
-\bibitem{esteban2017rgan}
-C.~Esteban, S.~L. Hyland, and G.~Raetsch, ``Real-valued (medical) time series
-  generation with recurrent conditional gans,'' {\em arXiv preprint
-  arXiv:1706.02633}, 2017.
-
-\bibitem{lin2020doppelganger}
-Z.~Lin {\em et~al.}, ``Using gans for sharing networked time series data:
-  Challenges, initial promise, and open questions,'' {\em arXiv preprint
-  arXiv:1909.13403}, 2020.
-
-\bibitem{mckinney2024doppelganger}
-Anonymous, ``Doppelganger: Auto-normalization and mode collapse.''
-  \url{https://arxiv.org/html/2405.20959v1}, 2024.
-
-\bibitem{gretelai2022doppelganger}
-{Gretel AI}, ``Create synthetic time series with doppelganger and pytorch.''
-  \url{https://www.gretel.ai/blog/create-synthetic-time-series-with-doppelganger-and-pytorch},
-  2022.
-
-\bibitem{yoon2019timegan}
-J.~Yoon, D.~Jarrett, and M.~van~der Schaar, ``Time-series generative
-  adversarial networks,'' in {\em Advances in Neural Information Processing
-  Systems (NeurIPS)}, 2019.
-
-\bibitem{liu2024ctimegan}
-Z.~Liu {\em et~al.}, ``Conditional-timegan for realistic and high-quality
-  appliance trajectories generation,'' {\em ResearchGate}, 2024.
-
-\bibitem{zhang2022ccgan}
-Y.~Zhang {\em et~al.}, ``Continuous conditional gans with generator
-  regularization.''
-  \url{https://openreview.net/pdf/a314da3379d678f622a913c79365c620d5d935e5.pdf},
-  2022.
-
-\bibitem{demirel2025mctimegan}
-B.~Demirel {\em et~al.}, ``Mc-timegan: Multivariate conditional timegan.''
-  GitHub, 2025.
-
-\bibitem{ctganmsin2025}
-Anonymous, ``A gradient-penalized conditional timegan combined with multi-scale
-  importance-aware network,'' {\em arXiv preprint}, 2025.
-
-\bibitem{bing2022healthgen}
-A.~Bing {\em et~al.}, ``Healthgen: Equitable synthetic ehr generation,'' {\em
-  PMC}, 2022.
-
-\bibitem{isasa2024wgangp}
-I.~Isasa {\em et~al.}, ``Wgan-gp for medical time series synthesis with
-  alignment loss,'' {\em BMC Medical Informatics and Decision Making}, 2024.
-
-\bibitem{liu2025hracgan}
-Z.~Liu {\em et~al.}, ``Hr-acgan: High reliability auxiliary classifier gan for
-  imbalanced time series,'' {\em Entropy}, vol.~27, no.~2, 2025.
-
-\bibitem{fadlon2025diffusion}
-Y.~Fadlon {\em et~al.}, ``Diffusion models for irregular time series
-  generation,'' {\em arXiv preprint arXiv:2510.06699}, 2025.
-
-\bibitem{rasul2021timegrad}
-K.~Rasul {\em et~al.}, ``Autoregressive denoising diffusion models for
-  multivariate probabilistic time series forecasting,'' in {\em Proceedings of
-  the International Conference on Machine Learning (ICML)}, 2021.
-
-\bibitem{alcaraz2022sssd}
-J.~M. Alcaraz and N.~Strodthoff, ``Diffusion-based time series imputation and
-  forecasting with structured state space models,'' {\em arXiv preprint}, 2022.
-
-\bibitem{nikolentzos2023vgae}
-G.~Nikolentzos {\em et~al.}, ``Synthetic ehr generation with variational graph
-  autoencoders,'' {\em npj Digital Medicine}, 2023.
-
-\bibitem{ijaia2025vae}
-Anonymous, ``Vae framework for synthetic healthcare data generation,'' {\em
-  International Journal of Artificial Intelligence \& Applications}, vol.~16,
-  no.~3, 2025.
-
-\bibitem{multitaskvae2024}
-Anonymous, ``Multitask vae for glucose forecasting with missing data,'' {\em
-  arXiv preprint arXiv:2410.00015}, 2024.
-
-\bibitem{bashiri2024variable}
-M.~Bashiri {\em et~al.}, ``Clinical prediction models from variable-length ehr
-  time series,'' {\em PubMed}, 2024.
-
-\bibitem{wei2023coformer}
-T.~Wei {\em et~al.}, ``Coformer: Compatible transformer for irregularly sampled
-  multivariate time series,'' {\em arXiv preprint arXiv:2310.11022}, 2023.
-
-\bibitem{li2023vitst}
-Z.~Li {\em et~al.}, ``Vitst: Time series classification by rethinking visual
-  statistical features,'' in {\em Advances in Neural Information Processing
-  Systems (NeurIPS)}, 2023.
-
-\bibitem{qian2024dsttn}
-J.~Qian {\em et~al.}, ``Dsttn: Dense spatio-temporal transformer network for
-  time series imputation,'' {\em Mathematical Biosciences and Engineering},
-  2024.
-
-\bibitem{rubanova2019latentode}
-Y.~Rubanova, R.~T.~Q. Chen, and D.~Duvenaud, ``Latent ordinary differential
-  equations for irregularly-sampled time series,'' in {\em Advances in Neural
-  Information Processing Systems (NeurIPS)}, 2019.
-
-\bibitem{kidger2020ncde}
-P.~Kidger, J.~Morrill, J.~Foster, and T.~Lyons, ``Neural controlled
-  differential equations for irregular time series,'' {\em arXiv preprint
-  arXiv:2005.08926}, 2020.
+\bibitem{mehrabi2021survey}
+N.~Mehrabi, F.~Morstatter, N.~Saxena, {\em et~al.}, ``A survey on bias and fairness in machine learning,'' {\em ACM Computing Surveys}, vol.~54, no.~6, pp.~1--35, 2021.
 
 \end{thebibliography}

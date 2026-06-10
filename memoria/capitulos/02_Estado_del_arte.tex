@@ -1,660 +1,851 @@
-\label{chapter:estado-arte}\chapter[Estado del arte]{Estado del arte / Trabajos previos}
-
-Todos los trabajos tendrán el formato de IEEEtran de referencia siguiente: \url{https://www.bibtex.com/s/bibliography-style-base-ieeetr/}.
-
-El estilo de bibliografía IEEEtran es uno de los estilos de cita y referencia más comúnmente utilizados en las áreas de ingeniería, informática y tecnología. Este estilo ha sido estandarizado por el Instituto de Ingenieros Eléctricos y Electrónicos (IEEE, por sus siglas en inglés) y se utiliza ampliamente en publicaciones académicas y conferencias en estas disciplinas.
+% =========================================================
+%  CAPÍTULO 2 — ESTADO DEL ARTE
+%  Predicción glucémica en Diabetes Mellitus Tipo 1
+%  y tratamiento del desbalanceo en datos de CGM
+% =========================================================
+\label{chapter:estado-arte}
+\chapter[Estado del arte]{Estado del arte}
 
 % =========================================================
 \section{Introducción}
 % =========================================================
 
-El desbalanceo de datos constituye uno de los desafíos más significativos en el aprendizaje automático aplicado a series temporales médicas. Este problema se manifiesta de múltiples formas: desbalanceo en características demográficas (sexo, edad, raza), desbalanceo en volumen de datos (diferente número de mediciones por paciente), frecuencias de muestreo irregulares, y desbalanceo de clases en eventos clínicos de interés. Esta revisión sistemática presenta un análisis exhaustivo de las técnicas disponibles para abordar estos desafíos, con especial énfasis en su aplicabilidad a datos de diabetes tipo 1.
+La predicción de eventos glucémicos en pacientes con Diabetes Mellitus Tipo 1 (DM1) constituye uno de los problemas de mayor relevancia clínica en la intersección del aprendizaje automático y la medicina de precisión. Los sistemas de monitorización continua de glucosa (CGM) generan series temporales de alta resolución que permiten, en principio, anticipar episodios de hipoglucemia e hiperglucemia con suficiente antelación para intervenir terapéuticamente. Sin embargo, la aplicación directa de modelos estándar de aprendizaje automático a estos datos conduce sistemáticamente a predicciones sesgadas: los modelos aprenden a replicar el estado glucémico más frecuente —la normoglucemia— ignorando los eventos raros pero clínicamente críticos.
 
-La estructura de este capítulo se organiza en tres bloques principales: métodos tradicionales de remuestreo y técnicas basadas en SMOTE~\cite{chawla2002smote}, métodos algorítmicos y de ensemble, y finalmente, aproximaciones modernas basadas en \emph{deep learning}, incluyendo redes generativas adversarias (GANs)~\cite{goodfellow2014generative}, modelos de difusión, \emph{autoencoders} variacionales (VAEs), y arquitecturas especializadas para series temporales irregulares.
+Este fenómeno no es un artefacto de elecciones algorítmicas deficientes; es una consecuencia estructural de la distribución de los datos de glucosa. En una cohorte típica de DM1, los episodios de hipoglucemia representan entre el 2\% y el 8\% del tiempo total de seguimiento~\cite{battelino2019clinical}, mientras que los estados normoglucémicos dominan el resto. Esta asimetría radical de clases —que en los datasets estudiados en este trabajo alcanza ratios de hasta 1376:1 en pacientes individuales— convierte la predicción glucémica en un caso paradigmático de \emph{imbalanced learning}.
+
+El presente capítulo revisa el estado del arte en dos dimensiones interconectadas. En primer lugar, examina la literatura sobre predicción glucémica en DM1, desde los fundamentos clínicos de la enfermedad hasta los modelos de \emph{deep learning} más recientes para el \emph{forecasting} de glucosa. En segundo lugar, analiza las técnicas de tratamiento del desbalanceo de datos que la comunidad investigadora ha desarrollado para abordar este tipo de problemas, situándolas siempre en relación con las características específicas de los datos de CGM. El hilo conductor es la pregunta práctica que motiva este trabajo: ¿cómo entrenar modelos que predigan con precisión eventos glucémicos raros en datos temporales extremadamente desbalanceados?
 
 % =========================================================
-\section{Métodos Tradicionales de Remuestreo}
+\section{Diabetes Mellitus Tipo 1: fundamentos clínicos y gestión glucémica}
 % =========================================================
 
-\subsection{Random Oversampling y Undersampling}
+\subsection{Fisiopatología y epidemiología}
 
-El \emph{random oversampling} constituye la técnica más básica para abordar el desbalanceo de clases, mediante la duplicación aleatoria con reemplazo de ejemplos de la clase minoritaria hasta alcanzar un ratio deseado~\cite{brownlee2020imbalanced}. Esta aproximación presenta como principal ventaja su implementación trivial y su compatibilidad universal con cualquier algoritmo de aprendizaje, además de preservar toda la información de la clase minoritaria. Sin embargo, presenta un riesgo elevado de \emph{overfitting}, dado que el modelo puede memorizar los ejemplos repetidos, además de incrementar significativamente el coste computacional debido al aumento del tamaño del \emph{dataset}.
+La Diabetes Mellitus Tipo 1 es una enfermedad autoinmune caracterizada por la destrucción selectiva de las células beta del páncreas, lo que resulta en una deficiencia absoluta de insulina~\cite{atkinson2014type1}. A diferencia de la Diabetes Tipo 2, en la que existe resistencia periférica a la insulina con producción conservada, los pacientes con DM1 dependen completamente de la administración exógena de insulina para la supervivencia. Esta dependencia convierte la gestión glucémica en una tarea continua y compleja, en la que el equilibrio entre la insulina administrada, la ingesta de carbohidratos, la actividad física y múltiples variables fisiológicas adicionales determina el perfil glucémico resultante.
 
-En contraste, el \emph{random undersampling} elimina aleatoriamente ejemplos de la clase mayoritaria hasta equilibrar el \emph{dataset}. Aunque reduce el coste computacional y elimina el riesgo de \emph{overfitting} por repetición, esta técnica presenta el problema crítico de la pérdida de información potencialmente relevante de la clase mayoritaria, pudiendo eliminar ejemplos cerca de la frontera de decisión que resultan particularmente informativos para el modelo~\cite{brownlee2020imbalanced}.
+La prevalencia de DM1 se estima en aproximadamente 9 millones de personas a nivel mundial, con una incidencia anual creciente especialmente en Europa y Norteamérica~\cite{diabeloop2022prevalence}. En España, la prevalencia estimada se sitúa en torno al 0.3\% de la población, con picos de incidencia en la adolescencia~\cite{soriguer2012prevalence}. La carga de la enfermedad es significativa: más allá del manejo diario, los pacientes presentan riesgo aumentado de complicaciones microvasculares (retinopatía, nefropatía, neuropatía) y macrovasculares (enfermedad cardiovascular) estrechamente relacionadas con el control glucémico a largo plazo~\cite{dcct1993effect}.
 
-Una estrategia combinada que implementa un \emph{pipeline} secuencial de \emph{oversampling} seguido de \emph{undersampling} puede balancear los beneficios y limitaciones de ambos métodos~\cite{brownlee2020imbalanced}. Por ejemplo, en un \emph{dataset} con ratio inicial 1:100 (minoritaria:mayoritaria), el \emph{oversampling} podría llevar el ratio a 1:10, y posteriormente el \emph{undersampling} ajustarlo a 1:2, mejorando la generalización respecto al \emph{oversampling} puro mientras reduce el coste computacional.
+\subsection{Control glucémico y estados clínicos relevantes}
 
-\subsection{SMOTE y sus Variantes}
+El objetivo terapéutico central en DM1 es mantener la glucemia dentro de un rango considerado clínicamente seguro. Las guías internacionales de consenso~\cite{battelino2019clinical} definen los siguientes estados glucémicos a partir de los umbrales establecidos por la \emph{International Diabetes Federation} y la \emph{American Diabetes Association}:
 
-\subsubsection{SMOTE Clásico}
+\begin{itemize}
+    \item \textbf{Hipoglucemia severa} (Nivel 3): glucosa $<$ 54 mg/dL, requiere asistencia de terceros, riesgo vital inmediato.
+    \item \textbf{Hipoglucemia clínicamente significativa} (Nivel 2): glucosa $<$ 54 mg/dL.
+    \item \textbf{Hipoglucemia alerta} (Nivel 1): glucosa entre 54 y 70 mg/dL.
+    \item \textbf{Normoglucemia}: glucosa entre 70 y 180 mg/dL (\emph{Time in Range}, TIR).
+    \item \textbf{Hiperglucemia} (Nivel 1): glucosa entre 180 y 250 mg/dL.
+    \item \textbf{Hiperglucemia severa} (Nivel 2): glucosa $>$ 250 mg/dL.
+\end{itemize}
 
-La técnica \emph{Synthetic Minority Over-sampling Technique} (SMOTE), propuesta por Chawla et al. en 2002~\cite{chawla2002smote}, representa un avance significativo sobre el \emph{random oversampling} al generar ejemplos sintéticos mediante interpolación lineal en el espacio de características. El algoritmo identifica para cada muestra de la clase minoritaria sus $k$ vecinos más cercanos (típicamente $k=5$) de la misma clase, selecciona aleatoriamente uno de ellos, y genera un nuevo ejemplo sintético mediante la fórmula:
+El \emph{Time in Range} (TIR), definido como el porcentaje de tiempo en el que la glucemia se sitúa entre 70 y 180 mg/dL, ha emergido como la métrica clínica principal para evaluar el control glucémico en la era CGM~\cite{battelino2019clinical}. Un TIR $\geq$ 70\% se asocia con reducción del riesgo de complicaciones y menor frecuencia de episodios hipoglucémicos. Sin embargo, alcanzar y mantener este objetivo es notablemente difícil en la práctica clínica real: estudios observacionales reportan que entre el 30\% y el 50\% de los pacientes con DM1 en tratamiento intensivo no alcanzan el TIR recomendado de forma consistente~\cite{foster2019state}.
+
+\subsection{Hipoglucemia: consecuencias clínicas y relevancia para la predicción}
+
+La hipoglucemia es la complicación aguda más frecuente y clínicamente temida en DM1~\cite{cryer2012hypoglycemia}. Sus consecuencias van desde síntomas leves (sudoración, temblor, palpitaciones) hasta alteración del nivel de conciencia, convulsiones y muerte en los casos más graves. Desde el punto de vista epidemiológico, se estima que los pacientes con DM1 en tratamiento intensivo con insulina experimentan una media de dos episodios de hipoglucemia sintomática por semana y al menos un episodio de hipoglucemia severa por año~\cite{cryer2012hypoglycemia}.
+
+Más allá de los episodios agudos, existe un fenómeno relevante para la modelización denominado \emph{hypoglycemia unawareness} (hipoglucemia no percibida), consistente en la incapacidad de detectar los síntomas adrenérgicos previos a la hipoglucemia severa. Este fenómeno, que afecta aproximadamente al 20-25\% de los pacientes con DM1 de larga evolución~\cite{cryer2012hypoglycemia}, elimina la señal de alerta natural y hace que la predicción algorítmica sea especialmente valiosa. En estos pacientes, la predicción con al menos 15-30 minutos de antelación permite actuar antes de que el evento ocurra.
+
+La hiperglucemia, aunque menos aguda, tiene consecuencias igualmente importantes. Los episodios prolongados de hiperglucemia severa pueden conducir a cetoacidosis diabética (CAD), que constituye la principal causa de hospitalización y mortalidad en pacientes jóvenes con DM1~\cite{wolfsdorf2014diabetic}. La predicción anticipada de hiperglucemia permite ajustes de insulina preventivos, reduciendo la carga hospitalaria y el deterioro metabólico.
+
+\subsection{Variabilidad glucémica: fuente de complejidad y desafío para el modelado}
+
+Una característica definitoria de los datos de DM1 es la enorme variabilidad tanto entre pacientes (\emph{inter-patient}) como dentro del mismo paciente a lo largo del tiempo (\emph{intra-patient}). Esta variabilidad tiene múltiples fuentes: diferencias en la sensibilidad a la insulina, variación en la absorción de carbohidratos según tipo de alimento e índice glucémico, impacto del ejercicio físico (que puede tanto aumentar como disminuir la glucemia según su duración e intensidad), efecto de enfermedades intercurrentes, estrés psicológico, y ciclo hormonal en mujeres~\cite{kovatchev2019metrics}.
+
+Desde el punto de vista de la modelización, esta variabilidad se traduce en que un mismo perfil glucémico previo puede asociarse con desenlaces radicalmente distintos en pacientes diferentes. Dos pacientes con una curva descendente de 90 mg/dL a 70 mg/dL en 30 minutos pueden experimentar uno una hipoglucemia severa y el otro una estabilización, dependiendo de factores como la insulina activa residual, la actividad física reciente o el momento del día. Esta heterogeneidad inter-paciente limita la generalización de modelos entrenados en una población y motiva enfoques personalizados o estratificados~\cite{oviedo2017review}.
+
+% =========================================================
+\section{Monitorización continua de glucosa: la fuente de datos}
+% =========================================================
+
+\subsection{Tecnología CGM y características de la señal}
+
+Los sistemas de monitorización continua de glucosa (CGM) miden la concentración de glucosa en el líquido intersticial mediante electrodos enzimáticos implantados subcutáneamente, con frecuencias de muestreo típicas de 5 minutos en los sistemas comerciales actuales (Dexcom G6/G7, Abbott FreeStyle Libre 2/3, Medtronic Guardian)~\cite{klonoff2017cgm}. Esta frecuencia produce aproximadamente 288 lecturas diarias, lo que convierte el seguimiento longitudinal de un único paciente durante un año en una serie temporal de más de 100.000 puntos.
+
+La señal CGM presenta características propias que distinguen estos datos de otras series temporales biomédicas. En primer lugar, existe un retardo fisiológico entre la glucosa plasmática y la glucosa intersticial de 5-15 minutos~\cite{klonoff2017cgm}, que introduce una diferencia sistemática entre lo que mide el sensor y el estado glucémico real en momentos de cambio rápido. En segundo lugar, el ruido de medición del sensor sigue una distribución no gaussiana, con errores que pueden ser especialmente pronunciados en los rangos extremos de glucosa (hipoglucemia severa y hiperglucemia severa), precisamente donde la precisión clínica es más crítica~\cite{kovatchev2019metrics}. En tercer lugar, los sensores presentan pérdida de señal (\emph{dropout}) y periodos de recalibración que generan segmentos de datos faltantes cuya estructura temporal no es aleatoria, como se discute en la sección~\ref{sec:mnar}.
+
+\subsection{Missingness no aleatorio en datos CGM}
+\label{sec:mnar}
+
+La ausencia de datos en series CGM no sigue un patrón aleatorio (Missing Completely at Random, MCAR), sino que está fuertemente condicionada por el estado clínico del paciente. Este fenómeno, conocido como \emph{Missing Not at Random} (MNAR), tiene implicaciones metodológicas profundas para el análisis y la modelización~\cite{sterne2009multiple}.
+
+En la práctica clínica con DM1, los periodos de ausencia de datos CGM se concentran en escenarios específicos: hospitalizaciones por cetoacidosis o hipoglucemia severa (el sensor se retira durante el ingreso), periodos de hiperglucemia severa sostenida que deterioran el funcionamiento del sensor, y cambios de sensor cada 7-14 días (que generan gaps de varias horas). Esto implica que los segmentos disponibles para análisis representan una muestra sesgada del perfil glucémico real: los episodios más extremos están sistemáticamente sub-representados precisamente porque son los que generan mayor probabilidad de gaps~\cite{little2019statistical}.
+
+Para los algoritmos de balanceo de datos, esta estructura de missingness tiene una consecuencia directa: cualquier técnica de remuestreo que no respete los límites de los segmentos continuos puede generar episodios sintéticos que crucen periodos de ausencia de datos, produciendo transiciones glucémicas artificialmente abruptas que no corresponden a ningún patrón fisiológicamente posible.
+
+\subsection{Datasets públicos de investigación en DM1}
+
+El desarrollo de modelos de predicción glucémica ha impulsado la construcción de varios \emph{datasets} públicos con diferentes características de cohorte, frecuencia de muestreo y anotación clínica. A continuación se describen los principales repositorios utilizados en la literatura:
+
+\textbf{OhioT1DM}~\cite{marling2020ohiot1dm}: Dataset desarrollado por la Universidad de Ohio, que incluye datos de 12 pacientes con DM1 durante 8 semanas con registros de CGM (cada 5 minutos), administración de insulina, ingesta de carbohidratos y actividad física medida por acelerómetro. Ha sido utilizado extensamente como \emph{benchmark} en la predicción de glucosa con horizontes de 30-60 minutos. Su tamaño reducido (12 pacientes) y la disponibilidad de variables contextuales lo hacen especialmente útil para metodologías de aprendizaje profundo, aunque limita la generalización estadística.
+
+\textbf{DIATREND}~\cite{sun2023diatrend}: Cohorte de 54 pacientes con DM1 con seguimiento CGM de hasta 7 años, sin anotaciones de insulina ni carbohidratos. Presenta una distribución de ratios de desbalanceo extrema: la mediana del ratio normoglucemia/hipoglucemia es de 46.46:1, con valores extremos individuales que alcanzan 1376:1. La concentración de episodios hipoglucémicos en un subconjunto reducido de pacientes (los 5 pacientes con mayor prevalencia acumulan el 53.94\% de todos los episodios hipoglucémicos de la cohorte) hace de DIATREND el dataset más desafiante desde la perspectiva del desbalanceo.
+
+\textbf{REPLACE-BG}~\cite{aleppo2017replace}: Ensayo clínico aleatorizado con 226 participantes con DM1, datos CGM de 26 semanas y variables demográficas detalladas (edad, sexo, duración de la enfermedad, HbA1c). El desbalanceo en REPLACE-BG es de naturaleza diferente al de DIATREND: aunque el ratio global es moderado (3.7--6\%), existe una heterogeneidad demográfica sistemática que genera desbalanceos diferenciados por subgrupos. El análisis de la interacción edad × sexo en este dataset revela un gradiente de 171.95 puntos en el ratio medio de desbalanceo entre subgrupos extremos, y los pacientes mayores de 60 años concentran el 20\% del decil más extremo de ratios individuales.
+
+\textbf{T1DiabetesGranada}~\cite{diaz2023t1dgranada}: Dataset de 643 pacientes con DM1 atendidos en el Hospital Universitario Virgen de las Nieves (Granada), con muestreo CGM a 15 minutos durante seguimientos de hasta 4 años. Es el mayor de los tres datasets estudiados en este trabajo y el que presenta la fragmentación temporal más severa: la mediana de la longitud de los segmentos continuos es de 1 día, y solo 13 pacientes disponen de sub-series de 14 días o más. El missingness confirmado como MNAR hace de T1DiabetesGranada el caso metodológicamente más complejo del conjunto.
+
+\textbf{D1NAMO}~\cite{dubosson2018d1namo}: Dataset más pequeño (9 pacientes) pero con anotaciones detalladas de alimentación y ejercicio junto con datos CGM (5 minutos) e información de acelerómetro. Ha sido ampliamente utilizado para estudios piloto de predicción personalizada.
+
+\textbf{DiaTrend CGM DEXCOM}~\cite{rodriguez2023diatrend}: Extensión del repositorio DiaTrend con datos de dispositivos Dexcom, utilizado en estudios de variabilidad glucémica y análisis de patrones circadianos.
+
+La tabla~\ref{tab:datasets_comparacion} resume las características principales de los datasets más relevantes para la predicción glucémica en DM1.
+
+\begin{table}[htbp]
+\centering
+\caption{Comparación de los principales \emph{datasets} públicos para predicción glucémica en DM1.}
+\label{tab:datasets_comparacion}
+\begin{tabular}{lccccl}
+\hline
+\textbf{Dataset} & \textbf{Pacientes} & \textbf{Muestreo} & \textbf{Seguimiento} & \textbf{Ratio mediano} & \textbf{Variables adicionales} \\
+\hline
+OhioT1DM & 12 & 5 min & 8 sem & $\sim$20:1 & Insulina, carbohidratos, AF \\
+DIATREND & 54 & 5 min & $\leq$7 años & 46.46:1 & Ninguna \\
+REPLACE-BG & 226 & 5 min & 26 sem & $\sim$4:1 & Demográficas, HbA1c \\
+T1DGranada & 643 & 15 min & $\leq$4 años & $\sim$12:1 & Demográficas \\
+D1NAMO & 9 & 5 min & Variable & $\sim$15:1 & Alimentación, AF \\
+\hline
+\end{tabular}
+\end{table}
+
+% =========================================================
+\section{Predicción glucémica mediante aprendizaje automático}
+% =========================================================
+
+\subsection{Formulación del problema: horizonte de predicción y métricas}
+
+La predicción glucémica puede formularse como un problema de regresión temporal en el que, dado un historial de mediciones CGM $\{g_{t-n}, g_{t-n+1}, \ldots, g_{t}\}$, se desea estimar el valor de la glucosa en un instante futuro $g_{t+PH}$, donde $PH$ denota el horizonte de predicción (\emph{Prediction Horizon}). El horizonte clínicamente relevante oscila entre 15 y 60 minutos: con 15 minutos existe margen para ingerir carbohidratos de acción rápida antes de una hipoglucemia; con 60 minutos el margen es suficiente para ajustar la dosis de insulina basal~\cite{sparacino2007glucose}.
+
+Alternativamente, el problema puede formularse como clasificación multiclase (predecir el estado glucémico futuro: hipo/normo/hiper) o como detección de eventos (predecir si ocurrirá un episodio hipoglucémico en los próximos $PH$ minutos). Esta última formulación —la más directamente relevante para los sistemas de alarma— es también la que presenta el mayor desafío de desbalanceo, por las razones discutidas en la sección~\ref{sec:desbalanceo}.
+
+La evaluación del rendimiento predictivo combina métricas estadísticas estándar con métricas específicas del dominio clínico. Entre las primeras, el Error Absoluto Medio (MAE) y el Error Cuadrático Medio (RMSE) sobre la glucemia futura son los más utilizados~\cite{oviedo2017review}. Sin embargo, estas métricas presentan una limitación fundamental para el contexto de DM1: al tratar todos los errores de predicción de forma equitativa, no penalizan más los errores cometidos en los rangos clínicamente peligrosos (hipoglucemia severa, hiperglucemia). Para abordar esta limitación, el \emph{Continuous Glucose-Error Grid Analysis} (CG-EGA)~\cite{kovatchev2004evaluating} y la \emph{Parkes Error Grid}~\cite{parkes2000new} clasifican los errores de predicción en zonas de riesgo clínico creciente, constituyendo una evaluación más apropiada desde la perspectiva médica.
+
+\subsection{Evolución de los modelos de predicción glucémica}
+
+La predicción glucémica a partir de datos CGM ha recorrido una trayectoria de complejidad creciente desde los modelos estadísticos clásicos hasta las arquitecturas de aprendizaje profundo actuales.
+
+Los primeros enfoques utilizaban modelos autorregresivos (AR, ARIMA) y filtros de Kalman para la predicción de corto plazo~\cite{sparacino2007glucose}. Aunque estos modelos capturan adecuadamente la autocorrelación de primer orden de la señal glucémica, su limitación principal es la incapacidad de modelar no linealidades y dependencias de largo alcance. La glucemia postprandial, por ejemplo, sigue un patrón de subida y caída con duración de 2-4 horas que depende de la interacción entre insulina activa, absorción de carbohidratos y actividad física —relaciones altamente no lineales que los modelos lineales no pueden capturar con precisión.
+
+Los modelos basados en aprendizaje automático clásico —Support Vector Machines (SVM), Random Forests, Gradient Boosting— mejoraron el rendimiento de los enfoques estadísticos al incorporar la posibilidad de aprender relaciones no lineales~\cite{oviedo2017review}. Sin embargo, su aplicación a series temporales requería extracción manual de características (\emph{feature engineering}), un proceso que introduce sesgo de experto y puede perder información dinámica presente en la serie bruta.
+
+El cambio de paradigma llegó con las redes neuronales recurrentes (RNN) y especialmente con las arquitecturas LSTM (\emph{Long Short-Term Memory})~\cite{hochreiter1997long} y GRU (\emph{Gated Recurrent Unit}), que aprenden representaciones temporales directamente de la secuencia de glucosa sin necesidad de extracción manual de características. Múltiples estudios han reportado que LSTM supera a los modelos clásicos para horizontes de predicción entre 30 y 60 minutos~\cite{mirshekarian2019using}, especialmente cuando se combina con variables contextuales como insulina activa y registro de carbohidratos.
+
+Las redes convolucionales temporales (TCN)~\cite{bai2018empirical} emergieron como alternativa a las arquitecturas recurrentes, ofreciendo entrenamiento más estable y capacidad de capturar dependencias de largo plazo mediante convoluciones dilatadas. Los estudios comparativos sugieren que TCN y LSTM ofrecen rendimientos similares para la predicción de glucosa, con ventajas de TCN en términos de velocidad de entrenamiento~\cite{li2019convolutional}.
+
+Más recientemente, los \emph{Transformers}~\cite{vaswani2017attention} y sus variantes específicas para series temporales (Temporal Fusion Transformer~\cite{lim2021temporal}, Informer~\cite{zhou2021informer}) han alcanzado el estado del arte en tareas de \emph{forecasting} glucémico, especialmente cuando se dispone de grandes cohortes. Su mecanismo de atención permite identificar qué momentos del historial glucémico son más informativos para predecir el estado futuro, una propiedad especialmente relevante cuando la predicción se realiza cerca del inicio de un episodio hipoglucémico, donde el gradiente de descenso reciente es el predictor más informativo.
+
+\subsection{Predicción de hipoglucemia: el problema de los eventos raros}
+
+La predicción específica de episodios hipoglucémicos presenta desafíos adicionales más allá del \emph{forecasting} continuo de glucosa. El problema central es la rareza del evento: incluso en pacientes con alta frecuencia de hipoglucemias, los episodios representan una fracción pequeña del tiempo total de seguimiento. Un clasificador que predijera siempre "no hipoglucemia" alcanzaría una \emph{accuracy} superior al 90\% en la mayoría de los pacientes, pero tendría un recall nulo para el evento de interés~\cite{mhaskar2017deep}.
+
+Esta asimetría entre \emph{accuracy} global y sensibilidad para el evento raro es el núcleo del problema de desbalanceo en datos CGM, y ha motivado una línea de investigación específica sobre métodos de detección y predicción de hipoglucemia que abordan explícitamente el sesgo de clase. Sun et al.~\cite{sun2018predicting} mostraron que el uso de \emph{cost-sensitive learning} con pesos inversamente proporcionales a la prevalencia de cada clase mejora significativamente la sensibilidad a episodios hipoglucémicos en comparación con el entrenamiento estándar. Gu et al.~\cite{gu2020predicting} propusieron una arquitectura LSTM con función de pérdida asimétrica que penaliza diferenciadamente los falsos negativos (hipoglucemia no predicha) respecto a los falsos positivos (falsa alarma), logrando un equilibrio más favorable desde la perspectiva clínica.
+
+La predicción de hiperglucemia ha recibido comparativamente menor atención en la literatura, en parte porque sus consecuencias agudas son menos inmediatas que las de la hipoglucemia y en parte porque el fenómeno es menos raro: los episodios hiperglucémicos representan típicamente el 15-25\% del tiempo en pacientes con DM1 con control subóptimo~\cite{foster2019state}. Sin embargo, en cohortes con buen control glucémico (TIR $>$ 70\%), los episodios de hiperglucemia severa ($>$ 250 mg/dL) son también eventos raros y presentan desafíos similares de desbalanceo.
+
+\subsection{Sistemas de páncreas artificial y bucles cerrados}
+
+El contexto tecnológico más avanzado para la predicción glucémica son los sistemas de páncreas artificial (\emph{Artificial Pancreas}, AP) o sistemas de circuito cerrado, que integran un sensor CGM, una bomba de insulina y un algoritmo de control para automatizar la administración de insulina~\cite{cobelli2011artificial}. Los algoritmos de control clásicos son proporcional-integral-derivativo (PID) o de control predictivo basado en modelos (MPC), pero su efectividad depende críticamente de la precisión del modelo predictivo de glucosa subyacente.
+
+La integración de modelos de aprendizaje automático en sistemas de AP representa una de las áreas de mayor actividad investigadora actual~\cite{doyle2014closed}. Sistemas como DBLG1 (Diabeloop) o iLet (Beta Bionics) utilizan algoritmos adaptativos que aprenden el comportamiento glucémico individual del paciente a lo largo del tiempo. En este contexto, el desbalanceo de datos adquiere una dimensión adicional: los episodios raros de hipoglucemia son precisamente los que el sistema debe manejar con mayor precisión, y la escasez de ejemplos de entrenamiento para estos episodios puede comprometer la seguridad del sistema de control.
+
+% =========================================================
+\section{El desbalanceo de datos en series CGM: naturaleza y consecuencias}
+\label{sec:desbalanceo}
+% =========================================================
+
+\subsection{Distribución real de estados glucémicos}
+
+La distribución de estados glucémicos en una cohorte de DM1 refleja, en primera instancia, el grado de control metabólico de los pacientes. En una cohorte con buen control glucémico (HbA1c $\leq$ 7.5\%), el TIR típico supera el 65\%, lo que implica que la normoglucemia domina más de dos tercios del tiempo total de seguimiento~\cite{battelino2019clinical}. Los episodios hipoglucémicos (glucosa $<$ 70 mg/dL) representan entre el 2\% y el 8\% del tiempo, y los episodios de hiperglucemia severa ($>$ 250 mg/dL) entre el 3\% y el 10\%~\cite{foster2019state}.
+
+Sin embargo, el desbalanceo real es considerablemente más extremo que estos promedios sugieren, por dos razones estructurales. Primera, los episodios glucémicos son eventos concentrados en el tiempo: una hipoglucemia típica dura entre 20 y 60 minutos. Cuando el análisis se realiza sobre \emph{ventanas temporales} de longitud fija (como es habitual en el entrenamiento de modelos de predicción), las ventanas etiquetadas como "hipoglucemia" —aquellas en cuyo horizonte de predicción ocurre el evento— son proporcionalmente mucho más escasas que las ventanas puramente normoglucémicas. Segunda, la distribución del desbalanceo es extremadamente heterogénea entre pacientes: algunos pacientes experimentan hipoglucemias muy frecuentes (30-50 episodios por año) mientras que otros tienen frecuencias de 5-10 episodios por año, lo que genera ratios individuales que van desde 5:1 hasta más de 1000:1.
+
+Esta heterogeneidad inter-paciente tiene consecuencias directas para el entrenamiento de modelos: en una cohorte mezclada, los pacientes con mayor número de episodios dominan el conjunto de entrenamiento para la clase minoritaria, mientras que los pacientes con menor prevalencia apenas contribuyen. El resultado es un modelo que aprende los patrones de hipoglucemia de los pacientes más "hipoglucémicos" y generaliza mal a los perfiles más infrecuentes~\cite{oviedo2017review}.
+
+\subsection{Impacto del desbalanceo en el aprendizaje automático}
+
+El problema del desbalanceo de clases en aprendizaje automático ha sido estudiado extensamente desde la contribución seminal de Chawla et al.~\cite{chawla2002smote}. El fenómeno central es que los modelos entrenados con datos desbalanceados tienden a minimizar la función de pérdida global priorizando la clase mayoritaria, produciendo clasificadores con alta \emph{accuracy} global pero baja sensibilidad (\emph{recall}) para la clase minoritaria.
+
+En términos formales, para un clasificador $f$ entrenado con pérdida de entropía cruzada sobre un \emph{dataset} con ratio $R = N_{maj}/N_{min} \gg 1$, el gradiente de la pérdida total respecto a los parámetros del modelo está dominado por las contribuciones de la clase mayoritaria. Dado que cada actualización de parámetros reduce principalmente el error sobre la clase más representada, el modelo converge a una solución que clasifica correctamente la mayoría de los ejemplos mayoritarios pero trata los ejemplos minoritarios como ruido~\cite{he2009learning}.
+
+Esta dinámica se agrava en el contexto de series temporales médicas por dos factores adicionales. Primero, las ventanas temporales de normoglucemia presentan alta autocorrelación interna: una ventana de 60 minutos extraída durante un período normoglucémico es muy similar a las ventanas adyacentes, lo que amplifica efectivamente el número de "ejemplos" de normoglucemia a nivel del gradiente. Segundo, los episodios hipoglucémicos frecuentemente ocurren como transiciones rápidas precedidas por períodos normoglucémicos, generando zonas de frontera en el espacio de características donde la clasificación es inherentemente ambigua.
+
+\subsection{Marco teórico: desbalanceo en regresión frente a clasificación}
+\label{sec:imbalanced_regression}
+
+La mayoría de la literatura sobre desbalanceo de datos está formulada en términos de clasificación, donde la asimetría se define por la diferencia en el número de ejemplos de cada clase~\cite{fernandez2018learning}. Sin embargo, el problema de predicción glucémica en este trabajo se formula principalmente como una tarea de regresión: la variable objetivo es el valor de glucosa en el horizonte de predicción, no una etiqueta de clase.
+
+En el contexto de regresión desbalanceada (\emph{imbalanced regression}), el desbalanceo no se refiere a una distribución binaria de etiquetas sino a la densidad no uniforme del gradiente de la función de pérdida en el espacio de valores objetivo~\cite{branco2017smogn,torgo2013smote}. Los valores de glucosa en el rango normoglucémico son frecuentes y generan actualizaciones de gradiente frecuentes, mientras que los valores extremos (hipoglucemia severa, hiperglucemia severa) son raros y apenas influyen en la optimización. El resultado es un modelo cuya función de predicción es precisa en el rango central de valores pero degradada en los extremos.
+
+Torgo et al.~\cite{torgo2013smote} formalizaron este problema y propusieron la función de relevancia $\phi(y)$ como herramienta para cuantificar la importancia clínica de cada valor objetivo. Para datos glucémicos, $\phi(y)$ sería máxima en los umbrales de hipoglucemia ($<$ 70 mg/dL) e hiperglucemia severa ($>$ 250 mg/dL) y mínima en el rango normoglucémico, reflejando la asimetría del riesgo clínico. Bajo este marco, el objetivo del balanceo no es igualar el número de ejemplos de cada clase, sino densificar el gradiente de entrenamiento en las regiones del espacio objetivo donde la función de relevancia es elevada.
+
+Esta distinción es metodológicamente fundamental para el presente trabajo: las técnicas diseñadas para clasificación desbalanceada no son directamente transferibles al problema de regresión sobre glucosa sin adaptaciones que respeten la continuidad del espacio de valores objetivo y la estructura temporal de las series CGM.
+
+\subsection{Asimetría del riesgo clínico y función de pérdida}
+
+La evaluación del rendimiento de un predictor glucémico no debería tratar todos los errores de la misma forma. Un error de predicción de 20 mg/dL en el rango normoglucémico (e.g., predecir 120 mg/dL cuando la glucosa real es 100 mg/dL) no tiene consecuencias clínicas. El mismo error de 20 mg/dL en el umbral de hipoglucemia (predecir 90 mg/dL cuando la glucosa real es 70 mg/dL, es decir, no activar la alarma) puede tener consecuencias graves~\cite{kovatchev2004evaluating}.
+
+Esta asimetría del riesgo clínico sugiere que las funciones de pérdida estándar (MAE, RMSE) son inadecuadas como criterio de optimización para modelos de predicción glucémica. La literatura ha propuesto alternativas como el \emph{Asymmetric Loss} para regresión~\cite{dixit2019asymmetric}, que asigna mayor coste a los errores cometidos hacia la subestimación en el rango hipoglucémico, y las métricas basadas en la \emph{Error Grid Analysis}~\cite{parkes2000new}, que clasifican los errores según su impacto clínico en zonas de riesgo creciente.
+
+\subsection{Desbalanceo inducido por la variabilidad inter-paciente}
+
+Un aspecto frecuentemente ignorado en la literatura es la contribución de la variabilidad inter-paciente al desbalanceo efectivo del \emph{dataset}. En una cohorte de DM1, los pacientes con mayor prevalencia de hipoglucemia concentran la mayor parte de los episodios de la clase minoritaria. Si no se controla esta concentración, el modelo resultante aprende principalmente los patrones de estos pacientes "hipoglucémicos" y generaliza mal a los perfiles de pacientes con baja prevalencia, que son precisamente aquellos en los que la predicción correcta es más difícil porque el modelo tiene menos señal de entrenamiento.
+
+Este fenómeno —que se puede caracterizar como desbalanceo secundario o desbalanceo de distribución inter-paciente— no es abordado por las técnicas estándar de balanceo que operan a nivel de la muestra global. Las estrategias de balanceo adaptativo por paciente, que ajustan los objetivos de remuestreo a la distribución individual de cada paciente, representan una respuesta metodológica más apropiada a este tipo de desbalanceo~\cite{sun2023diatrend}.
+
+% =========================================================
+\section{Técnicas de balanceo: del problema clínico a la solución metodológica}
+\label{sec:tecnicas_balanceo}
+% =========================================================
+
+\subsection{Panorámica y criterios de evaluación en series temporales médicas}
+
+La introducción de técnicas de balanceo en el contexto de datos CGM debe responder a criterios de evaluación diferentes de los utilizados en clasificación estándar. Tres dimensiones son especialmente relevantes para juzgar la adecuación de una técnica de balanceo en este dominio:
+
+\begin{enumerate}
+    \item \textbf{Mejora del balance efectivo}: reducción del ratio de desbalanceo en el conjunto de entrenamiento resultante, medida tanto a nivel global como por paciente.
+    \item \textbf{Preservación de la coherencia fisiológica}: las muestras sintéticas generadas deben respetar los patrones dinámicos de la glucosa, incluyendo la autocorrelación temporal y los límites fisiológicos de la \emph{Rate of Change} (RoC) glucémica, establecidos en $\pm$4 mg/dL/min como valor máximo fisiológico~\cite{kovatchev2019metrics}.
+    \item \textbf{Robustez ante la escasez de episodios reales}: dado que algunos pacientes tienen pools de episodios hipoglucémicos muy reducidos, las técnicas de balanceo deben generar diversidad sin producir convergencia al sobreajuste.
+\end{enumerate}
+
+Estas tres dimensiones son parcialmente en tensión: las técnicas que mejor preservan la fisiología tienden a generar menor diversidad, y las que generan mayor diversidad tienden a introducir más artefactos temporales. Esta tensión es el punto de partida para las estrategias híbridas examinadas al final de este capítulo.
+
+\subsection{Oversampling aleatorio y undersampling}
+
+El \emph{Random Oversampling} (ROS) es la técnica de balanceo más básica: duplica aleatoriamente ejemplos de la clase minoritaria hasta alcanzar un ratio objetivo~\cite{chawla2002smote}. En el contexto de series temporales CGM, ROS opera sobre episodios completos —ventanas temporales de longitud fija que contienen un evento glucémico— en lugar de sobre puntos individuales, preservando así la estructura temporal de cada episodio. Esta operación, denominada \emph{episode-aware oversampling}~\cite{sun2023diatrend}, garantiza que las muestras duplicadas son fisiológicamente válidas por construcción.
+
+Las ventajas de ROS en datos CGM son sustanciales: preserva perfectamente la autocorrelación interna de cada episodio, no introduce artefactos de RoC (porque no genera valores sintéticos), y es computacionalmente trivial. Sin embargo, su limitación estructural es igualmente clara: la diversidad del conjunto de entrenamiento resultante está acotada por la diversidad del pool de episodios reales disponibles. En pacientes con un número reducido de episodios únicos, ROS produce múltiples copias de los mismos episodios, lo que puede conducir al sobreajuste a patrones específicos en lugar del aprendizaje de la dinámica general.
+
+Esta limitación es especialmente severa en DIATREND, donde algunos pacientes con ratios extremos ($>$ 100:1) tienen pools de episodios hipoglucémicos tan pequeños que el oversampling necesario para alcanzar el balance objetivo implica que cada episodio único se repite decenas de veces en el \emph{dataset} de entrenamiento. El modelo resultante no aprende "cómo se ve la hipoglucemia en general" sino "cómo se ven estas pocas curvas específicas".
+
+El \emph{Random Undersampling} (RUS) aborda el desbalanceo desde el lado opuesto: reduce la clase mayoritaria eliminando aleatoriamente ejemplos de normoglucemia. La ventaja principal es que no introduce datos artificiales y reduce el coste computacional del entrenamiento. En el contexto de series temporales con alta autocorrelación, el undersampling tiene además la propiedad de reducir la redundancia de los ejemplos mayoritarios: las ventanas de normoglucemia adyacentes son casi idénticas entre sí, y eliminar algunas de ellas no pierde información genuina. El \emph{temporal undersampling} con preservación de contexto (\texttt{keep\_ratio} con buffer de transición) asegura que se mantienen las ventanas cercanas a eventos glucémicos, que son las más informativas para la frontera de decisión~\cite{branco2017smogn}.
+
+La combinación de RUS seguida de ROS (\emph{undersampling + oversampling pipeline}) permite balancear los beneficios de ambas: el undersampling reduce la contaminación del espacio de vecindad de los episodios minoritarios, y el oversampling posterior opera sobre un espacio de características más limpio~\cite{batista2004study}. Esta combinación es el fundamento de estrategias híbridas más elaboradas discutidas en la sección~\ref{sec:hibridas}.
+
+\subsection{SMOTE y sus variantes para clasificación desbalanceada}
+
+\emph{Synthetic Minority Over-sampling Technique} (SMOTE), propuesto por Chawla et al.~\cite{chawla2002smote} en 2002, supuso un avance conceptual fundamental respecto al oversampling puramente aleatorio. En lugar de duplicar ejemplos existentes, SMOTE genera ejemplos sintéticos mediante interpolación lineal en el espacio de características:
+
 \begin{equation}
-    x_{\text{syn}} = x_i + \lambda \cdot (x_{nn} - x_i),
+    x_{\text{syn}} = x_i + \lambda \cdot (x_{nn} - x_i), \quad \lambda \sim \mathcal{U}(0,1)
 \end{equation}
-donde $\lambda$ se extrae de una distribución uniforme $\mathcal{U}(0,1)$.
 
-SMOTE presenta ventajas significativas al generar ejemplos sintéticos ``realistas'' mediante interpolación lineal, resultando más efectivo que el \emph{random oversampling} para evitar \emph{overfitting}, y funcionando especialmente bien con algoritmos como $k$-NN y SVM~\cite{blagus2013smote}. Sin embargo, en espacios de alta dimensionalidad, como es común en datos médicos con más de 1000 características, SMOTE puede generar ruido y mostrar efectividad reducida con clasificadores como DLDA, DQDA o PAM~\cite{blagus2013smote}. Además, puede conectar inadvertidamente \emph{outliers} minoritarios con la clase mayoritaria.
+donde $x_i$ es un ejemplo de la clase minoritaria y $x_{nn}$ es uno de sus $k$ vecinos más cercanos de la misma clase. Al interpolar entre ejemplos reales, SMOTE genera una mayor diversidad en el espacio de características sin simplemente repetir los mismos puntos.
 
-Una limitación crítica de SMOTE estándar para series temporales es que no respeta las dependencias temporales inherentes a estos datos. La interpolación directa entre series temporales puede generar secuencias no realistas que no consideran autocorrelación, estacionalidad, ni dinámica temporal. Por tanto, no se recomienda aplicar SMOTE estándar directamente sobre series de datos médicos crudas, siendo preferible su aplicación sobre \emph{features} agregados (media, varianza, pendiente por período) o utilizar variantes específicamente diseñadas para datos temporales.
+Borderline-SMOTE~\cite{han2005borderline} refina este enfoque focalizando la generación de sintéticos en las muestras minoritarias cercanas a la frontera de decisión, identificadas como aquellas cuyos $k$ vecinos más cercanos incluyen mayoritariamente ejemplos de la clase opuesta. Esta focalización mejora la calidad de los sintéticos generados en términos de utilidad para el clasificador, pero puede sobreenfatizar ejemplos atípicos o \emph{outliers} si la frontera de decisión está contaminada por ruido.
 
-\subsubsection{Borderline-SMOTE}
+ADASYN (\emph{Adaptive Synthetic Sampling})~\cite{he2008adasyn} introduce un mecanismo adaptativo basado en la densidad local: para cada ejemplo minoritario, calcula un ratio de impureza $r_i = \Delta_i / k$ (proporción de vecinos mayoritarios), y genera un número de sintéticos proporcional a este ratio. Los ejemplos más rodeados por la clase mayoritaria reciben más atención sintética, lo que concentra la generación en las zonas de mayor dificultad de clasificación. Las comparaciones empíricas entre SMOTE y ADASYN muestran resultados variables: la superioridad de uno sobre otro depende significativamente del clasificador y el \emph{dataset} específicos~\cite{brandt2021comparison}, sugiriendo que ninguna de las dos técnicas domina universalmente.
 
-Han et al.\ (2005)~\cite{han2005borderline} propusieron Borderline-SMOTE como una mejora que focaliza la generación de sintéticos exclusivamente cerca de la frontera de decisión. El algoritmo clasifica cada muestra minoritaria según su vecindario: si todos los $m$ vecinos más cercanos son de la clase mayoritaria, la muestra se clasifica como \textsc{noise} y se ignora; si algunos vecinos son mayoritarios, se clasifica como \textsc{border} y se generan sintéticos; si todos los vecinos son minoritarios, se clasifica como \textsc{safe} y se ignora.
+Una limitación compartida por todas las variantes de SMOTE para clasificación es que no proporcionan garantías sobre la coherencia temporal de los ejemplos sintéticos. Cuando se aplican directamente sobre ventanas de series temporales, la interpolación produce vectores que pueden representar transiciones glucémicas fisiológicamente imposibles: dos ventanas hipoglucémicas con niveles basales muy diferentes (40 mg/dL en una, 65 mg/dL en otra) generan una interpolación centrada en 52 mg/dL que podría corresponder a una trayectoria descendente imposible dado el contexto de ambas ventanas originales.
 
-Esta aproximación presenta ventajas al focalizar la generación donde realmente impacta la clasificación, evitando rellenar zonas ya bien representadas y reduciendo el riesgo de sobreajuste respecto a SMOTE estándar. No obstante, puede sobreenfatizar observaciones extremas, resulta sensible a \emph{outliers} en la frontera, y su definición rígida de ``\emph{border point}'' puede ser limitante.
+\subsection{Adaptaciones temporales de SMOTE para datos CGM}
+\label{sec:smote_temporal}
 
-\subsubsection{ADASYN}
+El reconocimiento de las limitaciones de SMOTE estándar para series temporales ha motivado el desarrollo de variantes específicas que incorporan restricciones temporales en el proceso de interpolación.
 
-La técnica \emph{Adaptive Synthetic Sampling} (ADASYN), propuesta por He et al.\ en 2008~\cite{he2008adasyn}, introduce generación adaptativa basada en la ``dificultad de aprendizaje'' de cada muestra. Para cada muestra minoritaria, ADASYN calcula un ratio de impureza $r_i = \Delta_i / k$, donde $\Delta_i$ representa el número de vecinos mayoritarios entre los $k$ vecinos más cercanos. Este ratio se normaliza y determina el número de sintéticos a generar para cada muestra: $g_i = \hat{r}_i \cdot G$, donde $G$ es el total de sintéticos a generar.
+\textbf{T-SMOTE} (\emph{Temporal-oriented SMOTE}), propuesto por Zhao et al.~\cite{zhao2022tsmote}, aborda el problema fundamental de que SMOTE trata las series como vectores sin estructura interna. T-SMOTE utiliza \emph{Dynamic Time Warping} (DTW) como métrica de distancia para la búsqueda de vecinos, de forma que los "vecinos más cercanos" de una ventana hipoglucémica son aquellos con un perfil temporal similar, no simplemente aquellos con la menor distancia euclidiana. Esto garantiza que los episodios interpolados comparten una estructura temporal coherente. Los resultados experimentales reportados muestran mejoras consistentes frente a SMOTE estándar en métricas AUC, F1 y AUPRC en \emph{datasets} de clasificación de series temporales~\cite{zhao2022tsmote}.
 
-ADASYN presenta ventajas sobre SMOTE y Borderline-SMOTE al no emplear una clasificación binaria (\emph{noise}/\emph{border}/\emph{safe}) sino un continuo de dificultad, generando más sintéticos para observaciones ``difíciles'' rodeadas de ejemplos mayoritarios, y siendo menos sensible a definiciones rígidas de frontera. Sin embargo, la comparación empírica en la literatura muestra resultados mixtos~\cite{brandt2021comparison}: mientras He et al.\ (2008) reportaron superioridad de ADASYN sobre SMOTE en árboles de decisión, Brandt (2021)~\cite{brandt2021comparison} encontró que SMOTE superaba a ADASYN en SVM, Naïve Bayes y $k$-NN, sugiriendo que la efectividad depende significativamente del clasificador y el \emph{dataset} específicos.
+Para datos CGM específicamente, la consideración más importante al definir "vecindad temporal" es la similitud del nivel glucémico basal previo al episodio. La interpolación entre dos ventanas hipoglucémicas con niveles basales similares (ambas descienden desde $\sim$90 mg/dL hasta $\sim$55 mg/dL) produce una ventana sintética fisiológicamente plausible. La interpolación entre ventanas con niveles basales muy diferentes (una desciende desde 180 mg/dL, otra desde 80 mg/dL) puede producir una trayectoria que cruza umbrales múltiples y representa una secuencia imposible en 12 pasos de tiempo.
 
-\subsection{Métodos SMOTE Específicos para Series Temporales}
+La restricción de interpolación intra-paciente representa una adaptación adicional relevante: al limitar los vecinos de SMOTE a episodios del mismo paciente, se garantiza que los sintéticos generados reflejan la fisiología individual del paciente en cuestión, con el mismo nivel basal y la misma sensibilidad a la insulina. Esta restricción reduce el espacio de búsqueda disponible para la interpolación, pero produce sintéticos con mayor validez clínica~\cite{oviedo2017review}.
 
-\subsubsection{T-SMOTE}
+La \emph{Rate of Change} (RoC) glucémica es el criterio más objetivo para evaluar la fisiología de las muestras sintéticas. En fisiología normal, la glucosa plasmática no puede cambiar más de $\approx$4 mg/dL/min, lo que implica que una ventana de 12 pasos a 5 minutos de muestreo no puede tener variaciones de más de $\approx$240 mg/dL de extremo a extremo~\cite{kovatchev2019metrics}. La proporción de muestras sintéticas que violan esta restricción —denominada \emph{Physiological Artifact Rate} o tasa de artefactos fisiológicos— es una métrica de calidad directamente relevante para la evaluación de técnicas de generación de datos CGM.
 
-Zhao et al.\ (2022)~\cite{zhao2022tsmote} propusieron T-SMOTE (\emph{Temporal-oriented SMOTE}) como solución al problema fundamental de que SMOTE estándar trata series temporales como vectores independientes sin considerar orden temporal, autocorrelación ni patrones secuenciales. T-SMOTE incorpora tres innovaciones clave: primero, identifica series minoritarias ``difíciles'' cerca de la frontera de clase usando métricas temporales como \emph{Dynamic Time Warping} (DTW) en lugar de distancia euclidiana; segundo, al interpolar preserva patrones temporales incluyendo tendencias y periodicidades; tercero, implementa \emph{weighted sampling} que prioriza sintéticos generados cerca de la frontera.
+\subsection{Cost-sensitive learning y funciones de pérdida ponderadas}
 
-Los resultados experimentales demostraron que T-SMOTE supera consistentemente a SMOTE tradicional, \emph{Random Oversampling}, INOS y MBO en métricas AUC, F1 y AUPRC~\cite{zhao2022tsmote}, siendo especialmente efectivo en predicción temprana (\emph{early prediction}) y funcionando tanto en \emph{datasets} univariados como multivariados. La implementación de referencia está disponible en el repositorio de Microsoft Research.
+Las técnicas de \emph{cost-sensitive learning} abordan el desbalanceo no modificando la distribución de los datos sino modificando la función de pérdida durante el entrenamiento. La idea central es asignar mayor coste a los errores cometidos sobre la clase minoritaria, de forma que el optimizador sea forzado a priorizar la predicción correcta de los eventos raros~\cite{elkan2001foundations}.
 
-\subsubsection{tSMOTE (Time Sliced SMOTE)}
-
-El método \emph{Time Sliced SMOTE}~\cite{fonseca2022tsmote} aborda específicamente el problema de series temporales con observaciones completamente faltantes en ciertos intervalos y longitudes de serie muy variables entre pacientes. El algoritmo particiona el intervalo de interés $[t_{\min}, t_{\max}]$ en $N$ \emph{time slices} de tamaño $\Delta t = (t_{\max} - t_{\min})/N$, asigna cada observación al \emph{slice} correspondiente, y aplica SMOTE independientemente dentro de cada \emph{slice}.
-
-Esta técnica permite imputar observaciones completamente faltantes manteniendo la estructura temporal, preserva correlaciones dentro de cada \emph{slice}, y resulta compatible con SMOTE estándar facilitando su implementación. Entre sus limitaciones se encuentra la necesidad de definir manualmente el número de \emph{slices} $N$, la pérdida de correlaciones entre \emph{slices} lejanos, y el supuesto de estacionariedad local dentro de cada \emph{slice}.
-
-% =========================================================
-\section{Métodos Algorítmicos: Cost-Sensitive Learning}
-% =========================================================
-
-\subsection{Class Weights (Ponderación de Clases)}
-
-La ponderación de clases modifica la función de pérdida para penalizar más los errores en la clase minoritaria. Matemáticamente, la función de pérdida ponderada para clasificación binaria se expresa como:
+Para clasificación binaria, la pérdida ponderada toma la forma:
 \begin{equation}
-    \mathcal{L}_{\text{weighted}} = w_0 \sum_{i \in \mathcal{C}_0} \ell(y_i, \hat{y}_i) + w_1 \sum_{i \in \mathcal{C}_1} \ell(y_i, \hat{y}_i),
+    \mathcal{L}_{\text{weighted}} = w_{\text{min}} \sum_{i \in \mathcal{C}_{\text{min}}} \ell(y_i, \hat{y}_i) + w_{\text{maj}} \sum_{i \in \mathcal{C}_{\text{maj}}} \ell(y_i, \hat{y}_i)
 \end{equation}
-donde $w_0$ y $w_1$ son los pesos para las clases mayoritaria y minoritaria respectivamente, y $\ell$ representa la pérdida base. Una fórmula comúnmente utilizada para calcular pesos balanceados es:
+donde $w_{\text{min}}/w_{\text{maj}} = N_{\text{maj}}/N_{\text{min}}$ en la asignación de pesos balanceada. Este esquema es efectivo en modelos lineales y redes neuronales, pero puede producir inestabilidad de entrenamiento cuando la asimetría de clases es extrema (pesos $\gg$ 10), ya que los gradientes asociados a los pocos ejemplos minoritarios dominan la actualización y el optimizador oscila~\cite{khan2018cost}.
+
+Para el problema de regresión glucémica, la extensión natural de esta idea es una función de pérdida asimétrica ponderada por la función de relevancia~\cite{branco2017smogn}:
 \begin{equation}
-    w_c = \frac{n_{\text{samples}}}{n_{\text{classes}} \cdot n_{\text{samples}_c}}.
+    \mathcal{L}_{\phi} = \sum_i \phi(y_i) \cdot \ell(y_i, \hat{y}_i)
 \end{equation}
+donde $\phi(y_i)$ asigna mayor peso a los errores cometidos en los rangos glucémicos clínicamente relevantes. Branco et al.~\cite{branco2017smogn} denominaron a esta familia de enfoques \emph{utility-based learning for imbalanced domains}, proporcionando un marco unificado que conecta el desbalanceo en regresión con las métricas de evaluación orientadas al dominio.
 
-La efectividad de \emph{class weights} varía significativamente según el algoritmo empleado. En Regresión Logística, la mejora es dramática, con reportes de aumento de \emph{recall} del 0\% al 57.5\% al emplear \texttt{class\_weight='balanced'}. En contraste, \emph{Random Forest} muestra mejora mínima o nula con esta técnica, sugiriendo que los árboles de decisión ya capturan las minorías mediante \emph{split} condicional. En \emph{Deep Learning} con arquitecturas LSTM/GRU, \emph{class weights} se implementan mediante funciones de pérdida personalizadas~\cite{omdena2021timeseries}.
-
-Se recomienda probar siempre \emph{class weights} antes de recurrir a remuestreo, dado que no modifica los datos y permite entrenamiento rápido, siendo especialmente efectivo en modelos lineales y redes neuronales.
-
-\subsection{Focal Loss}
-
-Propuesta por Lin et al.\ (2017)~\cite{lin2017focal} en el contexto de detección de objetos densos con RetinaNet, \emph{Focal Loss} aborda el problema de que la entropía cruzada estándar penaliza igualmente ejemplos fáciles y difíciles. En \emph{datasets} desbalanceados, la clase mayoritaria domina la pérdida debido a la abundancia de ejemplos fáciles~\cite{wang2021focal}. \emph{Focal Loss} reduce automáticamente el peso de ejemplos bien clasificados mediante la fórmula:
+\emph{Focal Loss}, propuesta por Lin et al.~\cite{lin2017focal} en el contexto de detección de objetos, extiende la ponderación estática añadiendo un modulador dinámico basado en la confianza del clasificador:
 \begin{equation}
-    FL(p_t) = -\alpha_t (1 - p_t)^{\gamma} \log(p_t),
+    FL(p_t) = -\alpha_t (1 - p_t)^{\gamma} \log(p_t)
 \end{equation}
-donde $p_t$ representa la probabilidad de la clase verdadera, $\alpha_t$ es un peso de clase (balanceo estático), y $\gamma \geq 0$ es el \emph{focusing parameter} (típicamente $\gamma = 2$).
+El factor $(1-p_t)^{\gamma}$ reduce automáticamente la contribución al gradiente de los ejemplos bien clasificados (altos $p_t$), focalizando el entrenamiento en los ejemplos difíciles independientemente de su clase. Esta propiedad hace a \emph{Focal Loss} especialmente atractiva para el problema de predicción de hipoglucemia, donde los episodios ambiguos (glucosa descendente hacia el umbral) son precisamente los más informativos y más difíciles de clasificar. Aplicaciones en clasificación de imágenes médicas han reportado mejoras significativas de \emph{recall} frente a entropía cruzada estándar~\cite{wang2021focal}, aunque su adaptación a regresión continua sobre glucosa requiere reformulación.
 
-El término $(1-p_t)^{\gamma}$ actúa como modulador: cuando un ejemplo está bien clasificado ($p_t \to 1$), la pérdida se reduce drásticamente; cuando está mal clasificado ($p_t \to 0$), la pérdida permanece alta. Con $\gamma = 2$, un ejemplo con confianza 0.9 experimenta una reducción del 99\% en la pérdida respecto a la entropía cruzada estándar, mientras que uno con confianza 0.5 solo se reduce un 75\%.
+\subsection{Métodos ensemble para desbalanceo}
 
-Variantes como \emph{Cyclical Focal Loss} (CFL)~\cite{cyclicalfocal2022} varían $\gamma$ cíclicamente durante el entrenamiento, comenzando con $\gamma$ bajo en épocas iniciales (aprendiendo de ejemplos fáciles) y aumentándolo en épocas finales (focalizando en difíciles), logrando mejora consistente sobre \emph{Focal Loss} estático en \emph{benchmarks} como CIFAR-10/100~\cite{cyclicalfocal2022}. En aplicaciones médicas, \emph{Focal Loss} ha demostrado efectividad significativa: en clasificación de radiografías de tórax para neumonía bacteriana/viral/COVID-19, alcanzó un 97.2\% de \emph{accuracy} versus el 92\% con entropía cruzada~\cite{wang2021focal}. En series temporales, la combinación CNN-GRU con \emph{Focal Loss} para detección de fallos mostró mejora especialmente notable en \emph{recall} de clase minoritaria~\cite{wang2024cshn}.
+Los métodos ensemble combinan múltiples clasificadores base para mejorar el rendimiento en escenarios desbalanceados, con la idea de que cada clasificador puede capturar una perspectiva diferente de la clase minoritaria~\cite{galar2012review}.
 
-\subsection{Cost-Sensitive Hybrid Networks}
+\emph{EasyEnsemble}~\cite{liu2009exploratory} extrae $T$ subconjuntos balanceados de la clase mayoritaria, combinando cada uno con toda la clase minoritaria para entrenar $T$ clasificadores independientes. Al agregar sus predicciones, se aprovecha toda la información de la clase mayoritaria (a diferencia del undersampling simple, que descarta datos) mientras se garantiza que cada clasificador base opera sobre datos balanceados. Las mejoras reportadas en métricas AUC, G-mean y F-measure frente a métodos individuales son consistentes en la literatura~\cite{galar2012review}.
 
-Wang et al.\ (2024)~\cite{wang2024cshn} propusieron CSHN (\emph{Cost-Sensitive Hybrid Network}) específicamente para detección de anomalías en series temporales desbalanceadas. La arquitectura combina CNN para capturar \emph{features} locales (patrones cortos) con GRU para dependencias temporales largas, procesando ambas en paralelo antes de fusionarse. La función de pérdida \emph{cost-sensitive} se expresa como:
-\begin{equation}
-    \mathcal{L}_{CS} = \sum_i \sum_c w_c \cdot \mathbf{1}[y_i = c] \cdot \ell(f(x_i), c),
-\end{equation}
-donde $w_c$ representa el peso (coste) de \emph{misclassification} para la clase $c$, asignando mayor $w_c$ para clases minoritarias.
+\emph{BalanceCascade}~\cite{liu2009exploratory} añade una dinámica iterativa: los ejemplos de la clase mayoritaria correctamente clasificados con alta confianza por el clasificador $t$ son eliminados del pool para el clasificador $t+1$, de forma que los clasificadores posteriores se focalizan progresivamente en los ejemplos mayoritarios más difíciles de separar de los minoritarios. Este mecanismo es especialmente efectivo cuando el ratio de desbalanceo es muy alto ($>$ 100:1), aunque introduce sensibilidad al orden de entrenamiento.
 
-Los experimentos en \emph{datasets} industriales demostraron mejoras de 3--5\% en G-means y 5--9\% en F-measure versus entropía cruzada~\cite{wang2024cshn}, siendo especialmente efectivo en ratios de desbalance de 1:10 a 1:50.
+En el contexto de series temporales glucémicas, los métodos ensemble tienen una ventaja adicional: al entrenar cada clasificador base sobre una selección diferente de ventanas normoglucémicas, capturan diferentes patrones de transición hacia la normoglucemia, reduciendo el riesgo de que el modelo global ignore ciertos contextos de entrada que preceden a los episodios hipoglucémicos.
 
-Complementariamente, Roychoudhury et al.\ (2017)~\cite{roychoudhury2017cost} propusieron \emph{Cost-Sensitive Shapelets}, una aproximación altamente interpretable que aprende conjuntamente \emph{shapelets} (subsecuencias cortas características de una clase), sus pesos, y los costes de \emph{misclassification}. La técnica resulta competitiva con SMOTE y \emph{undersampling} en 18 \emph{datasets} desbalanceados~\cite{roychoudhury2017cost}, con la ventaja adicional de que los \emph{shapelets} son patrones visualizables. Sin embargo, presenta limitaciones de escalabilidad debido a que la búsqueda de \emph{shapelets} tiene complejidad $\mathcal{O}(n^2 m^2)$, donde $m$ es la longitud de la serie.
+\subsection{Regresión sobre eventos raros: SMOGN y WERCS}
+\label{sec:smogn}
 
-% =========================================================
-\section{Métodos Ensemble para Datos Desbalanceados}
-% =========================================================
+El problema de la regresión desbalanceada —donde la variable objetivo sigue una distribución con regiones densas y regiones escasas, y las regiones escasas son clínicamente más relevantes— fue formalizado por Torgo et al.~\cite{torgo2013smote} con la propuesta de \emph{SMOTE for Regression} y posteriormente extendido por Branco et al.~\cite{branco2017smogn} con \emph{SMOGN} (\emph{Synthetic Minority Over-sampling Technique for Regression with Gaussian Noise}).
 
-\subsection{EasyEnsemble}
+SMOGN combina dos mecanismos: para ejemplos raros con vecinos próximos, genera sintéticos mediante interpolación en el espacio de características (equivalente a SMOTE para regresión); para ejemplos raros aislados (sin vecinos suficientemente próximos), genera perturbaciones gaussianas controladas alrededor del ejemplo original. La función de relevancia $\phi(y)$ determina qué valores objetivo son considerados "raros" y, por tanto, candidatos al oversampling.
 
-Liu et al.\ (2009)~\cite{liu2009exploratory} propusieron EasyEnsemble como método que explota toda la información de la clase mayoritaria, superando las limitaciones del \emph{undersampling} simple. El algoritmo muestrea $T$ subconjuntos balanceados de tamaño $n$ (aproximadamente igual al tamaño de la clase minoritaria) de la clase mayoritaria (tamaño $N$), combina cada subconjunto con toda la clase minoritaria para crear \emph{datasets} balanceados $D_i$, entrena un clasificador base (típicamente AdaBoost con C4.5) en cada $D_i$, y finalmente agrega las predicciones mediante votación o promediado~\cite{phuong2021imbalanced}.
+Aplicado a la predicción glucémica, SMOGN generaría nuevas ventanas de entrenamiento en la región de transición hacia la hipoglucemia —ventanas con valores objetivo entre 55 y 70 mg/dL, que son escasas pero críticas para la predicción con horizonte de 30-60 minutos. La clave metodológica es que la interpolación de SMOGN opera conjuntamente sobre la ventana de entrada (el historial glucémico) y el valor objetivo (la glucosa futura), garantizando coherencia entre el contexto temporal y el evento predicho.
 
-Las ventajas principales incluyen la explotación de toda la información de la clase mayoritaria (versus \emph{undersampling} simple que descarta datos), métricas superiores de AUC, F-measure y G-mean respecto a métodos individuales~\cite{phuong2021imbalanced}, y un efecto \emph{bagging} que mejora la robustez. La principal limitación es el requisito de entrenar $T$ modelos, incrementando el coste computacional, aunque el beneficio marginal decrece si $T$ es muy grande.
+\emph{WERCS} (\emph{Weighted Relevance-based Combining Strategy})~\cite{branco2019pre} extiende este marco utilizando las funciones de relevancia para ponderar tanto el oversampling de ejemplos raros como el undersampling de ejemplos comunes, permitiendo una mayor flexibilidad en la definición del equilibrio deseado entre las regiones del espacio de salida. A diferencia de SMOGN, que opera en dos fases (oversampling de raros + undersampling de comunes), WERCS integra ambas operaciones en un marco unificado de ponderación.
 
-\subsection{BalanceCascade}
+Una limitación importante de tanto SMOGN como WERCS cuando se aplican a series temporales de CGM es que, al interpolar en el espacio de características de la ventana, pueden generar historiales glucémicos que no respetan la autocorrelación de la señal. El SMOTE temporal para regresión debe incorporar restricciones de coherencia temporal adicionales, como la restricción de RoC discutida en la sección~\ref{sec:smote_temporal}, para garantizar que los historiales sintéticos sean fisiológicamente plausibles.
 
-BalanceCascade se diferencia de EasyEnsemble por su eliminación progresiva de ejemplos mayoritarios bien clasificados~\cite{spelmen2018balancecascade}. En cada iteración $t$, el algoritmo muestrea un subconjunto $S_t$ de la clase mayoritaria del \emph{pool} actual, entrena un clasificador $M_t$ en $S_t$ más la clase minoritaria, y elimina del \emph{pool} mayoritario los ejemplos correctamente clasificados con alta confianza. Este proceso se repite hasta alcanzar $T$ clasificadores.
+\subsection{Estrategias híbridas: fundamentos teóricos y precedentes en la literatura}
+\label{sec:hibridas}
 
-La ventaja sobre EasyEnsemble radica en su mayor eficiencia en \emph{datasets} muy desbalanceados (ratios superiores a 1:100)~\cite{phuong2021imbalanced}, focalizando clasificadores posteriores en ejemplos ``difíciles'' de la clase mayoritaria. Sin embargo, puede eliminar prematuramente ejemplos de frontera y resulta sensible al orden de eliminación.
+La observación de que las técnicas individuales de balanceo presentan limitaciones complementarias —ROS está acotado por la diversidad del pool real; SMOTE introduce artefactos temporales; el cost-sensitive learning se vuelve inestable con pesos extremos— conduce naturalmente a la pregunta de si la combinación de técnicas puede resolver simultáneamente los fallos individuales. Esta pregunta tiene respuesta afirmativa en la teoría del aprendizaje automático: cuando dos métodos fallan por razones estructuralmente distintas, su combinación tiene posibilidad de cancelar los sesgos respectivos~\cite{fernandez2018learning}.
 
-\subsection{BEBS (Bagging of Extrapolation Borderline-SMOTE SVM)}
+El antecedente teórico más directo es Cleaning SMOTE (\emph{SMOTE + Tomek Links} y \emph{SMOTE + ENN})~\cite{batista2004study}, que combina la generación sintética de SMOTE con la limpieza posterior del espacio de decisión mediante reglas de Tomek o \emph{Edited Nearest Neighbors}. La lógica es que SMOTE puede generar sintéticos en zonas ambiguas o ruidosas, y la limpieza posterior elimina aquellos que quedan en regiones inconsistentes. Esta combinación ha demostrado mejoras sistemáticas sobre SMOTE solo en múltiples \emph{benchmarks} de clasificación~\cite{batista2004study}.
 
-Wang et al.\ (2017)~\cite{wang2017bebs} propusieron BEBS como método que combina tres técnicas exitosas: Borderline-SMOTE para generar sintéticos en la frontera, \emph{Bagging} para diversidad de modelos, y SVM como clasificador potente con margen máximo. La arquitectura identifica \emph{border points} con Borderline-SMOTE, genera $K$ subconjuntos \emph{bootstrap}, aplica Borderline-SMOTE en cada subconjunto para crear \emph{datasets} balanceados, entrena SVM en cada uno, y agrega mediante votación mayoritaria.
+Para datos de series temporales glucémicas, la adaptación de esta lógica de "dos fases" toma formas específicas del dominio. Una primera fase de reducción del ruido en el espacio de vecindad (mediante undersampling temporal que elimina ventanas de normoglucemia estable alejadas de transiciones) puede mejorar la calidad de los vecinos disponibles para la interpolación SMOTE posterior, reduciendo la probabilidad de que los sintéticos generados sean interpolaciones entre una ventana hipoglucémica y una ventana del borde de salida de un período normoglucémico largo. Esta hipótesis es formalmente equivalente a la que justifica Cleaning SMOTE, adaptada a la estructura temporal de los datos CGM.
 
-Un hallazgo notable es su insensibilidad a hiperparámetros en el rango de $K$ (número de metaclasificadores)~\cite{wang2017bebs}, manteniendo G-means estable con variación máxima de $\approx 0.15$, y logrando buen balance entre \emph{recall} y \emph{precision}.
+La combinación de oversampling moderado seguido de ponderación de pérdida residual corresponde al principio de \emph{two-phase learning} documentado por Li et al.~\cite{li2022two}: una primera fase de remuestreo lleva el ratio de desbalanceo a un nivel manejable (e.g., 1:10), reduciendo los pesos necesarios en la segunda fase de cost-sensitive learning a un rango que no compromete la estabilidad del optimizador. La evidencia empírica sugiere que esta combinación produce gradientes de entrenamiento más estables que cualquiera de los dos extremos aplicados de forma aislada.
 
-% =========================================================
-\section{Threshold Moving (Ajuste de Umbral de Decisión)}
-% =========================================================
+Las estrategias de balanceo estratificado por subgrupos demográficos tienen su fundamento en la literatura de equidad en aprendizaje automático (\emph{fairness-aware ML})~\cite{mehrabi2021survey}: cuando el desbalanceo no es uniforme entre subgrupos de la población (como ocurre en REPLACE-BG con la interacción edad × sexo), las técnicas globales de balanceo pueden corregir el desbalanceo medio mientras aumentan inadvertidamente la disparidad entre subgrupos. El balanceo intra-estrato garantiza que cada subgrupo recibe tratamiento proporcional a sus características individuales, no a las del agregado poblacional.
 
-La mayoría de clasificadores generan probabilidades $p(y=1|x)$ que se convierten a clase mediante un umbral $\tau$ (típicamente 0.5)~\cite{brownlee2020threshold}. En datos desbalanceados, este umbral asume clases equiprobables a priori, lo cual es subóptimo en \emph{datasets} con ratios extremos como 1:99. \emph{Threshold Moving} ajusta $\tau$ para optimizar métricas de interés (F1, G-mean, etc.).
-
-Las ventajas principales son que no requiere reentrenamiento ni remuestreo de datos, su implementación rápida como post-procesamiento, y su compatibilidad con cualquier clasificador que genere probabilidades. La limitación es que no mejora la capacidad discriminativa del modelo, solo ajusta la decisión final, y requiere un conjunto de validación para optimizar $\tau$.
-
-Los métodos de optimización incluyen el estadístico J de Youden ($J = \text{TPR} - \text{FPR}$), que encuentra $\tau^* = \arg\max_\tau J(\tau)$ usando la curva ROC; optimización basada en \emph{Precision-Recall Curve} maximizando F1-score; y búsqueda en rejilla sobre métricas \emph{custom} como G-mean $= \sqrt{\text{Sensitivity} \cdot \text{Specificity}}$.
-
-Riniker et al.\ (2021)~\cite{riniker2021ghost} propusieron GHOST (\emph{Gradient-based Hyperparameter Optimization for Sequential Thresholding}) como procedimiento automatizado para seleccionar el umbral óptimo en \emph{Random Forest}, demostrando que supera al \emph{random undersampling} en 138 \emph{datasets} de \emph{drug discovery} sin requerir reentrenamiento ni remuestreo~\cite{riniker2021ghost}.
+Finalmente, el tratamiento explícito del missingness no aleatorio antes de cualquier operación de remuestreo no tiene un precedente directo documentado en la literatura de balanceo para CGM, pero deriva de principios bien establecidos en estadística de datos faltantes. Little y Rubin~\cite{little2019statistical} muestran que ignorar la estructura MNAR en el análisis produce estimaciones sesgadas; por analogía, ignorar la estructura MNAR en el remuestreo produce datos sintéticos que cruzan artificialmente los gaps, generando trayectorias que no corresponden a ningún proceso fisiológico real. La segmentación explícita de las series continuas como paso previo al remuestreo es, por tanto, una condición de validez metodológica, no una optimización opcional.
 
 % =========================================================
-\section{Data Augmentation para Series Temporales}
+\section{Brechas en la literatura y motivación del presente trabajo}
 % =========================================================
 
-\subsection{Survey Empírico Fundamental}
+La revisión anterior permite identificar un conjunto de brechas específicas en la literatura que justifican las contribuciones metodológicas del presente trabajo:
 
-Iwana y Uchida (2021)~\cite{iwana2021empirical} realizaron un \emph{survey} empírico exhaustivo evaluando 12 técnicas de \emph{augmentation} en 128 \emph{datasets} del UCR Time Series Archive con redes neuronales (FCN, ResNet, LSTM). Los hallazgos principales revelaron que \emph{Time Warping} y \emph{Magnitude Warping} son las mejores técnicas en promedio~\cite{iwana2021empirical}, \emph{Window Slicing} resulta muy efectivo para aumentar el volumen de datos, \emph{Jittering} es simple pero sorprendentemente efectivo, y las combinaciones de \emph{Time Warping} con \emph{Magnitude Warping} superan cualquier técnica individual.
+\textbf{Primera brecha: ausencia de benchmarks sistemáticos en el dominio CGM.} La literatura de imbalanced learning cuenta con benchmarks bien establecidos para clasificación estática~\cite{fernandez2018learning}, pero no existe un benchmark comparable para series temporales glucémicas que evalúe sistemáticamente múltiples técnicas con métricas de coherencia fisiológica. Los estudios existentes comparan una o dos técnicas en un único \emph{dataset}, lo que impide extraer conclusiones generalizables.
 
-\subsection{Técnicas Específicas}
+\textbf{Segunda brecha: incompletitud del marco de regresión desbalanceada.} Los trabajos de Branco et al.~\cite{branco2017smogn} y Torgo et al.~\cite{torgo2013smote} establecen el marco teórico para la regresión desbalanceada, pero no abordan la dimensión temporal ni la coherencia fisiológica de las muestras sintéticas. La extensión de SMOGN a series temporales con restricciones de autocorrelación y RoC no está documentada en la literatura.
 
-\subsubsection{Time Warping}
+\textbf{Tercera brecha: tratamiento insuficiente de la heterogeneidad inter-paciente.} Las técnicas de balanceo disponibles operan típicamente sobre la distribución global del \emph{dataset}, ignorando la estructura de concentración de episodios en subconjuntos de pacientes. Solo algunos trabajos recientes abordan el balanceo adaptativo por paciente~\cite{sun2023diatrend}, y no existe evaluación comparativa de su efectividad frente a técnicas globales.
 
-\emph{Time Warping} estira o comprime el eje temporal de manera no uniforme, preservando la forma general de la serie~\cite{iwana2021empirical}. El algoritmo genera una curva de \emph{warping} suave:
-\begin{equation}
-    \tau(t) = t + \sigma \cdot \sin(2\pi f t + \phi),
-\end{equation}
-donde $\sigma$ es la magnitud de deformación, $f$ la frecuencia de oscilación, y $\phi$ la fase aleatoria, para luego resamplear la serie original en los nuevos tiempos: $x'(t) = x(\tau(t))$.
+\textbf{Cuarta brecha: ausencia de métodos que traten el MNAR como condición de validez.} Ningún trabajo existente en la literatura de balanceo para CGM identifica el MNAR como una condición que invalida las técnicas estándar de remuestreo cuando se aplican sin respetar la estructura de segmentos continuos. Esta brecha tiene implicaciones prácticas directas para \emph{datasets} con alta fragmentación temporal.
 
-La justificación biológica en diabetes es clara: las curvas de glucosa postprandial tienen forma similar (subida-pico-bajada), pero velocidad variable según el índice glucémico del alimento, cantidad de insulina activa, y actividad física previa. \emph{Time Warping} simula esta variabilidad natural.
+El presente trabajo aborda estas brechas mediante el diseño, implementación y evaluación sistemática de estrategias de balanceo adaptadas a las características específicas de los tres \emph{datasets} estudiados, con especial énfasis en las dimensiones de coherencia fisiológica, robustez ante heterogeneidad inter-paciente y validez metodológica en presencia de MNAR.
 
-\subsubsection{Magnitude Warping}
-
-\emph{Magnitude Warping} multiplica la serie por una curva suave aleatoria, simulando cambios en magnitud sin alterar \emph{timing}~\cite{iwana2021empirical}. El algoritmo genera una curva de \emph{scaling} suave:
-\begin{equation}
-    s(t) = 1 + \sigma \cdot \text{spline}(t),
-\end{equation}
-donde $\text{spline}(t)$ es una B-\emph{spline} con puntos de control aleatorios, y aplica $x'(t) = s(t) \cdot x(t)$.
-
-Esta técnica simula la variabilidad de sensibilidad a insulina entre días en diabetes: un día con alta sensibilidad produce mayor caída de glucosa con el mismo bolo, mientras que un día con resistencia produce menor caída. \emph{Magnitude Warping} escala la amplitud de la respuesta glucémica.
-
-\subsubsection{Window Slicing}
-
-\emph{Window Slicing} corta series largas en múltiples ventanas más cortas, multiplicando el número de muestras~\cite{iwana2021empirical}. Las estrategias incluyen \emph{sliding window} (ventanas solapadas) y \emph{non-overlapping} (ventanas consecutivas sin solapamiento).
-
-Las ventajas son que multiplica el \emph{dataset} sin generar sintéticos (solo reorganiza datos reales) y permite igualar volumen entre pacientes con distinta duración de seguimiento. Las limitaciones incluyen pérdida de contexto de largo plazo (una ventana de 24~h no captura tendencias semanales) y posible introducción de correlación artificial entre muestras (ventanas solapadas del mismo paciente).
-
-\subsubsection{Jittering}
-
-\emph{Jittering} añade ruido gaussiano pequeño: $x'(t) = x(t) + \varepsilon$, donde $\varepsilon \sim \mathcal{N}(0, \sigma^2)$~\cite{iwana2021empirical}. Es extremadamente simple, proporciona regularización efectiva previniendo \emph{overfitting}, y resulta compatible con cualquier tipo de serie. La limitación es que puede generar valores irreales si $\sigma$ es muy grande y no respeta \emph{constraints} físicos.
 
 % =========================================================
-\section{Modelos Generativos: GANs}
+%  REFERENCIAS BIBLIOGRÁFICAS — ENTRADAS BIBTEX SUGERIDAS
+%  Añadir al fichero .bib del proyecto
 % =========================================================
 
-\subsection{RGAN/RCGAN: Baseline Clásico}
+@article{atkinson2014type1,
+author  = {M. A. Atkinson and G. S. Eisenbarth and A. W. Michels},
+title   = {Type 1 diabetes},
+journal = {The Lancet},
+volume  = {383},
+number  = {9911},
+pages   = {69--82},
+year    = {2014},
+doi     = {10.1016/S0140-6736(13)60591-7}
+}
 
-Esteban et al.\ (2017)~\cite{esteban2017rgan} propusieron RGAN/RCGAN como primera aplicación sistemática de GANs a series temporales médicas multivariadas. RGAN procesa secuencialmente ruido $z_t \sim \mathcal{N}(0, I)$ mediante LSTM para generar series sintéticas $\{\hat{x}_1, \ldots, \hat{x}_T\}$, mientras que RCGAN añade condicionamiento concatenando la condición $c$ (edad, sexo) en cada \emph{timestep}. El discriminador evalúa la probabilidad real/falsa por \emph{timestep}, no solo al final.
+@article{battelino2019clinical,
+author  = {T. Battelino and T. Danne and R. M. Bergenstal and others},
+title   = {Clinical targets for continuous glucose monitoring data interpretation: recommendations from the international consensus on time in range},
+journal = {Diabetes Care},
+volume  = {42},
+number  = {8},
+pages   = {1593--1603},
+year    = {2019},
+doi     = {10.2337/dci19-0028}
+}
 
-La función de pérdida incorpora \emph{Maximum Mean Discrepancy}:
-\begin{equation}
-    \mathcal{L}_G = \mathcal{L}_{\text{GAN}} + \lambda \cdot \text{MMD}(\mathcal{P}_{\text{real}}, \mathcal{P}_{\text{gen}}),
-\end{equation}
-donde MMD mide la discrepancia entre distribuciones de series reales y generadas.
+@article{cryer2012hypoglycemia,
+author  = {P. E. Cryer},
+title   = {Severe hypoglycemia predicts mortality in diabetes},
+journal = {Diabetes Care},
+volume  = {35},
+number  = {9},
+pages   = {1814--1816},
+year    = {2012},
+doi     = {10.2337/dc12-0749}
+}
 
-Los experimentos en \emph{datasets} ICU (eICU/MIMIC-III) con 17\,000 pacientes y series de presión arterial, frecuencia cardíaca, SpO$_2$ y temperatura evaluaron mediante \emph{Train on Synthetic, Test on Real} (TSTR), logrando una \emph{accuracy} solo 2--3\% menor que \emph{Train on Real, Test on Real}~\cite{esteban2017rgan}. El test estadístico MMD \emph{two-sample} arrojó $p$-valores de 0.09--0.38, no permitiendo rechazar la hipótesis de que ambas distribuciones son iguales~\cite{esteban2017rgan}.
+@article{dcct1993effect,
+author  = {{DCCT Research Group}},
+title   = {The effect of intensive treatment of diabetes on the development and progression of long-term complications in insulin-dependent diabetes mellitus},
+journal = {New England Journal of Medicine},
+volume  = {329},
+number  = {14},
+pages   = {977--986},
+year    = {1993},
+doi     = {10.1056/NEJM199309303291401}
+}
 
-\subsection{DoppelGANger: Estado del Arte}
+@article{diabeloop2022prevalence,
+author  = {L. Journel and C. Franc and others},
+title   = {Real-world use of a closed-loop insulin delivery system in patients with type 1 diabetes},
+journal = {Diabetes \& Metabolism},
+volume  = {48},
+number  = {3},
+year    = {2022},
+doi     = {10.1016/j.diabet.2022.101309}
+}
 
-Lin et al.\ (2020)~\cite{lin2020doppelganger} propusieron DoppelGANger como respuesta a que RGAN/RCGAN no capturan adecuadamente correlaciones temporales a múltiples escalas (diarias, semanales, estacionales) y experimentan \emph{mode collapse} frecuente en series largas. Las innovaciones clave incluyen: (i) \emph{batch generation} que genera bloques de $S$ \emph{timesteps} simultáneamente preservando correlaciones de medio/largo plazo; (ii) \emph{auto-normalization} donde cada serie se normaliza individualmente y los valores $\min(x)$ y $\max(x)$ se tratan como \emph{metadata} que la GAN también aprende a generar, evitando \emph{mode collapse}~\cite{mckinney2024doppelganger}; y (iii) un discriminador auxiliar que evalúa solo atributos estáticos, mejorando la generación de relaciones atributo-serie temporal.
+@article{soriguer2012prevalence,
+author  = {F. Soriguer and A. Goday and A. Bosch-Comas and others},
+title   = {Prevalence of diabetes mellitus and impaired glucose regulation in Spain},
+journal = {Diabetologia},
+volume  = {55},
+number  = {1},
+pages   = {88--93},
+year    = {2012},
+doi     = {10.1007/s00125-011-2336-9}
+}
 
-Los parámetros clave son \texttt{max\_sequence\_len} (longitud total), \texttt{sample\_len} ($S$: tamaño de bloque generado simultáneamente), \texttt{batch\_size}, \texttt{epochs}, y \texttt{learning\_rate}. Los resultados reportados incluyen captura de tendencias semanales y anuales en tráfico \emph{web} de Wikipedia, correlaciones día/noche en redes de comunicación, y un tiempo de ejecución $\approx$40$\times$ más rápido que la implementación TensorFlow~1 original. La implementación PyTorch está disponible en Gretel AI~\cite{gretelai2022doppelganger}.
+@article{wolfsdorf2014diabetic,
+author  = {J. I. Wolfsdorf and N. Glaser and M. A. Sperling},
+title   = {Diabetic ketoacidosis in infants, children, and adolescents},
+journal = {Diabetes Care},
+volume  = {29},
+number  = {5},
+pages   = {1150--1159},
+year    = {2014},
+doi     = {10.2337/dc06-9273}
+}
 
-\subsection{C-TimeGAN/Conditional TimeGAN}
+@article{foster2019state,
+author  = {N. C. Foster and R. W. Beck and K. M. Miller and others},
+title   = {State of type 1 diabetes management and outcomes from the {T1D Exchange} in 2016--2018},
+journal = {Diabetes Technology \& Therapeutics},
+volume  = {21},
+number  = {2},
+pages   = {66--72},
+year    = {2019},
+doi     = {10.1089/dia.2018.0384}
+}
 
-TimeGAN, propuesto por Yoon et al.\ (2019)~\cite{yoon2019timegan} en NeurIPS, combina \emph{adversarial training} con \emph{supervised training} para aprender representaciones temporales. Los componentes incluyen \emph{Embedding Network} ($x \to h$), \emph{Recovery Network} ($h \to \tilde{x}$), \emph{Generator} ($z \to h_{\text{syn}}$), \emph{Discriminator} (distingue $h$ real vs.\ $h_{\text{syn}}$), y \emph{Supervisor} (aprende dinámica temporal $h_t \to h_{t+1}$).
+@article{kovatchev2019metrics,
+author  = {B. Kovatchev},
+title   = {Metrics for glycaemic control — from {HbA1c} to continuous glucose monitoring},
+journal = {Nature Reviews Endocrinology},
+volume  = {13},
+number  = {7},
+pages   = {425--436},
+year    = {2019},
+doi     = {10.1038/nrendo.2017.3}
+}
 
-C-TimeGAN extiende TimeGAN añadiendo condicionamiento explícito~\cite{liu2024ctimegan}. Liu et al.\ (2024)~\cite{liu2024ctimegan} propusieron \emph{Conditional-TimeGAN} para generación realista y de alta calidad, mientras que Zhang et al.\ desarrollaron \emph{Continuous Conditional GANs} con regularización del generador~\cite{zhang2022ccgan}. La arquitectura modificada incluye $G(z,c) \to h_{\text{syn}}$, $D(h,c) \to P(\text{real}|h,c)$, y $S(h_t,c) \to h_{t+1}$, donde $c$ representa la condición.
+@article{klonoff2017cgm,
+author  = {D. C. Klonoff and D. Ahn and A. Drincic},
+title   = {Continuous glucose monitoring: a review of the technology and clinical use},
+journal = {Diabetes Research and Clinical Practice},
+volume  = {133},
+pages   = {178--192},
+year    = {2017},
+doi     = {10.1016/j.diabres.2017.08.005}
+}
 
-MC-TimeGAN, propuesto por Demirel et al.\ (2025)~\cite{demirel2025mctimegan}, extiende TimeGAN condicional para series multivariadas (múltiples \emph{features} correlacionadas), con aplicación original en congestión de redes eléctricas.
+@article{oviedo2017review,
+author  = {S. Oviedo and J. Veh{\'i} and R. Calm and J. Armengol},
+title   = {A review of personalized blood glucose prediction strategies for {T1DM} patients},
+journal = {International Journal for Numerical Methods in Biomedical Engineering},
+volume  = {33},
+number  = {6},
+year    = {2017},
+doi     = {10.1002/cnm.2833}
+}
 
-CTGAN-MSIN (2025)~\cite{ctganmsin2025} combina \emph{Conditional TimeGAN} con \emph{Multi-Scale Importance-aware Network} para desbalanceo extremo (1:15 o mayor). Las innovaciones incluyen \emph{Gradient Penalty} para estabilizar el entrenamiento (similar a WGAN-GP) y una red \emph{Multi-Scale Importance-aware} que atiende a patrones temporales a múltiples escalas, logrando más del 98\% de \emph{accuracy} en diagnóstico tras \emph{augmentation} condicional, superando a SMOTE/ADASYN~\cite{ctganmsin2025}.
+@article{sparacino2007glucose,
+author  = {G. Sparacino and F. Zanderigo and S. Corazza and others},
+title   = {Glucose concentration can be predicted ahead in time from continuous glucose monitoring sensor time-series},
+journal = {IEEE Transactions on Biomedical Engineering},
+volume  = {54},
+number  = {5},
+pages   = {931--937},
+year    = {2007},
+doi     = {10.1109/TBME.2006.889774}
+}
 
-\subsection{HealthGen: Equidad en Datos Médicos}
+@article{hochreiter1997long,
+author  = {S. Hochreiter and J. Schmidhuber},
+title   = {Long short-term memory},
+journal = {Neural Computation},
+volume  = {9},
+number  = {8},
+pages   = {1735--1780},
+year    = {1997},
+doi     = {10.1162/neco.1997.9.8.1735}
+}
 
-Bing et al.\ (2022)~\cite{bing2022healthgen} propusieron HealthGen específicamente para equidad en datos clínicos. Los datos clínicos de \emph{Electronic Health Records} presentan desbalanceo demográfico (pocos pacientes de minorías étnicas), patrones de \emph{missingness} informativos (la ausencia de medición puede indicar estabilidad o gravedad), e irregularidad temporal (visitas no programadas).
+@article{bai2018empirical,
+author  = {S. Bai and J. Z. Kolter and V. Koltun},
+title   = {An empirical evaluation of generic convolutional and recurrent networks for sequence modeling},
+journal = {arXiv preprint arXiv:1803.01271},
+year    = {2018}
+}
 
-Las innovaciones de HealthGen incluyen el modelado explícito de patrones de \emph{missingness} (no solo valores observados)~\cite{bing2022healthgen}, generación condicional en características demográficas y clínicas, y evaluación \emph{downstream} que mejora la equidad de modelos predictivos. La arquitectura emplea \emph{encoder-decoder} con atención temporal, generando tanto valores como máscaras de observación.
+@article{li2019convolutional,
+author  = {K. Li and C. Liu and T. Zhu and P. Herrero and P. Georgiou},
+title   = {GluNet: a deep learning framework for accurate glucose forecasting},
+journal = {IEEE Journal of Biomedical and Health Informatics},
+volume  = {24},
+number  = {2},
+pages   = {414--423},
+year    = {2019},
+doi     = {10.1109/JBHI.2019.2931842}
+}
 
-Los experimentos en MIMIC-III demostraron que modelos entrenados en datos sintéticos generalizaron mejor a grupos minoritarios~\cite{bing2022healthgen}, reduciendo la disparidad demográfica en un 15--20\%.
+@inproceedings{vaswani2017attention,
+author    = {A. Vaswani and N. Shazeer and N. Parmar and others},
+title     = {Attention is all you need},
+booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+volume    = {30},
+year      = {2017}
+}
 
-\subsection{WGAN-GP para Series Temporales Médicas}
+@article{lim2021temporal,
+author  = {B. Lim and S. {\"O}. Ar{\i}k and N. Loeff and T. Pfister},
+title   = {Temporal Fusion Transformers for interpretable multi-horizon time series forecasting},
+journal = {International Journal of Forecasting},
+volume  = {37},
+number  = {4},
+pages   = {1748--1764},
+year    = {2021},
+doi     = {10.1016/j.ijforecast.2021.03.012}
+}
 
-Isasa et al.\ (2024)~\cite{isasa2024wgangp} propusieron WGAN-GP con \emph{alignment loss} para preservar correlaciones inter-variables. El \emph{alignment loss} se define como $\mathcal{L}_{\text{align}} = \|C_{\text{real}} - C_{\text{syn}}\|_1$, donde $C$ es la matriz de correlación entre variables. La función de pérdida del generador es:
-\begin{equation}
-    \mathcal{L}_G = \mathcal{L}_{\text{WGAN}} + \lambda_{\text{align}} \cdot \mathcal{L}_{\text{align}},
-\end{equation}
-típicamente con $\lambda_{\text{align}} = 10.0$~\cite{isasa2024wgangp}.
+@inproceedings{zhou2021informer,
+author    = {H. Zhou and S. Zhang and J. Peng and others},
+title     = {Informer: Beyond efficient transformer for long sequence time-series forecasting},
+booktitle = {Proceedings of AAAI},
+volume    = {35},
+year      = {2021}
+}
 
-Los \emph{datasets} evaluados (TMET monitoreo cardíaco, \emph{Hypotension subset} en UCI, PMData cuidados paliativos) mostraron TSTR de 0.837--0.900 (muy cercano a \emph{Train on Real})~\cite{isasa2024wgangp} y \emph{Membership Inference Attack} con \emph{precision} $= 0$, indicando privacidad de los datos sintéticos~\cite{isasa2024wgangp}. Los hiperparámetros reportados incluyen 5000 épocas, \emph{batch size} 32--64, 5 actualizaciones del crítico por actualización del generador, \emph{learning rate} 0.001, y coeficiente de \emph{gradient penalty} 10.0.
+@article{mirshekarian2019using,
+author  = {S. Mirshekarian and H. Shen and R. Bunescu and C. Marling},
+title   = {LSTMs and neural attention models for blood glucose prediction: comparative experiments on real and synthetic data},
+booktitle = {Proceedings of the 41st Annual IEEE EMBC},
+year    = {2019},
+doi     = {10.1109/EMBC.2019.8856940}
+}
 
-Liu et al.\ (2025)~\cite{liu2025hracgan} propusieron HR-ACGAN (\emph{High Reliability ACGAN}) combinando ACGAN (\emph{Auxiliary Classifier GAN}) con ideas de WGAN-GP para estabilidad de entrenamiento y alta diferenciación de clases. ACGAN permite generar sintéticos etiquetados directamente sin necesidad de etiquetado post-generación.
+@article{mhaskar2017deep,
+author  = {H. Mhaskar and Q. Liao and T. Poggio},
+title   = {When and why are deep networks better than shallow networks?},
+journal = {Proceedings of AAAI},
+year    = {2017}
+}
 
-% =========================================================
-\section{Modelos de Difusión}
-% =========================================================
+@article{sun2018predicting,
+author  = {Q. Sun and M. V. Jankovic and J. Bally and others},
+title   = {Predicting blood glucose with an {LSTM} and bi-directional {LSTM} using multi-sensor data},
+booktitle = {2018 IEEE Symposium Series on Computational Intelligence (SSCI)},
+year    = {2018},
+doi     = {10.1109/SSCI.2018.8628784}
+}
 
-Los modelos de difusión presentan ventajas sobre las GANs: entrenamiento más estable (no adversarial), mejor captura de variabilidad mediante muestreo estocástico, y constituyen el estado del arte en generación de imágenes (DALL-E~2, Stable Diffusion). Su aplicación a series temporales es emergente (2023--2025).
+@article{gu2020predicting,
+author  = {W. Gu and P. J. Zhou and M. Chen and others},
+title   = {Predicting hypoglycemia in type 1 diabetes using {CGM}-based deep learning models with asymmetric loss},
+journal = {IEEE Journal of Biomedical and Health Informatics},
+volume  = {24},
+number  = {11},
+pages   = {3093--3101},
+year    = {2020},
+doi     = {10.1109/JBHI.2020.2990129}
+}
 
-Fadlon et al.\ (2025)~\cite{fadlon2025diffusion} propusieron un modelo de difusión para generar series temporales regulares desde datos irregulares con \emph{completion} y \emph{masking}. El \emph{pipeline} en dos pasos incluye: primero, un \emph{Time Series Transformer} que completa irregularidades tomando como \emph{input} la serie irregular $\{(x_{t_1}, t_1), (x_{t_2}, t_2), \ldots\}$, usando \emph{transformer} con \emph{positional encoding} de \emph{timestamps} continuos, y generando como \emph{output} una serie regular imputada en \emph{timesteps} fijos; segundo, un \emph{Diffusion Model} que genera series sintéticas aplicando \emph{forward diffusion} añadiendo ruido progresivamente, y \emph{reverse diffusion} aprendiendo a eliminar el ruido.
+@article{cobelli2011artificial,
+author  = {C. Cobelli and E. Renard and B. Kovatchev},
+title   = {Artificial pancreas: past, present, future},
+journal = {Diabetes},
+volume  = {60},
+number  = {11},
+pages   = {2672--2682},
+year    = {2011},
+doi     = {10.2337/db11-0654}
+}
 
-Las ventajas incluyen manejo nativo de irregularidad sin requerir pre-procesamiento manual y generación de sintéticos de alta calidad preservando autocorrelación y estacionalidad. TimeGrad de Rasul et al.\ (ICML 2021)~\cite{rasul2021timegrad} y SSSD de Alcaraz y Strodthoff (2022)~\cite{alcaraz2022sssd} se orientan principalmente a \emph{forecasting} e imputación, con la limitación de no permitir condicionamiento explícito en características demográficas.
+@article{doyle2014closed,
+author  = {F. J. Doyle and L. M. Huyett and J. B. Lee and others},
+title   = {Closed-loop artificial pancreas systems: engineering the algorithms},
+journal = {Diabetes Care},
+volume  = {37},
+number  = {5},
+pages   = {1191--1197},
+year    = {2014},
+doi     = {10.2337/dc13-2108}
+}
 
-% =========================================================
-\section{Variational Autoencoders (VAEs)}
-% =========================================================
+@article{marling2020ohiot1dm,
+author  = {C. Marling and R. Bunescu},
+title   = {The {OhioT1DM} dataset for blood glucose level prediction: update 2020},
+booktitle = {KHD@IJCAI 2020},
+year    = {2020}
+}
 
-\subsection{VGAE para EHRs}
+@article{sun2023diatrend,
+author  = {Q. Sun and T. S. Bhatt and R. Nambhore and others},
+title   = {{DIATREND}: A multivariate longitudinal clinical dataset of type 1 diabetes patients to advance glucose forecasting},
+journal = {Scientific Data},
+volume  = {10},
+number  = {1},
+pages   = {612},
+year    = {2023},
+doi     = {10.1038/s41597-023-02510-7}
+}
 
-Nikolentzos et al.\ (2023)~\cite{nikolentzos2023vgae} propusieron el uso de \emph{Variational Graph Autoencoders} para generar registros electrónicos de salud sintéticos, representando trayectorias de pacientes como grafos dirigidos acíclicos (DAG), no como secuencias. La arquitectura incluye un \emph{encoder} que mapea el grafo del paciente $G$ a distribución latente $\mathcal{N}(\mu, \Sigma)$ y un \emph{decoder} que reconstruye el grafo desde la muestra latente $z \sim \mathcal{N}(\mu, \Sigma)$.
+@article{aleppo2017replace,
+author  = {G. Aleppo and K. L. Ruedy and T. T. Riddlesworth and others},
+title   = {{REPLACE-BG}: A randomized trial comparing continuous glucose monitoring with and without routine blood glucose monitoring in adults with well-controlled type 1 diabetes},
+journal = {Diabetes Care},
+volume  = {40},
+number  = {4},
+pages   = {538--545},
+year    = {2017},
+doi     = {10.2337/dc16-2482}
+}
 
-Las ventajas incluyen captura de correlaciones de largo plazo mediante arcos entre eventos lejanos en el tiempo, y generación de trayectorias realistas y privadas con MMD $= 0.025$ entre reales y sintéticas~\cite{nikolentzos2023vgae}. La evaluación mostró que clasificadores entrenados en sintéticos alcanzaron un 90--91\% de \emph{accuracy} en datos reales, casi igual que \emph{Train on Real}~\cite{nikolentzos2023vgae}.
+@dataset{diaz2023t1dgranada,
+author    = {J. D. D{\'i}az-L{\'o}pez and R. Capel-Delgado and others},
+title     = {T1DiabetesGranada dataset},
+year      = {2023},
+publisher = {Zenodo},
+doi       = {10.5281/zenodo.7670965}
+}
 
-\subsection{VAE Framework para Healthcare}
+@article{dubosson2018d1namo,
+author  = {F. Dubosson and J.-E. Ranvier and S. Bromuri and others},
+title   = {The open {D1NAMO} dataset: a multi-modal dataset for research on non-invasive type 1 diabetes management},
+journal = {Informatics in Medicine Unlocked},
+volume  = {13},
+pages   = {92--100},
+year    = {2018},
+doi     = {10.1016/j.imu.2018.09.003}
+}
 
-Un \emph{framework} VAE para generación de datos sintéticos en \emph{healthcare}~\cite{ijaia2025vae} emplea un \emph{pipeline} con datos origen de Synthea (generador de EHRs sintéticos \emph{baseline}), entrenamiento mediante VAE con \emph{encoder-decoder} totalmente conectado, y evaluación mediante divergencia Jensen-Shannon entre reales y sintéticos.
+@article{sterne2009multiple,
+author  = {J. A. Sterne and I. R. White and J. B. Carlin and others},
+title   = {Multiple imputation for missing data in epidemiological and clinical research: potential and pitfalls},
+journal = {BMJ},
+volume  = {338},
+year    = {2009},
+doi     = {10.1136/bmj.b2393}
+}
 
-Los resultados mostraron una divergencia JS de 0.24--0.53 (aceptable) y un \emph{performance} de modelos entrenados en sintéticos 2--3\% menor que en reales~\cite{ijaia2025vae}, concluyendo que los sintéticos son válidos para \emph{pre-training} y desarrollo de modelos.
+@book{little2019statistical,
+author    = {R. J. A. Little and D. B. Rubin},
+title     = {Statistical Analysis with Missing Data},
+edition   = {3rd},
+publisher = {Wiley},
+year      = {2019}
+}
 
-Un \emph{Multitask VAE} para \emph{forecasting} de glucosa con manejo de \emph{missing data}~\cite{multitaskvae2024} ofrece capacidades de imputación (rellenar huecos en series de CGM) y generación (crear perfiles de glucosa sintéticos).
+@article{kovatchev2004evaluating,
+author  = {B. P. Kovatchev and E. Otto and D. Cox and others},
+title   = {Evaluation of a new measure of blood glucose variability in diabetes},
+journal = {Diabetes Care},
+volume  = {29},
+number  = {11},
+pages   = {2433--2438},
+year    = {2004},
+doi     = {10.2337/dc06-1085}
+}
 
-% =========================================================
-\section{Arquitecturas para Series de Longitud/Frecuencia Variable}
-% =========================================================
+@article{parkes2000new,
+author  = {J. L. Parkes and S. L. Slatin and S. Pardo and B. H. Ginsberg},
+title   = {A new consensus error grid to evaluate the clinical significance of inaccuracies in the measurement of blood glucose},
+journal = {Diabetes Care},
+volume  = {23},
+number  = {8},
+pages   = {1143--1148},
+year    = {2000},
+doi     = {10.2337/diacare.23.8.1143}
+}
 
-\subsection{Variable-Length LSTM/GRU}
+@article{dixit2019asymmetric,
+author  = {S. Dixit and R. B. Grover},
+title   = {Asymmetric loss functions for learning with noisy labels},
+journal = {arXiv preprint arXiv:2003.03103},
+year    = {2019}
+}
 
-Bashiri et al.\ (2024)~\cite{bashiri2024variable} desarrollaron modelos de predicción clínica mediante \emph{deep learning} usando series temporales de longitud variable. El problema que abordan son las historias clínicas (EHR) con longitudes muy variables (desde días hasta años).
+@book{fernandez2018learning,
+author    = {A. Fern{\'a}ndez and S. Garc{\'i}a and M. Galar and R. C. Prati and B. Krawczyk and F. Herrera},
+title     = {Learning from Imbalanced Data Sets},
+publisher = {Springer},
+year      = {2018},
+doi       = {10.1007/978-3-319-98074-4}
+}
 
-La solución mediante \emph{Piece-wise Linear Encoding} (PLE) divide la serie en segmentos, ajusta una recta en cada segmento (pendiente + intercepto), y alimenta el LSTM con (pendiente, intercepto, duración) en lugar de valores crudos. Las ventajas incluyen compresión de información reduciendo dimensionalidad, procesamiento por LSTM de ``resúmenes'' de segmentos en lugar de puntos individuales, y funcionamiento con series desde 10 hasta 10\,000 \emph{timesteps}. Los resultados mostraron mejora en \emph{performance} en EHRs de longitud variable versus LSTM directo~\cite{bashiri2024variable}.
+@article{he2009learning,
+author  = {H. He and E. A. Garcia},
+title   = {Learning from imbalanced data},
+journal = {IEEE Transactions on Knowledge and Data Engineering},
+volume  = {21},
+number  = {9},
+pages   = {1263--1284},
+year    = {2009},
+doi     = {10.1109/TKDE.2008.239}
+}
 
-\subsection{CoFormer (Compatible Transformer)}
+@article{branco2017smogn,
+author  = {P. Branco and L. Torgo and R. P. Ribeiro},
+title   = {{SMOGN}: a pre-processing approach for imbalanced regression},
+journal = {Proceedings of Machine Learning Research},
+volume  = {74},
+pages   = {36--50},
+year    = {2017}
+}
 
-Wei et al.\ (2023)~\cite{wei2023coformer} propusieron CoFormer (\emph{Compatible Transformer}) para series temporales multivariadas muestreadas irregularmente. El problema que resuelve incluye series con \emph{timestamps} y variables no alineadas (\emph{misalignment} temporal y de \emph{features}).
+@inproceedings{torgo2013smote,
+author    = {L. Torgo and R. P. Ribeiro and B. Pfahringer and P. Branco},
+title     = {{SMOTE} for regression},
+booktitle = {Progress in Artificial Intelligence},
+pages     = {378--389},
+year      = {2013}
+% doi       = {10.1007/978-3-642-40669-0_33}
+}
 
-La solución incorpora \emph{variate-time embeddings} donde cada medición $(x_i(t_i), t_i, \text{feature}_i)$ se embebe como vector único, \emph{timestamp encoding} continuo usando funciones sinusoidales para \emph{timestamps} continuos (no discretos), y \emph{transformer attention} que atiende entre todas las mediciones sin requerir alineamiento. La ventaja es que no necesita imputación previa, manejando la irregularidad de forma nativa~\cite{wei2023coformer}.
+@inproceedings{branco2019pre,
+author    = {P. Branco and L. Torgo and R. P. Ribeiro},
+title     = {Pre-processing approaches for imbalanced distributions in regression},
+booktitle = {Neurocomputing},
+volume    = {343},
+pages     = {76--99},
+year      = {2019},
+doi       = {10.1016/j.neucom.2018.11.100}
+}
 
-\subsection{ViTST (Vision Transformer for Irregular Time Series)}
+@article{elkan2001foundations,
+author  = {C. Elkan},
+title   = {The foundations of cost-sensitive learning},
+booktitle = {Proceedings of the 17th International Joint Conference on Artificial Intelligence (IJCAI)},
+pages   = {973--978},
+year    = {2001}
+}
 
-Li et al.\ (2023)~\cite{li2023vitst} propusieron ViTST en NeurIPS 2023, convirtiendo series temporales en imágenes (\emph{line graphs}) y usando \emph{Vision Transformer} pre-entrenado. El \emph{pipeline} renderiza la serie temporal como gráfico de línea en imagen $224\times224$, pasa la imagen a un \emph{Vision Transformer} (p.ej., ViT-Base pre-entrenado en ImageNet), y realiza \emph{fine-tuning} para clasificación de series temporales.
+@article{khan2018cost,
+author  = {S. H. Khan and M. Hayat and M. Bennamoun and others},
+title   = {Cost-sensitive learning of deep feature representations from imbalanced data},
+journal = {IEEE Transactions on Neural Networks and Learning Systems},
+volume  = {29},
+number  = {8},
+pages   = {3573--3587},
+year    = {2018},
+doi     = {10.1109/TNNLS.2017.2732482}
+}
 
-Las ventajas incluyen aprovechamiento del pre-entrenamiento de ViT (transferencia desde visión a tiempo), manejo de irregularidad (el gráfico puede tener puntos no uniformemente espaciados), y resultados sólidos frente al estado del arte especializado~\cite{li2023vitst}. La limitación es la falta de interpretabilidad (es difícil explicar qué patrón temporal aprendió el modelo).
+@inproceedings{lin2017focal,
+author    = {T.-Y. Lin and P. Goyal and R. Girshick and K. He and P. Doll{\'a}r},
+title     = {Focal loss for dense object detection},
+booktitle = {Proceedings of the IEEE International Conference on Computer Vision (ICCV)},
+pages     = {2980--2988},
+year      = {2017},
+doi       = {10.1109/ICCV.2017.324}
+}
 
-\subsection{DSTTN (Dense Spatio-Temporal Transformer)}
+@article{wang2021focal,
+author  = {L. Wang and others},
+title   = {Focal loss for medical image classification},
+journal = {IEEE Access},
+year    = {2021}
+}
 
-Qian et al.\ (2024)~\cite{qian2024dsttn} propusieron DSTTN para imputación de series temporales con datos faltantes mediante \emph{transformers} densos espacio-temporales. El problema específico es \emph{Complete Data Missing} (CDM), series con observaciones completamente faltantes (no solo valores aislados).
+@article{galar2012review,
+author  = {M. Galar and A. Fern{\'a}ndez and E. Barrenechea and others},
+title   = {A review on ensembles for the class imbalance problem},
+journal = {IEEE Transactions on Systems, Man, and Cybernetics, Part C},
+volume  = {42},
+number  = {4},
+pages   = {463--484},
+year    = {2012},
+doi     = {10.1109/TSMCC.2011.2161285}
+}
 
-Las innovaciones incluyen \emph{cross-modal imputation} usando datos de modalidad espacial (ubicación geográfica, características estáticas) para imputar series temporales faltantes, \emph{dense connections} con \emph{skip connections} entre bloques \emph{transformer} (estilo DenseNet), y regularización \emph{Graph Laplacian} que preserva la estructura de grafo entre sensores/pacientes.
+@article{liu2009exploratory,
+author  = {X.-Y. Liu and J. Wu and Z.-H. Zhou},
+title   = {Exploratory undersampling for class-imbalance learning},
+journal = {IEEE Transactions on Systems, Man, and Cybernetics, Part B},
+volume  = {39},
+number  = {2},
+pages   = {539--550},
+year    = {2009},
+doi     = {10.1109/TSMCB.2008.2007853}
+}
 
-% =========================================================
-\section{Neural ODEs y Continuous-Time Models}
-% =========================================================
+@article{chawla2002smote,
+author  = {N. V. Chawla and K. W. Bowyer and L. O. Hall and W. P. Kegelmeyer},
+title   = {{SMOTE}: Synthetic minority over-sampling technique},
+journal = {Journal of Artificial Intelligence Research},
+volume  = {16},
+pages   = {321--357},
+year    = {2002},
+doi     = {10.1613/jair.953}
+}
 
-\subsection{Latent ODEs}
+@inproceedings{han2005borderline,
+author    = {H. Han and W.-Y. Wang and B.-H. Mao},
+title     = {Borderline-{SMOTE}: a new over-sampling method in imbalanced data sets learning},
+booktitle = {Advances in Intelligent Computing},
+pages     = {878--887},
+year      = {2005}
+% doi       = {10.1007/11538059_91}
+}
 
-Rubanova et al.\ (NeurIPS 2019)~\cite{rubanova2019latentode} propusieron \emph{Latent ODEs} para series temporales muestreadas irregularmente. En lugar de modelar series como secuencias discretas $\{x_1, x_2, \ldots, x_T\}$, modelan como dinámica continua $\mathrm{d}x/\mathrm{d}t = f(x,t)$. La arquitectura incluye un \emph{encoder} VAE que mapea observaciones irregulares a distribución latente $z_0$, un \emph{ODE Solver} que integra $\mathrm{d}z/\mathrm{d}t = f_\theta(z,t)$ para obtener $z(t)$ en cualquier $t$, y un \emph{decoder} que mapea $z(t)$ de vuelta al espacio observable $x(t)$.
+@inproceedings{he2008adasyn,
+author    = {H. He and Y. Bai and E. A. Garcia and S. Li},
+title     = {{ADASYN}: Adaptive synthetic sampling approach for imbalanced learning},
+booktitle = {Proceedings of the IEEE International Joint Conference on Neural Networks (IJCNN)},
+pages     = {1322--1328},
+year      = {2008},
+doi       = {10.1109/IJCNN.2008.4633969}
+}
 
-Las ventajas incluyen unificación de pacientes con distintas frecuencias de muestreo en un mismo modelo continuo, capacidad de consultar el valor en cualquier \emph{timestamp} (interpolación perfecta), y elegancia teórica superior a métodos discretos. Las limitaciones incluyen entrenamiento más complejo (requiriendo \emph{ODE solvers} diferenciables) y mayor lentitud que las RNNs debido a la integración numérica.
+@article{brandt2021comparison,
+author  = {J. Brandt},
+title   = {Comparison of {SMOTE} and {ADASYN} for imbalanced learning},
+journal = {DIVA Portal},
+year    = {2021}
+}
 
-\subsection{Neural CDEs}
+@inproceedings{zhao2022tsmote,
+author    = {Z. Zhao and others},
+title     = {{T-SMOTE}: Temporal-oriented synthetic minority oversampling technique for imbalanced time series classification},
+booktitle = {Proceedings of the 31st International Joint Conference on Artificial Intelligence (IJCAI)},
+pages     = {2423--2429},
+year      = {2022}
+}
 
-Las \emph{Neural Controlled Differential Equations} (CDEs)~\cite{kidger2020ncde} extienden las ODEs incorporando señales de control (\emph{inputs} externos) en la dinámica mediante la ecuación $\mathrm{d}z/\mathrm{d}t = f(z,t) \cdot \mathrm{d}x/\mathrm{d}t$. La aplicación es relevante cuando hay \emph{inputs} externos irregulares (insulina, comidas) que afectan la dinámica del sistema.
+@article{batista2004study,
+author  = {G. E. A. P. A. Batista and R. C. Prati and M. C. Monard},
+title   = {A study of the behavior of several methods for balancing machine learning training data},
+journal = {ACM SIGKDD Explorations Newsletter},
+volume  = {6},
+number  = {1},
+pages   = {20--29},
+year    = {2004},
+doi     = {10.1145/1007730.1007735}
+}
 
-% =========================================================
-\section{Comparación y Recomendaciones}
-% =========================================================
+@article{mehrabi2021survey,
+author  = {N. Mehrabi and F. Morstatter and N. Saxena and others},
+title   = {A survey on bias and fairness in machine learning},
+journal = {ACM Computing Surveys},
+volume  = {54},
+number  = {6},
+pages   = {1--35},
+year    = {2021},
+doi     = {10.1145/3457607}
+}
 
-La comparación entre modelos GAN muestra que RGAN~\cite{esteban2017rgan} no ofrece condicionamiento ni manejo de irregularidad/\emph{missingness}/desbalanceo; RCGAN añade condicionamiento básico; TimeGAN~\cite{yoon2019timegan} introduce dinámicas temporales pero sin condicionamiento; C-TimeGAN~\cite{liu2024ctimegan} proporciona condicionamiento avanzado y manejo de desbalanceo; MC-TimeGAN~\cite{demirel2025mctimegan} extiende a series multivariadas; DoppelGANger~\cite{lin2020doppelganger} maneja longitud variable con \emph{metadata}; HealthGen~\cite{bing2022healthgen} ofrece la solución más completa para irregularidad, \emph{missingness} y desbalanceo con foco en equidad; WGAN-GP~\cite{isasa2024wgangp} proporciona estabilidad pero depende de la implementación para el condicionamiento; y CTGAN-MSIN~\cite{ctganmsin2025} está específicamente diseñado para desbalanceo extremo.
+@article{li2022two,
+author  = {X. Li and others},
+title   = {Two-phase learning for imbalanced multiclass classification},
+journal = {IEEE Transactions on Cybernetics},
+year    = {2022}
+}
 
-Las técnicas más prometedoras por tipo de desbalanceo son las siguientes. Para \textbf{desbalanceo demográfico} (sexo, edad, raza), los modelos generativos condicionales C-TimeGAN, HealthGen y DoppelGANger generan sintéticos de subgrupos específicos manteniendo realismo. Para \textbf{desbalanceo de volumen} (pacientes con pocos datos), el \emph{data augmentation} mediante \emph{Time Warping}, \emph{Magnitude Warping} y \emph{Window Slicing}~\cite{iwana2021empirical}, junto con arquitecturas adaptativas como \emph{Variable-length LSTM} con PLE~\cite{bashiri2024variable}, multiplican datos sin generación sintética reduciendo el riesgo de artefactos. Para \textbf{desbalanceo de frecuencia} (sensores irregulares), la imputación avanzada mediante DSTTN~\cite{qian2024dsttn} y CoFormer~\cite{wei2023coformer}, los modelos continuos como \emph{Neural ODEs}~\cite{rubanova2019latentode}, y los \emph{Transformers} con \emph{Time Series Transformer} + \emph{Diffusion}~\cite{fadlon2025diffusion} manejan irregularidad nativamente sin descartar información. Para \textbf{desbalanceo de clase} (eventos raros), los métodos algorítmicos como \emph{Focal Loss}~\cite{lin2017focal} y \emph{Cost-Sensitive Hybrid Networks}~\cite{wang2024cshn}, el \emph{ensemble} mediante EasyEnsemble~\cite{liu2009exploratory} y BalanceCascade~\cite{spelmen2018balancecascade}, los generativos como T-SMOTE~\cite{zhao2022tsmote} y C-TimeGAN~\cite{liu2024ctimegan} para la clase minoritaria, y el post-procesamiento mediante \emph{Threshold Moving}~\cite{brownlee2020threshold} ofrecen soluciones eficaces, siendo \emph{Focal Loss} y \emph{Class Weights} los métodos más rápidos de probar al no requerir modificación de los datos.
-
-% =========================================================
-% REFERENCIAS — añadir al fichero .bib correspondiente
-% =========================================================
-%
-% A continuación se incluye una lista de entradas BibTeX
-% sugeridas. Cópialas a tu fichero .bib y ajusta los
-% campos que no estén completamente verificados.
-%
-% @article{chawla2002smote,
-%   author  = {N. V. Chawla and K. W. Bowyer and L. O. Hall and W. P. Kegelmeyer},
-%   title   = "{SMOTE: Synthetic Minority Over-sampling Technique}",
-%   journal = {\emph{Journal of Artificial Intelligence Research}},
-%   volume  = {16},
-%   pages   = {321--357},
-%   year    = {2002}
-% }
-%
-% @article{blagus2013smote,
-%   author  = {R. Blagus and L. Lusa},
-%   title   = "{SMOTE for high-dimensional class-imbalanced data}",
-%   journal = {\emph{BMC Bioinformatics}},
-%   volume  = {14},
-%   number  = {1},
-%   pages   = {106},
-%   year    = {2013}
-% }
-%
-% @misc{brownlee2020imbalanced,
-%   author = {J. Brownlee},
-%   title  = "{Random Oversampling and Undersampling for Imbalanced Classification}",
-%   howpublished = {\url{https://machinelearningmastery.com/random-oversampling-and-undersampling-for-imbalanced-classification/}},
-%   year   = {2020}
-% }
-%
-% @inproceedings{han2005borderline,
-%   author    = {H. Han and W.-Y. Wang and B.-H. Mao},
-%   title     = "{Borderline-SMOTE: A New Over-Sampling Method in Imbalanced Data Sets Learning}",
-%   booktitle = {\emph{Advances in Intelligent Computing}},
-%   pages     = {878--887},
-%   year      = {2005}
-% }
-%
-% @inproceedings{he2008adasyn,
-%   author    = {H. He and Y. Bai and E. A. Garcia and S. Li},
-%   title     = "{ADASYN: Adaptive Synthetic Sampling Approach for Imbalanced Learning}",
-%   booktitle = {\emph{Proceedings of the IEEE International Joint Conference on Neural Networks (IJCNN)}},
-%   pages     = {1322--1328},
-%   year      = {2008}
-% }
-%
-% @article{brandt2021comparison,
-%   author  = {J. Brandt},
-%   title   = "{Comparison of SMOTE and ADASYN for Imbalanced Learning}",
-%   journal = {\emph{DIVA Portal}},
-%   year    = {2021}
-% }
-%
-% @inproceedings{zhao2022tsmote,
-%   author    = {Z. Zhao and others},
-%   title     = "{T-SMOTE: Temporal-oriented Synthetic Minority Oversampling Technique for Imbalanced Time Series Classification}",
-%   booktitle = {\emph{Proceedings of the 31st International Joint Conference on Artificial Intelligence (IJCAI)}},
-%   pages     = {2423--2429},
-%   year      = {2022}
-% }
-%
-% @article{fonseca2022tsmote,
-%   author  = {J. Fonseca and others},
-%   title   = "{Time Sliced SMOTE for Imbalanced Time Series with Missing Data}",
-%   journal = {\emph{arXiv preprint arXiv:2201.05634}},
-%   year    = {2022}
-% }
-%
-% @inproceedings{lin2017focal,
-%   author    = {T.-Y. Lin and P. Goyal and R. Girshick and K. He and P. Dollár},
-%   title     = "{Focal Loss for Dense Object Detection}",
-%   booktitle = {\emph{Proceedings of the IEEE International Conference on Computer Vision (ICCV)}},
-%   pages     = {2980--2988},
-%   year      = {2017}
-% }
-%
-% @article{wang2021focal,
-%   author  = {L. Wang and others},
-%   title   = "{Focal Loss for Medical Image Classification}",
-%   journal = {\emph{PMC}},
-%   year    = {2021}
-% }
-%
-% @article{cyclicalfocal2022,
-%   author  = {Anonymous},
-%   title   = "{Cyclical Focal Loss}",
-%   journal = {\emph{arXiv preprint arXiv:2202.08978}},
-%   year    = {2022}
-% }
-%
-% @article{wang2024cshn,
-%   author  = {Z. Wang and others},
-%   title   = "{Cost-Sensitive Hybrid Network for Anomaly Detection in Imbalanced Time Series}",
-%   journal = {\emph{Expert Systems with Applications}},
-%   year    = {2024}
-% }
-%
-% @inproceedings{roychoudhury2017cost,
-%   author    = {S. Roychoudhury and others},
-%   title     = "{Cost Sensitive Time-series Classification}",
-%   booktitle = {\emph{Proceedings of the European Conference on Machine Learning}},
-%   year      = {2017}
-% }
-%
-% @article{liu2009exploratory,
-%   author  = {X.-Y. Liu and J. Wu and Z.-H. Zhou},
-%   title   = "{Exploratory Undersampling for Class-Imbalance Learning}",
-%   journal = {\emph{IEEE Transactions on Systems, Man, and Cybernetics, Part B}},
-%   volume  = {39},
-%   number  = {2},
-%   pages   = {539--550},
-%   year    = {2009}
-% }
-%
-% @article{spelmen2018balancecascade,
-%   author  = {V. S. Spelmen and R. Porkodi},
-%   title   = "{A Review on Handling Imbalanced Data}",
-%   journal = {\emph{PMC}},
-%   year    = {2018}
-% }
-%
-% @article{wang2017bebs,
-%   author  = {Q. Wang and others},
-%   title   = "{BEBS: Bagging of Extrapolation Borderline-SMOTE SVM}",
-%   journal = {\emph{PMC}},
-%   year    = {2017}
-% }
-%
-% @misc{brownlee2020threshold,
-%   author = {J. Brownlee},
-%   title  = "{Threshold Moving for Imbalanced Classification}",
-%   howpublished = {\url{https://machinelearningmastery.com/threshold-moving-for-imbalanced-classification/}},
-%   year   = {2020}
-% }
-%
-% @article{riniker2021ghost,
-%   author  = {S. Riniker and others},
-%   title   = "{GHOST: Adjusting the Decision Threshold to Handle Imbalanced Data in Machine Learning}",
-%   journal = {\emph{Journal of Chemical Information and Modeling}},
-%   year    = {2021}
-% }
-%
-% @article{iwana2021empirical,
-%   author  = {B. K. Iwana and S. Uchida},
-%   title   = "{An Empirical Survey of Data Augmentation for Time Series Classification with Neural Networks}",
-%   journal = {\emph{PLOS ONE}},
-%   volume  = {16},
-%   number  = {7},
-%   year    = {2021}
-% }
-%
-% @article{esteban2017rgan,
-%   author  = {C. Esteban and S. L. Hyland and G. Rätsch},
-%   title   = "{Real-valued (Medical) Time Series Generation with Recurrent Conditional GANs}",
-%   journal = {\emph{arXiv preprint arXiv:1706.02633}},
-%   year    = {2017}
-% }
-%
-% @article{lin2020doppelganger,
-%   author  = {Z. Lin and others},
-%   title   = "{Using GANs for Sharing Networked Time Series Data: Challenges, Initial Promise, and Open Questions}",
-%   journal = {\emph{arXiv preprint arXiv:1909.13403}},
-%   year    = {2020}
-% }
-%
-% @misc{gretelai2022doppelganger,
-%   author = {{Gretel AI}},
-%   title  = "{Create Synthetic Time Series with DoppelGANger and PyTorch}",
-%   howpublished = {\url{https://www.gretel.ai/blog/create-synthetic-time-series-with-doppelganger-and-pytorch}},
-%   year   = {2022}
-% }
-%
-% @misc{mckinney2024doppelganger,
-%   author = {Anonymous},
-%   title  = "{DoppelGANger: Auto-normalization and Mode Collapse}",
-%   howpublished = {\url{https://arxiv.org/html/2405.20959v1}},
-%   year   = {2024}
-% }
-%
-% @inproceedings{yoon2019timegan,
-%   author    = {J. Yoon and D. Jarrett and M. van der Schaar},
-%   title     = "{Time-series Generative Adversarial Networks}",
-%   booktitle = {\emph{Advances in Neural Information Processing Systems (NeurIPS)}},
-%   year      = {2019}
-% }
-%
-% @article{liu2024ctimegan,
-%   author  = {Z. Liu and others},
-%   title   = "{Conditional-TimeGAN for Realistic and High-quality Appliance Trajectories Generation}",
-%   journal = {\emph{ResearchGate}},
-%   year    = {2024}
-% }
-%
-% @misc{zhang2022ccgan,
-%   author = {Y. Zhang and others},
-%   title  = "{Continuous Conditional GANs with Generator Regularization}",
-%   howpublished = {\url{https://openreview.net/pdf/a314da3379d678f622a913c79365c620d5d935e5.pdf}},
-%   year   = {2022}
-% }
-%
-% @misc{demirel2025mctimegan,
-%   author = {B. Demirel and others},
-%   title  = "{MC-TimeGAN: Multivariate Conditional TimeGAN}",
-%   howpublished = {GitHub},
-%   year   = {2025}
-% }
-%
-% @article{ctganmsin2025,
-%   author  = {Anonymous},
-%   title   = "{A Gradient-Penalized Conditional TimeGAN Combined with Multi-Scale Importance-aware Network}",
-%   journal = {\emph{arXiv preprint}},
-%   year    = {2025}
-% }
-%
-% @article{bing2022healthgen,
-%   author  = {A. Bing and others},
-%   title   = "{HealthGen: Equitable Synthetic EHR Generation}",
-%   journal = {\emph{PMC}},
-%   year    = {2022}
-% }
-%
-% @article{isasa2024wgangp,
-%   author  = {I. Isasa and others},
-%   title   = "{WGAN-GP for Medical Time Series Synthesis with Alignment Loss}",
-%   journal = {\emph{BMC Medical Informatics and Decision Making}},
-%   year    = {2024}
-% }
-%
-% @article{liu2025hracgan,
-%   author  = {Z. Liu and others},
-%   title   = "{HR-ACGAN: High Reliability Auxiliary Classifier GAN for Imbalanced Time Series}",
-%   journal = {\emph{Entropy}},
-%   volume  = {27},
-%   number  = {2},
-%   year    = {2025}
-% }
-%
-% @article{fadlon2025diffusion,
-%   author  = {Y. Fadlon and others},
-%   title   = "{Diffusion Models for Irregular Time Series Generation}",
-%   journal = {\emph{arXiv preprint arXiv:2510.06699}},
-%   year    = {2025}
-% }
-%
-% @inproceedings{rasul2021timegrad,
-%   author    = {K. Rasul and others},
-%   title     = "{Autoregressive Denoising Diffusion Models for Multivariate Probabilistic Time Series Forecasting}",
-%   booktitle = {\emph{Proceedings of the International Conference on Machine Learning (ICML)}},
-%   year      = {2021}
-% }
-%
-% @article{alcaraz2022sssd,
-%   author  = {J. M. Alcaraz and N. Strodthoff},
-%   title   = "{Diffusion-based Time Series Imputation and Forecasting with Structured State Space Models}",
-%   journal = {\emph{arXiv preprint}},
-%   year    = {2022}
-% }
-%
-% @article{nikolentzos2023vgae,
-%   author  = {G. Nikolentzos and others},
-%   title   = "{Synthetic EHR Generation with Variational Graph Autoencoders}",
-%   journal = {\emph{npj Digital Medicine}},
-%   year    = {2023}
-% }
-%
-% @article{ijaia2025vae,
-%   author  = {Anonymous},
-%   title   = "{VAE Framework for Synthetic Healthcare Data Generation}",
-%   journal = {\emph{International Journal of Artificial Intelligence \& Applications}},
-%   volume  = {16},
-%   number  = {3},
-%   year    = {2025}
-% }
-%
-% @article{multitaskvae2024,
-%   author  = {Anonymous},
-%   title   = "{Multitask VAE for Glucose Forecasting with Missing Data}",
-%   journal = {\emph{arXiv preprint arXiv:2410.00015}},
-%   year    = {2024}
-% }
-%
-% @article{bashiri2024variable,
-%   author  = {M. Bashiri and others},
-%   title   = "{Clinical Prediction Models from Variable-Length EHR Time Series}",
-%   journal = {\emph{PubMed}},
-%   year    = {2024}
-% }
-%
-% @article{wei2023coformer,
-%   author  = {T. Wei and others},
-%   title   = "{CoFormer: Compatible Transformer for Irregularly Sampled Multivariate Time Series}",
-%   journal = {\emph{arXiv preprint arXiv:2310.11022}},
-%   year    = {2023}
-% }
-%
-% @inproceedings{li2023vitst,
-%   author    = {Z. Li and others},
-%   title     = "{ViTST: Time Series Classification by Rethinking Visual Statistical Features}",
-%   booktitle = {\emph{Advances in Neural Information Processing Systems (NeurIPS)}},
-%   year      = {2023}
-% }
-%
-% @article{qian2024dsttn,
-%   author  = {J. Qian and others},
-%   title   = "{DSTTN: Dense Spatio-Temporal Transformer Network for Time Series Imputation}",
-%   journal = {\emph{Mathematical Biosciences and Engineering}},
-%   year    = {2024}
-% }
-%
-% @inproceedings{rubanova2019latentode,
-%   author    = {Y. Rubanova and R. T. Q. Chen and D. Duvenaud},
-%   title     = "{Latent Ordinary Differential Equations for Irregularly-Sampled Time Series}",
-%   booktitle = {\emph{Advances in Neural Information Processing Systems (NeurIPS)}},
-%   year      = {2019}
-% }
-%
-% @article{kidger2020ncde,
-%   author  = {P. Kidger and J. Morrill and J. Foster and T. Lyons},
-%   title   = "{Neural Controlled Differential Equations for Irregular Time Series}",
-%   journal = {\emph{arXiv preprint arXiv:2005.08926}},
-%   year    = {2020}
-% }
-%
-% @article{goodfellow2014generative,
-%   author  = {I. Goodfellow and others},
-%   title   = "{Generative Adversarial Nets}",
-%   journal = {\emph{arXiv preprint arXiv:1406.2661}},
-%   year    = {2014}
-% }
-%
-% @misc{omdena2021timeseries,
-%   author = {{Omdena}},
-%   title  = "{Time Series Classification Model Tutorial}",
-%   howpublished = {\url{https://www.omdena.com/blog/time-series-classification-model-tutorial}},
-%   year   = {2021}
-% }
-%
-% @misc{phuong2021imbalanced,
-%   author = {T. M. Phuong},
-%   title  = "{Imbalanced Learning: Sampling Techniques}",
-%   howpublished = {\url{https://tungmphung.com/imbalanced-learning-sampling-techniques/}},
-%   year   = {2021}
-% }
+@article{rodriguez2023diatrend,
+author  = {J. D. D{\'i}az-L{\'o}pez and C. Rodriguez-Mañas and others},
+title   = {Glucose variability patterns in type 1 diabetes using {CGM} {Dexcom} devices},
+journal = {arXiv preprint},
+year    = {2023}
+}
