@@ -49,7 +49,6 @@ import psutil
 import subprocess
 import json
 import re
-import glob
 # ----------------------- End imports -----------------------
 
 # ----------------------- Custom losses mapping -----------------------
@@ -95,11 +94,6 @@ maximum_sensor_reading = 401 # Diatrend and REPLACE-BG
 
 minimum_sensor_reading = 39 # Diatrend and REPLACE-BG
 # minimum_sensor_reading = 40 # T1DiabetesGranada
-
-use_balanced_trainset = True
-balanced_group = 'sex'
-balanced_technique = 'undersampling'
-balanced_outputs_dir = os.path.join(os.path.dirname(windows_path.rstrip('/\\')), 'balanced_outputs') + os.sep
 
 experiment_context = "extra_fields_test"
 # ----------------------- End Config -----------------------
@@ -234,29 +228,6 @@ def build_experiment_dir(algo: str, loss_name: str, ph_value, history_len: int, 
         os.makedirs(os.path.join(exp_dir, sub), exist_ok=True)
     return exp_dir
 # ----------------------- End experiment directory helpers -----------------------
-
-
-def resolve_data_file_path(current_horizon: int, fold_idx: int) -> str:
-    base_file = f"{windows_path}windows_with_5folds_{dataset_name}_PH{current_horizon}.parquet"
-
-    if not use_balanced_trainset:
-        return base_file
-
-    balanced_search_dirs = [
-        balanced_outputs_dir,
-        os.path.join(os.path.dirname(__file__), os.pardir, 'data', dataset_name, 'balanced_outputs') + os.sep,
-    ]
-
-    for search_dir in balanced_search_dirs:
-        pattern = os.path.join(
-            os.path.abspath(search_dir),
-            f"windows_with_5folds_{dataset_name}*PH{current_horizon}_fold{fold_idx}_{balanced_group}_{balanced_technique}.parquet",
-        )
-        matches = sorted(glob.glob(pattern))
-        if matches:
-            return matches[0]
-
-    return base_file
 
 # ----------------------- Models -----------------------
 class LSTMModel:
@@ -432,7 +403,9 @@ try:
                     for i in range(k_folds):
                         current_fold = i + 1
                         current_name = f"{loss_function_name}_{current_algorithm}_H{current_horizon}_Fold{current_fold}"
-                        data_file_path = resolve_data_file_path(current_horizon, i)
+                        # data_file_path = f"{windows_path}windows_with_folds_horizon_{current_horizon}.parquet" (FIX) windows_with_5folds_DiaTrend_PH12
+                        data_file_path = f"{windows_path}windows_with_5folds_{dataset_name}_PH{current_horizon}.parquet" #(FIX) #windows_with_5folds_DiaTrend_PH12
+                        # data_file_path = windows_path
 
                         print(f"\n---- Loading data for Fold {current_fold}/{k_folds} from: {data_file_path} ----")
                         df = pd.read_parquet(data_file_path)

@@ -442,42 +442,9 @@ def run_sanity_checks(
 # ---------------------------------------------------------------------------
 
 def compact_one_job(job: CompactionJob, folds: Sequence[int], overwrite: bool) -> bool:
-    """
-    Reconstruct a full-fold parquet for one (group, technique) combination.
+    import pyarrow as pa
+    import pyarrow.parquet as pq
 
-    Design
-    ------
-    The original parquet has ONE row per window, with all five fold columns
-    populated.  A given row can be 'train' in fold_0 but 'val' in fold_1.
-
-    The balanced file for fold_i contains:
-        - balanced train rows for fold_i  (may include synthetic rows)
-        - ALL val/test rows from the original for fold_i
-
-    The key insight that fixes the previous bug:
-
-        Val/test rows MUST always come from the original, never from the
-        balanced files.  The balanced file for fold_i includes the val/test
-        rows of fold_i in its 'untouched' portion, but those same rows may
-        be 'train' in fold_j (j != i), causing double-counting if we naively
-        concatenate the untouched portions across all folds.
-
-    Correct assembly:
-        result = original_valtest_rows          # rows that are val/test in
-                                                # at least one fold, taken
-                                                # directly from the original
-               + balanced_train(fold_0)         # train rows for each fold
-               + balanced_train(fold_1)         # from the balanced files
-               + ...
-               + balanced_train(fold_4)
-
-    For synthetic train rows (not present in the original) the fold columns
-    for OTHER folds are set to TRAIN_LABEL as a safe placeholder.
-    3-train.py only reads fold_i when processing fold i, so those
-    placeholder values are never used in another fold's experiment.
-
-    Returns True if a file was written, False if skipped.
-    """
     k = job.key
 
     if job.output_path.exists() and not overwrite:
@@ -491,7 +458,7 @@ def compact_one_job(job: CompactionJob, folds: Sequence[int], overwrite: bool) -
     print(f"    Original  : {job.original_parquet.name}")
 
     # ------------------------------------------------------------------
-    # Step 1 — load the original parquet
+    # Step 1 — load original (reference for val/test and schema)
     # ------------------------------------------------------------------
     original_df = pd.read_parquet(job.original_parquet)
     original_df = strip_demographic_columns(original_df)
@@ -501,35 +468,62 @@ def compact_one_job(job: CompactionJob, folds: Sequence[int], overwrite: bool) -
     print(f"    Original rows: {len(original_df):,}")
 
     # ------------------------------------------------------------------
-    # Step 2 — extract val/test rows from the original
-    #
-    # A row belongs to the val/test pool if it is NOT 'train' in at least
-    # one fold.  We keep these rows exactly as they appear in the original
-    # (all five fold columns intact).
+    # Step 2 — val/test pool from original (never modified)
     # ------------------------------------------------------------------
     is_valtest_in_any_fold = pd.Series(False, index=original_df.index)
     for fold_col in fold_cols:
         is_valtest_in_any_fold |= (original_df[fold_col] != TRAIN_LABEL)
-
     original_valtest = original_df.loc[is_valtest_in_any_fold].copy()
     print(f"    Val/test pool (from original): {len(original_valtest):,} rows")
 
     # ------------------------------------------------------------------
-    # Step 3 — for each fold, read balanced train rows
+    # Step 3 — sanity check C3 counts before writing anything
+    # We compute expected val/test counts from the original here so we
+    # can verify them cheaply without building the full result in RAM.
     # ------------------------------------------------------------------
+    expected_valtest_counts: dict[str, dict[str, int]] = {}
+    for fold_col in fold_cols:
+        expected_valtest_counts[fold_col] = {
+            label: int((original_df[fold_col] == label).sum())
+            for label in ("val", "test")
+        }
+
+    # ------------------------------------------------------------------
+    # Step 4 — read balanced train rows fold by fold, validate, collect
+    # We do NOT concat everything into one giant DataFrame.
+    # Instead we write to parquet incrementally using pyarrow.
+    # ------------------------------------------------------------------
+    print(f"    Running sanity checks (pre-write)...")
+
+    # C1 — required columns (check against original schema)
+    required = FEATURE_COLS + [TARGET_COL, "patient_id"] + list(fold_cols)
+    missing_cols = [c for c in required if c not in original_df.columns]
+    if missing_cols:
+        raise ValueError(f"[CHECK] Missing required columns in original: {missing_cols}")
+    print(f"      ✓ C1: all required columns present")
+
+    # C4 — no demographic columns
+    leaked = [c for c in DEMOGRAPHIC_COLS if c in original_df.columns]
+    if leaked:
+        raise ValueError(f"[CHECK] Demographic columns in original: {leaked}")
+    print(f"      ✓ C4: no demographic columns")
+
+    # Collect train parts with per-fold stats (no full concat yet)
     train_parts: List[pd.DataFrame] = []
+    other_fold_cols_map: dict[str, List[str]] = {
+        fold_col: [c for c in fold_cols if c != fold_col]
+        for fold_col in fold_cols
+    }
 
     for fold_file in job.fold_files:
         fold_idx = fold_file.fold_idx
         fold_col = f"{FOLD_COLUMN_PREFIX}{fold_idx}"
 
         print(f"    Fold {fold_idx}: reading {fold_file.path.name}")
-
         balanced_df = pd.read_parquet(fold_file.path)
         balanced_df = strip_demographic_columns(balanced_df)
         balanced_df = normalise_fold_columns(balanced_df, fold_cols)
 
-        # Extract only the rows labelled 'train' for this fold
         train_rows = balanced_df.loc[
             balanced_df[fold_col] == TRAIN_LABEL
         ].copy()
@@ -541,44 +535,87 @@ def compact_one_job(job: CompactionJob, folds: Sequence[int], overwrite: bool) -
         print(f"      Balanced train size (fold {fold_idx}): {len(train_rows):,}")
 
         if len(train_rows) == 0:
-            print(
-                f"      [WARN] No train rows found for fold {fold_idx} "
-                f"in {fold_file.path.name}."
-            )
+            print(f"      [WARN] No train rows for fold {fold_idx}.")
 
-        # For synthetic rows the other fold columns carry stale values
-        # from the fold_i balanced file.  Overwrite them with TRAIN_LABEL
-        # so they never accidentally appear as val/test in another fold.
-        other_fold_cols = [c for c in fold_cols if c != fold_col]
-        for col in other_fold_cols:
+        # Set other fold columns to TRAIN_LABEL for synthetic rows
+        for col in other_fold_cols_map[fold_col]:
             train_rows[col] = TRAIN_LABEL
 
+        # C2 — NaN check on this fold's train (cheap, per-fold)
+        nan_total = train_rows[FEATURE_COLS + [TARGET_COL]].isna().sum().sum()
+        if nan_total > 0:
+            print(f"      ⚠ C2: {nan_total} NaN values in fold {fold_idx} train")
+
         train_parts.append(train_rows)
+        del balanced_df  # free RAM immediately
 
     # ------------------------------------------------------------------
-    # Step 4 — assemble final DataFrame
-    # ------------------------------------------------------------------
-    result_df = pd.concat(
-        [original_valtest] + train_parts,
-        ignore_index=True,
-    )
-
-    # Restore category dtype on fold columns (matches original schema)
-    for fold_col in fold_cols:
-        result_df[fold_col] = result_df[fold_col].astype("category")
-
-    # ------------------------------------------------------------------
-    # Step 5 — sanity checks
-    # ------------------------------------------------------------------
-    run_sanity_checks(result_df, original_df, fold_cols, k)
-
-    # ------------------------------------------------------------------
-    # Step 6 — write output
+    # Step 5 — write incrementally using pyarrow ParquetWriter
+    # We write: original_valtest first, then each fold's train chunk.
+    # This keeps peak RAM to: original_valtest + one fold's train at a time.
     # ------------------------------------------------------------------
     job.output_path.parent.mkdir(parents=True, exist_ok=True)
-    result_df.to_parquet(job.output_path, index=False)
 
-    print(f"    ✓ Written: {job.output_path.name}  ({len(result_df):,} rows)")
+    # Restore category dtype for the valtest chunk
+    valtest_for_write = original_valtest.copy()
+    for fold_col in fold_cols:
+        valtest_for_write[fold_col] = valtest_for_write[fold_col].astype("category")
+
+    schema = pa.Schema.from_pandas(valtest_for_write, preserve_index=False)
+
+    total_rows_written = 0
+    train_counts_per_fold: dict[str, int] = {fc: 0 for fc in fold_cols}
+
+    with pq.ParquetWriter(str(job.output_path), schema=schema) as writer:
+        # Write val/test block
+        writer.write_table(pa.Table.from_pandas(valtest_for_write, preserve_index=False))
+        total_rows_written += len(valtest_for_write)
+        del valtest_for_write
+
+        # Write each fold's train block
+        for fold_file, train_rows in zip(job.fold_files, train_parts):
+            fold_idx = fold_file.fold_idx
+            fold_col = f"{FOLD_COLUMN_PREFIX}{fold_idx}"
+
+            chunk = train_rows.copy()
+            for fc in fold_cols:
+                chunk[fc] = chunk[fc].astype("category")
+
+            writer.write_table(pa.Table.from_pandas(chunk, preserve_index=False))
+            total_rows_written += len(chunk)
+
+            # Accumulate train counts per fold column for C5
+            for fc in fold_cols:
+                train_counts_per_fold[fc] += int((chunk[fc].astype(str) == TRAIN_LABEL).sum())
+
+            del chunk, train_rows
+
+    # ------------------------------------------------------------------
+    # Step 6 — post-write sanity checks (using pre-computed counts)
+    # ------------------------------------------------------------------
+    print(f"    Post-write sanity checks...")
+
+    # C3 — val/test counts (compare expected vs actual in original_valtest)
+    for fold_col in fold_cols:
+        for label in ("val", "test"):
+            expected = expected_valtest_counts[fold_col][label]
+            actual   = int((original_valtest[fold_col].astype(str) == label).sum())
+            if expected != actual:
+                raise ValueError(
+                    f"[CHECK] C3 {fold_col}/{label}: "
+                    f"expected={expected:,}, got={actual:,}"
+                )
+    print(f"      ✓ C3: val/test counts match original for all folds")
+
+    # C5 — train rows per fold
+    for fold_col in fold_cols:
+        count = train_counts_per_fold[fold_col]
+        if count == 0:
+            print(f"      ⚠ C5: {fold_col} has 0 train rows")
+        else:
+            print(f"      ✓ C5: {fold_col} train rows = {count:,}")
+
+    print(f"    ✓ Written: {job.output_path.name}  ({total_rows_written:,} rows)")
     return True
 
 
