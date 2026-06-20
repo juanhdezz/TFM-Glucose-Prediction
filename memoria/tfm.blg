@@ -1,0 +1,51 @@
+This is BibTeX, Version 0.99e (TeX Live 2026)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: tfm.aux
+The style file: ieeetr.bst
+Database file #1: bibliografia.bib
+Warning--entry type for "diaz2023t1dgranada" isn't style-file defined
+--line 893 of file bibliografia.bib
+Warning--empty journal in mirshekarian2019using
+Warning--empty journal in wang2024disparate
+You've used 37 entries,
+            1876 wiz_defined-function locations,
+            672 strings with 10115 characters,
+and the built_in function-call counts, 8173 in all, are:
+= -- 743
+> -- 411
+< -- 0
++ -- 150
+- -- 113
+* -- 545
+:= -- 1228
+add.period$ -- 46
+call.type$ -- 37
+change.case$ -- 37
+chr.to.int$ -- 0
+cite$ -- 39
+duplicate$ -- 428
+empty$ -- 808
+format.name$ -- 113
+if$ -- 1975
+int.to.chr$ -- 0
+int.to.str$ -- 37
+missing$ -- 32
+newline$ -- 123
+num.names$ -- 37
+pop$ -- 156
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 236
+stack$ -- 0
+substring$ -- 291
+swap$ -- 131
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 2
+while$ -- 66
+width$ -- 39
+write$ -- 349
+(There were 3 warnings)

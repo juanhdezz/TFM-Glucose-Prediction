@@ -1,0 +1,193 @@
+{
+  "main": {
+    "id": "e54cb6f0cf888124",
+    "type": "split",
+    "children": [
+      {
+        "id": "af5c3c0b4b7da0c5",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e49a2b2658900165",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "Nueva pestaña"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "de9d3e19b893e0bd",
+    "type": "split",
+    "children": [
+      {
+        "id": "6cff13f252fbde2e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "84de27cf1b1cf23d",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Explorador de archivos"
+            }
+          },
+          {
+            "id": "317adb7f118fb0bf",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Buscar"
+            }
+          },
+          {
+            "id": "3fee68094374666e",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Marcadores"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "98bf35662f9af95a",
+    "type": "split",
+    "children": [
+      {
+        "id": "07b839aa57341007",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9eae3bea03d2a029",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "05_MOCs/MOC_Balancing.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Enlaces entrantes de MOC_Balancing"
+            }
+          },
+          {
+            "id": "dcd460ae020c9581",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "05_MOCs/MOC_Balancing.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Enlaces salientes de MOC_Balancing"
+            }
+          },
+          {
+            "id": "14b057ea5d075b8b",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Etiquetas"
+            }
+          },
+          {
+            "id": "7b9f2740e7cc1c93",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "Todas las propiedades"
+            }
+          },
+          {
+            "id": "32b2f46c7d292ee1",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "05_MOCs/MOC_Balancing.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Esquema de MOC_Balancing"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Abrir selector rápido": false,
+      "graph:Abrir vista gráfica": false,
+      "canvas:Crear nuevo lienzo": false,
+      "daily-notes:Abrir la nota de hoy": false,
+      "templates:Insertar plantilla": false,
+      "command-palette:Abrir paleta de comandos": false,
+      "bases:Crear nueva base": false
+    }
+  },
+  "active": "84de27cf1b1cf23d",
+  "lastOpenFiles": [
+    "Reference Proportional.md",
+    "05_MOCs/MOC_Balancing.md",
+    "01_Knowledge/Balancing/Smote.md",
+    "2b-trainset_balancing.md",
+    "00_Home/Dashboard.md",
+    "05_MOCs/MOC_Memoria.md",
+    "05_MOCs/MOC_Datasets.md",
+    "02_Project/Notebooks/01_Inspection_DIATREND.ipynb.md"
+  ]
+}

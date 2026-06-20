@@ -27,32 +27,32 @@
 \contentsline {subsection}{\numberline {2.5.7}Comparativa de técnicas}{13}{subsection.2.5.7}%
 \contentsline {subsection}{\numberline {2.5.8}Discusión y técnica seleccionada}{13}{subsection.2.5.8}%
 \contentsline {section}{\numberline {2.6}Brechas en la literatura y motivación del presente trabajo}{14}{section.2.6}%
-\contentsline {chapter}{\numberline {3}Desarrollo del TFM}{19}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Cómo colocar tablas y figuras}{19}{section.3.1}%
-\contentsline {chapter}{\numberline {4}Resultados y discusión}{21}{chapter.4}%
-\contentsline {chapter}{\numberline {5}Conclusiones}{25}{chapter.5}%
-\contentsline {chapter}{Bibliografía}{30}{chapter*.15}%
-\contentsline {chapter}{\numberline {A}Ejemplo de anexo: Planificación y gestión del proyecto (opcional)}{31}{appendix.Alph1}%
-\contentsline {section}{\numberline {A.1}Metodología/Ciclo de vida}{32}{section.Alph1.1}%
-\contentsline {section}{\numberline {A.2}Herramientas y plataformas utilizadas para el desarrollo del proyecto}{32}{section.Alph1.2}%
-\contentsline {section}{\numberline {A.3}Costes del proyecto}{32}{section.Alph1.3}%
-\contentsline {section}{\numberline {A.4}Gestión del proyecto. Planificación temporal. Diagrama de Gantt}{32}{section.Alph1.4}%
-\contentsline {section}{\numberline {A.5}Texto añadido}{32}{section.Alph1.5}%
-\contentsline {chapter}{\numberline {B}Ejemplo de anexo: Innovación (opcional)}{35}{appendix.Alph2}%
-\contentsline {section}{\numberline {B.1}Estudio del Mercado}{35}{section.Alph2.1}%
-\contentsline {subsection}{\numberline {B.1.1}Segmentos de Clientes}{35}{subsection.Alph2.1.1}%
-\contentsline {subsection}{\numberline {B.1.2}Competidores}{35}{subsection.Alph2.1.2}%
-\contentsline {section}{\numberline {B.2}Propuesta de Valor}{35}{section.Alph2.2}%
-\contentsline {section}{\numberline {B.3}Recursos Clave}{35}{section.Alph2.3}%
-\contentsline {section}{\numberline {B.4}Actividades Clave}{35}{section.Alph2.4}%
-\contentsline {section}{\numberline {B.5}Socios y Alianzas Clave}{35}{section.Alph2.5}%
-\contentsline {section}{\numberline {B.6}Estructura de Costes Prevista}{36}{section.Alph2.6}%
-\contentsline {section}{\numberline {B.7}Vías de Ingresos}{36}{section.Alph2.7}%
-\contentsline {section}{\numberline {B.8}Canales de Distribución}{36}{section.Alph2.8}%
-\contentsline {section}{\numberline {B.9}Relación con los Clientes}{36}{section.Alph2.9}%
-\contentsline {section}{\numberline {B.10}Descripción del Producto Mínimo Viable}{36}{section.Alph2.10}%
-\contentsline {section}{\numberline {B.11}Roadmap de Desarrollo}{36}{section.Alph2.11}%
-\contentsline {section}{\numberline {B.12}Aspectos Legales}{36}{section.Alph2.12}%
-\contentsline {section}{\numberline {B.13}Texto añadido}{36}{section.Alph2.13}%
-\contentsline {chapter}{\numberline {C}Ejemplo de anexo: Manual de usuario (opcional)}{39}{appendix.Alph3}%
-\contentsline {section}{\numberline {C.1}Texto añadido}{39}{section.Alph3.1}%
+\contentsline {chapter}{\numberline {3}Desarrollo del TFM}{17}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Cómo colocar tablas y figuras}{17}{section.3.1}%
+\contentsline {chapter}{\numberline {4}Resultados y discusión}{19}{chapter.4}%
+\contentsline {chapter}{\numberline {5}Conclusiones}{23}{chapter.5}%
+\contentsline {chapter}{Bibliografía}{27}{chapter*.15}%
+\contentsline {chapter}{\numberline {A}Ejemplo de anexo: Planificación y gestión del proyecto (opcional)}{29}{appendix.Alph1}%
+\contentsline {section}{\numberline {A.1}Metodología/Ciclo de vida}{30}{section.Alph1.1}%
+\contentsline {section}{\numberline {A.2}Herramientas y plataformas utilizadas para el desarrollo del proyecto}{30}{section.Alph1.2}%
+\contentsline {section}{\numberline {A.3}Costes del proyecto}{30}{section.Alph1.3}%
+\contentsline {section}{\numberline {A.4}Gestión del proyecto. Planificación temporal. Diagrama de Gantt}{30}{section.Alph1.4}%
+\contentsline {section}{\numberline {A.5}Texto añadido}{30}{section.Alph1.5}%
+\contentsline {chapter}{\numberline {B}Ejemplo de anexo: Innovación (opcional)}{33}{appendix.Alph2}%
+\contentsline {section}{\numberline {B.1}Estudio del Mercado}{33}{section.Alph2.1}%
+\contentsline {subsection}{\numberline {B.1.1}Segmentos de Clientes}{33}{subsection.Alph2.1.1}%
+\contentsline {subsection}{\numberline {B.1.2}Competidores}{33}{subsection.Alph2.1.2}%
+\contentsline {section}{\numberline {B.2}Propuesta de Valor}{33}{section.Alph2.2}%
+\contentsline {section}{\numberline {B.3}Recursos Clave}{33}{section.Alph2.3}%
+\contentsline {section}{\numberline {B.4}Actividades Clave}{33}{section.Alph2.4}%
+\contentsline {section}{\numberline {B.5}Socios y Alianzas Clave}{33}{section.Alph2.5}%
+\contentsline {section}{\numberline {B.6}Estructura de Costes Prevista}{34}{section.Alph2.6}%
+\contentsline {section}{\numberline {B.7}Vías de Ingresos}{34}{section.Alph2.7}%
+\contentsline {section}{\numberline {B.8}Canales de Distribución}{34}{section.Alph2.8}%
+\contentsline {section}{\numberline {B.9}Relación con los Clientes}{34}{section.Alph2.9}%
+\contentsline {section}{\numberline {B.10}Descripción del Producto Mínimo Viable}{34}{section.Alph2.10}%
+\contentsline {section}{\numberline {B.11}Roadmap de Desarrollo}{34}{section.Alph2.11}%
+\contentsline {section}{\numberline {B.12}Aspectos Legales}{34}{section.Alph2.12}%
+\contentsline {section}{\numberline {B.13}Texto añadido}{34}{section.Alph2.13}%
+\contentsline {chapter}{\numberline {C}Ejemplo de anexo: Manual de usuario (opcional)}{37}{appendix.Alph3}%
+\contentsline {section}{\numberline {C.1}Texto añadido}{37}{section.Alph3.1}%
