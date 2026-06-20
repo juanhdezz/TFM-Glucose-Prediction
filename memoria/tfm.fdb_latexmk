@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex tfm"] 1781078823.79914 "tfm.aux" "tfm.bbl" "tfm" 1781080764.14215 0
+["bibtex tfm"] 1781870637.98015 "tfm.aux" "tfm.bbl" "tfm" 1781941667.49518 0
   "./bibliografia.bib" 1781078822 27482 6edafb0ddf2aad378612b3d9bc56b238 ""
   "c:/texlive/2026/texmf-dist/bibtex/bst/base/ieeetr.bst" 1774463995 18361 1a00e58565e7f19bf2b3e1bfb82254ae ""
-  "tfm.aux" 1781080762 17679 1496f6c7554b94de4b782aa68e1af1b9 "pdflatex"
+  "tfm.aux" 1781941665 17391 0ae97055f968b257a3362b76bb4ba74c "pdflatex"
   (generated)
   "tfm.bbl"
   "tfm.blg"
   (rewritten before read)
-["pdflatex"] 1781080760.7129 "c:/Users/User/Desktop/TFM-Glucose-Prediction/memoria/tfm.tex" "tfm.pdf" "tfm" 1781080764.1429 0
+["pdflatex"] 1781941663.30752 "c:/Users/User/Desktop/TFM-Glucose-Prediction/memoria/tfm.tex" "tfm.pdf" "tfm" 1781941667.49621 2
   "agradecimientos.tex" 1774617311 102 9ecc95802b675b250060a5dd88a42a1d ""
   "anexos/gestion.tex" 1774617311 1943 416f11d7d153174b9357e8712bf18fa8 ""
   "anexos/innovacion.tex" 1774617311 1599 f44ec68ae8d12055c7c7f7671eaa24b0 ""
@@ -150,7 +150,7 @@
   "c:/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt" 1774472895 3636419 4cd8542d85888f55926f6186f07dae63 ""
   "c:/texlive/2026/texmf.cnf" 1774472573 713 e69b156964470283e0530f5060668171 ""
   "capitulos/01_Introduccion.tex" 1774617311 3791 35f12d7dc93840e2032633a404764829 ""
-  "capitulos/02_Estado_del_arte.tex" 1781080572 74447 9547061bb47c773f86cf39175b6620e3 ""
+  "capitulos/02_Estado_del_arte.tex" 1781941654 54688 046ac85e7ca23f716a2ab30aa74ba4e9 ""
   "capitulos/03_Desarrollo_del_TFM.tex" 1774617311 1755 aeb1d975ae324a9ca612586cb0839970 ""
   "capitulos/04_Resultados_y_Discusion.tex" 1774617311 2265 e7c8c8593f4768e0c6434d6642337a83 ""
   "capitulos/05_Conclusiones.tex" 1774617311 357 67803796021e91cc6bc6777bb418b03f ""
@@ -168,13 +168,13 @@
   "resumen.tex" 1774617311 101 ded528c93d61b88cfd7251f7337e087a ""
   "tablas/tabla-ejemplo-de-tabla.tex" 1774617311 537 e0d0b09bda2c1e842c4b75c77753dbda ""
   "tablas/tabla-poblacion.tex" 1774617311 984 0245f32003a6b37e62911737df87fdb2 ""
-  "tfm.aux" 1781080762 17679 1496f6c7554b94de4b782aa68e1af1b9 "pdflatex"
-  "tfm.bbl" 1781078824 11418 4761689afdead28f020db8c62062ae6e "bibtex tfm"
-  "tfm.lof" 1781080762 384 41579c0fd1ca018584cebd2345a1d253 "pdflatex"
-  "tfm.lot" 1781080762 546 34b12b6755d75d844328021e51c9b742 "pdflatex"
-  "tfm.out" 1781080762 17153 a83b4a23d2a8fea741e9c22cd20e43bc "pdflatex"
+  "tfm.aux" 1781941665 17391 0ae97055f968b257a3362b76bb4ba74c "pdflatex"
+  "tfm.bbl" 1781870638 11614 ead3369c66781df349b65d121330f51e "bibtex tfm"
+  "tfm.lof" 1781941665 384 8724c4a9fd9732751f259d6514b992ec "pdflatex"
+  "tfm.lot" 1781941665 696 4ba40955521b7849cd8d128dc4adb7b7 "pdflatex"
+  "tfm.out" 1781941665 13863 348636e4c43ba15e922f02fb3ba25787 "pdflatex"
   "tfm.tex" 1774865861 5473 ff8e0cec75c4463190a89e16514f5496 ""
-  "tfm.toc" 1781080762 6867 b234c2b95047b46a7c23d4dc7c618387 "pdflatex"
+  "tfm.toc" 1781941665 5743 5b6ada04ac6ff7a3aafc30e008d91e36 "pdflatex"
   (generated)
   "tfm.aux"
   "tfm.lof"

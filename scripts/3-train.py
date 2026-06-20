@@ -27,8 +27,8 @@ Each experiment directory contains a self-contained log file (experiment_log.out
 No global log file is created.
 """
 # ----------------------- Imports -----------------------
-from Test_predictions import test_by_range, get_train_plots_loss, fold_results_aggregation
-from custom_loss_functions import *
+from test_predictions import test_by_range, get_train_plots_loss, fold_results_aggregation
+from loss_functions import *
 
 from keras.layers import Dense, LSTM, Input, Conv1D, MaxPooling1D, Flatten
 from keras.models import Model

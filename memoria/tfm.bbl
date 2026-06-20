@@ -164,4 +164,7 @@ X.~Li {\em et~al.}, ``Two-phase learning for imbalanced multiclass classificatio
 \bibitem{mehrabi2021survey}
 N.~Mehrabi, F.~Morstatter, N.~Saxena, {\em et~al.}, ``A survey on bias and fairness in machine learning,'' {\em ACM Computing Surveys}, vol.~54, no.~6, pp.~1--35, 2021.
 
+\bibitem{yoon2019timegan}
+J.~Yoon, D.~Jarrett, and M.~van~der Schaar, ``Time-series generative adversarial networks,'' in {\em Advances in Neural Information Processing Systems (NeurIPS)}, 2019.
+
 \end{thebibliography}
