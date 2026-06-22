@@ -293,6 +293,9 @@ INPUT capitulos/02_Estado_del_arte.tex
 INPUT c:/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmbxti10.tfm
 INPUT c:/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmbxti10.tfm
 INPUT c:/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmtt10.tfm
+INPUT c:/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmbx6.tfm
+INPUT c:/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmtt8.tfm
+INPUT c:/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmtt8.tfm
 INPUT ./capitulos/03_Desarrollo_del_TFM.tex
 INPUT ./capitulos/03_Desarrollo_del_TFM.tex
 INPUT ./capitulos/03_Desarrollo_del_TFM.tex
@@ -313,6 +316,8 @@ INPUT tablas/tabla-ejemplo-de-tabla.tex
 INPUT ./tablas/tabla-poblacion.tex
 INPUT ./tablas/tabla-poblacion.tex
 INPUT tablas/tabla-poblacion.tex
+INPUT c:/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmbx9.tfm
+INPUT c:/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmbx5.tfm
 INPUT c:/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmti9.tfm
 INPUT ./imagenes/figura-ejemplo.tex
 INPUT ./imagenes/figura-ejemplo.tex
@@ -353,6 +358,7 @@ INPUT c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 INPUT c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb
 INPUT c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb
 INPUT c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb
+INPUT c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
 INPUT c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
 INPUT c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb
 INPUT c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb
@@ -364,3 +370,4 @@ INPUT c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb
 INPUT c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb
 INPUT c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb
 INPUT c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb
+INPUT c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb

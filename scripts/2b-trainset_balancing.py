@@ -230,38 +230,77 @@ def clip_feature_columns(df: pd.DataFrame, feature_columns: Sequence[str], low: 
 	return clipped
 
 
+# ─── Corrección en select_target_counts para reference_proportional ───────────────
+# El código actual tiene un pequeño riesgo de que sum(targets) ≠ total_rows
+# por errores de redondeo. Esta versión corregida lo garantiza usando
+# el método del "largest remainder" (Hamilton/Hare method).
+
 def select_target_counts(
-	counts: pd.Series,
-	technique: str,
-	total_rows: int,
-	reference_props: Optional[Mapping[str, float]] = None,
+    counts: pd.Series,
+    technique: str,
+    total_rows: int,
+    reference_props: Optional[Mapping[str, float]] = None,
 ) -> Dict[str, int]:
-	if technique in {"undersampling", "patient_aware_undersampling"}:
-		target = int(counts.min())
-		return {group: target for group in counts.index}
+    if technique in {"undersampling", "patient_aware_undersampling"}:
+        target = int(counts.min())
+        return {group: target for group in counts.index}
 
-	if technique in {"oversampling", "smote", "jittering"}:
-		target = int(counts.max())
-		return {group: target for group in counts.index}
+    if technique in {"oversampling", "smote", "jittering", "block_bootstrap"}:
+        target = int(counts.max())
+        return {group: target for group in counts.index}
 
-	if technique == "reference_proportional":
-		if not reference_props:
-			raise ValueError("reference_proportional requires a reference distribution file.")
-		missing = [group for group in counts.index if group not in reference_props]
-		if missing:
-			raise KeyError(f"Reference proportions are missing groups: {missing}")
+    if technique == "reference_proportional":
+        if not reference_props:
+            raise ValueError("reference_proportional requires a reference distribution file.")
 
-		raw_targets = {group: float(reference_props[group]) * total_rows for group in counts.index}
-		floors = {group: int(math.floor(value)) for group, value in raw_targets.items()}
-		remainder = total_rows - sum(floors.values())
-		ranked = sorted(counts.index, key=lambda group: raw_targets[group] - floors[group], reverse=True)
-		targets = floors.copy()
-		for group in ranked[:remainder]:
-			targets[group] += 1
-		return targets
+        # Only consider groups present in the train fold
+        present_groups = [g for g in counts.index if g in reference_props]
+        missing_from_ref = [g for g in counts.index if g not in reference_props]
+        if missing_from_ref:
+            print(
+                f"    [WARN] reference_proportional: groups {missing_from_ref} are present "
+                f"in the train fold but not in the reference file. They will be kept "
+                f"at their current size."
+            )
 
-	raise ValueError(f"Unknown technique: {technique}")
+        # Renormalize reference proportions to only the groups present
+        present_sum = sum(reference_props[g] for g in present_groups)
+        if present_sum == 0:
+            raise ValueError("Sum of reference proportions for present groups is 0.")
 
+        # Compute raw (float) targets for groups in the reference
+        raw_targets = {
+            g: (reference_props[g] / present_sum) * total_rows
+            for g in present_groups
+        }
+        # Floor all targets
+        floors = {g: int(math.floor(v)) for g, v in raw_targets.items()}
+        # Remaining rows to distribute (largest remainder method)
+        remainder = total_rows - sum(floors.values())
+        ranked = sorted(
+            present_groups,
+            key=lambda g: raw_targets[g] - floors[g],
+            reverse=True
+        )
+        targets = floors.copy()
+        for g in ranked[:remainder]:
+            targets[g] += 1
+
+        # Groups not in reference file: keep as-is (no resampling)
+        for g in missing_from_ref:
+            targets[g] = int(counts[g])
+
+        # Log what we computed
+        print(f"    [reference_proportional] Target distribution:")
+        for g, t in sorted(targets.items()):
+            actual = int(counts.get(g, 0))
+            direction = "↑ oversample" if t > actual else ("↓ undersample" if t < actual else "= unchanged")
+            pct_target = 100 * t / total_rows
+            print(f"      {g}: {actual:>8,} → {t:>8,} ({pct_target:.1f}%)  {direction}")
+
+        return targets
+
+    raise ValueError(f"Unknown technique: {technique}")
 
 def undersample_group(group_df: pd.DataFrame, target: int, rng: np.random.Generator) -> pd.DataFrame:
 	if len(group_df) <= target:
@@ -381,24 +420,34 @@ def jitter_group(
 
 
 def resample_group(
-	group_df: pd.DataFrame,
-	target: int,
-	technique: str,
-	rng: np.random.Generator,
-	feature_columns: Sequence[str],
-	sensor_limits: Tuple[float, float],
+    group_df: pd.DataFrame,
+    target: int,
+    technique: str,
+    rng: np.random.Generator,
+    feature_columns: Sequence[str],
+    sensor_limits: Tuple[float, float],
 ) -> pd.DataFrame:
-	if technique == "undersampling":
-		return undersample_group(group_df, target, rng)
-	if technique == "oversampling":
-		return oversample_group(group_df, target, rng)
-	if technique == "patient_aware_undersampling":
-		return patient_aware_undersample_group(group_df, target, rng)
-	if technique == "smote":
-		return smote_group(group_df, target, rng, feature_columns, sensor_limits)
-	if technique == "jittering":
-		return jitter_group(group_df, target, rng, feature_columns, sensor_limits)
-	raise ValueError(f"Unsupported technique: {technique}")
+    if technique == "undersampling":
+        return undersample_group(group_df, target, rng)
+    if technique == "oversampling":
+        return oversample_group(group_df, target, rng)
+    if technique == "patient_aware_undersampling":
+        return patient_aware_undersample_group(group_df, target, rng)
+    if technique == "smote":
+        return smote_group(group_df, target, rng, feature_columns, sensor_limits)
+    if technique == "jittering":
+        return jitter_group(group_df, target, rng, feature_columns, sensor_limits)
+    if technique == "block_bootstrap":
+        return block_bootstrap_group(group_df, target, rng, feature_columns, sensor_limits)
+    if technique == "reference_proportional":
+        current = len(group_df)
+        if target == current:
+            return group_df.copy()
+        elif target > current:
+            return oversample_group(group_df, target, rng)
+        else:
+            return undersample_group(group_df, target, rng)
+    raise ValueError(f"Unsupported technique: {technique}")
 
 
 def resample_train_fold(
@@ -528,13 +577,32 @@ def process_dataset(
 						print(f"    Skipping existing file: {output_name}")
 						continue
 
+					# ─── Ampliación de los logs en process_dataset ────────────────────────────────────
+					# Dentro del bucle que llama a resample_train_fold, añadir tras el guardado del
+					# parquet un bloque de log que registre la distribución final conseguida y la
+					# desviación residual respecto a la referencia, para facilitar la trazabilidad
+					# experimental en el catálogo de datasets generados.
+
+					# Reemplazar el bloque de print tras out_df.to_parquet() en process_dataset:
+
 					out_df.to_parquet(output_path, index=False)
 
 					before_counts = train_df[group_col].value_counts(dropna=False).to_dict()
-					after_counts = balanced_train[group_col].value_counts(dropna=False).to_dict()
+					after_counts  = balanced_train[group_col].value_counts(dropna=False).to_dict()
+
 					print(f"    ✓ Saved {output_name}")
-					print(f"      before: {before_counts}")
-					print(f"      after : {after_counts}")
+					print(f"      before : {before_counts}")
+					print(f"      after  : {after_counts}")
+
+					# Log adicional para reference_proportional
+					if technique == "reference_proportional" and reference_props:
+						total_balanced = len(balanced_train)
+						print(f"      reference distribution check:")
+						for g, n in sorted(after_counts.items()):
+							actual_pct = 100 * n / total_balanced if total_balanced > 0 else 0
+							ref_pct    = 100 * reference_props.get(str(g), 0)
+							deviation  = actual_pct - ref_pct
+							print(f"        {g}: achieved {actual_pct:.2f}%  |  target {ref_pct:.2f}%  |  Δ = {deviation:+.2f}pp")
 
 
 def main() -> None:

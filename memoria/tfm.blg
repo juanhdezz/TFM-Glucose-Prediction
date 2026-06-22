@@ -5,11 +5,17 @@ The style file: ieeetr.bst
 Database file #1: bibliografia.bib
 Warning--entry type for "diaz2023t1dgranada" isn't style-file defined
 --line 893 of file bibliografia.bib
+Warning--I didn't find a database entry for "gregory2022lancet"
+Warning--I didn't find a database entry for "green2021diabetologia"
+Warning--I didn't find a database entry for "neu2019germany"
+Warning--I didn't find a database entry for "gudbjornsdottir2003t1dexchange"
+Warning--I didn't find a database entry for "chen2025sexgwas"
+Warning--I didn't find a database entry for "schiborn2023sexreview"
 Warning--empty journal in mirshekarian2019using
 Warning--empty journal in wang2024disparate
 You've used 37 entries,
             1876 wiz_defined-function locations,
-            672 strings with 10115 characters,
+            678 strings with 10233 characters,
 and the built_in function-call counts, 8173 in all, are:
 = -- 743
 > -- 411
@@ -48,4 +54,4 @@ warning$ -- 2
 while$ -- 66
 width$ -- 39
 write$ -- 349
-(There were 3 warnings)
+(There were 9 warnings)

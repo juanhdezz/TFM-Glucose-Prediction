@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.25)  20 JUN 2026 11:42
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.25)  22 JUN 2026 13:28
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -818,104 +818,135 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.10}) has 
                    \relax 
 l.139 
        [10]
-Underfull \vbox (badness 10000) has occurred while \output is active []
 
-LaTeX Info: Redefining \. on input line 157.
-LaTeX Info: Redefining \% on input line 157.
+LaTeX Warning: Citation `gregory2022lancet' on page 11 undefined on input line 167.
+
+
+LaTeX Warning: Citation `gregory2022lancet' on page 11 undefined on input line 174.
+
+
+LaTeX Warning: Citation `green2021diabetologia' on page 11 undefined on input line 175.
+
+LaTeX Info: Redefining \. on input line 178.
+LaTeX Info: Redefining \% on input line 178.
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.11}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.157 
+l.178 
        [11]
-LaTeX Info: Redefining \. on input line 170.
-LaTeX Info: Redefining \% on input line 170.
+
+LaTeX Warning: Citation `neu2019germany' on page 12 undefined on input line 224.
+
+
+LaTeX Warning: Citation `gudbjornsdottir2003t1dexchange' on page 12 undefined on input line 231.
+
+
+LaTeX Warning: Citation `chen2025sexgwas' on page 12 undefined on input line 236.
+
+
+LaTeX Warning: Citation `schiborn2023sexreview' on page 12 undefined on input line 241.
+
+LaTeX Info: Redefining \. on input line 242.
+LaTeX Info: Redefining \% on input line 242.
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.12}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.170 
+l.242 
        [12]
-Overfull \hbox (4.85422pt too wide) in paragraph at lines 191--191
+LaTeX Info: Redefining \. on input line 270.
+LaTeX Info: Redefining \% on input line 270.
+ [13]
+Overfull \hbox (4.85422pt too wide) in paragraph at lines 295--295
 []|\OT1/cmr/bx/sc/10.95 Conserva
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 191--191
+Underfull \hbox (badness 10000) in paragraph at lines 295--295
 \OT1/cmr/bx/sc/10.95 din^^Sami-
  []
 
 
-Overfull \hbox (32.61943pt too wide) in paragraph at lines 191--191
+Overfull \hbox (32.61943pt too wide) in paragraph at lines 295--295
 []|\OT1/cmr/bx/sc/10.95 Complejidad| 
  []
 
 
-Overfull \hbox (7.87152pt too wide) in paragraph at lines 191--192
+Overfull \hbox (7.87152pt too wide) in paragraph at lines 295--296
 []|\OT1/cmr/bx/sc/10.95 Evidencia
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 191--192
+Underfull \hbox (badness 10000) in paragraph at lines 295--296
 \OT1/cmr/bx/it/10.95 Health-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 193--193
+Underfull \hbox (badness 10000) in paragraph at lines 297--297
 []|\OT1/cmr/m/n/10.95 Pre-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 194--194
+Underfull \hbox (badness 10000) in paragraph at lines 298--298
 []|\OT1/cmr/m/n/10.95 Pre-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 195--195
+Underfull \hbox (badness 10000) in paragraph at lines 299--299
 []|\OT1/cmr/m/n/10.95 Remuestreo
  []
 
 
-Underfull \hbox (badness 1895) in paragraph at lines 195--195
+Underfull \hbox (badness 1895) in paragraph at lines 299--299
 \OT1/cmr/m/n/10.95 pro-por-cio-nal a
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 195--195
+Underfull \hbox (badness 10000) in paragraph at lines 299--299
 []|\OT1/cmr/m/n/10.95 Pre-
  []
 
 
-Overfull \hbox (0.904pt too wide) in paragraph at lines 196--196
+LaTeX Warning: Citation `gregory2022lancet' on page 14 undefined on input line 299.
+
+
+LaTeX Warning: Citation `green2021diabetologia' on page 14 undefined on input line 299.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 299--300
+[]|\OT1/cmr/m/n/10.95 Alta [[],
+ []
+
+
+Overfull \hbox (0.904pt too wide) in paragraph at lines 300--300
 []|\OT1/cmr/m/n/10.95 Generativa| 
  []
 
 
-Overfull \hbox (7.53941pt too wide) in paragraph at lines 197--197
+Overfull \hbox (7.53941pt too wide) in paragraph at lines 301--301
 []|\OT1/cmr/m/n/10.95 Representaciones
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 197--197
+Underfull \hbox (badness 10000) in paragraph at lines 301--301
 []|\OT1/cmr/m/n/10.95 In-
  []
 
 
-Overfull \hbox (3.20045pt too wide) in paragraph at lines 198--198
+Overfull \hbox (3.20045pt too wide) in paragraph at lines 302--302
 []|\OT1/cmr/m/n/10.95 Estructural| 
  []
 
-LaTeX Info: Redefining \. on input line 211.
-LaTeX Info: Redefining \% on input line 211.
-[13]
-LaTeX Info: Redefining \. on input line 223.
-LaTeX Info: Redefining \% on input line 223.
- [14]) (./capitulos/03_Desarrollo_del_TFM.tex
+LaTeX Info: Redefining \. on input line 311.
+LaTeX Info: Redefining \% on input line 311.
+[14]
+LaTeX Info: Redefining \. on input line 317.
+LaTeX Info: Redefining \% on input line 317.
+ [15]) (./capitulos/03_Desarrollo_del_TFM.tex
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
- [15] [16
-
-]
+ [16]
 Cap\'{\i }tulo 3.
 LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 11.
 (c:/texlive/2026/texmf-dist/tex/latex/base/omscmr.fd
@@ -930,6 +961,7 @@ Overfull \hbox (9.64503pt too wide) in paragraph at lines 13--1
 
 [17
 
+
 ] [18
 
 ]
@@ -942,7 +974,7 @@ File: imagenes/logo.png Graphic file (type png)
 Package pdftex.def Info: imagenes/logo.png  used on input line 3.
 (pdftex.def)             Requested size: 227.62206pt x 84.66907pt.
 ) (./imagenes/figura-ejemplo2.tex
-<imagenes/test-distribuciones.pdf, id=619, 1134.63902pt x 693.5997pt>
+<imagenes/test-distribuciones.pdf, id=627, 1134.63902pt x 693.5997pt>
 File: imagenes/test-distribuciones.pdf Graphic file (type pdf)
 <use imagenes/test-distribuciones.pdf>
 Package pdftex.def Info: imagenes/test-distribuciones.pdf  used on input line 3.
@@ -1023,22 +1055,25 @@ L3 programming layer <2026-01-19>
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
+
+LaTeX Warning: There were undefined references.
+
 Package rerunfilecheck Info: File `tfm.out' has not changed.
-(rerunfilecheck)             Checksum: 348636E4C43BA15E922F02FB3BA25787;13863.
+(rerunfilecheck)             Checksum: AD26155F9A036F841CAE20354A5625FA;13863.
  ) 
 Here is how much of TeX's memory you used:
- 16829 strings out of 467525
- 274006 string characters out of 5423209
- 814198 words of memory out of 5000000
- 45273 multiletter control sequences out of 15000+600000
- 638330 words of font info for 76 fonts, out of 8000000 for 9000
+ 16849 strings out of 467525
+ 274300 string characters out of 5423209
+ 815575 words of memory out of 5000000
+ 45285 multiletter control sequences out of 15000+600000
+ 639595 words of font info for 81 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  73i,13n,81p,1756b,827s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on tfm.pdf (60 pages, 746943 bytes).
+<c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
+Output written on tfm.pdf (60 pages, 769494 bytes).
 PDF statistics:
- 851 PDF objects out of 1000 (max. 8388607)
- 731 compressed objects within 8 object streams
- 167 named destinations out of 1000 (max. 500000)
+ 868 PDF objects out of 1000 (max. 8388607)
+ 744 compressed objects within 8 object streams
+ 171 named destinations out of 1000 (max. 500000)
  477 words of extra memory for PDF output out of 10000 (max. 10000000)
 

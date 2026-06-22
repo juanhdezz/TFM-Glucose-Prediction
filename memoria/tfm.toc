@@ -21,17 +21,19 @@
 \contentsline {subsection}{\numberline {2.5.1}Reponderado de muestras (\emph {Reweighting})}{10}{subsection.2.5.1}%
 \contentsline {subsection}{\numberline {2.5.2}Remuestreo dirigido por grupo demográfico}{10}{subsection.2.5.2}%
 \contentsline {subsection}{\numberline {2.5.3}Remuestreo proporcional a una distribución de referencia poblacional}{11}{subsection.2.5.3}%
-\contentsline {subsection}{\numberline {2.5.4}Generación sintética condicionada mediante redes generativas adversarias temporales}{12}{subsection.2.5.4}%
-\contentsline {subsection}{\numberline {2.5.5}Aprendizaje de representaciones invariantes al atributo demográfico}{12}{subsection.2.5.5}%
-\contentsline {subsection}{\numberline {2.5.6}Validación cruzada con muestreo estratificado por grupo demográfico}{13}{subsection.2.5.6}%
-\contentsline {subsection}{\numberline {2.5.7}Comparativa de técnicas}{13}{subsection.2.5.7}%
-\contentsline {subsection}{\numberline {2.5.8}Discusión y técnica seleccionada}{13}{subsection.2.5.8}%
-\contentsline {section}{\numberline {2.6}Brechas en la literatura y motivación del presente trabajo}{14}{section.2.6}%
+\contentsline {subsubsection}{Distribución de referencia para la dimensión edad}{12}{section*.10}%
+\contentsline {subsubsection}{Distribución de referencia para la dimensión sexo}{12}{section*.11}%
+\contentsline {subsection}{\numberline {2.5.4}Generación sintética condicionada mediante redes generativas adversarias temporales}{13}{subsection.2.5.4}%
+\contentsline {subsection}{\numberline {2.5.5}Aprendizaje de representaciones invariantes al atributo demográfico}{14}{subsection.2.5.5}%
+\contentsline {subsection}{\numberline {2.5.6}Validación cruzada con muestreo estratificado por grupo demográfico}{14}{subsection.2.5.6}%
+\contentsline {subsection}{\numberline {2.5.7}Comparativa de técnicas}{14}{subsection.2.5.7}%
+\contentsline {subsection}{\numberline {2.5.8}Discusión y técnica seleccionada}{15}{subsection.2.5.8}%
+\contentsline {section}{\numberline {2.6}Brechas en la literatura y motivación del presente trabajo}{16}{section.2.6}%
 \contentsline {chapter}{\numberline {3}Desarrollo del TFM}{17}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Cómo colocar tablas y figuras}{17}{section.3.1}%
 \contentsline {chapter}{\numberline {4}Resultados y discusión}{19}{chapter.4}%
 \contentsline {chapter}{\numberline {5}Conclusiones}{23}{chapter.5}%
-\contentsline {chapter}{Bibliografía}{27}{chapter*.15}%
+\contentsline {chapter}{Bibliografía}{27}{chapter*.17}%
 \contentsline {chapter}{\numberline {A}Ejemplo de anexo: Planificación y gestión del proyecto (opcional)}{29}{appendix.Alph1}%
 \contentsline {section}{\numberline {A.1}Metodología/Ciclo de vida}{30}{section.Alph1.1}%
 \contentsline {section}{\numberline {A.2}Herramientas y plataformas utilizadas para el desarrollo del proyecto}{30}{section.Alph1.2}%
