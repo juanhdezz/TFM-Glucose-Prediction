@@ -1,0 +1,14 @@
+condition,balanced_age_jittering,balanced_age_oversampling,balanced_age_patient_aware_undersampling,balanced_age_reference_proportional,balanced_age_smote,balanced_age_undersampling,balanced_sex_jittering,balanced_sex_oversampling,balanced_sex_patient_aware_undersampling,balanced_sex_reference_proportional,balanced_sex_smote,balanced_sex_undersampling,original
+balanced_age_jittering,1.0,1.0,0.4765,1.0,1.0,0.8758,0.1216,0.1499,0.8569,0.4765,0.0119,0.183,0.4765
+balanced_age_oversampling,1.0,1.0,0.1499,0.9994,0.9996,0.5064,0.0212,0.028,0.4765,0.1499,0.0012,0.0366,0.1499
+balanced_age_patient_aware_undersampling,0.4765,0.1499,1.0,0.7402,0.7131,1.0,1.0,1.0,1.0,1.0,0.9773,1.0,1.0
+balanced_age_reference_proportional,1.0,0.9994,0.7402,1.0,1.0,0.9773,0.2867,0.3364,0.9714,0.7402,0.0418,0.3901,0.7402
+balanced_age_smote,1.0,0.9996,0.7131,1.0,1.0,0.9714,0.2635,0.311,0.9643,0.7131,0.0366,0.3628,0.7131
+balanced_age_undersampling,0.8758,0.5064,1.0,0.9773,0.9714,1.0,0.9896,0.9942,1.0,1.0,0.7402,0.997,1.0
+balanced_sex_jittering,0.1216,0.0212,1.0,0.2867,0.2635,0.9896,1.0,1.0,0.9922,1.0,1.0,1.0,1.0
+balanced_sex_oversampling,0.1499,0.028,1.0,0.3364,0.311,0.9942,1.0,1.0,0.9958,1.0,0.9999,1.0,1.0
+balanced_sex_patient_aware_undersampling,0.8569,0.4765,1.0,0.9714,0.9643,1.0,0.9922,0.9958,1.0,1.0,0.7662,0.9979,1.0
+balanced_sex_reference_proportional,0.4765,0.1499,1.0,0.7402,0.7131,1.0,1.0,1.0,1.0,1.0,0.9773,1.0,1.0
+balanced_sex_smote,0.0119,0.0012,0.9773,0.0418,0.0366,0.7402,1.0,0.9999,0.7662,0.9773,1.0,0.9996,0.9773
+balanced_sex_undersampling,0.183,0.0366,1.0,0.3901,0.3628,0.997,1.0,1.0,0.9979,1.0,0.9996,1.0,1.0
+original,0.4765,0.1499,1.0,0.7402,0.7131,1.0,1.0,1.0,1.0,1.0,0.9773,1.0,1.0

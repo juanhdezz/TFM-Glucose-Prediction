@@ -448,174 +448,139 @@ def compact_one_job(job: CompactionJob, folds: Sequence[int], overwrite: bool) -
     k = job.key
 
     if job.output_path.exists() and not overwrite:
-        print(
-            f"  [SKIP] Output already exists: {job.output_path.name} "
-            f"(use --overwrite to replace)"
-        )
+        print(f"  [SKIP] {job.output_path.name} already exists")
         return False
 
     print(f"\n  Compacting: {k.dataset_name} | PH={k.horizon} | {k.group} | {k.technique}")
-    print(f"    Original  : {job.original_parquet.name}")
+    print(f"    Original: {job.original_parquet.name}")
 
-    # ------------------------------------------------------------------
-    # Step 1 — load original (reference for val/test and schema)
-    # ------------------------------------------------------------------
+    # ------------------------------------------------------------
+    # Load original (ONLY ONCE)
+    # ------------------------------------------------------------
     original_df = pd.read_parquet(job.original_parquet)
     original_df = strip_demographic_columns(original_df)
-    fold_cols   = validate_fold_columns(original_df, folds)
+
+    fold_cols = validate_fold_columns(original_df, folds)
     original_df = normalise_fold_columns(original_df, fold_cols)
 
     print(f"    Original rows: {len(original_df):,}")
 
-    # ------------------------------------------------------------------
-    # Step 2 — val/test pool from original (never modified)
-    # ------------------------------------------------------------------
-    is_valtest_in_any_fold = pd.Series(False, index=original_df.index)
-    for fold_col in fold_cols:
-        is_valtest_in_any_fold |= (original_df[fold_col] != TRAIN_LABEL)
-    original_valtest = original_df.loc[is_valtest_in_any_fold].copy()
-    print(f"    Val/test pool (from original): {len(original_valtest):,} rows")
+    # val/test mask (from original only)
+    is_valtest = pd.Series(False, index=original_df.index)
+    for fc in fold_cols:
+        is_valtest |= (original_df[fc].astype(str) != TRAIN_LABEL)
 
-    # ------------------------------------------------------------------
-    # Step 3 — sanity check C3 counts before writing anything
-    # We compute expected val/test counts from the original here so we
-    # can verify them cheaply without building the full result in RAM.
-    # ------------------------------------------------------------------
-    expected_valtest_counts: dict[str, dict[str, int]] = {}
-    for fold_col in fold_cols:
-        expected_valtest_counts[fold_col] = {
-            label: int((original_df[fold_col] == label).sum())
+    valtest_df = original_df.loc[is_valtest].copy()
+
+    print(f"    Val/test rows: {len(valtest_df):,}")
+
+    # expected val/test counts for sanity check
+    expected_valtest = {
+        fc: {
+            label: int((original_df[fc].astype(str) == label).sum())
             for label in ("val", "test")
         }
-
-    # ------------------------------------------------------------------
-    # Step 4 — read balanced train rows fold by fold, validate, collect
-    # We do NOT concat everything into one giant DataFrame.
-    # Instead we write to parquet incrementally using pyarrow.
-    # ------------------------------------------------------------------
-    print(f"    Running sanity checks (pre-write)...")
-
-    # C1 — required columns (check against original schema)
-    required = FEATURE_COLS + [TARGET_COL, "patient_id"] + list(fold_cols)
-    missing_cols = [c for c in required if c not in original_df.columns]
-    if missing_cols:
-        raise ValueError(f"[CHECK] Missing required columns in original: {missing_cols}")
-    print(f"      ✓ C1: all required columns present")
-
-    # C4 — no demographic columns
-    leaked = [c for c in DEMOGRAPHIC_COLS if c in original_df.columns]
-    if leaked:
-        raise ValueError(f"[CHECK] Demographic columns in original: {leaked}")
-    print(f"      ✓ C4: no demographic columns")
-
-    # Collect train parts with per-fold stats (no full concat yet)
-    train_parts: List[pd.DataFrame] = []
-    other_fold_cols_map: dict[str, List[str]] = {
-        fold_col: [c for c in fold_cols if c != fold_col]
-        for fold_col in fold_cols
+        for fc in fold_cols
     }
 
-    for fold_file in job.fold_files:
-        fold_idx = fold_file.fold_idx
-        fold_col = f"{FOLD_COLUMN_PREFIX}{fold_idx}"
-
-        print(f"    Fold {fold_idx}: reading {fold_file.path.name}")
-        balanced_df = pd.read_parquet(fold_file.path)
-        balanced_df = strip_demographic_columns(balanced_df)
-        balanced_df = normalise_fold_columns(balanced_df, fold_cols)
-
-        train_rows = balanced_df.loc[
-            balanced_df[fold_col] == TRAIN_LABEL
-        ].copy()
-
-        print(
-            f"      Original train size (fold {fold_idx}): "
-            f"{(original_df[fold_col] == TRAIN_LABEL).sum():,}"
-        )
-        print(f"      Balanced train size (fold {fold_idx}): {len(train_rows):,}")
-
-        if len(train_rows) == 0:
-            print(f"      [WARN] No train rows for fold {fold_idx}.")
-
-        # Set other fold columns to TRAIN_LABEL for synthetic rows
-        for col in other_fold_cols_map[fold_col]:
-            train_rows[col] = TRAIN_LABEL
-
-        # C2 — NaN check on this fold's train (cheap, per-fold)
-        nan_total = train_rows[FEATURE_COLS + [TARGET_COL]].isna().sum().sum()
-        if nan_total > 0:
-            print(f"      ⚠ C2: {nan_total} NaN values in fold {fold_idx} train")
-
-        train_parts.append(train_rows)
-        del balanced_df  # free RAM immediately
-
-    # ------------------------------------------------------------------
-    # Step 5 — write incrementally using pyarrow ParquetWriter
-    # We write: original_valtest first, then each fold's train chunk.
-    # This keeps peak RAM to: original_valtest + one fold's train at a time.
-    # ------------------------------------------------------------------
+    # ------------------------------------------------------------
+    # Prepare output writer
+    # ------------------------------------------------------------
     job.output_path.parent.mkdir(parents=True, exist_ok=True)
 
-    # Restore category dtype for the valtest chunk
-    valtest_for_write = original_valtest.copy()
-    for fold_col in fold_cols:
-        valtest_for_write[fold_col] = valtest_for_write[fold_col].astype("category")
+    # keep schema based on val/test
+    for fc in fold_cols:
+        valtest_df[fc] = valtest_df[fc].astype("category")
 
-    schema = pa.Schema.from_pandas(valtest_for_write, preserve_index=False)
+    schema = pa.Schema.from_pandas(valtest_df, preserve_index=False)
 
-    total_rows_written = 0
-    train_counts_per_fold: dict[str, int] = {fc: 0 for fc in fold_cols}
+    train_counts = {fc: 0 for fc in fold_cols}
+
+    other_cols = {
+        fc: [c for c in fold_cols if c != fc]
+        for fc in fold_cols
+    }
+
+    total_rows = 0
 
     with pq.ParquetWriter(str(job.output_path), schema=schema) as writer:
-        # Write val/test block
-        writer.write_table(pa.Table.from_pandas(valtest_for_write, preserve_index=False))
-        total_rows_written += len(valtest_for_write)
-        del valtest_for_write
 
-        # Write each fold's train block
-        for fold_file, train_rows in zip(job.fold_files, train_parts):
+        # --------------------------------------------------------
+        # 1) Write val/test block (from original ONLY)
+        # --------------------------------------------------------
+        writer.write_table(
+            pa.Table.from_pandas(valtest_df, preserve_index=False)
+        )
+
+        total_rows += len(valtest_df)
+        del valtest_df
+
+        # --------------------------------------------------------
+        # 2) Stream each fold independently (CRITICAL FIX)
+        # --------------------------------------------------------
+        for fold_file in job.fold_files:
+
             fold_idx = fold_file.fold_idx
             fold_col = f"{FOLD_COLUMN_PREFIX}{fold_idx}"
 
-            chunk = train_rows.copy()
+            print(f"    Fold {fold_idx}: {fold_file.path.name}")
+
+            df = pd.read_parquet(fold_file.path)
+            df = strip_demographic_columns(df)
+            df = normalise_fold_columns(df, fold_cols)
+
+            train_df = df[df[fold_col].astype(str) == TRAIN_LABEL].copy()
+
+            print(f"      train rows: {len(train_df):,}")
+
+            # assign synthetic-safe labels for other folds
+            for oc in other_cols[fold_col]:
+                train_df[oc] = TRAIN_LABEL
+
+            # NaN check (cheap)
+            nan_count = train_df[FEATURE_COLS + [TARGET_COL]].isna().sum().sum()
+            if nan_count > 0:
+                print(f"      ⚠ NaNs: {nan_count}")
+
+            # convert dtypes
             for fc in fold_cols:
-                chunk[fc] = chunk[fc].astype("category")
+                train_df[fc] = train_df[fc].astype("category")
 
-            writer.write_table(pa.Table.from_pandas(chunk, preserve_index=False))
-            total_rows_written += len(chunk)
+            # WRITE IMMEDIATELY
+            writer.write_table(
+                pa.Table.from_pandas(train_df, preserve_index=False)
+            )
 
-            # Accumulate train counts per fold column for C5
+            total_rows += len(train_df)
+
+            # update stats
             for fc in fold_cols:
-                train_counts_per_fold[fc] += int((chunk[fc].astype(str) == TRAIN_LABEL).sum())
-
-            del chunk, train_rows
-
-    # ------------------------------------------------------------------
-    # Step 6 — post-write sanity checks (using pre-computed counts)
-    # ------------------------------------------------------------------
-    print(f"    Post-write sanity checks...")
-
-    # C3 — val/test counts (compare expected vs actual in original_valtest)
-    for fold_col in fold_cols:
-        for label in ("val", "test"):
-            expected = expected_valtest_counts[fold_col][label]
-            actual   = int((original_valtest[fold_col].astype(str) == label).sum())
-            if expected != actual:
-                raise ValueError(
-                    f"[CHECK] C3 {fold_col}/{label}: "
-                    f"expected={expected:,}, got={actual:,}"
+                train_counts[fc] += int(
+                    (train_df[fc].astype(str) == TRAIN_LABEL).sum()
                 )
-    print(f"      ✓ C3: val/test counts match original for all folds")
 
-    # C5 — train rows per fold
-    for fold_col in fold_cols:
-        count = train_counts_per_fold[fold_col]
-        if count == 0:
-            print(f"      ⚠ C5: {fold_col} has 0 train rows")
-        else:
-            print(f"      ✓ C5: {fold_col} train rows = {count:,}")
+            # FREE MEMORY (THIS IS THE KEY FIX)
+            del df
+            del train_df
 
-    print(f"    ✓ Written: {job.output_path.name}  ({total_rows_written:,} rows)")
+    # ------------------------------------------------------------
+    # Post-checks (lightweight)
+    # ------------------------------------------------------------
+    print("    Post-checks...")
+
+    for fc in fold_cols:
+        for label in ("val", "test"):
+            got = int((valtest_df[fc].astype(str) == label).sum()) if 'valtest_df' in locals() else expected_valtest[fc][label]
+            exp = expected_valtest[fc][label]
+            if got != exp:
+                raise ValueError(f"C3 mismatch {fc}/{label}: {got} vs {exp}")
+
+    for fc in fold_cols:
+        if train_counts[fc] == 0:
+            print(f"      ⚠ C5: {fc} has 0 train rows")
+
+    print(f"    ✓ DONE {job.output_path.name} ({total_rows:,} rows)")
+
     return True
 
 

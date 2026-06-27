@@ -1,0 +1,25 @@
+\begin{table}[htbp]
+\centering
+\small
+\caption{Improvement (\\%) vs. baseline  |  MAE · All Ranges  $\uparrow$ positive = improvement}
+\label{tab:delta_mae_entire}
+\begin{tabular}{lrrr}
+\toprule
+\textbf{Condition} & \textbf{T1DGranada} & \textbf{DiaTrend} & \textbf{ReplaceBG} \\
+\midrule
+Age · Jittering & \textcolor{BrickRed}{-0.9\%} & \textcolor{BrickRed}{-1.9\%} & \textcolor{BrickRed}{-0.1\%} \\
+Age · Oversampling & — & \textcolor{BrickRed}{-2.2\%} & \textcolor{OliveGreen}{+0.1\%} \\
+Age · PAUndersampling & \textcolor{OliveGreen}{+0.1\%} & \textcolor{OliveGreen}{+0.5\%} & \textcolor{OliveGreen}{+0.8\%} \\
+Age · Ref. Proportional & \textcolor{OliveGreen}{+0.0\%} & \textcolor{BrickRed}{-1.4\%} & \textcolor{OliveGreen}{+1.1\%} \\
+Age · SMOTE & \textcolor{OliveGreen}{+0.4\%} & \textcolor{BrickRed}{-1.4\%} & \textcolor{OliveGreen}{+0.4\%} \\
+Age · Undersampling & \textcolor{BrickRed}{-0.2\%} & \textcolor{black}{0.0\%} & \textcolor{OliveGreen}{+0.6\%} \\
+\midrule
+Sex · Jittering & \textcolor{BrickRed}{-0.2\%} & \textcolor{OliveGreen}{+0.5\%} & \textcolor{OliveGreen}{+0.6\%} \\
+Sex · Oversampling & \textcolor{BrickRed}{-0.5\%} & \textcolor{OliveGreen}{+0.6\%} & \textcolor{OliveGreen}{+0.4\%} \\
+Sex · PAUndersampling & \textcolor{BrickRed}{-0.5\%} & \textcolor{BrickRed}{-0.2\%} & \textcolor{OliveGreen}{+0.2\%} \\
+Sex · Ref. Proportional & \textcolor{BrickRed}{-0.0\%} & \textcolor{OliveGreen}{+0.2\%} & \textcolor{OliveGreen}{+0.6\%} \\
+Sex · SMOTE & \textcolor{OliveGreen}{+0.0\%} & \textcolor{OliveGreen}{+0.9\%} & \textcolor{OliveGreen}{+0.3\%} \\
+Sex · Undersampling & \textcolor{OliveGreen}{+0.1\%} & \textcolor{OliveGreen}{+0.6\%} & \textcolor{OliveGreen}{+0.3\%} \\
+\bottomrule
+\end{tabular}
+\end{table}
