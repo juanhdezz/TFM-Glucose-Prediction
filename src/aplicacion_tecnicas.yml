@@ -1,0 +1,16 @@
+# environment.yml
+# Entorno para 2b-trainset_balancing.py
+
+name: glucose_balancing
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10.13
+  - pip
+  - numpy=1.26.3
+  - pandas=2.1.4
+  - scikit-learn=1.4.0
+  - pyarrow=14.0.2
+  - pip:
+    - typing-extensions>=4.9.0

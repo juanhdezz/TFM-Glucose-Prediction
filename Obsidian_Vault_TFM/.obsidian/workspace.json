@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "af5c3c0b4b7da0c5",
+        "id": "99704aa0109f6e07",
         "type": "tabs",
         "children": [
           {
-            "id": "e49a2b2658900165",
+            "id": "c1d0bc5ced1ddfdb",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -179,8 +179,10 @@
       "bases:Crear nueva base": false
     }
   },
-  "active": "84de27cf1b1cf23d",
+  "active": "c1d0bc5ced1ddfdb",
   "lastOpenFiles": [
+    "01_Knowledge/Balancing/Oversampling.md",
+    "05_MOCs/MOC_Scripts.md",
     "Reference Proportional.md",
     "05_MOCs/MOC_Balancing.md",
     "01_Knowledge/Balancing/Smote.md",
