@@ -51,8 +51,9 @@ DEFAULT_TECHNIQUES = [
     "oversampling",
     "patient_aware_undersampling",
     "smote",
-    "jittering",
-    "reference_proportional",
+    "jittering"
+    "undersampling_oversampling", # Mismo tamaño , buscamos proporcion equitativa 50% / 50% entre sexos o 25% entre grupos de edad. Reduccion aleatroia , aumentando aleatoriamente.
+    "undersampling_smote", # Mismo tamaño , buscamos proporcion equitativa 50% / 50% entre sexos o 25% entre grupos de edad. reduccion aleatoria , aumentando con smote.
 ]
 DEFAULT_SENSOR_LIMITS = {
     "DIATREND":           (39.0, 401.0),
@@ -95,8 +96,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--folds",      nargs="*", type=int, default=DEFAULT_FOLDS,
                         help="Índices de fold a balancear.")
     parser.add_argument("--seed",       type=int, default=DEFAULT_SEED)
-    parser.add_argument("--reference-file", type=str, default=None,
-                        help="CSV o JSON con proporciones objetivo para reference_proportional.")
+    
     parser.add_argument("--output-root", type=str, default=str(DATA_DIR),
                         help="Raíz que contiene las carpetas de dataset.")
     parser.add_argument("--overwrite",  action="store_true",

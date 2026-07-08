@@ -989,3 +989,6 @@ def main() -> None:
             traceback.print_exc()
 
     print("DONE")
+
+if __name__ == "__main__":
+    main()

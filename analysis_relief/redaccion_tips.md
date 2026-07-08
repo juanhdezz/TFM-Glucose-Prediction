@@ -119,3 +119,108 @@ Tres párrafos: contraste con literatura del estado del arte (§2), limitaciones
 ## Regla general de uso de figuras
 
 Nunca dos figuras consecutivas sin párrafo de análisis entre ellas. Cada figura se introduce con una frase que dice qué muestra, seguida de un párrafo que extrae la conclusión específica relevante para la pregunta de la subsección. Las figuras de apéndice se referencian desde el texto con "el análisis completo se muestra en la Figura A.X del apéndice", para que el revisor sepa que existen pero no interrumpan el flujo argumentativo.
+
+
+---
+
+# Datos reales 
+
+§4.1 — Configuración experimental y baseline
+El conjunto de experimentos cubre tres datasets de monitorización continua de glucosa (T1DiabetesGranada, DiaTrend y REPLACE-BG), seis técnicas de balanceo demográfico (jittering, oversampling, patient-aware undersampling, reference proportional, SMOTE y undersampling) aplicadas sobre dos dimensiones (edad y sexo), con validación cruzada de 5 folds por condición. En total se evaluaron 39 condiciones experimentales —13 por dataset, incluyendo el baseline sin balanceo—, cada una entrenando un modelo LSTM con ventana de historia H=8H=8
+H=8 mediciones y horizonte de predicción PH=4PH=4
+PH=4 pasos (60 minutos). Las métricas de rendimiento se calcularon de forma independiente sobre seis rangos clínicos: hipoglucemia severa (TBR-2, $<$54 mg/dL), hipoglucemia leve (TBR-1, 54–69 mg/dL), rango en objetivo (TIR, 70–180 mg/dL), hiperglucemia leve (TAR-1, 181–250 mg/dL) e hiperglucemia severa (TAR-2, $>$250 mg/dL), además del rango global (ENTIRE). La condición sin balanceo (original) actúa como baseline de referencia a lo largo de todo el análisis; val y test permanecen inalterados en todos los experimentos, garantizando la comparabilidad entre condiciones.
+Los valores de RMSE del baseline oscilan entre 37.80 ± 0.81 mg/dL (T1DiabetesGranada, global) y 45.05 ± 2.45 mg/dL (DiaTrend, global), con REPLACE-BG en una posición intermedia (37.00 ± 0.83 mg/dL). La mayor incertidumbre entre folds se concentra en DiaTrend, especialmente en los rangos de hipoglucemia (TBR-2: 75.28 ± 7.33 mg/dL), lo que anticipa una mayor sensibilidad a las técnicas de balanceo en ese dataset.
+[Tabla §4.1: resumen de datasets, nº condiciones, RMSE baseline por rango — construir a mano a partir de main_results_RMSE.csv, fila "Original"]
+
+
+
+### §4.2 — Rendimiento global: ¿mejora el balanceo en promedio?
+
+**[Figura §4.2-A: `dashboard_global` — panel de honor]**
+
+El test de Friedman detecta diferencias estadísticamente significativas entre las 13 condiciones experimentales en DiaTrend para todos los rangos clínicos ($\chi^2=50.79$, $p=1\times10^{-6}$ en ENTIRE; $\chi^2=45.12$, $p=1\times10^{-5}$ en TIR; $\chi^2=39.24$, $p=9.6\times10^{-5}$ en TBR-1; $\chi^2=47.57$, $p=4\times10^{-6}$ en TAR-1). Por el contrario, ningún rango alcanza significancia en REPLACE-BG ($p \geq 0.24$ en todos los casos). T1DiabetesGranada presenta un patrón intermedio: el test resulta significativo en TBR-2 ($\chi^2=26.45$, $p=0.009$), TBR-1 ($\chi^2=21.62$, $p=0.042$), TIR ($\chi^2=24.35$, $p=0.018$) y TAR-1 ($\chi^2=25.57$, $p=0.012$), pero no en TAR-2 ni en el RMSE global ($p=0.457$).
+
+**[Figura §4.2-B: CD diagrams — tres paneles compuestos]**
+
+El post-hoc de Nemenyi sobre DiaTrend·TIR confirma que cuatro técnicas de balanceo por edad superan al baseline con significancia estadística: Age·Oversampling ($p=0.0055$), Age·SMOTE ($p=0.0088$), Age·Ref. Proportional ($p=0.0102$) y Age·Jittering ($p=0.0321$). Ninguna técnica de sexo alcanza diferencia significativa respecto al baseline en TIR ($p \geq 0.66$ en todos los casos). En TAR-1, el patrón se invierte: Age·Oversampling se separa del baseline con $p=0.0012$ en sentido negativo —es decir, el balanceo por edad degrada significativamente la predicción en hiperglucemia leve—, y Age·Ref. Proportional alcanza $p=0.0034$. Este trade-off se analiza en detalle en §4.5.
+
+En T1DiabetesGranada, el post-hoc de Nemenyi no identifica ningún par de condiciones con diferencia significativa en TBR-1, TBR-2 ni TIR a pesar de la significancia global de Friedman, lo que indica que las diferencias entre condiciones son difusas y no localizables en una técnica concreta —patrón consistente con la baja consistencia entre folds documentada en §4.6.
+
+En cuanto al ranking Borda por dataset, Age·SMOTE lidera en T1DiabetesGranada (puntuación 45, posición 1) y ocupa el tercer puesto en DiaTrend (63, posición 3); Age·PAUndersampling encabeza REPLACE-BG (43, posición 1). En el dashboard global (panel B), Age·Undersampling y Age·PAUndersampling acumulan las peores posiciones agregadas, impulsadas por su comportamiento en TAR-1 de DiaTrend.
+
+**[Figura §4.2-C: Borda lollipop — cierre de subsección]**
+
+La respuesta a la pregunta de investigación de esta subsección es contextual: el balanceo demográfico produce efectos estadísticamente distinguibles únicamente cuando el dataset presenta suficiente heterogeneidad demográfica entre folds. DiaTrend es el único caso donde esta condición se satisface de forma sistemática.
+
+---
+
+### §4.3 — Análisis por dataset
+
+**[Figura §4.3-A: panel A del `dashboard_global` — RMSE improvement heatmap]**
+
+La heterogeneidad entre datasets constituye el hallazgo estructural de mayor alcance del estudio. En DiaTrend, las técnicas de balanceo por edad producen mejoras de hasta −7.3\% en RMSE global (Age·PAUndersampling) y −6.4\% (Age·Undersampling), concentradas en TIR. Las técnicas de sexo permanecen dentro de ±0.5\% en todos los rangos globales de DiaTrend. En T1DiabetesGranada y REPLACE-BG las diferencias respecto al baseline son marginales en RMSE global (entre −0.6\% y +0.3\% en T1DG; entre −0.0\% y +0.3\% en REPLACE-BG), con efectos de tamaño negligible en ENTIRE en ambos datasets (Cohen $d < 0.28$ en todos los casos).
+
+**[Figura §4.3-B: dumbbell plots para TBR-1 y TIR por dataset]**
+
+La asimetría entre DiaTrend y los otros dos datasets se explica por tres factores convergentes: mayor variabilidad basal entre folds en DiaTrend (std de 2.45 mg/dL en ENTIRE frente a 0.81 y 0.83 en los otros dos), mayor diversidad etaria de sus pacientes —que amplifica el impacto del balanceo por edad—, y la alta consistencia del ranking de técnicas entre folds (Spearman $\rho$ entre 0.69 y 0.92), que permite al test estadístico detectar efectos sistemáticos. Estos tres factores se detallan en §4.6.
+
+---
+
+### §4.4 — Dimensión demográfica: edad vs. sexo
+
+**[Figura §4.4-A: panel C del `dashboard_global` — Mean RMSE by technique and dimension]**
+
+El balanceo por edad produce efectos sistemáticamente superiores a los del balanceo por sexo en DiaTrend, tanto en magnitud como en significancia estadística. En TIR, cuatro técnicas de edad alcanzan efecto large en Cohen $d$ (jittering $d=0.86$, oversampling $d=1.07$, reference proportional $d=0.95$, SMOTE $d=0.99$), mientras que las seis técnicas de sexo en el mismo rango se quedan en medium o small ($d$ entre 0.26 y 0.52). El post-hoc de Nemenyi confirma que ninguna técnica de sexo alcanza diferencia significativa respecto al baseline en TIR de DiaTrend ($p \geq 0.66$).
+
+En TBR-1 de DiaTrend, Age·Oversampling ($d=0.58$ medium) y Age·SMOTE ($d=0.63$ medium) producen mejoras moderadas, mientras que todas las técnicas de sexo presentan efectos negligibles ($d < 0.19$). El post-hoc de Nemenyi en TBR-1 no identifica diferencias significativas entre ninguna técnica y el baseline, aunque Age·Oversampling y Age·SMOTE tienen los p-values más bajos frente al original (0.54 y 0.48 respectivamente), coherentes con su dirección de efecto.
+
+En T1DiabetesGranada, ninguna de las dos dimensiones produce efectos clínicamente relevantes en ENTIRE o TIR (todos los $d$ negligibles). Los efectos más pronunciados de T1DG se localizan en TAR-1, donde Age·PAUndersampling ($d=0.79$ RMSE, $d=1.33$ MAE) y Age·Undersampling ($d=0.90$ RMSE, $d=1.23$ MAE) son las técnicas con mayor señal, aunque en sentido de mejora en hiperglucemia —a diferencia de lo observado en DiaTrend.
+
+**[Tabla §4.4: efectos large y medium seleccionados de cohens\_d\_vs\_original — construir a mano con las filas más informativas]**
+
+---
+
+### §4.5 — Relevancia clínica: rangos glucémicos
+
+**[Figura §4.5-A: panel D del `dashboard_global` — RMSE improvement en Hypo L1]**
+
+El análisis por rangos revela un trade-off sistemático que es el hallazgo clínico más importante del TFM: las técnicas de balanceo por edad que mejoran TIR degradan simultáneamente TAR-1 en DiaTrend, y este efecto es estadísticamente significativo.
+
+En TIR, Age·Oversampling reduce el RMSE de 30.72 a 29.45 mg/dL ($d=1.07$, large; $p_\text{Nemenyi}=0.0055$ vs. baseline). Age·SMOTE produce una reducción comparable (30.72 → 29.57 mg/dL, $d=0.99$, large; $p=0.0088$). Age·Ref. Proportional y Age·Jittering obtienen efectos large similares ($d=0.95$ y $d=0.86$; $p=0.0102$ y $p=0.0321$). Ninguna de estas técnicas, sin embargo, supera al baseline en TBR-1 con significancia estadística en el post-hoc de Nemenyi.
+
+En TAR-1, el patrón se invierte con igual contundencia: Age·Oversampling incrementa el RMSE de 42.08 a 44.93 mg/dL ($d=-2.14$, large; $p_\text{Nemenyi}=0.0012$ vs. baseline), Age·Ref. Proportional ($d=-1.95$, large; $p=0.0034$) y Age·Jittering ($d=-1.70$, large; $p=0.0212$) siguen el mismo patrón. Age·SMOTE, a pesar de su efecto large negativo en TAR-1 ($d=-2.14$), alcanza $p=0.0088$ —es decir, la mejora en TIR y la degradación en TAR-1 son ambas estadísticamente significativas para la misma técnica.
+
+La única técnica de edad que atenúa este trade-off es Age·PAUndersampling, cuyo efecto en TAR-1 es medium ($d=-0.88$; $p=0.63$ frente al baseline, no significativo), a costa de no mejorar significativamente TIR ($d=0.49$, small) ni TBR-1 ($d=-0.70$, medium, en sentido negativo).
+
+**[Figura §4.5-B: heatmap de rankings por rango y técnica en DiaTrend]**
+
+En T1DiabetesGranada, el test de Friedman detecta diferencias en TBR-1 ($p=0.042$) y TBR-2 ($p=0.009$), pero el post-hoc de Nemenyi no identifica ningún par significativo en esos rangos, lo que indica que el efecto del balanceo en hipoglucemia en T1DG es estadísticamente presente pero difuso —no atribuible a ninguna técnica concreta con la potencia estadística disponible (5 folds, 13 condiciones).
+
+En términos de seguridad clínica, estos resultados implican que la selección de técnica de balanceo no puede basarse únicamente en RMSE global: una técnica que mejora TIR a costa de TAR-1 puede ser aceptable para perfiles predominantemente normoglucémicos, pero contraproducente en pacientes con tendencia a hiperglucemia.
+
+---
+
+### §4.6 — Estabilidad entre folds
+
+**[Figura §4.6: `consistency_folds_RMSE_ENTIRE` — tres paneles, figura principal]**
+
+La matriz de correlación Spearman del ranking de técnicas entre pares de folds revela una brecha estructural entre datasets. DiaTrend presenta consistencia alta y uniforme ($\rho$ entre 0.69 y 0.92, con media $\bar{\rho}=0.81$), lo que indica que el ranking de condiciones es estable independientemente de la partición de pacientes. Por el contrario, T1DiabetesGranada muestra correlaciones que oscilan entre $-0.44$ y $0.40$ —con valores negativos frecuentes—, y REPLACE-BG exhibe un patrón igualmente inconsistente ($\rho$ entre $-0.48$ y $0.31$).
+
+Esta asimetría explica directamente la de Friedman: cuando el ranking de técnicas se invierte entre folds, el test no detecta diferencias sistemáticas entre condiciones, no por ausencia de efectos sino porque la varianza inducida por la heterogeneidad de pacientes entre particiones supera la señal del balanceo. En T1DiabetesGranada y REPLACE-BG el Group K-Fold opera sobre conjuntos de pacientes cuyas dinámicas glucémicas no son intercambiables, introduciendo un nivel de varianza estructural que el balanceo de ventanas no puede compensar. Este resultado es metodológicamente esperable y refleja la dificultad real de generalizar modelos de predicción glucémica a través de poblaciones heterogéneas.
+
+---
+
+### §4.7 — Técnica ganadora y recomendación práctica
+
+Del análisis acumulado se extraen tres recomendaciones condicionales.
+
+Si el dataset presenta diversidad etaria suficiente y el objetivo clínico prioritario es minimizar el error en rango normoglucémico (TIR), **Age·Oversampling** es la técnica con mayor efecto confirmado ($d=1.07$ large en TIR de DiaTrend; $p_\text{Nemenyi}=0.0055$ frente al baseline). Su coste en TAR-1 es estadísticamente significativo ($d=-2.14$, $p=0.0012$) y debe evaluarse explícitamente frente al perfil glucémico de la población.
+
+Si el objetivo es maximizar el rendimiento agregado minimizando el trade-off entre rangos, **Age·SMOTE** ofrece el mejor equilibrio según el ranking Borda intra-dataset (posición 1 en T1DG con puntuación 45; posición 3 en DiaTrend con 63), con efecto large en TIR ($d=0.99$) y la misma advertencia en TAR-1.
+
+Si el dataset es homogéneo o presenta baja consistencia entre folds (patrón T1DiabetesGranada/REPLACE-BG), **no aplicar balanceo** es la opción más conservadora: ninguna técnica produce mejoras globales estadísticamente significativas, el post-hoc de Nemenyi no localiza ningún par significativo en ningún rango, y el riesgo de introducir varianza incontrolada supera el beneficio esperado.
+
+**[Tabla §4.7: síntesis — construir a mano: filas = técnicas, columnas = Friedman sig. (DiaTrend), $p$ Nemenyi vs. baseline (TIR), Cohen $d$ TIR, Cohen $d$ TAR-1, posición Borda por dataset]**
+
+**[Figura §4.7: radar DiaTrend dimensión Age — perfil de técnica ganadora]**
+
