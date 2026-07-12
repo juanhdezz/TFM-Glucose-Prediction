@@ -40,7 +40,10 @@ TECHNIQUES = [
     "jittering",
     "oversampling",
     "patient_aware_undersampling",
-    "reference_proportional",
+    "tomek_links",
+    "undersampling_oversampling",
+    "undersampling_smote",
+    "smote_tomek",
     "smote",
     "undersampling",
 ]
@@ -50,9 +53,13 @@ TECHNIQUE_LABELS = {
     "jittering":                   "Jittering",
     "oversampling":                "Oversampling",
     "patient_aware_undersampling": "PAUndersampling",
-    "reference_proportional":      "Ref. Proportional",
     "smote":                       "SMOTE",
     "undersampling":               "Undersampling",
+    "tomek_links":                 "Tomek Links",
+    "undersampling_oversampling":  "Undersampling + Oversampling",
+    "undersampling_smote":         "Undersampling + SMOTE",
+    "smote_tomek":                 "SMOTE + Tomek Links",
+
 }
 
 # Orden canónico para todos los plots (original siempre primero)
@@ -61,9 +68,12 @@ TECHNIQUE_ORDER = [
     "jittering",
     "oversampling",
     "patient_aware_undersampling",
-    "reference_proportional",
     "smote",
     "undersampling",
+    "tomek_links",
+    "undersampling_oversampling",
+    "undersampling_smote",
+    "smote_tomek",
 ]
 
 # ---------------------------------------------------------------------------
@@ -105,6 +115,10 @@ PALETTE = {
     "reference_proportional":      "#CC79A7",   # rosa/morado
     "smote":                       "#D55E00",   # rojo-naranja
     "undersampling":               "#56B4E9",   # azul cielo
+    "tomek_links":                 "#F0E442",   # amarillo
+    "undersampling_oversampling":  "#BC8F8F",   # caqui
+    "undersampling_smote":         "#984EA3",   # morado
+    "smote_tomek":                 "#FF7F00",   # naranja oscuro
 }
 
 DIMENSION_PALETTE = {

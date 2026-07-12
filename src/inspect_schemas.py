@@ -18,11 +18,11 @@ for name, path in files.items():
         print(df.isnull().sum())
         print("\nHead:")
         print(df.head(3))
-        print("\nUnique patients:", df['Patient_ID'].nunique())
+        print("\nUnique patients:", df['patient_id'].nunique())
         
         # Check target stats
         print("\nMeasurement description:")
-        print(df['Measurement'].describe())
+        print(df['measurement'].describe())
         
     except Exception as e:
         print(f"Error loading {name}: {e}")

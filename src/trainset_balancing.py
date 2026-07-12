@@ -1,4 +1,3 @@
-# ─────────────────────────────────────────────────────────────────────────────
 # 2b-trainset_balancing.py
 #
 # Genera datasets balanceados por dimensión demográfica (edad / sexo), uno por
@@ -15,6 +14,22 @@
 #   8. Añadir columna "split" con valor "train" / "val" / "test".
 #   9. Guardar como parquet.
 #
+# Grupos de edad: <31, 31-45, 46-65, >=66
+#
+# Técnicas disponibles:
+#   Aleatorias:
+#     undersampling              — RUS: reduce al grupo minoritario (aleatorio)
+#     oversampling               — ROS: expande al grupo mayoritario (aleatorio)
+#   Guiadas:
+#     smote                      — genera sintéticos por interpolación hasta igualar el máximo
+#     tomek_links                — elimina pares Tomek (limpieza de frontera, sin objetivo de proporción)
+#   Combinaciones:
+#     patient_aware_undersampling — RUS respetando cuota por paciente
+#     jittering                  — expansión con ruido gaussiano
+#     undersampling_oversampling — mismo tamaño original, proporción equitativa (RUS + ROS)
+#     undersampling_smote        — mismo tamaño original, proporción equitativa (RUS + SMOTE)
+#     smote_tomek                — proporción equitativa: SMOTE para aumentar, Tomek para reducir
+#
 # Formato de salida (un archivo por fold × grupo × técnica):
 #   data/<DATASET>/balanced_outputs/
 #     <windows_stem>_fold<i>_<group>_<technique>.parquet
@@ -25,13 +40,11 @@
 from __future__ import annotations
 
 import argparse
-import csv
-import json
 import math
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Mapping, Optional, Sequence, Tuple
+from typing import Dict, List, Optional, Sequence, Tuple
 
 import numpy as np
 import pandas as pd
@@ -42,18 +55,23 @@ from sklearn.neighbors import NearestNeighbors
 ROOT_DIR = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT_DIR / "data"
 
-DEFAULT_SEED      = 42
-DEFAULT_HORIZONS  = [4]
-DEFAULT_FOLDS     = [0, 1, 2, 3, 4]
-DEFAULT_GROUPS    = ["sex", "age"]
+DEFAULT_SEED       = 42
+DEFAULT_HORIZONS   = [4]
+DEFAULT_FOLDS      = [0, 1, 2, 3, 4]
+DEFAULT_GROUPS     = ["sex", "age"]
 DEFAULT_TECHNIQUES = [
+    # Aleatorias
     "undersampling",
     "oversampling",
-    "patient_aware_undersampling",
+    # Guiadas
     "smote",
-    "jittering"
-    "undersampling_oversampling", # Mismo tamaño , buscamos proporcion equitativa 50% / 50% entre sexos o 25% entre grupos de edad. Reduccion aleatroia , aumentando aleatoriamente.
-    "undersampling_smote", # Mismo tamaño , buscamos proporcion equitativa 50% / 50% entre sexos o 25% entre grupos de edad. reduccion aleatoria , aumentando con smote.
+    "tomek_links",
+    # Combinaciones
+    "patient_aware_undersampling",
+    "jittering",
+    "undersampling_oversampling",
+    "undersampling_smote",
+    "smote_tomek",
 ]
 DEFAULT_SENSOR_LIMITS = {
     "DIATREND":           (39.0, 401.0),
@@ -61,12 +79,15 @@ DEFAULT_SENSOR_LIMITS = {
     "T1DiabetesGranada":  (40.0, 500.0),
 }
 
-AGE_BINS   = [-np.inf, 18, 30, 45, 60, np.inf]
-AGE_LABELS = ["<=18", "19-30", "31-45", "46-60", ">60"]
-SEX_MAP    = {"F": "F", "M": "M"}
+# Grupos de edad: <31, 31-45, 46-65, >=66
+AGE_BINS   = [-np.inf, 30, 45, 65, np.inf]
+AGE_LABELS = ["<31", "31-45", "46-65", ">=66"]
+
+SEX_MAP = {"F": "F", "M": "M"}
 
 # Columnas que se conservan en el archivo de salida (sin fold_*)
 KEEP_COLUMNS = [f"x{i}" for i in range(8)] + ["y", "x_date_7", "x_time_7", "patient_id"]
+FEATURE_COLUMNS = [f"x{i}" for i in range(8)] + ["y"]
 
 
 # ─── Dataclass de assets ──────────────────────────────────────────────────────
@@ -96,7 +117,6 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--folds",      nargs="*", type=int, default=DEFAULT_FOLDS,
                         help="Índices de fold a balancear.")
     parser.add_argument("--seed",       type=int, default=DEFAULT_SEED)
-    
     parser.add_argument("--output-root", type=str, default=str(DATA_DIR),
                         help="Raíz que contiene las carpetas de dataset.")
     parser.add_argument("--overwrite",  action="store_true",
@@ -225,7 +245,7 @@ def attach_demographics(train_df: pd.DataFrame, demo_lookup: pd.DataFrame) -> pd
     return result
 
 
-# ─── Técnicas de balanceo ────────────────────────────────────────────────────
+# ─── Utilidades de features ───────────────────────────────────────────────────
 def clip_feature_columns(
     df: pd.DataFrame, feature_columns: Sequence[str], low: float, high: float
 ) -> pd.DataFrame:
@@ -235,9 +255,15 @@ def clip_feature_columns(
     return clipped
 
 
+def get_feature_matrix(df: pd.DataFrame, feature_columns: Sequence[str]) -> np.ndarray:
+    return df[list(feature_columns)].apply(pd.to_numeric, errors="coerce").to_numpy(dtype=float)
+
+
+# ─── Técnicas aleatorias (RUS / ROS) ─────────────────────────────────────────
 def undersample_group(
     group_df: pd.DataFrame, target: int, rng: np.random.Generator
 ) -> pd.DataFrame:
+    """RUS: Random Under-Sampling. Reduce al tamaño target eliminando filas aleatoriamente."""
     if len(group_df) <= target:
         return group_df.copy()
     chosen = rng.choice(group_df.index.to_numpy(), size=target, replace=False)
@@ -247,6 +273,7 @@ def undersample_group(
 def oversample_group(
     group_df: pd.DataFrame, target: int, rng: np.random.Generator
 ) -> pd.DataFrame:
+    """ROS: Random Over-Sampling. Expande al tamaño target duplicando filas aleatoriamente."""
     if len(group_df) >= target:
         return group_df.copy()
     chosen = rng.choice(group_df.index.to_numpy(), size=target, replace=True)
@@ -256,6 +283,7 @@ def oversample_group(
 def patient_aware_undersample_group(
     group_df: pd.DataFrame, target: int, rng: np.random.Generator
 ) -> pd.DataFrame:
+    """RUS respetando una cuota por paciente para no vaciar a ninguno."""
     if len(group_df) <= target:
         return group_df.copy()
 
@@ -275,6 +303,7 @@ def patient_aware_undersample_group(
     return sampled.copy()
 
 
+# ─── Técnicas guiadas ─────────────────────────────────────────────────────────
 def smote_group(
     group_df: pd.DataFrame,
     target: int,
@@ -282,6 +311,10 @@ def smote_group(
     feature_columns: Sequence[str],
     sensor_limits: Tuple[float, float],
 ) -> pd.DataFrame:
+    """
+    SMOTE: genera muestras sintéticas por interpolación entre vecinos cercanos.
+    Solo aumenta (si ya hay suficientes filas, devuelve sin cambios).
+    """
     current = len(group_df)
     if current >= target:
         return group_df.copy()
@@ -291,7 +324,7 @@ def smote_group(
         synthetic = pd.concat([group_df.copy()] * needed, ignore_index=True)
         return clip_feature_columns(synthetic, feature_columns, *sensor_limits)
 
-    features     = group_df[list(feature_columns)].apply(pd.to_numeric, errors="coerce").to_numpy(dtype=float)
+    features     = get_feature_matrix(group_df, feature_columns)
     feature_mean = np.nanmean(features, axis=0)
     feature_std  = np.nanstd(features, axis=0)
     feature_std[feature_std == 0] = 1.0
@@ -305,20 +338,92 @@ def smote_group(
 
     synthetic_rows: List[pd.Series] = []
     for _ in range(needed):
-        base_idx           = int(rng.integers(0, current))
-        candidate_nbrs     = neighbors[base_idx][1:]
-        neighbor_idx       = base_idx if len(candidate_nbrs) == 0 else int(rng.choice(candidate_nbrs))
-        lam                = float(rng.random())
-        synthetic_vector   = features[base_idx] + lam * (features[neighbor_idx] - features[base_idx])
+        base_idx       = int(rng.integers(0, current))
+        candidate_nbrs = neighbors[base_idx][1:]
+        neighbor_idx   = base_idx if len(candidate_nbrs) == 0 else int(rng.choice(candidate_nbrs))
+        lam            = float(rng.random())
+        synth_vec      = features[base_idx] + lam * (features[neighbor_idx] - features[base_idx])
 
         synthetic_row = base_rows.iloc[base_idx].copy()
         for idx, col in enumerate(feature_columns):
-            synthetic_row[col] = synthetic_vector[idx]
+            synthetic_row[col] = synth_vec[idx]
         synthetic_rows.append(synthetic_row)
 
     synthetic_df = pd.DataFrame(synthetic_rows)
     synthetic_df = clip_feature_columns(synthetic_df, feature_columns, *sensor_limits)
     return pd.concat([group_df, synthetic_df], ignore_index=True)
+
+
+def find_tomek_links(
+    features: np.ndarray,
+    labels: np.ndarray,
+) -> np.ndarray:
+    """
+    Detecta índices pertenecientes a pares Tomek Link.
+
+    Un par Tomek Link es (i, j) tal que:
+      - i y j son vecinos más cercanos mutuos.
+      - pertenecen a clases distintas.
+
+    Devuelve una máscara booleana True en los índices que forman parte de un par Tomek.
+    Solo se marcan los del grupo mayoritario local (el más frecuente de cada par),
+    que es el candidato a eliminar en undersampling con Tomek.
+    """
+    n = len(features)
+    if n < 2:
+        return np.zeros(n, dtype=bool)
+
+    nn = NearestNeighbors(n_neighbors=2, metric="euclidean")
+    nn.fit(features)
+    distances, indices = nn.kneighbors(features)
+    nearest = indices[:, 1]  # vecino más cercano de cada punto (excluye a sí mismo)
+
+    # Calcular frecuencia de cada clase para decidir cuál eliminar
+    unique, counts = np.unique(labels, return_counts=True)
+    class_size = dict(zip(unique, counts))
+
+    is_tomek = np.zeros(n, dtype=bool)
+    for i in range(n):
+        j = nearest[i]
+        # Par mutuo y clases distintas
+        if nearest[j] == i and labels[i] != labels[j]:
+            # Eliminar el del grupo mayoritario
+            if class_size[labels[i]] >= class_size[labels[j]]:
+                is_tomek[i] = True
+
+    return is_tomek
+
+
+def apply_tomek_links(
+    train_df: pd.DataFrame,
+    group_col: str,
+    feature_columns: Sequence[str],
+    sensor_limits: Tuple[float, float],
+) -> pd.DataFrame:
+    """
+    Tomek Links sobre el conjunto completo de train (todos los grupos juntos).
+    Elimina los ejemplos del grupo mayoritario que forman pares Tomek.
+    No busca proporciones objetivo: simplemente limpia la frontera de decisión.
+    """
+    if len(train_df) < 2:
+        return train_df.copy()
+
+    features = get_feature_matrix(train_df, feature_columns)
+
+    # Normalizar para que la distancia euclidiana sea comparable entre features
+    feat_mean = np.nanmean(features, axis=0)
+    feat_std  = np.nanstd(features, axis=0)
+    feat_std[feat_std == 0] = 1.0
+    scaled = (features - feat_mean) / feat_std
+
+    labels = train_df[group_col].to_numpy(dtype=str)
+    is_tomek = find_tomek_links(scaled, labels)
+
+    kept = train_df[~is_tomek].copy()
+    n_removed = is_tomek.sum()
+    if n_removed > 0:
+        print(f"      [tomek_links] eliminados {n_removed} pares Tomek de {len(train_df):,} filas")
+    return kept.reset_index(drop=True)
 
 
 def jitter_group(
@@ -329,13 +434,14 @@ def jitter_group(
     sensor_limits: Tuple[float, float],
     jitter_scale: float = 0.20,
 ) -> pd.DataFrame:
+    """Expansión con ruido gaussiano proporcional a la desviación estándar."""
     current = len(group_df)
     if current >= target:
         return group_df.copy()
 
-    needed   = target - current
-    features = group_df[list(feature_columns)].apply(pd.to_numeric, errors="coerce")
-    stds     = features.std(axis=0, ddof=0).replace(0, 1.0).to_numpy(dtype=float)
+    needed    = target - current
+    features  = group_df[list(feature_columns)].apply(pd.to_numeric, errors="coerce")
+    stds      = features.std(axis=0, ddof=0).replace(0, 1.0).to_numpy(dtype=float)
     base_rows = group_df.reset_index(drop=True)
 
     synthetic_rows: List[pd.Series] = []
@@ -352,60 +458,170 @@ def jitter_group(
     return pd.concat([group_df, synthetic_df], ignore_index=True)
 
 
-# ─── Selección de targets de conteo ──────────────────────────────────────────
-def select_target_counts(
-    counts: pd.Series,
-    technique: str,
-    total_rows: int,
-    reference_props: Optional[Mapping[str, float]] = None,
-) -> Dict[str, int]:
+# ─── Helper: reparto equitativo ───────────────────────────────────────────────
+def compute_equal_targets(groups: List[str], total: int) -> Dict[str, int]:
+    """
+    Reparte 'total' filas equitativamente entre n grupos.
+    Los primeros (total % n) grupos reciben un elemento extra para que la suma cuadre.
+    """
+    n      = len(groups)
+    base   = total // n
+    n_extra = total % n
+    return {g: base + (1 if i < n_extra else 0) for i, g in enumerate(sorted(groups))}
+
+
+# ─── Técnicas combinadas ──────────────────────────────────────────────────────
+def undersampling_oversampling_balanced(
+    train_df: pd.DataFrame,
+    group_col: str,
+    rng: np.random.Generator,
+    sensor_limits: Tuple[float, float],
+    feature_columns: Sequence[str],
+) -> pd.DataFrame:
+    """
+    RUS + ROS: mantiene el mismo nº de filas que el train original
+    con proporción equitativa entre grupos (50/50 o 25/25/25/25).
+    - Grupos mayoritarios → RUS (undersample aleatorio)
+    - Grupos minoritarios → ROS (oversample aleatorio con reemplazo)
+    """
+    total  = len(train_df)
+    groups = [g for g in train_df[group_col].unique() if pd.notna(g) and g != "Unknown"]
+    if not groups:
+        return train_df.copy()
+
+    target_map = compute_equal_targets(groups, total)
+    parts = []
+    for g, target in target_map.items():
+        gdf = train_df[train_df[group_col] == g].copy()
+        if len(gdf) == 0:
+            continue
+        if len(gdf) > target:
+            parts.append(undersample_group(gdf, target, rng))
+        else:
+            parts.append(oversample_group(gdf, target, rng))
+
+    # Mantener filas "Unknown" sin tocar
+    unknown_df = train_df[~train_df[group_col].isin(groups)].copy()
+    if len(unknown_df):
+        parts.append(unknown_df)
+
+    balanced = pd.concat(parts, ignore_index=True)
+    return balanced.sample(frac=1.0, random_state=int(rng.integers(0, 2**32 - 1))).reset_index(drop=True)
+
+
+def undersampling_smote_balanced(
+    train_df: pd.DataFrame,
+    group_col: str,
+    rng: np.random.Generator,
+    sensor_limits: Tuple[float, float],
+    feature_columns: Sequence[str],
+) -> pd.DataFrame:
+    """
+    RUS + SMOTE: mantiene el mismo nº de filas que el train original
+    con proporción equitativa entre grupos (50/50 o 25/25/25/25).
+    - Grupos mayoritarios → RUS (undersample aleatorio)
+    - Grupos minoritarios → SMOTE (generación sintética por interpolación)
+    """
+    total  = len(train_df)
+    groups = [g for g in train_df[group_col].unique() if pd.notna(g) and g != "Unknown"]
+    if not groups:
+        return train_df.copy()
+
+    target_map = compute_equal_targets(groups, total)
+    parts = []
+    for g, target in target_map.items():
+        gdf = train_df[train_df[group_col] == g].copy()
+        if len(gdf) == 0:
+            continue
+        if len(gdf) > target:
+            parts.append(undersample_group(gdf, target, rng))
+        else:
+            parts.append(smote_group(gdf, target, rng, feature_columns, sensor_limits))
+
+    unknown_df = train_df[~train_df[group_col].isin(groups)].copy()
+    if len(unknown_df):
+        parts.append(unknown_df)
+
+    balanced = pd.concat(parts, ignore_index=True)
+    return balanced.sample(frac=1.0, random_state=int(rng.integers(0, 2**32 - 1))).reset_index(drop=True)
+
+
+def smote_tomek_balanced(
+    train_df: pd.DataFrame,
+    group_col: str,
+    rng: np.random.Generator,
+    sensor_limits: Tuple[float, float],
+    feature_columns: Sequence[str],
+) -> pd.DataFrame:
+    """
+    SMOTE + Tomek Links: proporción equitativa entre grupos conservando el tamaño original.
+    - Grupos minoritarios → SMOTE (genera sintéticos por interpolación)
+    - Grupos mayoritarios → Tomek Links (elimina pares ruidosos en la frontera)
+
+    Proceso:
+      1. Calcular targets equitativos respecto al total original.
+      2. Aumentar grupos bajo target con SMOTE.
+      3. Reducir grupos sobre target con Tomek Links; si no basta, completar con RUS.
+    """
+    total  = len(train_df)
+    groups = [g for g in train_df[group_col].unique() if pd.notna(g) and g != "Unknown"]
+    if not groups:
+        return train_df.copy()
+
+    target_map = compute_equal_targets(groups, total)
+
+    # Paso 1: SMOTE para grupos minoritarios
+    parts = []
+    for g, target in target_map.items():
+        gdf = train_df[train_df[group_col] == g].copy()
+        if len(gdf) == 0:
+            continue
+        if len(gdf) < target:
+            parts.append(smote_group(gdf, target, rng, feature_columns, sensor_limits))
+        else:
+            parts.append(gdf)
+
+    unknown_df = train_df[~train_df[group_col].isin(groups)].copy()
+    if len(unknown_df):
+        parts.append(unknown_df)
+
+    after_smote = pd.concat(parts, ignore_index=True)
+
+    # Paso 2: Tomek Links sobre el conjunto completo para reducir mayoritarios
+    after_tomek = apply_tomek_links(after_smote, group_col, feature_columns, sensor_limits)
+
+    # Paso 3: Si algún grupo todavía supera su target, recortar con RUS
+    final_parts = []
+    for g, target in target_map.items():
+        gdf = after_tomek[after_tomek[group_col] == g].copy()
+        if len(gdf) > target:
+            gdf = undersample_group(gdf, target, rng)
+        final_parts.append(gdf)
+
+    unknown_final = after_tomek[~after_tomek[group_col].isin(groups)].copy()
+    if len(unknown_final):
+        final_parts.append(unknown_final)
+
+    balanced = pd.concat(final_parts, ignore_index=True)
+    return balanced.sample(frac=1.0, random_state=int(rng.integers(0, 2**32 - 1))).reset_index(drop=True)
+
+
+# ─── Selección de targets y dispatch ─────────────────────────────────────────
+def select_target_counts(counts: pd.Series, technique: str) -> Dict[str, int]:
+    """
+    Calcula el target por grupo para técnicas simples.
+    Técnicas combinadas/guiadas tienen su propio dispatch y no usan esta función.
+    """
     if technique in {"undersampling", "patient_aware_undersampling"}:
         target = int(counts.min())
-        return {group: target for group in counts.index}
-
+        return {g: target for g in counts.index}
     if technique in {"oversampling", "smote", "jittering"}:
         target = int(counts.max())
-        return {group: target for group in counts.index}
-
-    if technique == "reference_proportional":
-        if not reference_props:
-            raise ValueError("reference_proportional requiere un archivo de referencia.")
-
-        present_groups    = [g for g in counts.index if g in reference_props]
-        missing_from_ref  = [g for g in counts.index if g not in reference_props]
-
-        if missing_from_ref:
-            print(
-                f"    [WARN] reference_proportional: grupos {missing_from_ref} no están en "
-                "el archivo de referencia — se mantienen en su tamaño actual."
-            )
-
-        present_sum = sum(reference_props[g] for g in present_groups)
-        if present_sum == 0:
-            raise ValueError("La suma de proporciones de referencia para los grupos presentes es 0.")
-
-        raw_targets = {g: (reference_props[g] / present_sum) * total_rows for g in present_groups}
-        floors      = {g: int(math.floor(v)) for g, v in raw_targets.items()}
-        remainder   = total_rows - sum(floors.values())
-        ranked      = sorted(present_groups, key=lambda g: raw_targets[g] - floors[g], reverse=True)
-        targets     = floors.copy()
-        for g in ranked[:remainder]:
-            targets[g] += 1
-        for g in missing_from_ref:
-            targets[g] = int(counts[g])
-
-        print(f"    [reference_proportional] Distribución objetivo:")
-        for g, t in sorted(targets.items()):
-            actual    = int(counts.get(g, 0))
-            direction = "↑ oversample" if t > actual else ("↓ undersample" if t < actual else "= sin cambio")
-            print(f"      {g}: {actual:>8,} → {t:>8,} ({100 * t / total_rows:.1f}%)  {direction}")
-
-        return targets
-
-    raise ValueError(f"Técnica desconocida: {technique}")
+        return {g: target for g in counts.index}
+    raise ValueError(f"Técnica sin target definido: {technique}")
 
 
-def resample_group(
+def resample_group_simple(
     group_df: pd.DataFrame,
     target: int,
     technique: str,
@@ -413,6 +629,7 @@ def resample_group(
     feature_columns: Sequence[str],
     sensor_limits: Tuple[float, float],
 ) -> pd.DataFrame:
+    """Aplica la técnica simple a un único grupo."""
     if technique == "undersampling":
         return undersample_group(group_df, target, rng)
     if technique == "oversampling":
@@ -423,14 +640,6 @@ def resample_group(
         return smote_group(group_df, target, rng, feature_columns, sensor_limits)
     if technique == "jittering":
         return jitter_group(group_df, target, rng, feature_columns, sensor_limits)
-    if technique == "reference_proportional":
-        current = len(group_df)
-        if target == current:
-            return group_df.copy()
-        elif target > current:
-            return oversample_group(group_df, target, rng)
-        else:
-            return undersample_group(group_df, target, rng)
     raise ValueError(f"Técnica no soportada: {technique}")
 
 
@@ -440,49 +649,40 @@ def resample_train_fold(
     technique: str,
     rng: np.random.Generator,
     sensor_limits: Tuple[float, float],
-    reference_props: Optional[Mapping[str, float]] = None,
 ) -> pd.DataFrame:
-    counts         = train_df[group_col].value_counts(dropna=False)
-    target_counts  = select_target_counts(counts, technique, len(train_df), reference_props)
-    feature_columns = [f"x{i}" for i in range(8)] + ["y"]
+    """
+    Punto de entrada principal del balanceo.
+    Despacha a la función correspondiente según la técnica.
+    """
+    feature_columns = FEATURE_COLUMNS
+
+    # ── Técnicas con lógica global (actúan sobre todo el df de una vez) ──────
+    if technique == "tomek_links":
+        result = apply_tomek_links(train_df, group_col, feature_columns, sensor_limits)
+        return result.sample(frac=1.0, random_state=int(rng.integers(0, 2**32 - 1))).reset_index(drop=True)
+
+    if technique == "undersampling_oversampling":
+        return undersampling_oversampling_balanced(train_df, group_col, rng, sensor_limits, feature_columns)
+
+    if technique == "undersampling_smote":
+        return undersampling_smote_balanced(train_df, group_col, rng, sensor_limits, feature_columns)
+
+    if technique == "smote_tomek":
+        return smote_tomek_balanced(train_df, group_col, rng, sensor_limits, feature_columns)
+
+    # ── Técnicas simples: calcular target por grupo y resamplear ─────────────
+    counts        = train_df[group_col].value_counts(dropna=False)
+    target_counts = select_target_counts(counts, technique)
 
     parts = []
     for group_value, target in target_counts.items():
         group_df = train_df[train_df[group_col] == group_value].copy()
-        parts.append(resample_group(group_df, target, technique, rng, feature_columns, sensor_limits))
+        parts.append(resample_group_simple(group_df, target, technique, rng, feature_columns, sensor_limits))
 
     balanced = pd.concat(parts, ignore_index=True)
-    shuffled = balanced.sample(
+    return balanced.sample(
         frac=1.0, random_state=int(rng.integers(0, 2**32 - 1))
     ).reset_index(drop=True)
-    return shuffled
-
-
-# ─── Carga de proporciones de referencia ─────────────────────────────────────
-def load_reference_proportions(reference_file: Optional[str]) -> Optional[Dict[str, float]]:
-    if not reference_file:
-        return None
-
-    path = Path(reference_file)
-    if not path.exists():
-        raise FileNotFoundError(f"Archivo de referencia no encontrado: {path}")
-
-    if path.suffix.lower() == ".json":
-        with path.open("r", encoding="utf-8") as f:
-            payload = json.load(f)
-        return {str(k): float(v) for k, v in payload.items()}
-
-    if path.suffix.lower() == ".csv":
-        with path.open("r", encoding="utf-8", newline="") as f:
-            reader = csv.DictReader(f)
-            rows   = list(reader)
-        if not rows:
-            raise ValueError(f"CSV de referencia vacío: {path}")
-        if "group" not in rows[0] or "proportion" not in rows[0]:
-            raise ValueError("El CSV de referencia debe tener columnas 'group' y 'proportion'.")
-        return {str(row["group"]): float(row["proportion"]) for row in rows}
-
-    raise ValueError("El archivo de referencia debe ser CSV o JSON.")
 
 
 # ─── Nombre de archivo de salida ─────────────────────────────────────────────
@@ -492,21 +692,19 @@ def build_output_name(windows_stem: str, fold_idx: int, group_name: str, techniq
 
 # ─── Procesado de un dataset ─────────────────────────────────────────────────
 def process_dataset(
-    assets:          DatasetAssets,
-    horizons:        Sequence[int],
-    groups:          Sequence[str],
-    techniques:      Sequence[str],
-    folds:           Sequence[int],
-    seed:            int,
-    reference_props: Optional[Mapping[str, float]],
-    overwrite:       bool,
+    assets:     DatasetAssets,
+    horizons:   Sequence[int],
+    groups:     Sequence[str],
+    techniques: Sequence[str],
+    folds:      Sequence[int],
+    seed:       int,
+    overwrite:  bool,
 ) -> None:
     patient_info  = load_table(assets.patient_info_file)
     demo_lookup   = build_demographic_lookup(patient_info)
     sensor_limits = DEFAULT_SENSOR_LIMITS.get(assets.dataset_name, (39.0, 401.0))
 
     for horizon in horizons:
-        # Buscar archivo de ventanas
         windows_candidates = sorted(
             assets.dataset_dir.glob(
                 f"windows_with_5folds_{assets.dataset_name}*PH{horizon}*.parquet"
@@ -532,7 +730,6 @@ def process_dataset(
 
         df_windows = load_table(windows_file)
 
-        # Columnas fold disponibles
         fold_columns_available = {
             int(c.split("_")[-1]): c
             for c in df_windows.columns
@@ -549,14 +746,10 @@ def process_dataset(
 
                 fold_col = fold_columns_available[fold_idx]
 
-                # ── Separar train / val+test usando solo este fold ────────────
                 fold_values   = df_windows[fold_col].astype(str).str.lower()
                 train_mask    = fold_values == "train"
                 val_mask      = fold_values == "val"
                 test_mask     = fold_values == "test"
-
-                # Filas que pertenecen a este fold (train + val + test)
-                in_fold_mask  = train_mask | val_mask | test_mask
 
                 raw_train     = df_windows.loc[train_mask].copy()
                 raw_untouched = df_windows.loc[val_mask | test_mask].copy()
@@ -566,7 +759,6 @@ def process_dataset(
                     f"train={len(raw_train):,}, val+test={len(raw_untouched):,}"
                 )
 
-                # ── Añadir demografía al train ────────────────────────────────
                 train_with_demo = attach_demographics(raw_train, demo_lookup)
 
                 if group_col not in train_with_demo.columns:
@@ -577,10 +769,6 @@ def process_dataset(
                 print(f"    Distribución antes: {group_dist_before}")
 
                 for technique in techniques:
-                    if technique == "reference_proportional" and reference_props is None:
-                        print("    [WARN] reference_proportional solicitado sin archivo de referencia; omitiendo.")
-                        continue
-
                     output_name = build_output_name(windows_stem, fold_idx, group_name, technique)
                     output_path = assets.output_dir / output_name
                     if output_path.exists() and not overwrite:
@@ -593,29 +781,24 @@ def process_dataset(
                         + abs(hash((assets.dataset_name, group_name, technique))) % 1000
                     )
 
-                    # ── Balancear train ───────────────────────────────────────
                     balanced_train = resample_train_fold(
-                        train_df        = train_with_demo,
-                        group_col       = group_col,
-                        technique       = technique,
-                        rng             = rng,
-                        sensor_limits   = sensor_limits,
-                        reference_props = reference_props,
+                        train_df      = train_with_demo,
+                        group_col     = group_col,
+                        technique     = technique,
+                        rng           = rng,
+                        sensor_limits = sensor_limits,
                     )
 
-                    # ── Añadir columna 'split' ────────────────────────────────
-                    balanced_train  = balanced_train.copy()
+                    balanced_train = balanced_train.copy()
                     balanced_train["split"] = "train"
 
                     untouched_out = raw_untouched.copy()
-                    # Reasignar split desde la columna fold
                     untouched_out["split"] = (
                         df_windows.loc[val_mask | test_mask, fold_col]
                         .astype(str).str.lower()
                         .values
                     )
 
-                    # ── Construir salida: solo columnas de interés + split ────
                     keep = [c for c in KEEP_COLUMNS if c in balanced_train.columns]
                     balanced_train_out = balanced_train[keep + ["split"]].copy()
 
@@ -626,9 +809,10 @@ def process_dataset(
                         [balanced_train_out, untouched_final], ignore_index=True
                     )
 
-                    # ── Log de distribución final ─────────────────────────────
                     group_dist_after = (
                         balanced_train[group_col].value_counts(dropna=False).to_dict()
+                        if group_col in balanced_train.columns
+                        else {}
                     )
 
                     out_df.to_parquet(output_path, index=False)
@@ -642,24 +826,11 @@ def process_dataset(
                         f"total={len(out_df):,}"
                     )
 
-                    if technique == "reference_proportional" and reference_props:
-                        total_bal = len(balanced_train)
-                        print("      check reference_proportional:")
-                        for g, n in sorted(group_dist_after.items()):
-                            actual_pct = 100 * n / total_bal if total_bal > 0 else 0
-                            ref_pct    = 100 * reference_props.get(str(g), 0)
-                            deviation  = actual_pct - ref_pct
-                            print(
-                                f"        {g}: conseguido {actual_pct:.2f}%  |  "
-                                f"objetivo {ref_pct:.2f}%  |  Δ = {deviation:+.2f}pp"
-                            )
-
 
 # ─── Main ─────────────────────────────────────────────────────────────────────
 def main() -> None:
-    args             = parse_args()
-    root             = Path(args.output_root)
-    reference_props  = load_reference_proportions(args.reference_file)
+    args = parse_args()
+    root = Path(args.output_root)
 
     dataset_dirs = discover_dataset_dirs(root, args.datasets)
 
@@ -681,14 +852,13 @@ def main() -> None:
             continue
 
         process_dataset(
-            assets          = assets,
-            horizons        = args.horizons,
-            groups          = args.groups,
-            techniques      = args.techniques,
-            folds           = args.folds,
-            seed            = args.seed,
-            reference_props = reference_props,
-            overwrite       = args.overwrite,
+            assets     = assets,
+            horizons   = args.horizons,
+            groups     = args.groups,
+            techniques = args.techniques,
+            folds      = args.folds,
+            seed       = args.seed,
+            overwrite  = args.overwrite,
         )
 
 
