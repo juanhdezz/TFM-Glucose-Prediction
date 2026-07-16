@@ -1,0 +1,79 @@
+============================================================
+  Dataset  : DIATREND
+  Técnica  : Oversampling + Tomek
+  Dimensión: EDAD
+============================================================
+
+FOLD 0
+  1. TAMAÑO DEL CONJUNTO DE ENTRENAMIENTO
+     Original  :    1,598,896
+     Balanceado:    2,713,270
+     Diferencia:   +1,114,374  (+69.70%)
+
+  2. DISTRIBUCIÓN POR AGE_GROUP EN TRAIN
+     Grupo           Original n  Original %    Balanceado n   Balanceado %
+     --------------------------------------------------------------------
+     31-45               20,144        1.3%         399,724          14.7%
+     46-65               48,725        3.0%         399,724          14.7%
+     <31              1,514,127       94.7%       1,514,098          55.8%
+     >=66                15,900        1.0%         399,724          14.7%
+------------------------------------------------------------
+
+FOLD 1
+  1. TAMAÑO DEL CONJUNTO DE ENTRENAMIENTO
+     Original  :    1,613,241
+     Balanceado:    2,736,421
+     Diferencia:   +1,123,180  (+69.62%)
+
+  2. DISTRIBUCIÓN POR AGE_GROUP EN TRAIN
+     Grupo           Original n  Original %    Balanceado n   Balanceado %
+     --------------------------------------------------------------------
+     31-45               28,214        1.7%         403,311          14.7%
+     46-65               42,631        2.6%         403,310          14.7%
+     <31              1,526,496       94.6%       1,526,490          55.8%
+     >=66                15,900        1.0%         403,310          14.7%
+------------------------------------------------------------
+
+FOLD 2
+  1. TAMAÑO DEL CONJUNTO DE ENTRENAMIENTO
+     Original  :    1,582,201
+     Balanceado:    2,696,202
+     Diferencia:   +1,114,001  (+70.41%)
+
+  2. DISTRIBUCIÓN POR AGE_GROUP EN TRAIN
+     Grupo           Original n  Original %    Balanceado n   Balanceado %
+     --------------------------------------------------------------------
+     31-45               12,339        0.8%         395,551          14.7%
+     46-65               44,397        2.8%         395,550          14.7%
+     <31              1,509,565       95.4%       1,509,551          56.0%
+     >=66                15,900        1.0%         395,550          14.7%
+------------------------------------------------------------
+
+FOLD 3
+  1. TAMAÑO DEL CONJUNTO DE ENTRENAMIENTO
+     Original  :    1,617,106
+     Balanceado:    2,761,569
+     Diferencia:   +1,144,463  (+70.77%)
+
+  2. DISTRIBUCIÓN POR AGE_GROUP EN TRAIN
+     Grupo           Original n  Original %    Balanceado n   Balanceado %
+     --------------------------------------------------------------------
+     31-45               23,945        1.5%         404,277          14.6%
+     46-65               28,522        1.8%         404,277          14.6%
+     <31              1,548,739       95.8%       1,548,739          56.1%
+     >=66                15,900        1.0%         404,276          14.6%
+------------------------------------------------------------
+
+FOLD 4
+  1. TAMAÑO DEL CONJUNTO DE ENTRENAMIENTO
+     Original  :    1,604,177
+     Balanceado:    2,620,300
+     Diferencia:   +1,016,123  (+63.34%)
+
+  2. DISTRIBUCIÓN POR AGE_GROUP EN TRAIN
+     Grupo           Original n  Original %    Balanceado n   Balanceado %
+     --------------------------------------------------------------------
+     31-45               28,214        1.8%         534,726          20.4%
+     46-65               25,115        1.6%         534,726          20.4%
+     <31              1,550,848       96.7%       1,550,848          59.2%
+------------------------------------------------------------

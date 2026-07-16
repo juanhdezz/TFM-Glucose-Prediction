@@ -29,6 +29,7 @@
 #     undersampling_oversampling — mismo tamaño original, proporción equitativa (RUS + ROS)
 #     undersampling_smote        — mismo tamaño original, proporción equitativa (RUS + SMOTE)
 #     smote_tomek                — proporción equitativa: SMOTE para aumentar, Tomek para reducir
+#     oversampling_tomek          — mismo tamaño original, proporción equitativa (ROS + Tomek)
 #
 # Formato de salida (un archivo por fold × grupo × técnica):
 #   data/<DATASET>/balanced_outputs/
@@ -73,6 +74,7 @@ DEFAULT_TECHNIQUES = [
     "undersampling_oversampling",
     "undersampling_smote",
     "smote_tomek",
+    "oversampling_tomek"
 ]
 DEFAULT_SENSOR_LIMITS = {
     "DIATREND":           (39.0, 401.0),
@@ -607,6 +609,45 @@ def smote_tomek_balanced(
     return balanced.sample(frac=1.0, random_state=int(rng.integers(0, 2**32 - 1))).reset_index(drop=True)
 
 
+def oversampling_tomek_balanced(
+    train_df: pd.DataFrame,
+    group_col: str,
+    rng: np.random.Generator,
+    sensor_limits: Tuple[float, float],
+    feature_columns: Sequence[str],
+) -> pd.DataFrame:
+    """
+    ROS + Tomek Links: mantiene el mismo nº de filas que el train original
+    con proporción equitativa entre grupos (50/50 o 25/25/25/25).
+    - Grupos minoritarios → ROS (oversample aleatorio con reemplazo)
+    - Grupos mayoritarios → Tomek Links (elimina pares ruidosos en la frontera)
+    """
+    total  = len(train_df)
+    groups = [g for g in train_df[group_col].unique() if pd.notna(g) and g != "Unknown"]
+    if not groups:
+        return train_df.copy()
+
+    target_map = compute_equal_targets(groups, total)
+    parts = []
+    for g, target in target_map.items():
+        gdf = train_df[train_df[group_col] == g].copy()
+        if len(gdf) == 0:
+            continue
+        if len(gdf) < target:
+            parts.append(oversample_group(gdf, target, rng))
+        else:
+            parts.append(gdf)
+
+    unknown_df = train_df[~train_df[group_col].isin(groups)].copy()
+    if len(unknown_df):
+        parts.append(unknown_df)
+
+    after_ros = pd.concat(parts, ignore_index=True)
+    balanced  = apply_tomek_links(after_ros, group_col, feature_columns, sensor_limits)
+
+    return balanced.sample(frac=1.0, random_state=int(rng.integers(0, 2**32 - 1))).reset_index(drop=True)
+
+
 # ─── Selección de targets y dispatch ─────────────────────────────────────────
 def select_target_counts(counts: pd.Series, technique: str) -> Dict[str, int]:
     """
@@ -670,6 +711,9 @@ def resample_train_fold(
 
     if technique == "smote_tomek":
         return smote_tomek_balanced(train_df, group_col, rng, sensor_limits, feature_columns)
+
+    if technique == "oversampling_tomek":
+        return oversampling_tomek_balanced(train_df, group_col, rng, sensor_limits, feature_columns)
 
     # ── Técnicas simples: calcular target por grupo y resamplear ─────────────
     counts        = train_df[group_col].value_counts(dropna=False)

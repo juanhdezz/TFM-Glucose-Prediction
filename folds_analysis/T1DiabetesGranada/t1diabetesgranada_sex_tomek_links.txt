@@ -1,0 +1,70 @@
+============================================================
+  Dataset  : T1DiabetesGranada
+  Técnica  : Tomek Links
+  Dimensión: SEXO
+============================================================
+
+FOLD 0
+  1. TAMAÑO DEL CONJUNTO DE ENTRENAMIENTO
+     Original  :   13,572,679
+     Balanceado:   12,098,808
+     Diferencia:   -1,473,871  (-10.86%)
+
+  2. DISTRIBUCIÓN POR SEX_GROUP EN TRAIN
+     Grupo           Original n  Original %    Balanceado n   Balanceado %
+     --------------------------------------------------------------------
+     F                7,155,100       52.7%       5,681,229          47.0%
+     M                6,417,579       47.3%       6,417,579          53.0%
+------------------------------------------------------------
+
+FOLD 1
+  1. TAMAÑO DEL CONJUNTO DE ENTRENAMIENTO
+     Original  :   13,588,245
+     Balanceado:   12,114,960
+     Diferencia:   -1,473,285  (-10.84%)
+
+  2. DISTRIBUCIÓN POR SEX_GROUP EN TRAIN
+     Grupo           Original n  Original %    Balanceado n   Balanceado %
+     --------------------------------------------------------------------
+     F                7,242,080       53.3%       5,768,795          47.6%
+     M                6,346,165       46.7%       6,346,165          52.4%
+------------------------------------------------------------
+
+FOLD 2
+  1. TAMAÑO DEL CONJUNTO DE ENTRENAMIENTO
+     Original  :   13,597,404
+     Balanceado:   12,115,209
+     Diferencia:   -1,482,195  (-10.90%)
+
+  2. DISTRIBUCIÓN POR SEX_GROUP EN TRAIN
+     Grupo           Original n  Original %    Balanceado n   Balanceado %
+     --------------------------------------------------------------------
+     F                6,970,881       51.3%       5,488,686          45.3%
+     M                6,626,523       48.7%       6,626,523          54.7%
+------------------------------------------------------------
+
+FOLD 3
+  1. TAMAÑO DEL CONJUNTO DE ENTRENAMIENTO
+     Original  :   13,596,135
+     Balanceado:   12,120,620
+     Diferencia:   -1,475,515  (-10.85%)
+
+  2. DISTRIBUCIÓN POR SEX_GROUP EN TRAIN
+     Grupo           Original n  Original %    Balanceado n   Balanceado %
+     --------------------------------------------------------------------
+     F                7,237,381       53.2%       5,761,866          47.5%
+     M                6,358,754       46.8%       6,358,754          52.5%
+------------------------------------------------------------
+
+FOLD 4
+  1. TAMAÑO DEL CONJUNTO DE ENTRENAMIENTO
+     Original  :   13,583,812
+     Balanceado:   12,116,006
+     Diferencia:   -1,467,806  (-10.81%)
+
+  2. DISTRIBUCIÓN POR SEX_GROUP EN TRAIN
+     Grupo           Original n  Original %    Balanceado n   Balanceado %
+     --------------------------------------------------------------------
+     F                7,409,488       54.5%       5,941,682          49.0%
+     M                6,174,324       45.5%       6,174,324          51.0%
+------------------------------------------------------------

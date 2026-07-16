@@ -1,0 +1,80 @@
+============================================================
+  Dataset  : REPLACE-BG
+  Técnica  : Patient-Aware Undersampling
+  Dimensión: EDAD
+============================================================
+
+FOLD 0
+  1. TAMAÑO DEL CONJUNTO DE ENTRENAMIENTO
+     Original  :    2,308,739
+     Balanceado:      740,020
+     Diferencia:   -1,568,719  (-67.95%)
+
+  2. DISTRIBUCIÓN POR AGE_GROUP EN TRAIN
+     Grupo           Original n  Original %    Balanceado n   Balanceado %
+     --------------------------------------------------------------------
+     31-45              687,000       29.8%         184,474          24.9%
+     46-65              917,297       39.7%         185,182          25.0%
+     <31                519,260       22.5%         185,182          25.0%
+     >=66               185,182        8.0%         185,182          25.0%
+------------------------------------------------------------
+
+FOLD 1
+  1. TAMAÑO DEL CONJUNTO DE ENTRENAMIENTO
+     Original  :    2,309,304
+     Balanceado:      612,012
+     Diferencia:   -1,697,292  (-73.50%)
+
+  2. DISTRIBUCIÓN POR AGE_GROUP EN TRAIN
+     Grupo           Original n  Original %    Balanceado n   Balanceado %
+     --------------------------------------------------------------------
+     31-45              721,808       31.3%         153,003          25.0%
+     46-65              866,690       37.5%         153,003          25.0%
+     <31                567,803       24.6%         153,003          25.0%
+     >=66               153,003        6.6%         153,003          25.0%
+------------------------------------------------------------
+
+FOLD 2
+  1. TAMAÑO DEL CONJUNTO DE ENTRENAMIENTO
+     Original  :    2,313,695
+     Balanceado:      689,644
+     Diferencia:   -1,624,051  (-70.19%)
+
+  2. DISTRIBUCIÓN POR AGE_GROUP EN TRAIN
+     Grupo           Original n  Original %    Balanceado n   Balanceado %
+     --------------------------------------------------------------------
+     31-45              660,555       28.5%         172,411          25.0%
+     46-65              991,536       42.9%         172,411          25.0%
+     <31                489,193       21.1%         172,411          25.0%
+     >=66               172,411        7.5%         172,411          25.0%
+------------------------------------------------------------
+
+FOLD 3
+  1. TAMAÑO DEL CONJUNTO DE ENTRENAMIENTO
+     Original  :    2,309,302
+     Balanceado:      852,646
+     Diferencia:   -1,456,656  (-63.08%)
+
+  2. DISTRIBUCIÓN POR AGE_GROUP EN TRAIN
+     Grupo           Original n  Original %    Balanceado n   Balanceado %
+     --------------------------------------------------------------------
+     31-45              661,306       28.6%         211,972          24.9%
+     46-65              907,452       39.3%         213,558          25.0%
+     <31                526,986       22.8%         213,558          25.0%
+     >=66               213,558        9.2%         213,558          25.0%
+------------------------------------------------------------
+
+FOLD 4
+  1. TAMAÑO DEL CONJUNTO DE ENTRENAMIENTO
+     Original  :    2,309,924
+     Balanceado:      801,923
+     Diferencia:   -1,508,001  (-65.28%)
+
+  2. DISTRIBUCIÓN POR AGE_GROUP EN TRAIN
+     Grupo           Original n  Original %    Balanceado n   Balanceado %
+     --------------------------------------------------------------------
+     31-45              725,219       31.4%         199,883          24.9%
+     46-65              944,816       40.9%         200,716          25.0%
+     <31                439,173       19.0%         200,608          25.0%
+     >=66               200,716        8.7%         200,716          25.0%
+------------------------------------------------------------

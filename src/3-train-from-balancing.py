@@ -881,6 +881,16 @@ def main() -> None:
         '--datasets', nargs='*', default=None,
         help='Limitar el procesamiento a estas carpetas de dataset (nombres).'
     )
+
+    parser.add_argument(
+    '--technique', type=str, default=None,
+    help=(
+        'Ejecutar solo la balancing_condition indicada (ej: balanced_age_smote) '
+        'para todos los datasets. Los archivos se buscan en '
+        'balanced_outputs/ con el patrón *_fold{i}_{group}_{technique}.parquet. '
+        'Formato esperado: balanced_{group}_{technique}  (ej: balanced_age_smote).'
+    )
+)
     parser.add_argument(
         '--file', type=str, default=None,
         help=(
@@ -966,6 +976,86 @@ def main() -> None:
         print("\nMODO: carpeta de folds balanceados")
         print(target)
         run_experiment(target)
+        return
+    
+    # ──────────────────────────────────────────────────────────────────────────
+    # MODO 4: --technique  → ejecutar una balancing_condition concreta
+    #          para todos los datasets
+    # ──────────────────────────────────────────────────────────────────────────
+    if args.technique:
+        condition = args.technique  # ej: 'balanced_age_smote'
+
+        # Validar formato: debe empezar por 'balanced_age_' o 'balanced_sex_'
+        m = re.match(r'^balanced_(?P<group>age|sex)_(?P<technique>.+)$', condition)
+        if not m:
+            raise ValueError(
+                f"--technique debe tener el formato 'balanced_{{age|sex}}_{{method}}'. "
+                f"Recibido: '{condition}'"
+            )
+        group_name     = m.group('group')      # 'age' o 'sex'
+        technique_name = m.group('technique')  # ej: 'smote'
+
+        fold_pattern = re.compile(
+            r'^(?P<stem>.+)_fold(?P<fold>\d+)_'
+            + re.escape(group_name) + r'_'
+            + re.escape(technique_name) + r'\.parquet$'
+        )
+
+        targets = []
+        dataset_dirs = sorted(INPUT_ROOT.iterdir()) if not args.datasets else [
+            INPUT_ROOT / d for d in args.datasets
+        ]
+
+        for dataset_dir in dataset_dirs:
+            if not dataset_dir.is_dir():
+                continue
+
+            dataset_name = detect_dataset_name(dataset_dir.name)
+            min_s, max_s = SENSOR_LIMITS.get(dataset_name, DEFAULT_SENSOR_LIMITS)
+            balanced_dir = dataset_dir / 'balanced_outputs'
+
+            if not balanced_dir.exists():
+                print(f"[WARN] {dataset_name}: no existe balanced_outputs/, se omite.")
+                continue
+
+            fold_dict: dict[int, Path] = {}
+            for f in sorted(balanced_dir.glob('*.parquet')):
+                fm = fold_pattern.match(f.name)
+                if fm:
+                    fold_dict[int(fm.group('fold'))] = f
+
+            missing = [i for i in range(K_FOLDS) if i not in fold_dict]
+            if missing:
+                print(
+                    f"[WARN] {dataset_name} | {condition}: "
+                    f"faltan folds {missing}; experimento omitido."
+                )
+                continue
+
+            targets.append(ExperimentTarget(
+                dataset_name        = dataset_name,
+                balancing_condition = condition,
+                min_sensor          = min_s,
+                max_sensor          = max_s,
+                parquet_path        = None,
+                fold_files          = [fold_dict[i] for i in range(K_FOLDS)],
+            ))
+
+        if not targets:
+            print(f"No se encontraron archivos para la condición '{condition}'.")
+            return
+
+        print(f"\nMODO: --technique '{condition}' → {len(targets)} dataset(s)")
+        for i, target in enumerate(targets, 1):
+            print(f"\n[{i}/{len(targets)}] {target}")
+            try:
+                run_experiment(target)
+            except Exception as exc:
+                print(f"ERROR en {target.dataset_name}: {exc}")
+                import traceback
+                traceback.print_exc()
+
+        print("DONE")
         return
 
     # ──────────────────────────────────────────────────────────────────────────

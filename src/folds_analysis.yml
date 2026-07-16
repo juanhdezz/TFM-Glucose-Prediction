@@ -1,0 +1,9 @@
+name: folds_analysis
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - numpy>=1.26
+  - pandas>=2.1
+  - pyarrow>=15.0      # motor para pd.read_parquet / pd.read_parquet (parquet)
