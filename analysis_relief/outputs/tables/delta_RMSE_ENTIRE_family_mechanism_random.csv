@@ -1,0 +1,7 @@
+Condition,T1DGranada,DiaTrend,ReplaceBG
+Age · Oversampling,-0.7%,-2.2%,+0.1%
+Age · Undersampling,-0.3%,-6.0%,-0.3%
+Age · Undersampling + Oversampling,-0.5%,-1.9%,+0.4%
+Sex · Oversampling,-0.4%,+0.1%,+0.4%
+Sex · Undersampling,-0.3%,-0.1%,+0.1%
+Sex · Undersampling + Oversampling,-0.5%,+0.1%,-0.1%

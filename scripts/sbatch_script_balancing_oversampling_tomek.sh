@@ -12,7 +12,7 @@ source /opt/miniconda/etc/profile.d/conda.sh # Esta línea es común para todos
 conda activate glucose_balancing # Según el nombre del ambiente que hayas creado
 
 # Ejecutar tu script Python dentro del entorno Conda (poner la ruta completa, no poner ruta relativa)
-python /home/juanhdez/scripts/balancing_servidor.py --techniques oversampling_tomek 
+python /home/juanhdez/scripts/balancing_servidor.py --techniques oversampling_tomek --overwrite
 
 # Desactivar el entorno de Conda (opcional)
 conda deactivate

@@ -1,0 +1,9 @@
+Condition,T1DGranada,DiaTrend,ReplaceBG
+Age · Undersampling + Oversampling,#6  (39.57±1.67),#4  (74.11±6.32),#6  (57.01±1.81)
+Age · Undersampling + SMOTE,#1  (38.78±1.45),#3  (73.88±7.09),#4  (56.88±1.26)
+Age · balanced_age_smote_tomek,#2  (39.05±1.08),#2  (73.35±7.28),#7  (57.08±1.39)
+Age · Oversampling + Tomek Links,#4  (39.42±2.49),#1  (73.29±8.13),#5  (56.90±1.11)
+Sex · Undersampling + Oversampling,#8  (39.79±1.31),#5  (74.17±7.56),#3  (56.78±1.53)
+Sex · Undersampling + SMOTE,#3  (39.34±0.90),#7  (74.93±7.43),#1  (56.51±0.90)
+Sex · balanced_sex_smote_tomek,#7  (39.63±0.94),#6  (74.59±6.65),#8  (57.13±1.07)
+Sex · Oversampling + Tomek Links,#5  (39.56±1.54),#8  (75.45±5.41),#2  (56.78±0.68)

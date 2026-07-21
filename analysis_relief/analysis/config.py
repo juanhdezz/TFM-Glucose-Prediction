@@ -46,6 +46,8 @@ TECHNIQUES = [
     "smote_tomek",
     "smote",
     "undersampling",
+    "oversampling_tomek",
+
 ]
 
 TECHNIQUE_LABELS = {
@@ -58,7 +60,7 @@ TECHNIQUE_LABELS = {
     "tomek_links":                 "Tomek Links",
     "undersampling_oversampling":  "Undersampling + Oversampling",
     "undersampling_smote":         "Undersampling + SMOTE",
-    "smote_tomek":                 "SMOTE + Tomek Links",
+    "oversampling_tomek":          "Oversampling + Tomek Links",
 
 }
 
@@ -74,7 +76,51 @@ TECHNIQUE_ORDER = [
     "undersampling_oversampling",
     "undersampling_smote",
     "smote_tomek",
+    "oversampling_tomek",
 ]
+
+# Clasificación 1: efecto sobre el tamaño del conjunto de entrenamiento
+FAMILY_SIZE = {
+    'original':                    'baseline',
+    'oversampling':                'oversampling',
+    'smote':                       'oversampling',
+    'jittering':                   'oversampling',
+    'undersampling':               'undersampling',
+    'tomek_links':                 'undersampling',
+    'patient_aware_undersampling': 'undersampling',
+    'undersampling_oversampling':  'same_size',
+    'undersampling_smote':         'same_size',
+    'smote_tomek':                 'same_size',
+    'oversampling_tomek':          'same_size',
+}
+ 
+# Clasificación 2: mecanismo de selección/generación de muestras
+FAMILY_MECHANISM = {
+    'original':                    'baseline',
+    'oversampling':                'random',
+    'undersampling':               'random',
+    'undersampling_oversampling':  'random',
+    'smote':                       'guided',
+    'undersampling_smote':         'random+guided',
+    'smote_tomek':                 'guided',
+    'jittering':                   'guided',
+    'tomek_links':                 'guided',
+    'oversampling_tomek':          'random+guided',
+    'patient_aware_undersampling': 'guided',
+}
+
+# Etiquetas legibles para familias
+FAMILY_SIZE_LABELS = {
+    'baseline':     'Baseline',
+    'oversampling': 'Oversampling',
+    'hybrid':       'Híbrido',
+    'undersampling':'Undersampling',
+}
+FAMILY_MECHANISM_LABELS = {
+    'baseline':      'Baseline',
+    'random':        'Aleatorio',
+    'guided':        'Guiado',
+    'random+guided': 'Aleatorio + Guiado',}
 
 # ---------------------------------------------------------------------------
 # RANGOS GLUCÉMICOS — nomenclatura real de los CSVs
@@ -119,6 +165,7 @@ PALETTE = {
     "undersampling_oversampling":  "#BC8F8F",   # caqui
     "undersampling_smote":         "#984EA3",   # morado
     "smote_tomek":                 "#FF7F00",   # naranja oscuro
+    "oversampling_tomek":          "#999999",   # gris
 }
 
 DIMENSION_PALETTE = {

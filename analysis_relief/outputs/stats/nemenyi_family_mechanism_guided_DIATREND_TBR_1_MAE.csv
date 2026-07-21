@@ -1,0 +1,11 @@
+condition,balanced_age_jittering,balanced_age_patient_aware_undersampling,balanced_age_smote,balanced_age_smote_tomek,balanced_age_tomek_links,balanced_sex_jittering,balanced_sex_patient_aware_undersampling,balanced_sex_smote,balanced_sex_smote_tomek,balanced_sex_tomek_links
+balanced_age_jittering,1.0,0.2121,0.9398,0.9993,0.998,0.9895,0.7509,1.0,1.0,1.0
+balanced_age_patient_aware_undersampling,0.2121,1.0,0.0029,0.0286,0.7509,0.8643,0.998,0.3902,0.2646,0.2646
+balanced_age_smote,0.9398,0.0029,1.0,0.9998,0.4613,0.3242,0.0547,0.8119,0.9069,0.9069
+balanced_age_smote_tomek,0.9993,0.0286,0.9998,1.0,0.8643,0.7509,0.2646,0.9895,0.998,0.998
+balanced_age_tomek_links,0.998,0.7509,0.4613,0.8643,1.0,1.0,0.9952,1.0,0.9993,0.9993
+balanced_sex_jittering,0.9895,0.8643,0.3242,0.7509,1.0,1.0,0.9993,0.9993,0.9952,0.9952
+balanced_sex_patient_aware_undersampling,0.7509,0.998,0.0547,0.2646,0.9952,0.9993,1.0,0.9069,0.8119,0.8119
+balanced_sex_smote,1.0,0.3902,0.8119,0.9895,1.0,0.9993,0.9069,1.0,1.0,1.0
+balanced_sex_smote_tomek,1.0,0.2646,0.9069,0.998,0.9993,0.9952,0.8119,1.0,1.0,1.0
+balanced_sex_tomek_links,1.0,0.2646,0.9069,0.998,0.9993,0.9952,0.8119,1.0,1.0,1.0

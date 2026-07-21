@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-main.py — Orquestador RELIEF-T1D Analysis Pipeline.
+main.py — Orquestador RELIEF-T1D Analysis Pipeline (con análisis intra‑familia).
 Uso:
     python main.py                    pipeline completo
     python main.py --only load        solo carga y validación
@@ -56,7 +56,7 @@ def main():
         logging.getLogger().setLevel(logging.DEBUG)
 
     log.info("=" * 55)
-    log.info("  RELIEF-T1D  —  Analysis Pipeline")
+    log.info("  RELIEF-T1D  —  Analysis Pipeline (incl. intra‑family)")
     log.info("=" * 55)
 
     # ── 1. Load ──
@@ -76,7 +76,6 @@ def main():
     log.info(f"    fold_long: {fold_long.shape[0]:,} filas")
 
     if args.only == "load":
-        # Print a quick summary
         log.info("\n=== SUMMARY ===")
         for ds in master["dataset"].unique():
             ds_data = master[(master["dataset"]==ds)&(master["metric"]=="RMSE")&(master["range"]=="ENTIRE")]
@@ -87,20 +86,23 @@ def main():
     # ── 2. Stats ──
     stats_results = {}
     if args.only in (None, "stats"):
-        log.info("[2] Análisis estadístico...")
+        log.info("[2] Análisis estadístico (global + intra‑familia)...")
         stats_results = run_all_stats(master, fold_long)
 
     if args.only == "stats":
         return
 
-    borda_df = stats_results.get("borda", None)
+    borda_df      = stats_results.get("borda", None)
+    borda_size    = stats_results.get("borda_size", None)
+    borda_mechanism = stats_results.get("borda_mechanism", None)
 
     # ── 3. Viz ──
     if args.only in (None, "viz"):
-        log.info("[3] Generando figuras...")
+        log.info("[3] Generando figuras (globales e intra‑familia)...")
         plot_all_heatmaps(master)
         plot_all_dumbbells(master)
         plot_all_distributions(fold_long)
+        # Los rankings usan borda_df global y los nuevos borda_size/mechanism
         plot_all_rankings(master, fold_long, borda_df=borda_df)
         plot_all_profiles(master)
 
@@ -109,7 +111,7 @@ def main():
 
     # ── 4. Tables ──
     if args.only in (None, "tables"):
-        log.info("[4] Generando tablas...")
+        log.info("[4] Generando tablas (globales e intra‑familia)...")
         generate_all_tables(master, fold_long)
 
     if args.only == "tables":
@@ -117,7 +119,7 @@ def main():
 
     # ── 5. Dashboards ──
     if args.only in (None, "dashboards"):
-        log.info("[5] Generando dashboards...")
+        log.info("[5] Generando dashboards (globales e intra‑familia)...")
         generate_all_dashboards(master, fold_long, borda_df=borda_df)
 
     log.info("=" * 55)

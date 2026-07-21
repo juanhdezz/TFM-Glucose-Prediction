@@ -1,7 +1,0 @@
-pandas>=2.0
-numpy>=1.24
-scipy>=1.11
-scikit-posthocs>=0.9
-matplotlib>=3.8
-seaborn>=0.13
-ptitprince>=0.2

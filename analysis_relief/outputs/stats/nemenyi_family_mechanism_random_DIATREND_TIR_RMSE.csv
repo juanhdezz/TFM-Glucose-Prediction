@@ -1,0 +1,7 @@
+condition,balanced_age_oversampling,balanced_age_undersampling,balanced_age_undersampling_oversampling,balanced_sex_oversampling,balanced_sex_undersampling,balanced_sex_undersampling_oversampling
+balanced_age_oversampling,1.0,0.1139,0.9959,0.0743,0.0284,0.0467
+balanced_age_undersampling,0.1139,1.0,0.326,1.0,0.9959,0.9994
+balanced_age_undersampling_oversampling,0.9959,0.326,1.0,0.2388,0.1139,0.1681
+balanced_sex_oversampling,0.0743,1.0,0.2388,1.0,0.9994,1.0
+balanced_sex_undersampling,0.0284,0.9959,0.1139,0.9994,1.0,1.0
+balanced_sex_undersampling_oversampling,0.0467,0.9994,0.1681,1.0,1.0,1.0

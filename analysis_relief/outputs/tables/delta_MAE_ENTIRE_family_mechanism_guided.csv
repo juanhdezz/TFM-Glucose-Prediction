@@ -1,0 +1,11 @@
+Condition,T1DGranada,DiaTrend,ReplaceBG
+Age · Jittering,-0.7%,-3.1%,-0.7%
+Age · PAUndersampling,+0.8%,-7.5%,-0.2%
+Age · SMOTE,-0.6%,-1.7%,-0.0%
+Age · Tomek Links,+0.3%,+0.7%,+0.4%
+Age · balanced_age_smote_tomek,-0.3%,-1.8%,-0.1%
+Sex · Jittering,-0.4%,-0.5%,+0.4%
+Sex · PAUndersampling,-0.4%,-0.7%,+0.1%
+Sex · SMOTE,+0.0%,+0.2%,-0.2%
+Sex · Tomek Links,+0.1%,+0.0%,-0.2%
+Sex · balanced_sex_smote_tomek,-0.5%,+0.1%,+0.6%

@@ -19,7 +19,7 @@ import numpy as np
 import pandas as pd
 
 from analysis.config import (
-    ANALYSIS_METRICS, ERROR_METRICS, CEG_METRICS, RANGE_ORDER, PRIMARY_METRIC
+    ANALYSIS_METRICS, ERROR_METRICS, CEG_METRICS, RANGE_ORDER, PRIMARY_METRIC,FAMILY_SIZE,FAMILY_MECHANISM
 )
 
 log = logging.getLogger(__name__)
@@ -34,12 +34,15 @@ ALL_METRIC_COLS = ["A", "B", "C", "D", "E", "A + B", "RMSE", "MSE", "MAE", "MAPE
 
 def _meta_fields(exp: dict) -> dict:
     m = exp["metadata"]
+    tech = m["technique"]
     return {
         "dataset":     m["dataset"],
         "condition":   m["condition"],
         "dimension":   m["dimension"],
-        "technique":   m["technique"],
+        "technique":   tech,
         "is_original": m["is_original"],
+        "family_size":       FAMILY_SIZE.get(tech, "unknown"),
+        "family_mechanism":  FAMILY_MECHANISM.get(tech, "unknown"),
     }
 
 

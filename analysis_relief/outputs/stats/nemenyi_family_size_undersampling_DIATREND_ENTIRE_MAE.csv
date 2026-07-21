@@ -1,0 +1,7 @@
+condition,balanced_age_patient_aware_undersampling,balanced_age_tomek_links,balanced_age_undersampling,balanced_sex_patient_aware_undersampling,balanced_sex_tomek_links,balanced_sex_undersampling
+balanced_age_patient_aware_undersampling,1.0,0.0028,0.959,0.326,0.0126,0.0592
+balanced_age_tomek_links,0.0028,1.0,0.0467,0.5382,0.9983,0.939
+balanced_age_undersampling,0.959,0.0467,1.0,0.8451,0.139,0.3753
+balanced_sex_patient_aware_undersampling,0.326,0.5382,0.8451,1.0,0.8027,0.974
+balanced_sex_tomek_links,0.0126,0.9983,0.139,0.8027,1.0,0.9959
+balanced_sex_undersampling,0.0592,0.939,0.3753,0.974,0.9959,1.0

@@ -286,16 +286,174 @@ def compute_borda_ranking(master: pd.DataFrame,
     log.info(f"Borda ranking: {out.name}")
     return borda_summary
 
+# ---------------------------------------------------------------------------
+# Análisis por familia
+# ---------------------------------------------------------------------------
+
+def run_friedman_family(fold_long: pd.DataFrame,
+                        family_col: str = "family_size") -> dict:
+    """
+    Friedman test para cada combinación (family_value, dataset, range, metric).
+    Devuelve un DataFrame y guarda CSV.
+    """
+    results = []
+    families = fold_long[family_col].dropna().unique()
+    for fam in families:
+        sub_fam = fold_long[fold_long[family_col] == fam]
+        for dataset in sub_fam["dataset"].unique():
+            for rng in RANGE_ORDER:
+                if rng not in sub_fam["range"].unique():
+                    continue
+                for metric in ANALYSIS_METRICS:
+                    if metric not in sub_fam["metric"].unique():
+                        continue
+                    pivot = make_friedman_pivot(sub_fam, metric=metric, rng=rng, dataset=dataset)
+                    if pivot.empty or pivot.shape[1] < 3:
+                        continue
+                    try:
+                        stat, pval = ss.friedmanchisquare(*[pivot[c].values for c in pivot.columns])
+                    except Exception as e:
+                        log.warning(f"Friedman family error ({fam}/{dataset}/{rng}/{metric}): {e}")
+                        continue
+                    results.append({
+                        "family":         fam,
+                        "dataset":        dataset,
+                        "range":          rng,
+                        "metric":         metric,
+                        "n_conditions":   pivot.shape[1],
+                        "n_folds":        pivot.shape[0],
+                        "friedman_stat":  round(stat, 4),
+                        "friedman_pval":  round(pval, 6),
+                        "significant":    pval < ALPHA,
+                    })
+                    # Nemenyi post-hoc
+                    if pval < ALPHA:
+                        _run_nemenyi_family(pivot, fam, dataset, rng, metric, family_col)
+    df = pd.DataFrame(results)
+    if not df.empty:
+        out = STATS_DIR / f"friedman_results_{family_col}.csv"
+        df.to_csv(out, index=False)
+        log.info(f"Friedman {family_col}: {len(df)} tests, {df['significant'].sum()} significativos → {out.name}")
+    return df
+
+
+def _run_nemenyi_family(pivot, fam, dataset, rng, metric, family_col):
+    try:
+        import scikit_posthocs as sp
+        nemenyi = sp.posthoc_nemenyi_friedman(pivot.values)
+        nemenyi.index = pivot.columns
+        nemenyi.columns = pivot.columns
+        fname = f"nemenyi_{family_col}_{fam}_{dataset}_{rng}_{metric}.csv".replace(" ", "_").replace("+", "plus")
+        nemenyi.round(4).to_csv(STATS_DIR / fname)
+        log.info(f"  Nemenyi guardado: {fname}")
+    except ImportError:
+        log.warning("scikit-posthocs no instalado.")
+    except Exception as e:
+        log.warning(f"Nemenyi family error: {e}")
+
+
+def compute_cohens_d_family(fold_long: pd.DataFrame,
+                            family_col: str = "family_size") -> pd.DataFrame:
+    """
+    Cohen's d vs original, segmentado por familia.
+    """
+    results = []
+    for fam, fam_data in fold_long.groupby(family_col):
+        for dataset in fam_data["dataset"].unique():
+            ds = fam_data[fam_data["dataset"] == dataset]
+            original_cond = ds[ds["is_original"]]
+            for rng in RANGE_ORDER:
+                if rng not in ds["range"].unique():
+                    continue
+                for metric in ANALYSIS_METRICS:
+                    if metric not in ds["metric"].unique():
+                        continue
+                    orig_vals = original_cond[
+                        (original_cond["range"] == rng) &
+                        (original_cond["metric"] == metric)
+                    ]["value"].dropna().values
+                    if len(orig_vals) < 2:
+                        continue
+                    conditions = ds[~ds["is_original"]]["condition"].unique()
+                    for cond in conditions:
+                        bal_vals = ds[
+                            (ds["condition"] == cond) &
+                            (ds["range"] == rng) &
+                            (ds["metric"] == metric)
+                        ]["value"].dropna().values
+                        if len(bal_vals) < 2:
+                            continue
+                        n1, n2 = len(orig_vals), len(bal_vals)
+                        pooled = np.sqrt(
+                            ((n1-1)*np.std(orig_vals, ddof=1)**2 +
+                             (n2-1)*np.std(bal_vals, ddof=1)**2) / (n1+n2-2)
+                        )
+                        d = (np.mean(orig_vals) - np.mean(bal_vals)) / pooled if pooled > 0 else np.nan
+                        cond_meta = ds[ds["condition"] == cond].iloc[0]
+                        results.append({
+                            "family":      fam,
+                            "dataset":     dataset,
+                            "condition":   cond,
+                            "dimension":   cond_meta["dimension"],
+                            "technique":   cond_meta["technique"],
+                            "range":       rng,
+                            "metric":      metric,
+                            "mean_original": round(np.mean(orig_vals), 4),
+                            "mean_balanced": round(np.mean(bal_vals), 4),
+                            "cohens_d":      round(d, 4) if not np.isnan(d) else np.nan,
+                            "effect_size":   _interpret_d(d),
+                        })
+    df = pd.DataFrame(results)
+    if not df.empty:
+        out = STATS_DIR / f"cohens_d_vs_original_{family_col}.csv"
+        df.to_csv(out, index=False)
+        log.info(f"Cohen's d {family_col}: {len(df)} filas → {out.name}")
+    return df
+
+
+def compute_borda_ranking_family(master: pd.DataFrame,
+                                 family_col: str = "family_size") -> pd.DataFrame:
+    """
+    Ranking de Borda dentro de cada familia.
+    """
+    from analysis.config import ANALYSIS_METRICS as DEFAULT_METRICS
+    sub = master.copy()
+    results = []
+    for fam, fam_data in sub.groupby(family_col):
+        fam_data = fam_data[fam_data["metric"].isin(ANALYSIS_METRICS) &
+                            fam_data["range"].isin(RANGE_ORDER)]
+        for (dataset, rng, metric), grp in fam_data.groupby(["dataset", "range", "metric"]):
+            ascending = metric in LOWER_IS_BETTER
+            ranked = grp.sort_values("mean", ascending=ascending).copy()
+            ranked["borda_score"] = range(1, len(ranked)+1)
+            for _, row in ranked.iterrows():
+                results.append({
+                    "family":      fam,
+                    "dataset":     dataset,
+                    "condition":   row["condition"],
+                    "dimension":   row["dimension"],
+                    "technique":   row["technique"],
+                    "range":       rng,
+                    "metric":      metric,
+                    "borda_score": row["borda_score"],
+                })
+    df_borda = pd.DataFrame(results)
+    if df_borda.empty:
+        return df_borda
+    # Resumen por (family, dataset, condition)
+    borda_summary = (df_borda.groupby(["family", "dataset", "condition", "dimension", "technique"])
+                     ["borda_score"].sum().reset_index())
+    borda_summary["global_rank"] = borda_summary.groupby(["family", "dataset"])["borda_score"].rank(method="min")
+    out = STATS_DIR / f"borda_ranking_{family_col}.csv"
+    borda_summary.to_csv(out, index=False)
+    log.info(f"Borda {family_col}: {out.name}")
+    return borda_summary
 
 # ---------------------------------------------------------------------------
 # Entrada pública
 # ---------------------------------------------------------------------------
 
 def run_all_stats(master: pd.DataFrame, fold_long: pd.DataFrame) -> dict:
-    """
-    Ejecuta todo el pipeline estadístico.
-    Devuelve dict con todos los DataFrames de resultados.
-    """
     log.info("--- Estadísticos ---")
     out = {}
 
@@ -304,9 +462,16 @@ def run_all_stats(master: pd.DataFrame, fold_long: pd.DataFrame) -> dict:
     out["rankings"]  = compute_rankings(master)
     out["borda"]     = compute_borda_ranking(master)
 
-    # Guardar tabla master
+    # Familias
+    out["friedman_size"]      = run_friedman_family(fold_long, "family_size")
+    out["friedman_mechanism"] = run_friedman_family(fold_long, "family_mechanism")
+    out["cohens_d_size"]      = compute_cohens_d_family(fold_long, "family_size")
+    out["cohens_d_mechanism"] = compute_cohens_d_family(fold_long, "family_mechanism")
+    out["borda_size"]         = compute_borda_ranking_family(master, "family_size")
+    out["borda_mechanism"]    = compute_borda_ranking_family(master, "family_mechanism")
+
+    # Guardar tablas maestras
     master.to_csv(STATS_DIR / "master_table.csv", index=False)
     fold_long.to_csv(STATS_DIR / "fold_table.csv", index=False)
     log.info("Tablas master y fold guardadas en stats/")
-
     return out

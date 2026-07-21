@@ -62,13 +62,10 @@ DEFAULT_HORIZONS   = [4]
 DEFAULT_FOLDS      = [0, 1, 2, 3, 4]
 DEFAULT_GROUPS     = ["sex", "age"]
 DEFAULT_TECHNIQUES = [
-    # Aleatorias
     "undersampling",
     "oversampling",
-    # Guiadas
     "smote",
     "tomek_links",
-    # Combinaciones
     "patient_aware_undersampling",
     "jittering",
     "undersampling_oversampling",
@@ -617,35 +614,85 @@ def oversampling_tomek_balanced(
     feature_columns: Sequence[str],
 ) -> pd.DataFrame:
     """
-    ROS + Tomek Links: mantiene el mismo nº de filas que el train original
-    con proporción equitativa entre grupos (50/50 o 25/25/25/25).
-    - Grupos minoritarios → ROS (oversample aleatorio con reemplazo)
-    - Grupos mayoritarios → Tomek Links (elimina pares ruidosos en la frontera)
+    Tomek Links + ROS compensatorio → garantiza el mismo nº de filas que train_df.
+
+    Procedimiento:
+    1. Separar grupos (excluyendo Unknown) y Unknown.
+    2. Aplicar Tomek Links solo a los grupos definidos.
+    3. Calcular cuántas filas se eliminaron (n_removed).
+    4. Añadir n_removed filas mediante ROS equitativo entre los grupos
+       (respetando la proporción final deseada 50/50 o 25/25/25/25).
+    5. Reincorporar Unknown (sin modificar) y mezclar.
     """
-    total  = len(train_df)
+    total = len(train_df)
     groups = [g for g in train_df[group_col].unique() if pd.notna(g) and g != "Unknown"]
+
     if not groups:
         return train_df.copy()
 
-    target_map = compute_equal_targets(groups, total)
-    parts = []
-    for g, target in target_map.items():
-        gdf = train_df[train_df[group_col] == g].copy()
-        if len(gdf) == 0:
-            continue
-        if len(gdf) < target:
-            parts.append(oversample_group(gdf, target, rng))
-        else:
-            parts.append(gdf)
-
+    # Separar Unknown para que no interfiera en el balanceo
     unknown_df = train_df[~train_df[group_col].isin(groups)].copy()
+    main_df    = train_df[train_df[group_col].isin(groups)].copy()
+
+    # ── 1. Tomek Links sobre los grupos principales ─────────────────
+    main_clean = apply_tomek_links(main_df, group_col, feature_columns, sensor_limits)
+
+    # ── 2. Calcular eliminadas ──────────────────────────────────────
+    n_removed = len(main_df) - len(main_clean)
+
+    if n_removed > 0:
+        # ── 3. Repartir las n_removed filas entre los grupos de forma equitativa ──
+        # Calculamos cuántas filas debería tener cada grupo al final,
+        # asumiendo que queremos mantener el total de main_df = total - len(unknown_df).
+        target_total_main = total - len(unknown_df)
+        target_map = compute_equal_targets(groups, target_total_main)
+
+        # Determinamos cuántas filas tiene cada grupo en main_clean
+        current_counts = main_clean[group_col].value_counts()
+
+        # Para cada grupo, cuántas necesita añadir
+        to_add = {}
+        for g in groups:
+            current = current_counts.get(g, 0)
+            needed  = max(0, target_map[g] - current)
+            to_add[g] = needed
+
+        # Comprobamos que la suma de to_add sea exactamente n_removed
+        sum_to_add = sum(to_add.values())
+        if sum_to_add != n_removed:
+            # Ajuste por si hay descuadre (repartimos diferencia en el grupo más grande)
+            diff = n_removed - sum_to_add
+            # Se asigna al primer grupo (o se puede repartir proporcionalmente)
+            first_group = groups[0]
+            to_add[first_group] = max(0, to_add[first_group] + diff)
+
+        # ── 4. ROS compensatorio ────────────────────────────────────
+        extra_parts = []
+        for g, needed in to_add.items():
+            if needed <= 0:
+                continue
+            gdf = train_df[train_df[group_col] == g]  # muestrear del original
+            if len(gdf) == 0:
+                continue
+            extra = gdf.sample(n=needed, replace=True, 
+                               random_state=int(rng.integers(0, 2**31 - 1)))
+            extra_parts.append(extra)
+
+        if extra_parts:
+            extra_df = pd.concat(extra_parts, ignore_index=True)
+            main_clean = pd.concat([main_clean, extra_df], ignore_index=True)
+
+    # ── 5. Reincorporar Unknown y mezclar ───────────────────────────
     if len(unknown_df):
-        parts.append(unknown_df)
+        balanced = pd.concat([main_clean, unknown_df], ignore_index=True)
+    else:
+        balanced = main_clean
 
-    after_ros = pd.concat(parts, ignore_index=True)
-    balanced  = apply_tomek_links(after_ros, group_col, feature_columns, sensor_limits)
+    balanced = balanced.sample(frac=1.0, 
+                               random_state=int(rng.integers(0, 2**31 - 1))
+                              ).reset_index(drop=True)
 
-    return balanced.sample(frac=1.0, random_state=int(rng.integers(0, 2**32 - 1))).reset_index(drop=True)
+    return balanced
 
 
 # ─── Selección de targets y dispatch ─────────────────────────────────────────

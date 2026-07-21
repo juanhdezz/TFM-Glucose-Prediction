@@ -1,0 +1,7 @@
+Condition,T1DGranada,DiaTrend,ReplaceBG
+Age · Oversampling,#6  (38.05±0.84),#5  (46.03±2.17),#4  (36.97±0.76)
+Age · Undersampling,#1  (37.90±0.75),#6  (47.76±2.86),#6  (37.12±1.08)
+Age · Undersampling + Oversampling,#5  (38.00±0.79),#4  (45.92±2.15),#2  (36.86±0.72)
+Sex · Oversampling,#3  (37.96±0.88),#1  (44.99±2.10),#1  (36.86±0.73)
+Sex · Undersampling,#2  (37.93±0.83),#3  (45.08±2.21),#3  (36.95±0.70)
+Sex · Undersampling + Oversampling,#4  (37.99±0.93),#2  (45.02±2.26),#5  (37.02±0.85)

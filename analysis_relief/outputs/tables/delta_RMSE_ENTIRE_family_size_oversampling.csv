@@ -1,0 +1,7 @@
+Condition,T1DGranada,DiaTrend,ReplaceBG
+Age · Jittering,-0.8%,-3.0%,-0.7%
+Age · Oversampling,-0.7%,-2.2%,+0.1%
+Age · SMOTE,-0.5%,-1.7%,+0.0%
+Sex · Jittering,-0.3%,-0.6%,+0.2%
+Sex · Oversampling,-0.4%,+0.1%,+0.4%
+Sex · SMOTE,+0.0%,+0.2%,-0.1%

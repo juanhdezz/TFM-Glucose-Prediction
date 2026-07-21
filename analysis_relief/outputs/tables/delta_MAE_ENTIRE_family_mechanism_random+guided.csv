@@ -1,0 +1,5 @@
+Condition,T1DGranada,DiaTrend,ReplaceBG
+Age · Undersampling + SMOTE,-0.2%,-2.1%,+0.1%
+Age · Oversampling + Tomek Links,-0.0%,-0.8%,+0.0%
+Sex · Undersampling + SMOTE,-0.7%,-0.3%,+0.0%
+Sex · Oversampling + Tomek Links,+0.0%,-0.4%,+0.1%

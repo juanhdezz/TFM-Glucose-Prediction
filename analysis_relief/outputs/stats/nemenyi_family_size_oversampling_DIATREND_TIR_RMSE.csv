@@ -1,0 +1,7 @@
+condition,balanced_age_jittering,balanced_age_oversampling,balanced_age_smote,balanced_sex_jittering,balanced_sex_oversampling,balanced_sex_smote
+balanced_age_jittering,1.0,0.9983,0.9983,0.1139,0.1139,0.1139
+balanced_age_oversampling,0.9983,1.0,0.959,0.0366,0.0366,0.0366
+balanced_age_smote,0.9983,0.959,1.0,0.2804,0.2804,0.2804
+balanced_sex_jittering,0.1139,0.0366,0.2804,1.0,1.0,1.0
+balanced_sex_oversampling,0.1139,0.0366,0.2804,1.0,1.0,1.0
+balanced_sex_smote,0.1139,0.0366,0.2804,1.0,1.0,1.0

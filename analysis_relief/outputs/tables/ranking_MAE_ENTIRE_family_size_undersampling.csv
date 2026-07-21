@@ -1,0 +1,7 @@
+Condition,T1DGranada,DiaTrend,ReplaceBG
+Age · PAUndersampling,#1  (27.30±0.30),#6  (35.76±2.18),#4  (27.21±0.74)
+Age · Undersampling,#4  (27.59±0.51),#5  (35.27±2.06),#6  (27.24±0.93)
+Age · Tomek Links,#2  (27.44±0.69),#1  (33.03±1.70),#1  (27.05±0.70)
+Sex · PAUndersampling,#5  (27.62±0.61),#4  (33.49±1.46),#3  (27.13±0.82)
+Sex · Undersampling,#6  (27.62±0.61),#3  (33.28±1.64),#2  (27.11±0.66)
+Sex · Tomek Links,#3  (27.47±0.74),#2  (33.24±1.53),#5  (27.21±0.74)
