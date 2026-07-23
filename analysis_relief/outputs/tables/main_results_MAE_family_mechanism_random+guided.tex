@@ -1,0 +1,19 @@
+\begin{table}[htbp]
+\centering
+\small
+\caption{Results by condition — MAE (mean $\pm$ std across 5 folds)}
+\label{tab:results_maefamily_mechanism_random+guided}
+\begin{tabular}{lrrrrrrrrrrrrrrrrrr}
+\toprule
+ & \multicolumn{6}{c}{\textbf{T1DGranada}} & \multicolumn{6}{c}{\textbf{DiaTrend}} & \multicolumn{6}{c}{\textbf{ReplaceBG}} \\
+\cmidrule(lr){2-7}\cmidrule(lr){8-13}\cmidrule(lr){14-19}
+\textbf{Condition} & \textbf{Hypo L2} & \textbf{Hypo L1} & \textbf{In Range} & \textbf{Hyper L1} & \textbf{Hyper L2} & \textbf{All Ranges} & \textbf{Hypo L2} & \textbf{Hypo L1} & \textbf{In Range} & \textbf{Hyper L1} & \textbf{Hyper L2} & \textbf{All Ranges} & \textbf{Hypo L2} & \textbf{Hypo L1} & \textbf{In Range} & \textbf{Hyper L1} & \textbf{Hyper L2} & \textbf{All Ranges} \\
+\midrule
+Age · Undersampling + SMOTE & $\mathbf{34.35 \pm 1.51}$ & $\mathbf{30.18 \pm 0.81}$ & $19.41 \pm 0.37$ & $33.89 \pm 0.46$ & $\mathbf{56.01 \pm 1.47}$ & $27.57 \pm 0.69$ & $70.23 \pm 6.34$ & $53.15 \pm 3.59$ & $21.93 \pm 0.52$ & $35.54 \pm 0.92$ & $62.53 \pm 3.04$ & $33.96 \pm 1.48$ & $54.08 \pm 1.47$ & $37.89 \pm 1.26$ & $19.12 \pm 0.42$ & $34.67 \pm 0.61$ & $58.17 \pm 1.49$ & $27.12 \pm 0.67$ \\
+Age · Oversampling + Tomek Links & $34.66 \pm 1.60$ & $30.24 \pm 1.12$ & $19.36 \pm 0.39$ & $33.85 \pm 0.33$ & $56.67 \pm 1.63$ & $27.60 \pm 0.68$ & $\mathbf{68.93 \pm 5.45}$ & $\mathbf{52.61 \pm 2.07}$ & $\mathbf{21.90 \pm 0.65}$ & $34.71 \pm 0.80$ & $61.62 \pm 1.96$ & $33.52 \pm 1.42$ & $54.18 \pm 0.57$ & $38.22 \pm 0.40$ & $19.03 \pm 0.38$ & $34.75 \pm 1.15$ & $\mathbf{57.93 \pm 1.11}$ & $27.07 \pm 0.83$ \\
+\midrule
+Sex · Undersampling + SMOTE & $35.17 \pm 0.63$ & $30.25 \pm 0.60$ & $19.41 \pm 0.48$ & $34.33 \pm 0.47$ & $56.42 \pm 1.03$ & $27.71 \pm 0.57$ & $71.06 \pm 6.51$ & $54.68 \pm 4.41$ & $22.30 \pm 0.83$ & $33.63 \pm 0.68$ & $\mathbf{61.01 \pm 2.74}$ & $33.34 \pm 1.54$ & $\mathbf{53.58 \pm 1.01}$ & $\mathbf{37.68 \pm 0.57}$ & $19.15 \pm 0.33$ & $34.88 \pm 0.68$ & $58.00 \pm 1.15$ & $27.15 \pm 0.55$ \\
+Sex · Oversampling + Tomek Links & $34.93 \pm 1.75$ & $30.25 \pm 1.30$ & $\mathbf{19.35 \pm 0.34}$ & $\mathbf{33.61 \pm 0.58}$ & $56.44 \pm 1.95$ & $\mathbf{27.52 \pm 0.77}$ & $70.94 \pm 6.35$ & $55.20 \pm 3.30$ & $22.33 \pm 0.75$ & $\mathbf{33.41 \pm 0.91}$ & $\mathbf{61.01 \pm 2.75}$ & $\mathbf{33.28 \pm 1.65}$ & $53.73 \pm 0.60$ & $37.78 \pm 0.65$ & $\mathbf{18.99 \pm 0.32}$ & $\mathbf{34.61 \pm 0.76}$ & $58.13 \pm 1.14$ & $\mathbf{27.02 \pm 0.79}$ \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,40 +1,72 @@
-\label{chapter:introduccion}\chapter{Introducción}
+% =========================================================
+%  CAPÍTULO 1 — INTRODUCCIÓN
+%  RELIEF-T1D: Impacto del balanceo demográfico (sexo, edad)
+%  en la predicción de glucosa mediante LSTM sobre datos CGM
+% =========================================================
+\label{chapter:introduccion}
+\chapter{Introducción}
 
-La introducción de un Trabajo Fin de Máster (TFM) es una sección fundamental que sirve como presentación y puerta de entrada a la investigación realizada. Su principal objetivo es proporcionar al lector una visión general clara y concisa del tema que se va a abordar, despertando su interés y motivación para continuar leyendo. En esta sección, se debe exponer el contexto y la relevancia del tema elegido, justificando así la importancia y la necesidad de la investigación realizada. Además, se deben presentar los objetivos y la estructura del trabajo, guiando al lector a través de los capítulos y secciones que se van a desarrollar. Una buena introducción debe ser capaz de captar la atención del lector, proporcionando una idea clara y precisa de lo que se va a tratar en el TFM, y dejando una primera impresión positiva y duradera.
+La diabetes mellitus tipo 1 (DM1) es una enfermedad crónica de carácter autoinmune que afecta a millones de personas en todo el mundo y que se caracteriza por la destrucción de las células beta del páncreas, impidiendo la producción endógena de insulina. A diferencia de otras enfermedades crónicas con una dinámica relativamente estable, la DM1 somete al paciente a una gestión terapéutica diaria de alta complejidad: la concentración de glucosa en sangre fluctúa de forma continua en respuesta a la insulina exógena, la ingesta, el ejercicio físico, el estrés y otros factores fisiológicos. El desafío clínico central es anticipar estas fluctuaciones con suficiente antelación para que el paciente pueda actuar antes de que se produzcan episodios de hipoglucemia o hiperglucemia, que pueden tener consecuencias agudas graves a corto plazo y complicaciones crónicas severas a largo plazo.
+
+Los sistemas de monitorización continua de glucosa (CGM, por sus siglas en inglés) han transformado el seguimiento clínico de la DM1, al generar señales de alta frecuencia —una medición cada 5 o 15 minutos— que capturan la dinámica glucémica con una resolución imposible mediante los métodos tradicionales de glucometría capilar. Esta riqueza temporal ha impulsado el desarrollo de modelos predictivos basados en aprendizaje automático que estiman el valor futuro de glucosa a partir de la trayectoria reciente de la señal. Entre estas arquitecturas, las redes neuronales recurrentes de tipo LSTM (\emph{Long Short-Term Memory}) han ocupado un lugar consolidado por su capacidad de aprender dependencias temporales de largo alcance directamente de la secuencia bruta, sin necesidad de ingeniería manual de características.
+
+Sin embargo, el rendimiento de un modelo LSTM de predicción de glucosa no depende únicamente de su arquitectura ni de la calidad de la señal CGM en sí misma: depende también de la composición del conjunto de datos con el que se entrena. Los \emph{datasets} de investigación en DM1 disponibles públicamente son, por construcción, muestras de conveniencia clínica. Sus distribuciones demográficas no son uniformes: algunos \emph{datasets} presentan una mayoría de pacientes de un determinado sexo o de un rango etario concreto, lo que se traduce en una asimetría estructural en el número de ventanas de entrenamiento disponibles por grupo demográfico. Esta asimetría puede inducir que el modelo aprenda preferentemente la dinámica glucémica del subgrupo mayoritario, degradando su capacidad predictiva para los subgrupos infrarrepresentados.
+
+La cuestión de si esta composición demográfica del conjunto de entrenamiento afecta de forma medible y corregible al rendimiento predictivo de un modelo LSTM constituye la pregunta central de este Trabajo Fin de Máster. Se trata de una pregunta que la literatura ha comenzado a explorar en el dominio amplio del aprendizaje automático clínico, pero que permanece escasamente estudiada en el contexto específico de la predicción de glucosa mediante CGM, lo que delimita y justifica la contribución de este trabajo.
+
+% =========================================================
+\section{Motivación}
+\label{section:motivacion}
+% =========================================================
+
+La motivación de este trabajo surge de la intersección de dos líneas de inquietud: una de carácter personal, derivada del interés por aplicar técnicas de ciencia de datos a problemas con impacto clínico real; y otra de carácter técnico, derivada de una limitación metodológica concreta identificada en la literatura existente.
+
+Desde el punto de vista personal, la predicción de glucosa en DM1 representa un problema de modelado especialmente rico: combina series temporales de alta frecuencia con contexto clínico complejo, heterogeneidad interindividual pronunciada y consecuencias potencialmente graves de los errores de predicción. Es, además, un dominio en el que la brecha entre el rendimiento agregado de un modelo y su rendimiento en subgrupos específicos puede traducirse en diferencias reales en la calidad del cuidado que reciben los pacientes. Trabajar en este dominio con las herramientas propias de la ingeniería de datos y el aprendizaje automático, y hacerlo con rigor estadístico, constituye una motivación genuina que subyace a todas las decisiones de diseño de este trabajo.
+
+Desde el punto de vista técnico, la motivación surge de una observación concreta: la equidad algorítmica en salud —el estudio sistemático de si los modelos de aprendizaje automático producen rendimientos dispares en función de características demográficas de los pacientes— ha recibido creciente atención en la literatura, pero ha operado mayoritariamente sobre datos tabulares en los que cada observación corresponde a un paciente o a un episodio clínico discreto. El problema de la predicción de series temporales mediante ventana deslizante introduce una complicación estructural que no ha sido tratada explícitamente en la literatura revisada: la unidad de balanceo no es el paciente sino la ventana. Un mismo paciente con una serie temporal larga puede generar órdenes de magnitud más ventanas de entrenamiento que otro paciente con una serie corta, incluso cuando ambos pertenecen nominalmente al mismo grupo demográfico. Esta distinción entre balanceo a nivel de paciente y balanceo a nivel de ventana es metodológicamente relevante y constituye una de las contribuciones de diseño de este trabajo.
+
+Adicionalmente, la elección de las dimensiones demográficas de estudio —sexo y edad— está motivada por evidencia fisiológica consolidada: tanto el sexo como la edad están asociados a patrones de dinámica glucémica distinguibles. Las diferencias hormonales entre hombres y mujeres, así como la evolución de la respuesta insulínica a lo largo de la vida, producen perfiles CGM sistémicamente distintos entre subgrupos, lo que hace esperable —y justifica estudiar empíricamente— que un modelo LSTM entrenado sobre una composición demográficamente sesgada aprenda de forma subóptima para los subgrupos infrarrepresentados.
+
+Por último, existe una motivación de relevancia práctica e inmediata: el \emph{dataset} T1DiabetesGranada, generado en el Hospital Universitario Virgen de las Nieves de Granada con más de 643 pacientes y más de 30 millones de mediciones registradas entre 2018 y 2022, es uno de los tres conjuntos de datos sobre los que se trabaja en este TFM. Incorporar un recurso de investigación local de esta envergadura, y contribuir a entender sus propiedades estadísticas y sus implicaciones para el entrenamiento de modelos predictivos, añade una dimensión de relevancia territorial y clínica directa a la investigación.
+
+% =========================================================
+\section{Objetivos}
+\label{section:objetivos}
+% =========================================================
+
+El objetivo general de este trabajo es cuantificar empíricamente el impacto de las técnicas de balanceo demográfico —aplicadas sobre las dimensiones de sexo y edad— en el rendimiento predictivo de un modelo LSTM de predicción de glucosa entrenado sobre datos CGM, y determinar bajo qué condiciones dicho balanceo produce mejoras clínicamente relevantes.
+
+De este objetivo general se derivan los siguientes objetivos específicos:
 
 \begin{enumerate}
 
-\item Concisión y claridad: La introducción debe ser concisa y clara. Evita divagar o incluir información innecesaria. Ve directo al punto y asegúrate de que el lector pueda comprender fácilmente el tema y la importancia de tu investigación.
+    \item \textbf{Diseñar e implementar un \emph{pipeline} de balanceo demográfico} que opere exclusivamente sobre el conjunto de entrenamiento de cada \emph{fold} en un esquema de validación cruzada por grupos (\emph{Group K-Fold}), garantizando la separación estricta de pacientes entre particiones y la invarianza bit a bit de los conjuntos de validación y test entre condiciones experimentales.
 
-\item Contexto y antecedentes: Proporciona un contexto adecuado para tu tema. Explica brevemente los antecedentes históricos, teóricos o prácticos relevantes para tu investigación. Esto ayudará al lector a comprender la evolución y la importancia del tema elegido.
+    \item \textbf{Implementar y validar una taxonomía de diez técnicas de balanceo}, clasificadas en tres familias: técnicas aleatorias (\emph{random undersampling}, \emph{random oversampling}), técnicas guiadas (\emph{SMOTE}, \emph{Tomek Links}) y combinaciones híbridas (\emph{patient-aware undersampling}, \emph{jittering}, \emph{undersampling} + \emph{oversampling}, \emph{undersampling} + \emph{SMOTE}, \emph{SMOTE} + \emph{Tomek}, \emph{oversampling} + \emph{Tomek Links}), aplicadas en dos variantes demográficas (edad y sexo) más una condición de control sin balanceo.
 
-\item Relevancia e importancia: Establece claramente la relevancia y la importancia de tu tema. Explica por qué es significativo y por qué vale la pena investigar. Demuestra que entiendes el impacto potencial de tu trabajo y cómo contribuye al campo de estudio.
+    \item \textbf{Evaluar el efecto del balanceo demográfico sobre el rendimiento global del modelo LSTM}, medido mediante métricas de error de predicción (RMSE, MAE) y métricas de la \emph{Clarke Error Grid} (zonas A, B, A+B), desagregadas por rango glucémico (TBR-2, TBR-1, TIR, TAR-1, TAR-2, rango completo).
 
-\item Relevancia e importancia: Establece claramente la relevancia y la importancia de tu tema. Explica por qué es significativo y por qué vale la pena investigar. Demuestra que entiendes el impacto potencial de tu trabajo y cómo contribuye al campo de estudio.
+    \item \textbf{Comparar el impacto del balanceo por edad frente al balanceo por sexo} y determinar cuál de las dos dimensiones demográficas produce un efecto mayor y más consistente sobre el rendimiento predictivo.
 
-\item Objetivos y preguntas de investigación: Presenta de manera clara y precisa los objetivos de tu TFM. Indica qué preguntas o hipótesis estás tratando de responder o abordar. Asegúrate de que los objetivos sean específicos, medibles, alcanzables, relevantes y limitados en el tiempo (SMART).
+    \item \textbf{Caracterizar la robustez de los resultados entre \emph{datasets}}, evaluando si los efectos observados son consistentes a través de los tres conjuntos de datos (T1DiabetesGranada, REPLACE-BG, DiaTrend) o si dependen de propiedades estructurales específicas de cada cohorte, como el tamaño muestral, el patrón de datos ausentes o la distribución demográfica intrínseca.
 
-\item Estructura del trabajo: Proporciona una descripción general de la estructura de tu TFM. Guía al lector a través de los capítulos o secciones principales, explicando brevemente el contenido y la finalidad de cada parte. Esto ayuda al lector a comprender la organización lógica de tu trabajo.
+    \item \textbf{Identificar la técnica de balanceo con mejor rendimiento agregado} mediante un análisis estadístico formal que incluya pruebas de Friedman, comparaciones \emph{post-hoc} de Nemenyi, tamaños del efecto de Cohen's $d$ y agregación de \emph{rankings} mediante el método de Borda.
+
+    \item \textbf{Describir las limitaciones metodológicas y los compromisos clínicos} identificados en los resultados, en particular aquellos casos en que la mejora en un rango glucémico conlleva una degradación en otro, con el objetivo de proporcionar una base de evidencia honesta para la toma de decisiones sobre la incorporación de balanceo demográfico en sistemas de predicción clínica.
 
 \end{enumerate}
 
-Estilo y tono: Utiliza un estilo de escritura claro, sencillo y accesible. Mantén un tono formal y académico, pero evita un lenguaje excesivamente
+% =========================================================
+\section{Estructura del trabajo}
+\label{section:estructura}
+% =========================================================
 
-Estas subsecciones pueden ir dentro del fichero o fuera. Normalmente solo deberías sacar las subsecciones que ocupen más espacio en tu texto.
+El presente trabajo se organiza en seis capítulos, cuya estructura refleja la progresión lógica desde la fundamentación teórica hasta las conclusiones empíricas.
 
-\section{Motivación}\label{section:motivacion}
+El capítulo~\ref{chapter:estado-arte} (\nameref{chapter:estado-arte}) establece el marco teórico y bibliográfico del trabajo. Se introduce el contexto clínico de la DM1 y de los sistemas CGM, se revisa la evidencia fisiológica de que el sexo y la edad modulan la dinámica glucémica, se examina la literatura sobre desequilibrio demográfico en \emph{datasets} clínicos y su impacto documentado en el rendimiento de modelos de aprendizaje automático, y se revisan las técnicas del estado del arte para la mitigación de este desequilibrio. El capítulo concluye identificando las tres brechas concretas que este trabajo aborda.
 
-Aquí hay que escribir una motivación personal, pero también una motivación de tu trabajo en el área. Te tienes que plantear por qué es interesante tu trabajo en el campo.
+El capítulo de metodología describe el diseño experimental completo: la arquitectura del modelo LSTM utilizado, el esquema de validación cruzada por grupos, el proceso de generación de ventanas deslizantes a partir de las señales CGM, la implementación de las diez técnicas de balanceo demográfico y el proceso de validación formal del \emph{pipeline} mediante un \emph{notebook} de verificación de restricciones. Se describen igualmente las métricas de evaluación empleadas y el protocolo estadístico utilizado para el análisis comparativo.
 
-\section{Objetivos}\label{section:objetivos}
+El capítulo de resultados y discusión presenta los resultados experimentales siguiendo una estructura analítica en embudo: se parte de una visión global del efecto del balanceo agregado sobre todos los \emph{datasets} y rangos glucémicos, y se desciende progresivamente hacia el análisis por \emph{dataset}, por dimensión demográfica, por rango glucémico y por técnica individual. Los resultados de los tests de Friedman, los \emph{rankings} de Nemenyi y la agregación de Borda se presentan en este capítulo, junto con la discusión de los compromisos clínicos identificados y la caracterización de la robustez entre \emph{datasets}.
 
-Tanto una descripción de los objetivos generales, como una lista de objetivos específicos que, posteriormente, deben cubrirse en el capítulo de \nameref{chapter:conclusiones} (Capítulo~\ref{chapter:conclusiones}).
-
-\section{Estructura del trabajo}\label{section:estructura}
-
-Aquí indicarás cual es la estructura del trabajo. Por ejemplo, en el capítulo~\ref{chapter:estado-arte} (\nameref{chapter:estado-arte}) se describirán los trabajos relacionados con este TFM.
-
-\section{Ejemplo de texto largo}
-
-Este texto largo simula una redacción\footnote{Puedes añadir una nota a pie de esta forma.}. 
-\lipsum[1-15]
+Finalmente, el capítulo~\ref{chapter:conclusiones} (\nameref{chapter:conclusiones}) recoge las conclusiones del trabajo, contrastando los resultados obtenidos con los objetivos específicos enumerados en la sección~\ref{section:objetivos}, e identifica las líneas de trabajo futuro más directamente motivadas por los resultados y las limitaciones encontradas.

@@ -7,64 +7,64 @@
 FOLD 0
   1. TAMAÑO DEL CONJUNTO DE ENTRENAMIENTO
      Original  :   13,572,679
-     Balanceado:   13,292,917
-     Diferencia:     -279,762  (-2.06%)
+     Balanceado:   13,572,679
+     Diferencia:           +0  (+0.00%)
 
   2. DISTRIBUCIÓN POR SEX_GROUP EN TRAIN
      Grupo           Original n  Original %    Balanceado n   Balanceado %
      --------------------------------------------------------------------
-     F                7,155,100       52.7%       6,506,578          48.9%
-     M                6,417,579       47.3%       6,786,339          51.1%
+     F                7,155,100       52.7%       6,786,340          50.0%
+     M                6,417,579       47.3%       6,786,339          50.0%
 ------------------------------------------------------------
 
 FOLD 1
   1. TAMAÑO DEL CONJUNTO DE ENTRENAMIENTO
      Original  :   13,588,245
-     Balanceado:   13,392,937
-     Diferencia:     -195,308  (-1.44%)
+     Balanceado:   13,588,245
+     Diferencia:           +0  (+0.00%)
 
   2. DISTRIBUCIÓN POR SEX_GROUP EN TRAIN
      Grupo           Original n  Original %    Balanceado n   Balanceado %
      --------------------------------------------------------------------
-     F                7,242,080       53.3%       6,598,815          49.3%
-     M                6,346,165       46.7%       6,794,122          50.7%
+     F                7,242,080       53.3%       6,794,123          50.0%
+     M                6,346,165       46.7%       6,794,122          50.0%
 ------------------------------------------------------------
 
 FOLD 2
   1. TAMAÑO DEL CONJUNTO DE ENTRENAMIENTO
      Original  :   13,597,404
-     Balanceado:   13,106,257
-     Diferencia:     -491,147  (-3.61%)
+     Balanceado:   13,597,404
+     Diferencia:           +0  (+0.00%)
 
   2. DISTRIBUCIÓN POR SEX_GROUP EN TRAIN
      Grupo           Original n  Original %    Balanceado n   Balanceado %
      --------------------------------------------------------------------
-     F                6,970,881       51.3%       6,307,555          48.1%
-     M                6,626,523       48.7%       6,798,702          51.9%
+     F                6,970,881       51.3%       6,798,702          50.0%
+     M                6,626,523       48.7%       6,798,702          50.0%
 ------------------------------------------------------------
 
 FOLD 3
   1. TAMAÑO DEL CONJUNTO DE ENTRENAMIENTO
      Original  :   13,596,135
-     Balanceado:   13,389,893
-     Diferencia:     -206,242  (-1.52%)
+     Balanceado:   13,596,135
+     Diferencia:           +0  (+0.00%)
 
   2. DISTRIBUCIÓN POR SEX_GROUP EN TRAIN
      Grupo           Original n  Original %    Balanceado n   Balanceado %
      --------------------------------------------------------------------
-     F                7,237,381       53.2%       6,591,826          49.2%
-     M                6,358,754       46.8%       6,798,067          50.8%
+     F                7,237,381       53.2%       6,798,068          50.0%
+     M                6,358,754       46.8%       6,798,067          50.0%
 ------------------------------------------------------------
 
 FOLD 4
   1. TAMAÑO DEL CONJUNTO DE ENTRENAMIENTO
      Original  :   13,583,812
-     Balanceado:   13,568,045
-     Diferencia:      -15,767  (-0.12%)
+     Balanceado:   13,583,812
+     Diferencia:           +0  (+0.00%)
 
   2. DISTRIBUCIÓN POR SEX_GROUP EN TRAIN
      Grupo           Original n  Original %    Balanceado n   Balanceado %
      --------------------------------------------------------------------
-     F                7,409,488       54.5%       6,776,139          49.9%
-     M                6,174,324       45.5%       6,791,906          50.1%
+     F                7,409,488       54.5%       6,791,906          50.0%
+     M                6,174,324       45.5%       6,791,906          50.0%
 ------------------------------------------------------------

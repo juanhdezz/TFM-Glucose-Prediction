@@ -8,7 +8,7 @@ Age · Tomek Links,+0.5%,+1.2%,+0.8%
 Age · Undersampling + Oversampling,-0.6%,+2.1%,+0.5%
 Age · Undersampling + SMOTE,+0.9%,+3.6%,+1.6%
 Age · balanced_age_smote_tomek,+0.8%,+4.0%,+0.6%
-Age · Oversampling + Tomek Links,-0.4%,+3.2%,+1.3%
+Age · Oversampling + Tomek Links,+0.8%,+4.1%,+0.8%
 Sex · Jittering,-0.1%,+0.7%,+2.1%
 Sex · Oversampling,+0.2%,+0.6%,+1.2%
 Sex · PAUndersampling,+0.3%,-0.6%,+2.6%
@@ -18,4 +18,4 @@ Sex · Tomek Links,-1.0%,+1.4%,-0.1%
 Sex · Undersampling + Oversampling,-0.6%,+1.1%,+1.2%
 Sex · Undersampling + SMOTE,+1.1%,+1.0%,+1.8%
 Sex · balanced_sex_smote_tomek,-0.3%,+1.3%,+0.5%
-Sex · Oversampling + Tomek Links,+0.2%,+0.0%,+1.5%
+Sex · Oversampling + Tomek Links,+0.5%,+0.0%,+1.5%

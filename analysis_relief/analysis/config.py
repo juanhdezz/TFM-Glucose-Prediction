@@ -91,7 +91,7 @@ FAMILY_SIZE = {
     'undersampling_oversampling':  'same_size',
     'undersampling_smote':         'same_size',
     'smote_tomek':                 'same_size',
-    'oversampling_tomek':          'same_size',
+    'oversampling_tomek':          'oversampling',
 }
  
 # Clasificación 2: mecanismo de selección/generación de muestras

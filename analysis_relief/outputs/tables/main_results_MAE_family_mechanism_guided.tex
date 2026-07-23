@@ -1,0 +1,25 @@
+\begin{table}[htbp]
+\centering
+\small
+\caption{Results by condition — MAE (mean $\pm$ std across 5 folds)}
+\label{tab:results_maefamily_mechanism_guided}
+\begin{tabular}{lrrrrrrrrrrrrrrrrrr}
+\toprule
+ & \multicolumn{6}{c}{\textbf{T1DGranada}} & \multicolumn{6}{c}{\textbf{DiaTrend}} & \multicolumn{6}{c}{\textbf{ReplaceBG}} \\
+\cmidrule(lr){2-7}\cmidrule(lr){8-13}\cmidrule(lr){14-19}
+\textbf{Condition} & \textbf{Hypo L2} & \textbf{Hypo L1} & \textbf{In Range} & \textbf{Hyper L1} & \textbf{Hyper L2} & \textbf{All Ranges} & \textbf{Hypo L2} & \textbf{Hypo L1} & \textbf{In Range} & \textbf{Hyper L1} & \textbf{Hyper L2} & \textbf{All Ranges} & \textbf{Hypo L2} & \textbf{Hypo L1} & \textbf{In Range} & \textbf{Hyper L1} & \textbf{Hyper L2} & \textbf{All Ranges} \\
+\midrule
+Age · Jittering & $35.52 \pm 1.49$ & $30.67 \pm 1.09$ & $19.41 \pm 0.43$ & $34.09 \pm 0.50$ & $56.69 \pm 0.96$ & $27.71 \pm 0.56$ & $69.76 \pm 6.99$ & $53.98 \pm 3.79$ & $21.88 \pm 0.88$ & $35.34 \pm 0.86$ & $64.84 \pm 2.06$ & $34.28 \pm 1.61$ & $55.14 \pm 0.62$ & $39.13 \pm 0.86$ & $19.05 \pm 0.28$ & $35.16 \pm 0.98$ & $59.49 \pm 0.73$ & $27.35 \pm 0.65$ \\
+Age · PAUndersampling & $35.60 \pm 1.55$ & $31.17 \pm 1.06$ & $19.51 \pm 0.61$ & $\mathbf{32.95 \pm 1.34}$ & $\mathbf{54.82 \pm 1.53}$ & $\mathbf{27.30 \pm 0.30}$ & $76.39 \pm 5.88$ & $58.74 \pm 3.61$ & $22.61 \pm 0.83$ & $34.69 \pm 0.84$ & $71.01 \pm 4.85$ & $35.76 \pm 2.18$ & $55.06 \pm 1.95$ & $39.16 \pm 1.83$ & $19.18 \pm 0.31$ & $34.59 \pm 1.08$ & $58.57 \pm 1.31$ & $27.21 \pm 0.74$ \\
+Age · SMOTE & $\mathbf{34.08 \pm 1.44}$ & $\mathbf{29.91 \pm 1.00}$ & $19.43 \pm 0.40$ & $34.19 \pm 0.13$ & $56.34 \pm 0.98$ & $27.67 \pm 0.53$ & $\mathbf{69.04 \pm 5.98}$ & $\mathbf{52.23 \pm 3.40}$ & $\mathbf{21.83 \pm 0.67}$ & $35.43 \pm 1.20$ & $62.52 \pm 2.25$ & $33.83 \pm 1.60$ & $53.81 \pm 1.31$ & $37.68 \pm 1.41$ & $19.14 \pm 0.39$ & $34.84 \pm 0.58$ & $58.19 \pm 0.65$ & $27.16 \pm 0.76$ \\
+Age · Tomek Links & $35.24 \pm 1.12$ & $30.43 \pm 1.11$ & $19.44 \pm 0.40$ & $33.53 \pm 0.81$ & $55.41 \pm 2.09$ & $27.44 \pm 0.69$ & $69.55 \pm 6.76$ & $54.31 \pm 3.06$ & $22.49 \pm 0.69$ & $\mathbf{32.67 \pm 1.15}$ & $60.41 \pm 2.50$ & $\mathbf{33.03 \pm 1.70}$ & $54.17 \pm 1.89$ & $38.18 \pm 1.75$ & $19.09 \pm 0.38$ & $34.63 \pm 0.42$ & $57.67 \pm 1.09$ & $27.05 \pm 0.70$ \\
+Age · balanced_age_smote_tomek & $34.51 \pm 0.84$ & $30.16 \pm 0.74$ & $19.36 \pm 0.46$ & $33.86 \pm 0.36$ & $56.60 \pm 1.27$ & $27.59 \pm 0.69$ & $69.72 \pm 6.39$ & $52.92 \pm 3.82$ & $21.91 \pm 0.66$ & $35.51 \pm 0.95$ & $62.25 \pm 2.19$ & $33.86 \pm 1.40$ & $54.30 \pm 1.40$ & $38.42 \pm 1.33$ & $19.14 \pm 0.31$ & $34.97 \pm 0.78$ & $57.68 \pm 1.02$ & $27.17 \pm 0.79$ \\
+\midrule
+Sex · Jittering & $35.67 \pm 0.50$ & $30.77 \pm 0.44$ & $\mathbf{19.30 \pm 0.38}$ & $34.01 \pm 0.79$ & $56.53 \pm 1.04$ & $27.61 \pm 0.71$ & $71.12 \pm 6.44$ & $54.74 \pm 3.27$ & $22.23 \pm 0.72$ & $33.59 \pm 1.14$ & $61.77 \pm 2.10$ & $33.42 \pm 1.64$ & $53.52 \pm 1.86$ & $37.49 \pm 1.53$ & $\mathbf{19.04 \pm 0.40}$ & $34.46 \pm 1.16$ & $58.68 \pm 1.32$ & $27.04 \pm 0.75$ \\
+Sex · PAUndersampling & $34.99 \pm 1.34$ & $30.48 \pm 1.36$ & $19.38 \pm 0.39$ & $34.04 \pm 0.61$ & $56.24 \pm 1.40$ & $27.62 \pm 0.61$ & $72.87 \pm 5.11$ & $56.18 \pm 2.88$ & $22.30 \pm 0.74$ & $33.87 \pm 0.82$ & $61.26 \pm 1.99$ & $33.49 \pm 1.46$ & $\mathbf{53.05 \pm 0.71}$ & $\mathbf{37.26 \pm 1.10}$ & $19.09 \pm 0.31$ & $34.85 \pm 0.88$ & $58.35 \pm 0.78$ & $27.13 \pm 0.82$ \\
+Sex · SMOTE & $35.34 \pm 1.18$ & $30.57 \pm 0.96$ & $19.40 \pm 0.40$ & $33.73 \pm 0.96$ & $55.76 \pm 1.16$ & $27.51 \pm 0.69$ & $70.07 \pm 5.93$ & $54.43 \pm 2.97$ & $22.29 \pm 0.49$ & $33.56 \pm 1.31$ & $\mathbf{60.34 \pm 2.42}$ & $33.18 \pm 1.55$ & $54.83 \pm 1.40$ & $38.77 \pm 1.19$ & $19.08 \pm 0.39$ & $34.80 \pm 1.34$ & $58.82 \pm 1.05$ & $27.21 \pm 0.80$ \\
+Sex · Tomek Links & $35.95 \pm 2.27$ & $31.12 \pm 1.65$ & $19.54 \pm 0.58$ & $33.18 \pm 1.54$ & $55.41 \pm 2.19$ & $27.47 \pm 0.74$ & $69.87 \pm 5.40$ & $54.22 \pm 2.26$ & $22.37 \pm 0.64$ & $33.26 \pm 0.85$ & $60.94 \pm 2.53$ & $33.24 \pm 1.53$ & $54.65 \pm 1.16$ & $38.78 \pm 0.87$ & $19.15 \pm 0.31$ & $34.75 \pm 0.60$ & $58.44 \pm 0.55$ & $27.21 \pm 0.74$ \\
+Sex · balanced_sex_smote_tomek & $35.46 \pm 1.21$ & $30.81 \pm 1.17$ & $19.35 \pm 0.40$ & $33.87 \pm 0.58$ & $56.81 \pm 1.50$ & $27.65 \pm 0.68$ & $70.41 \pm 5.64$ & $54.26 \pm 2.29$ & $22.38 \pm 0.78$ & $33.34 \pm 0.76$ & $60.61 \pm 2.95$ & $33.22 \pm 1.68$ & $54.22 \pm 0.91$ & $38.28 \pm 0.90$ & $19.10 \pm 0.40$ & $\mathbf{34.39 \pm 0.66}$ & $\mathbf{57.62 \pm 0.77}$ & $\mathbf{27.00 \pm 0.75}$ \\
+\bottomrule
+\end{tabular}
+\end{table}

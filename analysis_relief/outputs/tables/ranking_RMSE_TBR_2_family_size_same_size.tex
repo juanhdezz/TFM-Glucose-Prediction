@@ -1,0 +1,19 @@
+\begin{table}[htbp]
+\centering
+\small
+\caption{Ranking by condition — RMSE · Hypo L2  (1 = best)}
+\label{tab:ranking_rmse_tbr_2_family_size_same_size}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Condition} & \textbf{T1DGranada} & \textbf{DiaTrend} & \textbf{ReplaceBG} \\
+\midrule
+Age · Undersampling + Oversampling & \#4 (39.57$\pm$1.67) & \#3 (74.11$\pm$6.32) & \#4 (57.01$\pm$1.81) \\
+Age · Undersampling + SMOTE & \#1 (38.78$\pm$1.45) & \#2 (73.88$\pm$7.09) & \#3 (56.88$\pm$1.26) \\
+Age · balanced_age_smote_tomek & \#2 (39.05$\pm$1.08) & \#1 (73.35$\pm$7.28) & \#5 (57.08$\pm$1.39) \\
+\midrule
+Sex · Undersampling + Oversampling & \#6 (39.79$\pm$1.31) & \#4 (74.17$\pm$7.56) & \#2 (56.78$\pm$1.53) \\
+Sex · Undersampling + SMOTE & \#3 (39.34$\pm$0.90) & \#6 (74.93$\pm$7.43) & \#1 (56.51$\pm$0.90) \\
+Sex · balanced_sex_smote_tomek & \#5 (39.63$\pm$0.94) & \#5 (74.59$\pm$6.65) & \#6 (57.13$\pm$1.07) \\
+\bottomrule
+\end{tabular}
+\end{table}

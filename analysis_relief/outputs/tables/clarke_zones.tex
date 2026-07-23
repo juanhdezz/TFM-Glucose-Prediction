@@ -1,0 +1,36 @@
+\begin{table}[htbp]
+\centering
+\small
+\caption{Clarke Error Grid — \% points in Zone A and A+B by condition}
+\label{tab:clarke}
+\begin{tabular}{lrrrrrr}
+\toprule
+\textbf{Condition} & \multicolumn{2}{c}{\textbf{T1DGranada}} & \multicolumn{2}{c}{\textbf{DiaTrend}} & \multicolumn{2}{c}{\textbf{ReplaceBG}} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+ & \textbf{Zone A} & \textbf{Zone A+B} & \textbf{Zone A} & \textbf{Zone A+B} & \textbf{Zone A} & \textbf{Zone A+B} \\
+\midrule
+Original & 67.6 \pm 0.8 & 94.4 \pm 0.4 & 64.7 \pm 2.8 & 95.6 \pm 0.8 & 67.3 \pm 0.6 & 95.0 \pm 0.2 \\
+Age · Jittering & 67.4 \pm 0.6 & 94.4 \pm 0.3 & 63.6 \pm 2.4 & 95.2 \pm 0.8 & 67.0 \pm 0.6 & 94.9 \pm 0.2 \\
+Age · Oversampling & 67.4 \pm 0.8 & 94.4 \pm 0.4 & 64.0 \pm 2.1 & 95.2 \pm 0.8 & 67.4 \pm 0.5 & 95.0 \pm 0.2 \\
+Age · PAUndersampling & 67.6 \pm 0.7 & 94.4 \pm 0.4 & 61.4 \pm 3.0 & 95.3 \pm 0.8 & 67.2 \pm 0.5 & 95.0 \pm 0.2 \\
+Age · SMOTE & 67.5 \pm 0.8 & 94.6 \pm 0.4 & 64.3 \pm 2.2 & 95.3 \pm 0.9 & 67.4 \pm 0.8 & 95.0 \pm 0.2 \\
+Age · Undersampling & 67.4 \pm 0.8 & 94.3 \pm 0.4 & 62.1 \pm 2.9 & 95.4 \pm 0.9 & 67.1 \pm 1.0 & 95.0 \pm 0.2 \\
+Age · Tomek Links & 67.7 \pm 1.0 & 94.5 \pm 0.4 & 65.2 \pm 2.3 & 95.6 \pm 0.8 & 67.5 \pm 0.7 & 95.0 \pm 0.2 \\
+Age · Undersampling + Oversampling & 67.4 \pm 0.7 & 94.4 \pm 0.3 & 64.0 \pm 2.2 & 95.3 \pm 0.8 & 67.5 \pm 0.4 & 95.0 \pm 0.2 \\
+Age · Undersampling + SMOTE & 67.5 \pm 0.7 & 94.5 \pm 0.3 & 64.2 \pm 1.9 & 95.3 \pm 0.8 & 67.5 \pm 0.5 & 95.0 \pm 0.2 \\
+Age · balanced_age_smote_tomek & 67.6 \pm 0.8 & 94.5 \pm 0.3 & 64.2 \pm 1.9 & 95.3 \pm 0.8 & 67.4 \pm 0.9 & 95.0 \pm 0.2 \\
+Age · Oversampling + Tomek Links & 67.6 \pm 0.9 & 94.5 \pm 0.4 & 64.8 \pm 2.0 & 95.4 \pm 0.8 & 67.5 \pm 0.8 & 95.0 \pm 0.2 \\
+\midrule
+Sex · Jittering & 67.5 \pm 0.8 & 94.4 \pm 0.2 & 64.9 \pm 2.2 & 95.5 \pm 0.9 & 67.6 \pm 0.9 & 95.0 \pm 0.2 \\
+Sex · Oversampling & 67.4 \pm 0.9 & 94.3 \pm 0.3 & 65.0 \pm 2.1 & 95.5 \pm 0.8 & 67.6 \pm 0.6 & 95.0 \pm 0.2 \\
+Sex · PAUndersampling & 67.5 \pm 0.9 & 94.5 \pm 0.4 & 64.6 \pm 1.9 & 95.5 \pm 0.8 & 67.5 \pm 0.8 & 95.0 \pm 0.2 \\
+Sex · SMOTE & 67.6 \pm 1.1 & 94.4 \pm 0.4 & 65.1 \pm 1.9 & 95.5 \pm 0.8 & 67.2 \pm 0.9 & 95.0 \pm 0.2 \\
+Sex · Undersampling & 67.4 \pm 0.8 & 94.3 \pm 0.3 & 64.9 \pm 2.2 & 95.5 \pm 0.8 & 67.4 \pm 0.6 & 95.0 \pm 0.2 \\
+Sex · Tomek Links & 67.5 \pm 0.8 & 94.4 \pm 0.3 & 65.0 \pm 2.0 & 95.6 \pm 0.8 & 67.2 \pm 0.7 & 95.0 \pm 0.2 \\
+Sex · Undersampling + Oversampling & 67.3 \pm 1.0 & 94.3 \pm 0.3 & 65.0 \pm 2.3 & 95.6 \pm 0.8 & 67.4 \pm 0.8 & 95.0 \pm 0.2 \\
+Sex · Undersampling + SMOTE & 67.4 \pm 0.8 & 94.4 \pm 0.3 & 64.8 \pm 2.2 & 95.5 \pm 0.8 & 67.4 \pm 0.5 & 95.0 \pm 0.1 \\
+Sex · balanced_sex_smote_tomek & 67.3 \pm 0.5 & 94.4 \pm 0.1 & 65.0 \pm 2.3 & 95.6 \pm 0.8 & 67.6 \pm 0.8 & 95.0 \pm 0.2 \\
+Sex · Oversampling + Tomek Links & 67.7 \pm 1.0 & 94.5 \pm 0.4 & 64.9 \pm 2.2 & 95.6 \pm 0.8 & 67.7 \pm 0.8 & 95.0 \pm 0.2 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,19 @@
+\begin{table}[htbp]
+\centering
+\small
+\caption{Improvement (\%) vs. baseline  |  RMSE · All Ranges  $\uparrow$ positive = improvement}
+\label{tab:delta_rmse_entire_family_size_undersampling}
+\begin{tabular}{lrrr}
+\toprule
+\textbf{Condition} & \textbf{T1DGranada} & \textbf{DiaTrend} & \textbf{ReplaceBG} \\
+\midrule
+Age · PAUndersampling & \textcolor{OliveGreen}{+0.6\%} & \textcolor{BrickRed}{-7.0\%} & \textcolor{BrickRed}{-0.2\%} \\
+Age · Undersampling & \textcolor{BrickRed}{-0.3\%} & \textcolor{BrickRed}{-6.0\%} & \textcolor{BrickRed}{-0.3\%} \\
+Age · Tomek Links & \textcolor{OliveGreen}{+0.0\%} & \textcolor{OliveGreen}{+0.5\%} & \textcolor{OliveGreen}{+0.4\%} \\
+\midrule
+Sex · PAUndersampling & \textcolor{BrickRed}{-0.3\%} & \textcolor{BrickRed}{-0.5\%} & \textcolor{OliveGreen}{+0.1\%} \\
+Sex · Undersampling & \textcolor{BrickRed}{-0.3\%} & \textcolor{BrickRed}{-0.1\%} & \textcolor{OliveGreen}{+0.1\%} \\
+Sex · Tomek Links & \textcolor{OliveGreen}{+0.1\%} & \textcolor{BrickRed}{-0.0\%} & \textcolor{BrickRed}{-0.1\%} \\
+\bottomrule
+\end{tabular}
+\end{table}

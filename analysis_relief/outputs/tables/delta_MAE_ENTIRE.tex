@@ -1,7 +1,7 @@
 \begin{table}[htbp]
 \centering
 \small
-\caption{Improvement (\\%) vs. baseline  |  MAE · All Ranges  $\uparrow$ positive = improvement}
+\caption{Improvement (\%) vs. baseline  |  MAE · All Ranges  $\uparrow$ positive = improvement}
 \label{tab:delta_mae_entire}
 \begin{tabular}{lrrr}
 \toprule
@@ -15,7 +15,8 @@ Age · Undersampling & \textcolor{BrickRed}{-0.3\%} & \textcolor{BrickRed}{-6.1\
 Age · Tomek Links & \textcolor{OliveGreen}{+0.3\%} & \textcolor{OliveGreen}{+0.7\%} & \textcolor{OliveGreen}{+0.4\%} \\
 Age · Undersampling + Oversampling & \textcolor{BrickRed}{-0.7\%} & \textcolor{BrickRed}{-2.2\%} & \textcolor{OliveGreen}{+0.5\%} \\
 Age · Undersampling + SMOTE & \textcolor{BrickRed}{-0.2\%} & \textcolor{BrickRed}{-2.1\%} & \textcolor{OliveGreen}{+0.1\%} \\
-Age · SMOTE + Tomek Links & \textcolor{BrickRed}{-0.3\%} & \textcolor{BrickRed}{-1.8\%} & \textcolor{BrickRed}{-0.1\%} \\
+Age · balanced_age_smote_tomek & \textcolor{BrickRed}{-0.3\%} & \textcolor{BrickRed}{-1.8\%} & \textcolor{BrickRed}{-0.1\%} \\
+Age · Oversampling + Tomek Links & \textcolor{BrickRed}{-0.3\%} & \textcolor{BrickRed}{-0.8\%} & \textcolor{OliveGreen}{+0.3\%} \\
 \midrule
 Sex · Jittering & \textcolor{BrickRed}{-0.4\%} & \textcolor{BrickRed}{-0.5\%} & \textcolor{OliveGreen}{+0.4\%} \\
 Sex · Oversampling & \textcolor{BrickRed}{-0.4\%} & \textcolor{OliveGreen}{+0.1\%} & \textcolor{OliveGreen}{+0.5\%} \\
@@ -25,7 +26,8 @@ Sex · Undersampling & \textcolor{BrickRed}{-0.4\%} & \textcolor{BrickRed}{-0.1\
 Sex · Tomek Links & \textcolor{OliveGreen}{+0.1\%} & \textcolor{OliveGreen}{+0.0\%} & \textcolor{BrickRed}{-0.2\%} \\
 Sex · Undersampling + Oversampling & \textcolor{BrickRed}{-0.7\%} & \textcolor{OliveGreen}{+0.1\%} & \textcolor{OliveGreen}{+0.1\%} \\
 Sex · Undersampling + SMOTE & \textcolor{BrickRed}{-0.7\%} & \textcolor{BrickRed}{-0.3\%} & \textcolor{black}{0.0\%} \\
-Sex · SMOTE + Tomek Links & \textcolor{BrickRed}{-0.5\%} & \textcolor{OliveGreen}{+0.1\%} & \textcolor{OliveGreen}{+0.6\%} \\
+Sex · balanced_sex_smote_tomek & \textcolor{BrickRed}{-0.5\%} & \textcolor{OliveGreen}{+0.1\%} & \textcolor{OliveGreen}{+0.6\%} \\
+Sex · Oversampling + Tomek Links & \textcolor{BrickRed}{-0.0\%} & \textcolor{BrickRed}{-0.1\%} & \textcolor{OliveGreen}{+0.5\%} \\
 \bottomrule
 \end{tabular}
 \end{table}

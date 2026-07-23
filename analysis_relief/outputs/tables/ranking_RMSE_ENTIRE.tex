@@ -1,0 +1,34 @@
+\begin{table}[htbp]
+\centering
+\small
+\caption{Ranking by condition — RMSE · All Ranges  (1 = best)}
+\label{tab:ranking_rmse_entire}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Condition} & \textbf{T1DGranada} & \textbf{DiaTrend} & \textbf{ReplaceBG} \\
+\midrule
+Original & \#5 (37.80$\pm$0.81) & \#6 (45.05$\pm$2.45) & \#14 (37.00$\pm$0.83) \\
+Age · Jittering & \#21 (38.09$\pm$0.77) & \#19 (46.41$\pm$2.14) & \#21 (37.25$\pm$0.76) \\
+Age · Oversampling & \#20 (38.05$\pm$0.84) & \#18 (46.03$\pm$2.17) & \#10 (36.97$\pm$0.76) \\
+Age · PAUndersampling & \#1 (37.56$\pm$0.39) & \#21 (48.22$\pm$3.09) & \#19 (37.06$\pm$0.72) \\
+Age · SMOTE & \#16 (37.98$\pm$0.70) & \#14 (45.80$\pm$2.16) & \#15 (37.00$\pm$0.77) \\
+Age · Undersampling & \#8 (37.90$\pm$0.75) & \#20 (47.76$\pm$2.86) & \#20 (37.12$\pm$1.08) \\
+Age · Tomek Links & \#3 (37.79$\pm$0.87) & \#1 (44.83$\pm$2.23) & \#2 (36.85$\pm$0.77) \\
+Age · Undersampling + Oversampling & \#18 (38.00$\pm$0.79) & \#16 (45.92$\pm$2.15) & \#4 (36.86$\pm$0.72) \\
+Age · Undersampling + SMOTE & \#6 (37.87$\pm$0.93) & \#17 (45.97$\pm$2.17) & \#9 (36.96$\pm$0.78) \\
+Age · balanced_age_smote_tomek & \#12 (37.93$\pm$0.89) & \#15 (45.81$\pm$2.07) & \#11 (36.97$\pm$0.81) \\
+Age · Oversampling + Tomek Links & \#13 (37.95$\pm$0.86) & \#13 (45.47$\pm$1.97) & \#6 (36.90$\pm$0.90) \\
+\midrule
+Sex · Jittering & \#11 (37.93$\pm$0.91) & \#12 (45.33$\pm$2.17) & \#7 (36.93$\pm$0.82) \\
+Sex · Oversampling & \#14 (37.96$\pm$0.88) & \#3 (44.99$\pm$2.10) & \#5 (36.86$\pm$0.73) \\
+Sex · PAUndersampling & \#9 (37.92$\pm$0.77) & \#11 (45.26$\pm$1.98) & \#12 (36.98$\pm$0.81) \\
+Sex · SMOTE & \#4 (37.80$\pm$0.86) & \#2 (44.94$\pm$2.12) & \#18 (37.04$\pm$0.84) \\
+Sex · Undersampling & \#10 (37.93$\pm$0.83) & \#9 (45.08$\pm$2.21) & \#8 (36.95$\pm$0.70) \\
+Sex · Tomek Links & \#2 (37.78$\pm$0.89) & \#7 (45.06$\pm$2.08) & \#16 (37.02$\pm$0.79) \\
+Sex · Undersampling + Oversampling & \#17 (37.99$\pm$0.93) & \#4 (45.02$\pm$2.26) & \#17 (37.02$\pm$0.85) \\
+Sex · Undersampling + SMOTE & \#19 (38.03$\pm$0.80) & \#10 (45.16$\pm$2.13) & \#13 (36.99$\pm$0.59) \\
+Sex · balanced_sex_smote_tomek & \#15 (37.97$\pm$0.98) & \#5 (45.04$\pm$2.25) & \#1 (36.81$\pm$0.80) \\
+Sex · Oversampling + Tomek Links & \#7 (37.87$\pm$1.01) & \#8 (45.07$\pm$2.23) & \#3 (36.85$\pm$0.87) \\
+\bottomrule
+\end{tabular}
+\end{table}

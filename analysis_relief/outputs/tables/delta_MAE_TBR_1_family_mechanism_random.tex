@@ -1,0 +1,19 @@
+\begin{table}[htbp]
+\centering
+\small
+\caption{Improvement (\%) vs. baseline  |  MAE · Hypo L1  $\uparrow$ positive = improvement}
+\label{tab:delta_mae_tbr_1_family_mechanism_random}
+\begin{tabular}{lrrr}
+\toprule
+\textbf{Condition} & \textbf{T1DGranada} & \textbf{DiaTrend} & \textbf{ReplaceBG} \\
+\midrule
+Age · Oversampling & \textcolor{OliveGreen}{+0.5\%} & \textcolor{OliveGreen}{+3.4\%} & \textcolor{OliveGreen}{+0.5\%} \\
+Age · Undersampling & \textcolor{BrickRed}{-0.5\%} & \textcolor{BrickRed}{-5.2\%} & \textcolor{BrickRed}{-0.7\%} \\
+Age · Undersampling + Oversampling & \textcolor{BrickRed}{-0.7\%} & \textcolor{OliveGreen}{+1.3\%} & \textcolor{OliveGreen}{+0.5\%} \\
+\midrule
+Sex · Oversampling & \textcolor{BrickRed}{-0.3\%} & \textcolor{OliveGreen}{+1.0\%} & \textcolor{OliveGreen}{+1.5\%} \\
+Sex · Undersampling & \textcolor{BrickRed}{-1.2\%} & \textcolor{OliveGreen}{+0.8\%} & \textcolor{OliveGreen}{+0.5\%} \\
+Sex · Undersampling + Oversampling & \textcolor{BrickRed}{-1.4\%} & \textcolor{OliveGreen}{+1.3\%} & \textcolor{OliveGreen}{+1.4\%} \\
+\bottomrule
+\end{tabular}
+\end{table}

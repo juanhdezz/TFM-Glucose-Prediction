@@ -1,0 +1,21 @@
+\begin{table}[htbp]
+\centering
+\small
+\caption{Results by condition — RMSE (mean $\pm$ std across 5 folds)}
+\label{tab:results_rmsefamily_size_same_size}
+\begin{tabular}{lrrrrrrrrrrrrrrrrrr}
+\toprule
+ & \multicolumn{6}{c}{\textbf{T1DGranada}} & \multicolumn{6}{c}{\textbf{DiaTrend}} & \multicolumn{6}{c}{\textbf{ReplaceBG}} \\
+\cmidrule(lr){2-7}\cmidrule(lr){8-13}\cmidrule(lr){14-19}
+\textbf{Condition} & \textbf{Hypo L2} & \textbf{Hypo L1} & \textbf{In Range} & \textbf{Hyper L1} & \textbf{Hyper L2} & \textbf{All Ranges} & \textbf{Hypo L2} & \textbf{Hypo L1} & \textbf{In Range} & \textbf{Hyper L1} & \textbf{Hyper L2} & \textbf{All Ranges} & \textbf{Hypo L2} & \textbf{Hypo L1} & \textbf{In Range} & \textbf{Hyper L1} & \textbf{Hyper L2} & \textbf{All Ranges} \\
+\midrule
+Age · Undersampling + Oversampling & $39.57 \pm 1.67$ & $36.14 \pm 1.46$ & $26.58 \pm 0.56$ & $43.36 \pm 0.41$ & $66.79 \pm 1.21$ & $38.00 \pm 0.79$ & $74.11 \pm 6.32$ & $58.54 \pm 3.50$ & $\mathbf{29.60 \pm 1.21}$ & $44.32 \pm 0.93$ & $74.71 \pm 2.89$ & $45.92 \pm 2.15$ & $57.01 \pm 1.81$ & $41.83 \pm 1.27$ & $25.80 \pm 0.46$ & $43.21 \pm 1.08$ & $68.13 \pm 1.30$ & $36.86 \pm 0.72$ \\
+Age · Undersampling + SMOTE & $\mathbf{38.78 \pm 1.45}$ & $35.60 \pm 1.04$ & $26.69 \pm 0.59$ & $43.09 \pm 0.42$ & $\mathbf{66.39 \pm 1.50}$ & $\mathbf{37.87 \pm 0.93}$ & $73.88 \pm 7.09$ & $57.64 \pm 4.37$ & $29.76 \pm 1.06$ & $44.63 \pm 1.13$ & $74.40 \pm 3.57$ & $45.97 \pm 2.17$ & $56.88 \pm 1.26$ & $41.36 \pm 0.81$ & $25.80 \pm 0.72$ & $43.49 \pm 0.83$ & $68.36 \pm 1.52$ & $36.96 \pm 0.78$ \\
+Age · balanced_age_smote_tomek & $39.05 \pm 1.08$ & $35.63 \pm 0.83$ & $26.62 \pm 0.68$ & $\mathbf{43.07 \pm 0.49}$ & $66.87 \pm 1.44$ & $37.93 \pm 0.89$ & $\mathbf{73.35 \pm 7.28}$ & $\mathbf{57.41 \pm 4.78}$ & $29.70 \pm 1.20$ & $44.53 \pm 1.25$ & $74.12 \pm 2.93$ & $45.81 \pm 2.07$ & $57.08 \pm 1.39$ & $41.77 \pm 1.35$ & $\mathbf{25.77 \pm 0.39}$ & $43.72 \pm 0.94$ & $68.02 \pm 0.99$ & $36.97 \pm 0.81$ \\
+\midrule
+Sex · Undersampling + Oversampling & $39.79 \pm 1.31$ & $36.13 \pm 1.00$ & $26.60 \pm 0.49$ & $43.27 \pm 0.68$ & $66.81 \pm 1.99$ & $37.99 \pm 0.93$ & $74.17 \pm 7.56$ & $59.18 \pm 4.36$ & $30.31 \pm 1.06$ & $\mathbf{42.40 \pm 1.36}$ & $72.57 \pm 3.40$ & $\mathbf{45.02 \pm 2.26}$ & $56.78 \pm 1.53$ & $41.51 \pm 1.36$ & $25.78 \pm 0.53$ & $43.40 \pm 0.96$ & $68.84 \pm 1.52$ & $37.02 \pm 0.85$ \\
+Sex · Undersampling + SMOTE & $39.34 \pm 0.90$ & $\mathbf{35.51 \pm 0.90}$ & $26.65 \pm 0.69$ & $43.50 \pm 0.47$ & $66.82 \pm 1.20$ & $38.03 \pm 0.80$ & $74.93 \pm 7.43$ & $59.21 \pm 5.21$ & $30.25 \pm 1.21$ & $42.79 \pm 0.99$ & $72.71 \pm 3.33$ & $45.16 \pm 2.13$ & $\mathbf{56.51 \pm 0.90}$ & $\mathbf{41.27 \pm 0.44}$ & $25.85 \pm 0.60$ & $43.63 \pm 0.89$ & $68.25 \pm 1.37$ & $36.99 \pm 0.59$ \\
+Sex · balanced_sex_smote_tomek & $39.63 \pm 0.94$ & $36.03 \pm 0.91$ & $\mathbf{26.56 \pm 0.64}$ & $\mathbf{43.07 \pm 0.72}$ & $67.11 \pm 1.63$ & $37.97 \pm 0.98$ & $74.59 \pm 6.65$ & $59.06 \pm 3.54$ & $30.40 \pm 1.23$ & $42.55 \pm 1.01$ & $\mathbf{72.37 \pm 3.48}$ & $45.04 \pm 2.25$ & $57.13 \pm 1.07$ & $41.79 \pm 1.08$ & $25.78 \pm 0.57$ & $\mathbf{43.18 \pm 0.79}$ & $\mathbf{67.92 \pm 0.94}$ & $\mathbf{36.81 \pm 0.80}$ \\
+\bottomrule
+\end{tabular}
+\end{table}

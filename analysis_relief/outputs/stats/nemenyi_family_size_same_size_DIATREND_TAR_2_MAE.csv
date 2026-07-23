@@ -1,9 +1,7 @@
-condition,balanced_age_oversampling_tomek,balanced_age_smote_tomek,balanced_age_undersampling_oversampling,balanced_age_undersampling_smote,balanced_sex_oversampling_tomek,balanced_sex_smote_tomek,balanced_sex_undersampling_oversampling,balanced_sex_undersampling_smote
-balanced_age_oversampling_tomek,1.0,0.9576,0.6589,0.9576,0.9243,0.6589,0.9788,0.9695
-balanced_age_smote_tomek,0.9576,1.0,0.9982,1.0,0.2804,0.0853,0.4375,0.3953
-balanced_age_undersampling_oversampling,0.6589,0.9982,1.0,0.9982,0.0597,0.0115,0.1191,0.1011
-balanced_age_undersampling_smote,0.9576,1.0,0.9982,1.0,0.2804,0.0853,0.4375,0.3953
-balanced_sex_oversampling_tomek,0.9243,0.2804,0.0597,0.2804,1.0,0.9996,1.0,1.0
-balanced_sex_smote_tomek,0.6589,0.0853,0.0115,0.0853,0.9996,1.0,0.9944,0.9967
-balanced_sex_undersampling_oversampling,0.9788,0.4375,0.1191,0.4375,1.0,0.9944,1.0,1.0
-balanced_sex_undersampling_smote,0.9695,0.3953,0.1011,0.3953,1.0,0.9967,1.0,1.0
+condition,balanced_age_smote_tomek,balanced_age_undersampling_oversampling,balanced_age_undersampling_smote,balanced_sex_smote_tomek,balanced_sex_undersampling_oversampling,balanced_sex_undersampling_smote
+balanced_age_smote_tomek,1.0,0.959,1.0,0.0743,0.326,0.4275
+balanced_age_undersampling_oversampling,0.959,1.0,0.9846,0.0052,0.0467,0.0743
+balanced_age_undersampling_smote,1.0,0.9846,1.0,0.0467,0.2388,0.326
+balanced_sex_smote_tomek,0.0743,0.0052,0.0467,1.0,0.9846,0.959
+balanced_sex_undersampling_oversampling,0.326,0.0467,0.2388,0.9846,1.0,1.0
+balanced_sex_undersampling_smote,0.4275,0.0743,0.326,0.959,1.0,1.0

@@ -1,0 +1,5 @@
+condition,balanced_age_oversampling_tomek,balanced_age_undersampling_smote,balanced_sex_oversampling_tomek,balanced_sex_undersampling_smote
+balanced_age_oversampling_tomek,1.0,0.9948,0.0681,0.3159
+balanced_age_undersampling_smote,0.9948,1.0,0.1219,0.4559
+balanced_sex_oversampling_tomek,0.0681,0.1219,1.0,0.8831
+balanced_sex_undersampling_smote,0.3159,0.4559,0.8831,1.0

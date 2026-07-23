@@ -91,9 +91,6 @@ M.~A. Ahmad {\em et~al.}, ``Algorithm fairness in ai for medicine and healthcare
 \bibitem{chu2024agebias}
 C.~Chu, S.~Donato-Woodger, S.~S. Khan, T.~Shi, K.~Leslie, S.~Abbasgholizadeh-Rahimi, R.~Nyrup, and A.~Grenier, ``Strategies to mitigate age-related bias in machine learning: Scoping review,'' {\em JMIR Aging}, vol.~7, p.~e53564, 2024.
 
-\bibitem{lahoti2020fairness}
-P.~Lahoti, A.~Beutel, J.~Chen, K.~Lee, F.~Prost, N.~Thain, X.~Wang, and E.~H. Chi, ``Fairness without demographics through adversarially reweighted learning,'' in {\em Advances in Neural Information Processing Systems (NeurIPS)}, vol.~33, 2020.
-
 \bibitem{yoon2019timegan}
 J.~Yoon, D.~Jarrett, and M.~van~der Schaar, ``Time-series generative adversarial networks,'' in {\em Advances in Neural Information Processing Systems (NeurIPS)}, 2019.
 

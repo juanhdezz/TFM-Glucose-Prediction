@@ -5,53 +5,47 @@ The style file: ieeetr.bst
 Database file #1: bibliografia.bib
 Warning--entry type for "diaz2023t1dgranada" isn't style-file defined
 --line 893 of file bibliografia.bib
-Warning--I didn't find a database entry for "gregory2022lancet"
-Warning--I didn't find a database entry for "green2021diabetologia"
-Warning--I didn't find a database entry for "neu2019germany"
-Warning--I didn't find a database entry for "gudbjornsdottir2003t1dexchange"
-Warning--I didn't find a database entry for "chen2025sexgwas"
-Warning--I didn't find a database entry for "schiborn2023sexreview"
 Warning--empty journal in mirshekarian2019using
 Warning--empty journal in wang2024disparate
-You've used 37 entries,
+You've used 36 entries,
             1876 wiz_defined-function locations,
-            678 strings with 10233 characters,
-and the built_in function-call counts, 8173 in all, are:
-= -- 743
-> -- 411
+            668 strings with 9924 characters,
+and the built_in function-call counts, 7917 in all, are:
+= -- 730
+> -- 385
 < -- 0
-+ -- 150
-- -- 113
-* -- 545
-:= -- 1228
-add.period$ -- 46
-call.type$ -- 37
-change.case$ -- 37
++ -- 141
+- -- 105
+* -- 520
+:= -- 1184
+add.period$ -- 45
+call.type$ -- 36
+change.case$ -- 36
 chr.to.int$ -- 0
-cite$ -- 39
-duplicate$ -- 428
-empty$ -- 808
-format.name$ -- 113
-if$ -- 1975
+cite$ -- 38
+duplicate$ -- 416
+empty$ -- 784
+format.name$ -- 105
+if$ -- 1920
 int.to.chr$ -- 0
-int.to.str$ -- 37
-missing$ -- 32
-newline$ -- 123
-num.names$ -- 37
-pop$ -- 156
+int.to.str$ -- 36
+missing$ -- 31
+newline$ -- 120
+num.names$ -- 36
+pop$ -- 149
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 236
+skip$ -- 233
 stack$ -- 0
 substring$ -- 291
-swap$ -- 131
+swap$ -- 130
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 2
-while$ -- 66
-width$ -- 39
-write$ -- 349
-(There were 9 warnings)
+while$ -- 65
+width$ -- 38
+write$ -- 340
+(There were 3 warnings)

@@ -1,0 +1,17 @@
+\begin{table}[htbp]
+\centering
+\small
+\caption{Improvement (\%) vs. baseline  |  RMSE · All Ranges  $\uparrow$ positive = improvement}
+\label{tab:delta_rmse_entire_family_mechanism_random+guided}
+\begin{tabular}{lrrr}
+\toprule
+\textbf{Condition} & \textbf{T1DGranada} & \textbf{DiaTrend} & \textbf{ReplaceBG} \\
+\midrule
+Age · Undersampling + SMOTE & \textcolor{BrickRed}{-0.2\%} & \textcolor{BrickRed}{-2.0\%} & \textcolor{OliveGreen}{+0.1\%} \\
+Age · Oversampling + Tomek Links & \textcolor{BrickRed}{-0.4\%} & \textcolor{BrickRed}{-0.9\%} & \textcolor{OliveGreen}{+0.3\%} \\
+\midrule
+Sex · Undersampling + SMOTE & \textcolor{BrickRed}{-0.6\%} & \textcolor{BrickRed}{-0.2\%} & \textcolor{OliveGreen}{+0.0\%} \\
+Sex · Oversampling + Tomek Links & \textcolor{BrickRed}{-0.2\%} & \textcolor{BrickRed}{-0.0\%} & \textcolor{OliveGreen}{+0.4\%} \\
+\bottomrule
+\end{tabular}
+\end{table}

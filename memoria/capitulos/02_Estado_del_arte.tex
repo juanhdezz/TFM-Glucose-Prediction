@@ -141,119 +141,7 @@ La aplicabilidad a balanceo por sexo y por edad es directa en ambos casos, ya qu
 
 El riesgo de introducir sesgos está documentado extensamente en la literatura~\cite{krasanakis2018reweighting,algorithmfairnessmedicine2021}: el remuestreo uniforme corrige la proporción global del grupo, pero puede mantener o incluso amplificar la concentración de las muestras añadidas en un subconjunto reducido de individuos del grupo minoritario, un riesgo de pseudo-replicación particularmente relevante en \emph{datasets} de tamaño muestral reducido como DiaTrend (sección~\ref{subsec:datasets_utilizados}). Este es precisamente el motivo de la implementación de \emph{Patient-Aware Undersampling} en este trabajo, que introduce un límite de contribución máxima por paciente al remuestreo. En el dominio específico de sesgo por edad, la revisión de Chu et al.~\cite{chu2024agebias} en \emph{JMIR Aging} describe el caso de un estudio de neuroimagen en el que se duplicaron muestras de grupos etarios sobrerrepresentados para igualar la representación de grupos etarios minoritarios, si bien los propios autores señalan que un sesgo residual persistió tras el balanceo, una observación directamente relevante para la interpretación de los resultados de este trabajo. De forma convergente, Yan et al.~\cite{yan2022doubleprioritized} mostraron empíricamente que las técnicas de remuestreo estándar de clase (incluido SMOTE) ofrecen una mitigación limitada de la disparidad por subgrupo demográfico precisamente por no diferenciar el subgrupo dentro de la clase remuestreada, motivando la necesidad de aplicar el remuestreo directamente sobre la variable demográfica, como se hace en este trabajo.
 
-\subsection{Remuestreo proporcional a una distribución de referencia poblacional}
-\label{subsec:proportional_resampling}
 
-A diferencia del remuestreo que persigue la paridad exacta entre grupos, esta variante ajusta la composición del conjunto de entrenamiento para que se aproxime a una distribución de referencia externa —por ejemplo, la prevalencia real de DM1 por sexo y edad en la población general— en lugar de a la distribución uniforme~\cite{lahoti2020fairness}.
-
-La aplicabilidad a balanceo por sexo y por edad es directa, siempre que se disponga de una fuente epidemiológica de referencia adecuada. Su ventaja principal es que evita el riesgo de que la corrección del desequilibrio introduzca una distribución artificial que no se corresponde con ninguna población real, mejorando potencialmente la validez externa del modelo. Su limitación es que depende críticamente de la calidad y pertinencia de la distribución de referencia elegida; una elección inadecuada puede introducir un sesgo distinto al original, por lo que el riesgo de introducir sesgos es medio-alto si la fuente de referencia no es representativa de la población clínica objetivo del modelo.
-
-El marco de equidad sin atributos demográficos explícitos propuesto por
-Lahoti et al.~\cite{lahoti2020fairness} motiva conceptualmente este enfoque;
-en el ámbito sanitario, se ha documentado el uso de \emph{importance weighting}
-para corregir el \emph{covariate shift} entre la distribución de entrenamiento
-y la distribución poblacional objetivo~\cite{algorithmfairnessmedicine2021}.
-La clave de esta técnica, sin embargo, es la elección de la distribución de
-referencia, que debe provenir de evidencia científica real y no de una
-convención arbitraria. Las dos secciones siguientes justifican las distribuciones
-de referencia seleccionadas para las dos dimensiones demográficas estudiadas
-en este trabajo.
-
-\subsubsection{Distribución de referencia para la dimensión edad}
-\label{subsubsec:ref_edad}
-
-La distribución de referencia para el balanceo por grupo de edad se deriva del
-estudio de modelización global más completo y actualizado disponible sobre
-prevalencia de DM1: Gregory et al.~\cite{gregory2022lancet}, publicado en
-\emph{The Lancet Diabetes \& Endocrinology} en 2022, que estimó mediante un
-modelo de enfermedad-muerte en tiempo discreto (modelo de Markov) la prevalencia,
-incidencia y mortalidad de DM1 en 201 países para el año 2021, con proyección
-hasta 2040. Los resultados muestran que, globalmente, la distribución de casos
-prevalentes de DM1 por grupo de edad es la siguiente: el 6\,\% corresponde al
-grupo de 0 a 14 años, el 35\,\% al grupo de 15 a 39 años, el 43\,\% al grupo
-de 40 a 64 años, y el 16\,\% al grupo de 65 años o más~\cite{gregory2022lancet}.
-Estos datos coinciden con la estimación previa de Green et al.~\cite{green2021diabetologia},
-que reportó distribuciones equivalentes utilizando datos del IDF Atlas para
-201 países en 2017, proporcionando una validación independiente de los porcentajes.
-
-Los grupos de edad definidos en este trabajo (\texttt{0-18}, \texttt{19-30},
-\texttt{31-45}, \texttt{46-60}, \texttt{>60}) no coinciden exactamente con los
-intervalos reportados en Gregory et al.\ (0--14, 15--39, 40--64, $\geq$65), lo
-que requiere una adaptación por interpolación lineal dentro de cada intervalo
-original. Bajo el supuesto de distribución uniforme dentro de cada grupo de edad
-del estudio de referencia ---suposición estándar en demografía cuando no se
-dispone de datos más desagregados--- la distribución adaptada a los grupos del
-pipeline es la siguiente:
-
-\begin{equation}
-\label{eq:ref_age_distribution}
-\mathbf{p}^*_{\text{edad}} =
-\begin{cases}
-p^*_{\texttt{0-18}}   = 0{,}08 &\approx 6\% \text{ (0--14)} + \tfrac{4}{25} \times 35\% \text{ (15--39)} \\
-p^*_{\texttt{19-30}}  = 0{,}17 &\approx \tfrac{12}{25} \times 35\%\\
-p^*_{\texttt{31-45}}  = 0{,}24 &\approx \tfrac{9}{25} \times 35\% + \tfrac{6}{25} \times 43\%\\
-p^*_{\texttt{46-60}}  = 0{,}30 &\approx \tfrac{15}{25} \times 43\%\\
-p^*_{\texttt{>60}}    = 0{,}21 &\approx \tfrac{4}{25} \times 43\% + 16\%
-\end{cases}
-\end{equation}
-
-donde los factores $k/25$ representan la fracción del intervalo de 25 años de
-cada grupo del estudio original que corresponde al grupo del pipeline. Esta
-distribución expresa que el conjunto de entrenamiento balanceado debería
-contener aproximadamente un 8\,\% de ventanas de pacientes con edad $\leq$18
-años, un 17\,\% de pacientes de 19 a 30 años, un 24\,\% de pacientes de 31 a
-45 años, un 30\,\% de pacientes de 46 a 60 años y un 21\,\% de pacientes
-mayores de 60 años.
-
-Es importante destacar que esta distribución no expresa una preferencia
-normativa por ningún grupo de edad, sino que refleja la distribución real de
-la carga de la enfermedad en la población global con DM1 según la mejor
-evidencia epidemiológica disponible. Entrenar el modelo con esta composición
-minimiza el \emph{covariate shift} entre el conjunto de entrenamiento y la
-distribución de la población de despliegue real, lo que puede mejorar la
-validez externa de los resultados~\cite{lahoti2020fairness,algorithmfairnessmedicine2021}.
-
-\subsubsection{Distribución de referencia para la dimensión sexo}
-\label{subsubsec:ref_sexo}
-
-La distribución de referencia para el balanceo por sexo se deriva de la
-convergencia de varios registros clínicos de gran escala con datos
-desagregados por sexo en poblaciones con DM1.
-
-El registro DPV alemán (\emph{Diabetes-Patienten-Verlaufsdokumentation}),
-analizado por Neu et al.~\cite{neu2019germany} a partir de datos de 2016 de
-pacientes adultos con DM1, reportó una prevalencia de 544 por 100.000 personas
-en varones frente a 445 por 100.000 en mujeres, lo que corresponde a una
-distribución aproximada de 55\,\% masculino y 45\,\% femenino en la población
-adulta alemana con DM1. El T1D Exchange Clinic Registry de Estados Unidos,
-con 25.833 participantes con DM1 reclutados en 67 centros endocrinológicos,
-reportó una distribución exacta del 50\,\% femenino en el momento de su
-publicación fundacional~\cite{gudbjornsdottir2003t1dexchange}. En cohortes
-pediátricas de incidencia de países de alta prevalencia de origen europeo,
-se ha documentado de forma consistente una ligera predominancia masculina
-(entre el 52\,\% y el 56\,\% de varones), asociada a mecanismos genéticos
-específicos de sexo identificados en estudios \emph{GWAS} y de transcriptómica
-de célula única~\cite{chen2025sexgwas}. Una revisión sistemática de diferencias
-de sexo en DM1 pediátrica, con datos de 643.217 individuos procedentes de
-90 estudios observacionales, documentó que la mayoría de los estudios incluidos
-mostraban una distribución ligeramente favorable a varones en las cohortes de
-incidencia, mientras que la prevalencia en adultos tendía hacia el equilibrio
-o una leve mayoría femenina~\cite{schiborn2023sexreview}.
-
-La convergencia de estas fuentes indica una distribución de referencia de
-aproximadamente el 54\,\% masculino y el 46\,\% femenino, expresada formalmente
-como:
-\begin{equation}
-\label{eq:ref_sex_distribution}
-\mathbf{p}^*_{\text{sexo}} = \bigl(p^*_M,\; p^*_F\bigr) = (0{,}54,\; 0{,}46)
-\end{equation}
-
-Esta distribución es preferible a la paridad exacta 50/50 porque refleja la
-predominancia masculina documentada de forma consistente en la epidemiología
-de la DM1, al tiempo que es suficientemente conservadora para no sobreajustarse
-a ningún registro nacional concreto. Adoptar el 50/50 implicaría presuponer
-que hombres y mujeres tienen exactamente la misma probabilidad de desarrollar
-DM1, lo que ningún registro de gran escala revisado confirma.
 \subsection{Generación sintética condicionada mediante redes generativas adversarias temporales}
 \label{subsec:timegan_demografico}
 
@@ -296,7 +184,6 @@ La tabla~\ref{tab:comparativa_balanceo_demografico} resume las seis familias de 
 \hline
 Reponderado & Pre-procesado & S\'i & S\'i & S\'i & Baja & Alta \\
 Remuestreo dirigido por grupo & Pre-procesado & Depende & S\'i & S\'i & Baja & Alta \\
-Remuestreo proporcional a referencia & Pre-procesado & Depende & S\'i & S\'i & Media & Alta~\cite{gregory2022lancet,green2021diabetologia} \\
 GAN temporal condicionada & Generativa & S\'i & S\'i & S\'i & Alta & Media \\
 Representaciones invariantes (adversarial) & In-processing & N/A & S\'i & S\'i & Alta & Alta \\
 CV estratificada por grupo & Estructural & S\'i & S\'i & S\'i & Baja & Media \\
@@ -307,13 +194,7 @@ CV estratificada por grupo & Estructural & S\'i & S\'i & S\'i & Baja & Media \\
 \subsection{Discusión y técnica seleccionada}
 \label{subsec:discusion_balanceo_demografico}
 
-De las seis familias de técnicas revisadas, dos quedan descartadas para su implementación directa en este trabajo por incompatibilidad con la restricción metodológica establecida en la sección~\ref{subsec:formulacion_problema}: el \textbf{reponderado puro}, que requiere soporte de \texttt{sample\_weight} en el bucle de entrenamiento, y el \textbf{aprendizaje de representaciones invariantes}, que requiere modificar la arquitectura del modelo. Ambas técnicas se documentan en esta sección porque permiten contextualizar y justificar teóricamente las técnicas de remuestreo ya implementadas, que pueden interpretarse como una aproximación basada en datos al mismo objetivo que el reponderado persigue mediante pesos.
-
-La \textbf{CV estratificada por grupo demográfico} no es una técnica de balanceo en sentido estricto, sino una garantía estructural complementaria que debería verificarse como paso previo, dado que una partición de \emph{folds} no estratificada podría introducir un desequilibrio adicional al ya presente en los datos.
-
-De las técnicas restantes, compatibles con la arquitectura del \emph{pipeline}, el \textbf{remuestreo proporcional a una distribución de referencia poblacional} resulta de notable interés académico por su conexión con la literatura de equidad, pero su dependencia de una fuente epidemiológica externa introduce una decisión metodológica adicional que debe justificarse y acordarse explícitamente, por lo que se considera una extensión de las técnicas de remuestreo ya implementadas más que una técnica nueva de prioridad inmediata.
-
-La técnica que se considera más apropiada para incorporar como aportación metodológica adicional de este trabajo es la \textbf{generación sintética de ventanas mediante un modelo generativo condicionado al grupo demográfico}. Esta elección se fundamenta en tres factores: primero, es la única técnica revisada, aparte de las ya implementadas, que es simultáneamente compatible con la restricción de no modificar el entrenamiento y capaz de generar observaciones genuinamente nuevas en lugar de remuestrear las existentes; segundo, existe evidencia bibliográfica directa de la aplicación de redes generativas adversarias temporales a series fisiológicas de sensores~\cite{dong2023tsgan,dahmen2022conditionalgan}; tercero, su adaptación a ventanas de glucosa de longitud corta ($HW=8$, $PH=4$) es computacionalmente más abordable que su aplicación a series largas, lo que la hace viable dentro del alcance temporal de este trabajo.
+Por completar
 
 % =========================================================
 \section{Brechas en la literatura y motivación del presente trabajo}

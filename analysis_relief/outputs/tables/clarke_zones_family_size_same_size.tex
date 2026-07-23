@@ -1,0 +1,21 @@
+\begin{table}[htbp]
+\centering
+\small
+\caption{Clarke Error Grid — \% points in Zone A and A+B by condition}
+\label{tab:clarkefamily_size_same_size}
+\begin{tabular}{lrrrrrr}
+\toprule
+\textbf{Condition} & \multicolumn{2}{c}{\textbf{T1DGranada}} & \multicolumn{2}{c}{\textbf{DiaTrend}} & \multicolumn{2}{c}{\textbf{ReplaceBG}} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+ & \textbf{Zone A} & \textbf{Zone A+B} & \textbf{Zone A} & \textbf{Zone A+B} & \textbf{Zone A} & \textbf{Zone A+B} \\
+\midrule
+Age · Undersampling + Oversampling & 67.4 \pm 0.7 & 94.4 \pm 0.3 & 64.0 \pm 2.2 & 95.3 \pm 0.8 & 67.5 \pm 0.4 & 95.0 \pm 0.2 \\
+Age · Undersampling + SMOTE & 67.5 \pm 0.7 & 94.5 \pm 0.3 & 64.2 \pm 1.9 & 95.3 \pm 0.8 & 67.5 \pm 0.5 & 95.0 \pm 0.2 \\
+Age · balanced_age_smote_tomek & 67.6 \pm 0.8 & 94.5 \pm 0.3 & 64.2 \pm 1.9 & 95.3 \pm 0.8 & 67.4 \pm 0.9 & 95.0 \pm 0.2 \\
+\midrule
+Sex · Undersampling + Oversampling & 67.3 \pm 1.0 & 94.3 \pm 0.3 & 65.0 \pm 2.3 & 95.6 \pm 0.8 & 67.4 \pm 0.8 & 95.0 \pm 0.2 \\
+Sex · Undersampling + SMOTE & 67.4 \pm 0.8 & 94.4 \pm 0.3 & 64.8 \pm 2.2 & 95.5 \pm 0.8 & 67.4 \pm 0.5 & 95.0 \pm 0.1 \\
+Sex · balanced_sex_smote_tomek & 67.3 \pm 0.5 & 94.4 \pm 0.1 & 65.0 \pm 2.3 & 95.6 \pm 0.8 & 67.6 \pm 0.8 & 95.0 \pm 0.2 \\
+\bottomrule
+\end{tabular}
+\end{table}

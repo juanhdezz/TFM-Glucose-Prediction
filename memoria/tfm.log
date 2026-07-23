@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.25)  22 JUN 2026 13:28
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.25)  23 JUL 2026 14:22
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -572,7 +572,7 @@ Package hyperref Info: Link coloring ON on input line 190.
 
  (./portada/portada.tex
 \centeroffset=\skip81
-<imagenes_plantilla/logo_ugrfin.jpg, id=233, 687.0468pt x 244.7544pt>
+<imagenes_plantilla/logo_ugrfin.jpg, id=225, 687.0468pt x 244.7544pt>
 File: imagenes_plantilla/logo_ugrfin.jpg Graphic file (type jpg)
 <use imagenes_plantilla/logo_ugrfin.jpg>
 Package pdftex.def Info: imagenes_plantilla/logo_ugrfin.jpg  used on input line 11.
@@ -582,7 +582,7 @@ Overfull \hbox (45.52718pt too wide) in paragraph at lines 11--11
  [][] 
  []
 
-<imagenes_plantilla/etsiit_logo.jpg, id=234, 230.8625pt x 84.315pt>
+<imagenes_plantilla/etsiit_logo.jpg, id=226, 230.8625pt x 84.315pt>
 File: imagenes_plantilla/etsiit_logo.jpg Graphic file (type jpg)
 <use imagenes_plantilla/etsiit_logo.jpg>
 Package pdftex.def Info: imagenes_plantilla/etsiit_logo.jpg  used on input line 39.
@@ -593,7 +593,7 @@ Package pdftex.def Info: imagenes_plantilla/etsiit_logo.jpg  used on input line 
 {c:/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./imagenes_plantilla/logo_ugrfin.jpg> <./imagenes_plantilla/etsiit_logo.jpg>]) (./portada/portada_2.tex [2
 
 ]
-<imagenes/logo.png, id=248, 123.46124pt x 45.92157pt>
+<imagenes/logo.png, id=240, 123.46124pt x 45.92157pt>
 File: imagenes/logo.png Graphic file (type png)
 <use imagenes/logo.png>
 Package pdftex.def Info: imagenes/logo.png  used on input line 18.
@@ -620,7 +620,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 21--22
 
  []
 
-(./resumen.tex)
+(./resumen.tex [3
+
+]) [4{c:/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
 Underfull \hbox (badness 10000) in paragraph at lines 39--40
 
  []
@@ -630,30 +632,20 @@ Underfull \hbox (badness 10000) in paragraph at lines 42--43
 
  []
 
-(./resumen-en.tex) [3
+(./resumen-en.tex [5
 
-] [4
-
-]
+]) [6]
 Underfull \hbox (badness 10000) in paragraph at lines 49--50
-
- []
-
-[5
-
-] [6
-
-]
-Underfull \hbox (badness 10000) in paragraph at lines 67--68
 
  []
 
 [7
 
+
 ] [8
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 118--119
+Underfull \hbox (badness 10000) in paragraph at lines 67--68
 
  []
 
@@ -661,9 +653,18 @@ Underfull \hbox (badness 10000) in paragraph at lines 118--119
 
 ] [10
 
-] (./agradecimientos.tex)) [11
+]
+Underfull \hbox (badness 10000) in paragraph at lines 118--119
+
+ []
+
+[11
 
 ] [12
+
+] (./agradecimientos.tex)) [13
+
+] [14
 
 ] (./tfm.toc
 LaTeX Info: Redefining \. on input line 1.
@@ -714,30 +715,37 @@ LaTeX Info: Redefining \% on input line 1.
 ] (./capitulos/01_Introduccion.tex
 Cap\'{\i }tulo 1.
 
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.29 \section
-             {Objetivos}\label{section:objetivos} [1
+l.23 
+      [1
 
 
-])
-LaTeX Info: Redefining \. on input line 211.
-LaTeX Info: Redefining \% on input line 211.
+]
+Overfull \hbox (15.57005pt too wide) in paragraph at lines 30--31
+[]\OT1/cmr/m/n/10.95 Por ^^Sulti-mo, exis-te una mo-ti-va-ci^^Son de re-le-van-cia pr^^Sacti-ca e in-me-dia-ta: el \OT1/cmr/m/it/10.95 da-ta-set \OT1/cmr/m/n/10.95 T1DiabetesGranada,
+ []
+
+LaTeX Info: Redefining \. on input line 44.
+LaTeX Info: Redefining \% on input line 44.
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.211 \input{capitulos/01_Introduccion}
-                                        [2]
-LaTeX Info: Redefining \. on input line 211.
-LaTeX Info: Redefining \% on input line 211.
+l.44 
+      [2]
+LaTeX Info: Redefining \. on input line 69.
+LaTeX Info: Redefining \% on input line 69.
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.3}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.211 \input{capitulos/01_Introduccion}
-                                        [3] (./capitulos/02_Estado_del_arte.tex
+l.69 
+      [3]) (./capitulos/02_Estado_del_arte.tex
 LaTeX Info: Redefining \. on input line 7.
 LaTeX Info: Redefining \% on input line 7.
 
@@ -818,135 +826,92 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.10}) has 
                    \relax 
 l.139 
        [10]
-
-LaTeX Warning: Citation `gregory2022lancet' on page 11 undefined on input line 167.
-
-
-LaTeX Warning: Citation `gregory2022lancet' on page 11 undefined on input line 174.
-
-
-LaTeX Warning: Citation `green2021diabetologia' on page 11 undefined on input line 175.
-
-LaTeX Info: Redefining \. on input line 178.
-LaTeX Info: Redefining \% on input line 178.
+LaTeX Info: Redefining \. on input line 153.
+LaTeX Info: Redefining \% on input line 153.
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.11}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.178 
+l.153 
        [11]
-
-LaTeX Warning: Citation `neu2019germany' on page 12 undefined on input line 224.
-
-
-LaTeX Warning: Citation `gudbjornsdottir2003t1dexchange' on page 12 undefined on input line 231.
-
-
-LaTeX Warning: Citation `chen2025sexgwas' on page 12 undefined on input line 236.
-
-
-LaTeX Warning: Citation `schiborn2023sexreview' on page 12 undefined on input line 241.
-
-LaTeX Info: Redefining \. on input line 242.
-LaTeX Info: Redefining \% on input line 242.
+LaTeX Info: Redefining \. on input line 171.
+LaTeX Info: Redefining \% on input line 171.
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.12}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.242 
+l.171 
        [12]
-LaTeX Info: Redefining \. on input line 270.
-LaTeX Info: Redefining \% on input line 270.
- [13]
-Overfull \hbox (4.85422pt too wide) in paragraph at lines 295--295
+Overfull \hbox (4.85422pt too wide) in paragraph at lines 183--183
 []|\OT1/cmr/bx/sc/10.95 Conserva
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 295--295
+Underfull \hbox (badness 10000) in paragraph at lines 183--183
 \OT1/cmr/bx/sc/10.95 din^^Sami-
  []
 
 
-Overfull \hbox (32.61943pt too wide) in paragraph at lines 295--295
+Overfull \hbox (32.61943pt too wide) in paragraph at lines 183--183
 []|\OT1/cmr/bx/sc/10.95 Complejidad| 
  []
 
 
-Overfull \hbox (7.87152pt too wide) in paragraph at lines 295--296
+Overfull \hbox (7.87152pt too wide) in paragraph at lines 183--184
 []|\OT1/cmr/bx/sc/10.95 Evidencia
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 295--296
+Underfull \hbox (badness 10000) in paragraph at lines 183--184
 \OT1/cmr/bx/it/10.95 Health-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 297--297
+Underfull \hbox (badness 10000) in paragraph at lines 185--185
 []|\OT1/cmr/m/n/10.95 Pre-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 298--298
+Underfull \hbox (badness 10000) in paragraph at lines 186--186
 []|\OT1/cmr/m/n/10.95 Pre-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 299--299
-[]|\OT1/cmr/m/n/10.95 Remuestreo
- []
-
-
-Underfull \hbox (badness 1895) in paragraph at lines 299--299
-\OT1/cmr/m/n/10.95 pro-por-cio-nal a
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 299--299
-[]|\OT1/cmr/m/n/10.95 Pre-
- []
-
-
-LaTeX Warning: Citation `gregory2022lancet' on page 14 undefined on input line 299.
-
-
-LaTeX Warning: Citation `green2021diabetologia' on page 14 undefined on input line 299.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 299--300
-[]|\OT1/cmr/m/n/10.95 Alta [[],
- []
-
-
-Overfull \hbox (0.904pt too wide) in paragraph at lines 300--300
+Overfull \hbox (0.904pt too wide) in paragraph at lines 187--187
 []|\OT1/cmr/m/n/10.95 Generativa| 
  []
 
 
-Overfull \hbox (7.53941pt too wide) in paragraph at lines 301--301
+Overfull \hbox (7.53941pt too wide) in paragraph at lines 188--188
 []|\OT1/cmr/m/n/10.95 Representaciones
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 301--301
+Underfull \hbox (badness 10000) in paragraph at lines 188--188
 []|\OT1/cmr/m/n/10.95 In-
  []
 
 
-Overfull \hbox (3.20045pt too wide) in paragraph at lines 302--302
+Overfull \hbox (3.20045pt too wide) in paragraph at lines 189--189
 []|\OT1/cmr/m/n/10.95 Estructural| 
  []
 
-LaTeX Info: Redefining \. on input line 311.
-LaTeX Info: Redefining \% on input line 311.
-[14]
-LaTeX Info: Redefining \. on input line 317.
-LaTeX Info: Redefining \% on input line 317.
- [15]) (./capitulos/03_Desarrollo_del_TFM.tex
+LaTeX Info: Redefining \. on input line 209.
+LaTeX Info: Redefining \% on input line 209.
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.13}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.209 
+       [13]) (./capitulos/03_Desarrollo_del_TFM.tex
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
- [16]
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.14}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.1 \chapter
+            {Desarrollo del TFM}\label{chapter:desarrollo} [14]
 Cap\'{\i }tulo 3.
 LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 11.
 (c:/texlive/2026/texmf-dist/tex/latex/base/omscmr.fd
@@ -959,22 +924,22 @@ Overfull \hbox (9.64503pt too wide) in paragraph at lines 13--1
 []\OT1/cmr/m/n/10.95 Revisa es-ta web pa-ra m^^Sas in-for-ma-ci^^Son: [][]$\OT1/cmtt/m/n/10.95 https : / / www . overleaf . com / learn / latex / Positioning _
  []
 
-[17
+[15
 
 
-] [18
+] [16
 
 ]
 Cap\'{\i }tulo 4.
-(./tablas/tabla-ejemplo-de-tabla.tex) (./tablas/tabla-poblacion.tex) [19
+(./tablas/tabla-ejemplo-de-tabla.tex) (./tablas/tabla-poblacion.tex) [17
 
-] [20] (./imagenes/figura-ejemplo.tex
+] [18] (./imagenes/figura-ejemplo.tex
 File: imagenes/logo.png Graphic file (type png)
 <use imagenes/logo.png>
 Package pdftex.def Info: imagenes/logo.png  used on input line 3.
 (pdftex.def)             Requested size: 227.62206pt x 84.66907pt.
 ) (./imagenes/figura-ejemplo2.tex
-<imagenes/test-distribuciones.pdf, id=627, 1134.63902pt x 693.5997pt>
+<imagenes/test-distribuciones.pdf, id=598, 1134.63902pt x 693.5997pt>
 File: imagenes/test-distribuciones.pdf Graphic file (type pdf)
 <use imagenes/test-distribuciones.pdf>
 Package pdftex.def Info: imagenes/test-distribuciones.pdf  used on input line 3.
@@ -982,66 +947,66 @@ Package pdftex.def Info: imagenes/test-distribuciones.pdf  used on input line 3.
 )
 LaTeX Info: Redefining \. on input line 32.
 LaTeX Info: Redefining \% on input line 32.
- [21 <./imagenes/test-distribuciones.pdf>]) (./capitulos/05_Conclusiones.tex [22]
+ [19 <./imagenes/test-distribuciones.pdf>]) (./capitulos/05_Conclusiones.tex [20]
 Cap\'{\i }tulo 5.
-) (./tfm.bbl [23
+) (./tfm.bbl [21
 
 
-] [24
+] [22
 
-] [25
+] [23
 
 ]
 LaTeX Info: Redefining \. on input line 96.
 LaTeX Info: Redefining \% on input line 96.
- [26])
+ [24])
 LaTeX Info: Redefining \. on input line 228.
 LaTeX Info: Redefining \% on input line 228.
- [27] [28
+ [25] [26
 
 ] (./anexos/gestion.tex
 Ap\'{e}ndice A.
 )
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [29
+ [27
 
 
 ]
 LaTeX Info: Redefining \. on input line 234.
 LaTeX Info: Redefining \% on input line 234.
- [30]
+ [28]
 LaTeX Info: Redefining \. on input line 234.
 LaTeX Info: Redefining \% on input line 234.
- [31] (./anexos/innovacion.tex
+ [29] (./anexos/innovacion.tex
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
- [32]
+ [30]
 Ap\'{e}ndice B.
-[33
+[31
 
 
 ])
 LaTeX Info: Redefining \. on input line 235.
 LaTeX Info: Redefining \% on input line 235.
- [34]
+ [32]
 LaTeX Info: Redefining \. on input line 235.
 LaTeX Info: Redefining \% on input line 235.
- [35] (./anexos/manual_usuario.tex
+ [33] (./anexos/manual_usuario.tex
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
- [36]
+ [34]
 Ap\'{e}ndice C.
-) [37
+) [35
 
 
 ]
 LaTeX Info: Redefining \. on input line 236.
 LaTeX Info: Redefining \% on input line 236.
- [38]
+ [36]
 LaTeX Info: Redefining \. on input line 244.
 LaTeX Info: Redefining \% on input line 244.
- [39] [40
+ [37] [38
 
 ] (./tfm.aux
 LaTeX Info: Redefining \. on input line 11.
@@ -1055,25 +1020,22 @@ L3 programming layer <2026-01-19>
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-
-LaTeX Warning: There were undefined references.
-
 Package rerunfilecheck Info: File `tfm.out' has not changed.
-(rerunfilecheck)             Checksum: AD26155F9A036F841CAE20354A5625FA;13863.
+(rerunfilecheck)             Checksum: 719B697FA7220FE5A0CE0E15167AE1F6;13263.
  ) 
 Here is how much of TeX's memory you used:
- 16849 strings out of 467525
- 274300 string characters out of 5423209
- 815575 words of memory out of 5000000
- 45285 multiletter control sequences out of 15000+600000
- 639595 words of font info for 81 fonts, out of 8000000 for 9000
+ 16860 strings out of 467525
+ 274482 string characters out of 5423209
+ 813870 words of memory out of 5000000
+ 45307 multiletter control sequences out of 15000+600000
+ 638675 words of font info for 77 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  73i,13n,81p,1756b,827s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on tfm.pdf (60 pages, 769494 bytes).
+<c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb>
+Output written on tfm.pdf (60 pages, 754760 bytes).
 PDF statistics:
- 868 PDF objects out of 1000 (max. 8388607)
- 744 compressed objects within 8 object streams
- 171 named destinations out of 1000 (max. 500000)
- 477 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 836 PDF objects out of 1000 (max. 8388607)
+ 714 compressed objects within 8 object streams
+ 162 named destinations out of 1000 (max. 500000)
+ 461 words of extra memory for PDF output out of 10000 (max. 10000000)
 

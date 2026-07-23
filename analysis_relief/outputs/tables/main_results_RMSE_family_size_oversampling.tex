@@ -1,0 +1,23 @@
+\begin{table}[htbp]
+\centering
+\small
+\caption{Results by condition — RMSE (mean $\pm$ std across 5 folds)}
+\label{tab:results_rmsefamily_size_oversampling}
+\begin{tabular}{lrrrrrrrrrrrrrrrrrr}
+\toprule
+ & \multicolumn{6}{c}{\textbf{T1DGranada}} & \multicolumn{6}{c}{\textbf{DiaTrend}} & \multicolumn{6}{c}{\textbf{ReplaceBG}} \\
+\cmidrule(lr){2-7}\cmidrule(lr){8-13}\cmidrule(lr){14-19}
+\textbf{Condition} & \textbf{Hypo L2} & \textbf{Hypo L1} & \textbf{In Range} & \textbf{Hyper L1} & \textbf{Hyper L2} & \textbf{All Ranges} & \textbf{Hypo L2} & \textbf{Hypo L1} & \textbf{In Range} & \textbf{Hyper L1} & \textbf{Hyper L2} & \textbf{All Ranges} & \textbf{Hypo L2} & \textbf{Hypo L1} & \textbf{In Range} & \textbf{Hyper L1} & \textbf{Hyper L2} & \textbf{All Ranges} \\
+\midrule
+Age · Jittering & $39.81 \pm 1.30$ & $36.07 \pm 0.85$ & $26.69 \pm 0.65$ & $43.30 \pm 0.54$ & $67.12 \pm 1.10$ & $38.09 \pm 0.77$ & $73.55 \pm 7.47$ & $58.27 \pm 4.45$ & $29.51 \pm 1.21$ & $44.39 \pm 1.06$ & $76.43 \pm 2.79$ & $46.41 \pm 2.14$ & $57.84 \pm 0.50$ & $42.44 \pm 0.56$ & $\mathbf{25.64 \pm 0.51}$ & $43.87 \pm 1.05$ & $69.64 \pm 0.90$ & $37.25 \pm 0.76$ \\
+Age · Oversampling & $39.44 \pm 1.39$ & $35.80 \pm 1.10$ & $26.57 \pm 0.58$ & $43.45 \pm 0.73$ & $67.02 \pm 1.26$ & $38.05 \pm 0.84$ & $73.23 \pm 7.00$ & $57.58 \pm 4.29$ & $\mathbf{29.36 \pm 1.06}$ & $44.71 \pm 1.16$ & $75.06 \pm 3.05$ & $46.03 \pm 2.17$ & $57.04 \pm 1.12$ & $41.74 \pm 0.40$ & $25.66 \pm 0.58$ & $43.61 \pm 0.92$ & $68.52 \pm 0.87$ & $36.97 \pm 0.76$ \\
+Age · SMOTE & $\mathbf{38.74 \pm 1.49}$ & $\mathbf{35.46 \pm 1.20}$ & $26.67 \pm 0.61$ & $43.36 \pm 0.25$ & $66.72 \pm 1.06$ & $37.98 \pm 0.70$ & $\mathbf{72.71 \pm 6.82}$ & $\mathbf{56.82 \pm 4.41}$ & $29.60 \pm 1.14$ & $44.46 \pm 1.39$ & $74.30 \pm 2.97$ & $45.80 \pm 2.16$ & $56.63 \pm 1.35$ & $41.18 \pm 1.47$ & $25.83 \pm 0.54$ & $43.61 \pm 0.77$ & $68.40 \pm 0.90$ & $37.00 \pm 0.77$ \\
+Age · Oversampling + Tomek Links & $39.02 \pm 1.72$ & $35.63 \pm 1.26$ & $26.64 \pm 0.56$ & $43.06 \pm 0.39$ & $66.94 \pm 1.65$ & $37.95 \pm 0.86$ & $72.87 \pm 6.37$ & $57.34 \pm 3.31$ & $29.78 \pm 1.18$ & $43.86 \pm 1.12$ & $73.47 \pm 2.66$ & $45.47 \pm 1.97$ & $57.05 \pm 0.72$ & $41.68 \pm 0.51$ & $25.67 \pm 0.55$ & $43.49 \pm 1.19$ & $68.21 \pm 0.98$ & $36.90 \pm 0.90$ \\
+\midrule
+Sex · Jittering & $39.81 \pm 0.77$ & $35.96 \pm 0.62$ & $\mathbf{26.49 \pm 0.56}$ & $43.19 \pm 0.82$ & $66.94 \pm 1.17$ & $37.93 \pm 0.91$ & $75.15 \pm 7.34$ & $59.42 \pm 4.26$ & $30.22 \pm 1.16$ & $42.75 \pm 1.47$ & $73.41 \pm 2.73$ & $45.33 \pm 2.17$ & $\mathbf{56.46 \pm 1.80}$ & $\mathbf{41.13 \pm 1.50}$ & $25.74 \pm 0.57$ & $43.28 \pm 1.23$ & $68.78 \pm 1.33$ & $36.93 \pm 0.82$ \\
+Sex · Oversampling & $39.66 \pm 0.72$ & $35.86 \pm 0.79$ & $26.64 \pm 0.65$ & $43.18 \pm 0.24$ & $66.77 \pm 1.51$ & $37.96 \pm 0.88$ & $74.38 \pm 6.62$ & $59.45 \pm 3.27$ & $30.28 \pm 1.01$ & $42.64 \pm 1.21$ & $72.27 \pm 2.89$ & $44.99 \pm 2.10$ & $56.96 \pm 1.40$ & $41.50 \pm 1.29$ & $25.81 \pm 0.50$ & $\mathbf{43.23 \pm 1.01}$ & $\mathbf{68.13 \pm 1.07}$ & $36.86 \pm 0.73$ \\
+Sex · SMOTE & $39.60 \pm 1.33$ & $35.91 \pm 1.03$ & $26.66 \pm 0.52$ & $42.96 \pm 0.93$ & $\mathbf{66.25 \pm 1.20}$ & $\mathbf{37.80 \pm 0.86}$ & $74.32 \pm 6.60$ & $59.24 \pm 3.79$ & $30.29 \pm 0.85$ & $42.64 \pm 1.55$ & $\mathbf{72.15 \pm 3.06}$ & $\mathbf{44.94 \pm 2.12}$ & $57.47 \pm 1.51$ & $42.03 \pm 1.31$ & $25.69 \pm 0.51$ & $43.50 \pm 1.41$ & $68.96 \pm 0.97$ & $37.04 \pm 0.84$ \\
+Sex · Oversampling + Tomek Links & $39.28 \pm 1.79$ & $35.73 \pm 1.29$ & $26.64 \pm 0.45$ & $\mathbf{42.85 \pm 0.64}$ & $66.76 \pm 1.96$ & $37.87 \pm 1.01$ & $75.14 \pm 7.00$ & $59.81 \pm 4.05$ & $30.27 \pm 1.16$ & $\mathbf{42.51 \pm 1.18}$ & $72.65 \pm 3.40$ & $45.07 \pm 2.23$ & $56.71 \pm 0.79$ & $41.39 \pm 0.82$ & $25.66 \pm 0.48$ & $43.34 \pm 0.90$ & $68.31 \pm 1.08$ & $\mathbf{36.85 \pm 0.87}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
