@@ -12,7 +12,7 @@ Uso:
     python folds_analysis_report.py
 
 Salida:
-    ROOT_DIR/folds_analysis/<dataset>_<dim>_<tecnica>.txt   (57 ficheros)
+    ROOT_DIR/folds_analysis/<dataset>_<dim>_<tecnica>.txt   (60 ficheros)
 """
 
 from pathlib import Path
