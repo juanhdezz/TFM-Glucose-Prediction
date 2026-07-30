@@ -7,30 +7,43 @@ Figuras generadas (todas en outputs/figures/balancing/):
   FIG-B1  heatmap_balancing_{dataset}_{dimension}.pdf          (6 fig)
           Heatmap de variación Δn y Δ% por técnica × clase demográfica.
           Filas = técnicas, columnas = grupos de edad o sexo.
+          Escala de color UNIFICADA entre datasets: una escala común para
+          los 3 heatmaps de "sex" y otra (distinta) para los 3 de "age",
+          cada una con su propia paleta de color para no confundirlas.
 
   FIG-B2  stacked_bars_{dataset}.pdf                           (3 fig)
           Barras horizontales apiladas por rango glucémico.
           Una barra por (clase × técnica) × dimensión.
-          Eje X global = max entre todos los datasets.
+          Eje X idéntico entre el panel de "age" y el de "sex" del mismo
+          dataset (misma escala para poder comparar ambos paneles).
+          Valores = MEDIA por fold (no la suma de los 5 folds), para que
+          la barra sea representativa del tamaño real de un train set.
 
-  FIG-B3  boxplot_trainsize_{dimension}.pdf                    (2 fig)
-          Boxplot del tamaño de train por técnica, sobre folds × datasets.
-          Muestra variabilidad real del efecto de tamaño.
+  FIG-B3  trainsize_bars_{dimension}.pdf                       (2 fig)
+          Barras verticales del tamaño de train por técnica, con media
+          y desviación estándar (error bars) sobre los 5 folds.
+          La línea discontinua "original" usa la media de los 5 folds
+          originales.
 
   FIG-B4  delta_glycemic_{dataset}.pdf                         (3 fig)
-          Barras divergentes: Δ puntos porcentuales por rango glucémico
-          para cada técnica vs. original. Lectura clínica directa.
+          Barras divergentes: Δ% (no puntos porcentuales) por rango
+          glucémico para cada técnica vs. original. Lectura clínica directa.
 
-  FIG-B5  tradeoff_tbr2_vs_tir.pdf                             (1 fig)
-          Scatter: Δ% TBR_2 (eje X) vs. Δ% TIR (eje Y) por técnica × dim.
+  FIG-B5  tradeoff_{rango}_vs_tir.pdf                          (4 fig)
+          Scatter: Δ% de un rango glucémico (eje X) vs. Δ% TIR (eje Y)
+          por técnica × dimensión. Se genera una figura para cada uno de
+          los 4 rangos fuera de TIR: TBR_2, TBR_1, TAR_1, TAR_2.
           Visualiza el trade-off clínico más importante del balanceo.
 
-Total: 15 figuras.
+Total: 18 figuras.
 
 Asunciones verificadas:
   - Columna `y`: glucosa en mg/dL directamente.
   - Parquets balanceados: incluyen train + val + test; se filtra por split == 'train'.
   - Columna patient_id: presente en todos los parquets.
+  - Las tablas agregadas (orig_glyc, tech_glyc, orig_demo, tech_demo) representan
+    la MEDIA sobre los 5 folds de CV, no la suma — la suma multiplicaba por ~5
+    el tamaño real del dataset y distorsionaba las cifras (ver FIG-B2/B3).
 """
 
 from pathlib import Path
@@ -132,12 +145,17 @@ GLYCEMIC_LABELS = {
     "TAR_2": "Hyper L2 (>250 mg/dL)",
 }
 GLYCEMIC_COLORS = {
-    "TBR_2": "#D55E00",
-    "TBR_1": "#E69F00",
-    "TIR":   "#009E73",
-    "TAR_1": "#56B4E9",
-    "TAR_2": "#0072B2",
+    "TBR_2": "#FA8072",  # rosa salmón
+    "TBR_1": "#E63946",  # rojo
+    "TIR":   "#2CA02C",  # verde
+    "TAR_1": "#F1C40F",  # amarillo
+    "TAR_2": "#F28C28",  # naranja
 }
+
+# Rangos evaluados en FIG-B5 (trade-off vs. TIR) — todos menos TIR
+TRADEOFF_RANGES = ["TBR_2", "TBR_1", "TAR_1", "TAR_2"]
+# Para la lectura clínica de cada rango: ¿es hipoglucemia o hiperglucemia?
+RANGE_KIND = {"TBR_2": "hypo", "TBR_1": "hypo", "TAR_1": "hyper", "TAR_2": "hyper"}
 
 MPL_RC = {
     "font.family":        "DejaVu Sans",
@@ -275,14 +293,21 @@ class DatasetAggregator:
     """
     Para un dataset dado, precalcula sobre los 5 folds:
 
-      self.orig_demo[group]         → pd.Series  index=clases,  values=n medio
-      self.tech_demo[group][tech]   → pd.Series  index=clases,  values=n medio balanceado
+      self.orig_demo[group]         → pd.Series  index=clases,  values=n medio POR FOLD
+      self.tech_demo[group][tech]   → pd.Series  index=clases,  values=n medio balanceado POR FOLD
 
-      self.orig_glyc[group]         → pd.DataFrame  index=clases, cols=rangos (n medio)
-      self.tech_glyc[group][tech]   → pd.DataFrame  index=clases, cols=rangos (n medio bal)
+      self.orig_glyc[group]         → pd.DataFrame  index=clases, cols=rangos (n medio POR FOLD)
+      self.tech_glyc[group][tech]   → pd.DataFrame  index=clases, cols=rangos (n medio bal POR FOLD)
 
-      self.fold_sizes[group][tech]  → list[float]   tamaño total train por fold
-      self.fold_sizes_orig[group]   → list[float]   tamaño total train original por fold
+      self.fold_sizes[group][tech]  → list[float]   tamaño total train POR fold (crudo, sin agregar)
+      self.fold_sizes_orig[group]   → list[float]   tamaño total train original POR fold (crudo)
+
+    IMPORTANTE: todos los valores agregados (orig_demo/tech_demo/orig_glyc/tech_glyc)
+    son la MEDIA sobre los folds disponibles, no la suma. Sumar los 5 folds de una
+    validación cruzada da un total ~5x mayor que el dataset real (cada fold es un
+    train set casi completo), lo que generaba cifras engañosas (p. ej. un dataset de
+    22.6M de muestras mostrando 26-36M en las barras). fold_sizes / fold_sizes_orig sí
+    quedan sin agregar para poder calcular media ± desviación estándar en FIG-B3.
     """
 
     def __init__(self, ds_name: str, dataset_dir: Path):
@@ -341,25 +366,27 @@ class DatasetAggregator:
                 )
                 tech_sizes_folds[tech].append(len(bal_g))
 
-        # -- SUMA sobre folds (no media): representa el dataset completo sin dividir --
-        def sum_series(folds, idx):
-            return (pd.concat(folds, axis=1)
-                      .reindex(idx)
-                      .fillna(0)
-                      .sum(axis=1))
+        # -- MEDIA sobre folds: representa el tamaño real de UN train set --
+        # Cada fold se reindexa primero a las clases/rangos canónicos (rellenando
+        # con 0 lo ausente) y luego se promedia — así un fold sin una clase no
+        # falsea la media al excluirla en vez de contarla como 0.
+        def mean_series(folds, idx):
+            if not folds:
+                return pd.Series(0.0, index=idx)
+            aligned = [f.reindex(idx, fill_value=0) for f in folds]
+            return pd.concat(aligned, axis=1).mean(axis=1)
 
-        def sum_df(folds, idx):
+        def mean_df(folds, idx):
             if not folds:
                 return pd.DataFrame(0.0, index=idx, columns=GLYCEMIC_RANGES)
-            return (pd.concat(folds)
-                      .groupby(level=0)
-                      .sum()
-                      .reindex(idx, fill_value=0)
-                      .reindex(columns=GLYCEMIC_RANGES, fill_value=0))
+            aligned = [f.reindex(index=idx, columns=GLYCEMIC_RANGES, fill_value=0)
+                       for f in folds]
+            stacked = np.stack([a.values for a in aligned])
+            return pd.DataFrame(stacked.mean(axis=0), index=idx, columns=GLYCEMIC_RANGES)
 
-        self.orig_demo[group]       = sum_series(orig_demo_folds, class_order)
-        self.orig_glyc[group]       = sum_df(orig_glyc_folds, class_order)
-        self.fold_sizes_orig[group] = float(sum(orig_sizes))  # total real sin dividir
+        self.orig_demo[group]       = mean_series(orig_demo_folds, class_order)
+        self.orig_glyc[group]       = mean_df(orig_glyc_folds, class_order)
+        self.fold_sizes_orig[group] = [float(s) for s in orig_sizes]  # crudo, sin agregar
 
         self.tech_demo[group]  = {}
         self.tech_glyc[group]  = {}
@@ -368,9 +395,9 @@ class DatasetAggregator:
         for tech in TECHNIQUES:
             if not tech_demo_folds[tech]:
                 continue
-            self.tech_demo[group][tech]  = sum_series(tech_demo_folds[tech], class_order)
-            self.tech_glyc[group][tech]  = sum_df(tech_glyc_folds[tech], class_order)
-            self.fold_sizes[group][tech] = [float(sum(tech_sizes_folds[tech]))]  # lista de 1 elemento = total
+            self.tech_demo[group][tech]  = mean_series(tech_demo_folds[tech], class_order)
+            self.tech_glyc[group][tech]  = mean_df(tech_glyc_folds[tech], class_order)
+            self.fold_sizes[group][tech] = [float(s) for s in tech_sizes_folds[tech]]  # crudo
 
 
 # ===========================================================================
@@ -384,9 +411,15 @@ def _save(fig, filename: str):
     log.info(f"  → {path.name}")
 
 
-def _delta_cmap():
-    return LinearSegmentedColormap.from_list(
-        "bal_delta", ["#0072B2", "#FFFFFF", "#009E73"], N=256)
+def _delta_cmap(group: str):
+    """Paleta divergente para el heatmap FIG-B1. Distinta por dimensión
+    para que 'age' y 'sex' no se confundan visualmente aunque compartan
+    la misma figura de referencia (Blue/Green = sex, Purple/Orange = age)."""
+    if group == "sex":
+        colors = ["#0072B2", "#FFFFFF", "#009E73"]   # azul – blanco – verde
+    else:
+        colors = ["#7B3294", "#FFFFFF", "#E66101"]   # morado – blanco – naranja
+    return LinearSegmentedColormap.from_list(f"bal_delta_{group}", colors, N=256)
 
 
 def _class_order(group: str) -> list:
@@ -401,11 +434,8 @@ def _dim_label(group: str) -> str:
 # FIG-B1: Heatmap de variación demográfica  (6 figuras)
 # ===========================================================================
 
-def plot_heatmap_balancing(agg: DatasetAggregator, group: str):
-    """
-    Heatmap Δn / Δ% por técnica × clase demográfica.
-    Una figura por (dataset × dimensión).
-    """
+def _heatmap_deltas(agg: DatasetAggregator, group: str):
+    """Calcula las matrices Δabs y Δ% (técnica × clase) para un (dataset, dimensión)."""
     class_order = _class_order(group)
     n_techs     = len(TECHNIQUES)
     n_classes   = len(class_order)
@@ -424,14 +454,40 @@ def plot_heatmap_balancing(agg: DatasetAggregator, group: str):
             delta_abs[ti, ci] = b - o
             delta_pct[ti, ci] = (b - o) / o * 100 if o > 0 else np.nan
 
-    valid = delta_pct[~np.isnan(delta_pct)]
-    vmax  = max(np.percentile(np.abs(valid), 95), 5.0) if len(valid) else 20.0
+    return delta_pct, delta_abs, class_order
+
+
+def _global_heatmap_vmax(aggregators: list, group: str) -> float:
+    """
+    Vmax de la escala de color de FIG-B1, calculado sobre TODOS los datasets
+    para una misma dimensión (age o sex). Así los 3 heatmaps de "sex" son
+    directamente comparables entre sí (y lo mismo para "age"), en vez de que
+    cada dataset tenga su propia escala distorsionando la percepción visual.
+    """
+    all_valid = []
+    for agg in aggregators:
+        delta_pct, _, _ = _heatmap_deltas(agg, group)
+        all_valid.append(delta_pct[~np.isnan(delta_pct)])
+    valid = np.concatenate(all_valid) if all_valid else np.array([])
+    return max(np.percentile(np.abs(valid), 95), 5.0) if len(valid) else 20.0
+
+
+def plot_heatmap_balancing(agg: DatasetAggregator, group: str, vmax: float):
+    """
+    Heatmap Δn / Δ% por técnica × clase demográfica.
+    Una figura por (dataset × dimensión). `vmax` se calcula una única vez
+    para todos los datasets de la misma dimensión (ver _global_heatmap_vmax),
+    de forma que la escala de color sea homogénea y comparable entre datasets.
+    """
+    delta_pct, delta_abs, class_order = _heatmap_deltas(agg, group)
+    n_techs   = len(TECHNIQUES)
+    n_classes = len(class_order)
 
     fig_h = max(5.5, n_techs * 0.70 + 2.2)
     fig_w = max(5.0, n_classes * 2.4 + 2.8)
     fig, ax = plt.subplots(figsize=(fig_w, fig_h))
 
-    im = ax.imshow(delta_pct, cmap=_delta_cmap(), vmin=-vmax, vmax=vmax,
+    im = ax.imshow(delta_pct, cmap=_delta_cmap(group), vmin=-vmax, vmax=vmax,
                    aspect="auto", interpolation="nearest")
 
     for ti in range(n_techs):
@@ -467,15 +523,18 @@ def plot_heatmap_balancing(agg: DatasetAggregator, group: str):
 
     ds_lbl = DATASET_LABELS.get(agg.ds_name, agg.ds_name)
     dim_lbl = "Age" if group == "age" else "Sex"
+    scale_note = ("Blue = loss  ·  Green = gain" if group == "sex"
+                  else "Purple = loss  ·  Orange = gain")
     ax.set_title(
         f"{ds_lbl}  ·  Balancing effect on train composition  ({dim_lbl} dimension)\n"
         f"Cell: mean Δsamples (bold) and Δ% across {N_FOLDS} folds  "
-        f"|  Blue = loss  ·  Green = gain",
+        f"|  {scale_note}",
         fontsize=10, pad=14, loc="left"
     )
     fig.text(0.01, -0.01,
              "Values averaged across 5 cross-validation folds. "
-             "Positive = samples added (oversampling); negative = removed (undersampling).",
+             "Positive = samples added (oversampling); negative = removed (undersampling). "
+             f"Color scale shared across all {len(DATASET_ORDER)} datasets for this dimension.",
              fontsize=7, color="0.5")
 
     _save(fig, f"heatmap_balancing_{agg.ds_name}_{group}.pdf")
@@ -490,18 +549,26 @@ def plot_stacked_bars(agg: DatasetAggregator):
     Una figura por dataset con dos paneles (age | sex).
     Etiquetas de técnica al final (derecha) de cada barra, no en el eje Y.
     Eje Y: solo la clase demográfica (centrada en el bloque).
-    xmax: máximo de ESTE dataset (no global), calculado internamente.
-    Valores = suma de todos los folds (equivalente al dataset sin partir).
+    xmax: ÚNICO para ambos paneles (age y sex) de este dataset, para que las
+    dos escalas sean directamente comparables entre sí.
+    Valores = MEDIA por fold (no la suma de los 5 folds), representando el
+    tamaño real de un train set.
     """
     ds_lbl = DATASET_LABELS.get(agg.ds_name, agg.ds_name)
 
     # xmax = max ancho de barra individual (suma de rangos de UNA clase),
-    # más un 8% de margen para que las etiquetas al final no queden cortadas.
+    # calculado sobre AMBAS dimensiones (age y sex) para que los dos paneles
+    # compartan la misma escala, más un margen para que las etiquetas al
+    # final de la barra no queden cortadas.
     def _panel_xmax(orig_glyc, tech_glyc):
         candidates = list(orig_glyc.sum(axis=1).values)   # total por clase, original
         for df in tech_glyc.values():
             candidates.extend(df.sum(axis=1).values)       # total por clase, cada técnica
-        return float(max(candidates)) * 1.08 if candidates else 1.0
+        return float(max(candidates)) if candidates else 1.0
+
+    xmax_shared = max(
+        _panel_xmax(agg.orig_glyc[g], agg.tech_glyc[g]) for g in DIMENSIONS
+    ) * 1.28  # margen derecho para etiquetas
 
     fig, axes = plt.subplots(1, 2, figsize=(24, 20),
                              gridspec_kw={"wspace": 0.10})
@@ -512,7 +579,7 @@ def plot_stacked_bars(agg: DatasetAggregator):
         tech_glyc   = agg.tech_glyc[group]
         available   = [t for t in TECHNIQUES if t in tech_glyc]
 
-        xmax = _panel_xmax(orig_glyc, tech_glyc) * 1.28  # margen derecho para etiquetas
+        xmax = xmax_shared  # misma escala X para age y sex
 
         BAR_H     = 0.30
         ORIG_H    = 0.42
@@ -585,7 +652,7 @@ def plot_stacked_bars(agg: DatasetAggregator):
 
         ax.xaxis.set_major_formatter(
             mticker.FuncFormatter(lambda x, _: f"{int(x):,}"))
-        ax.set_xlabel("Total training samples across all folds (sum)", fontsize=10)
+        ax.set_xlabel("Mean training samples per fold", fontsize=10)
         ax.grid(axis="x", alpha=0.20, linestyle="--", color="0.6")
         ax.set_axisbelow(True)
 
@@ -595,7 +662,7 @@ def plot_stacked_bars(agg: DatasetAggregator):
             ax.axvline(orig_max_class, color="#222", lw=1.2, ls=":", alpha=0.5, zorder=0)
             ax.text(orig_max_class + xmax * 0.005,
                     max(all_ys) + ORIG_H + 0.25,
-                    f"Orig. max class\n{int(orig_max_class):,}",
+                    f"Orig. group samples\n{int(orig_max_class):,}",
                     fontsize=7.5, color="#555", va="bottom")
 
         # Separadores horizontales entre grupos de clase
@@ -618,9 +685,9 @@ def plot_stacked_bars(agg: DatasetAggregator):
 
     fig.suptitle(
         f"{ds_lbl}  ·  Train set composition by glycemic range — Original vs. Balanced\n"
-        f"Each bar = sum of training samples across all {N_FOLDS} folds  "
+        f"Each bar = mean training samples per fold (averaged across {N_FOLDS} folds)  "
         f"|  Bold-border bar = original baseline  "
-        f"|  X-axis scaled independently per panel",
+        f"|  X-axis shared between both panels",
         fontsize=11, y=1.01
     )
 
@@ -633,8 +700,9 @@ def plot_stacked_bars(agg: DatasetAggregator):
 
 def plot_trainsize_bars(aggregators: list, group: str):
     """
-    FIG-B3: Gráfico de barras verticales — tamaño total del train por técnica.
-    Valores = suma de todos los folds (dataset completo, sin medias).
+    FIG-B3: Gráfico de barras verticales — tamaño medio del train por técnica,
+    con barra de error mostrando la desviación estándar sobre los 5 folds.
+    La línea discontinua "Original" usa la media de los 5 folds originales.
     Una figura con un panel por dataset, compacta y sin solapamientos.
     """
     dim_lbl  = "Age" if group == "age" else "Sex"
@@ -655,53 +723,59 @@ def plot_trainsize_bars(aggregators: list, group: str):
         if agg is None:
             continue
 
-        # Tamaño original (suma de folds)
-        orig_total = float(agg.orig_glyc[group].values.sum())
+        # Tamaño original: media ± std sobre los 5 folds
+        orig_sizes = agg.fold_sizes_orig[group]
+        orig_mean  = float(np.mean(orig_sizes)) if orig_sizes else 0.0
 
-        # Tamaño por técnica (suma de folds)
-        heights = []
+        # Tamaño por técnica: media ± std sobre los folds disponibles
+        heights, errs = [], []
         for tech in TECHNIQUES:
-            if tech in agg.tech_glyc[group]:
-                heights.append(float(agg.tech_glyc[group][tech].values.sum()))
+            sizes = agg.fold_sizes[group].get(tech, [])
+            if sizes:
+                heights.append(float(np.mean(sizes)))
+                errs.append(float(np.std(sizes, ddof=1)) if len(sizes) > 1 else 0.0)
             else:
                 heights.append(0.0)
+                errs.append(0.0)
 
-        bars = ax.bar(x_pos, heights, width=0.65,
+        bars = ax.bar(x_pos, heights, yerr=errs, width=0.65,
                       color=[FAMILY_COLOR.get(t, "#888") for t in TECHNIQUES],
-                      edgecolor="white", linewidth=0.5, alpha=0.85, zorder=2)
+                      edgecolor="white", linewidth=0.5, alpha=0.85, zorder=2,
+                      capsize=3.5,
+                      error_kw={"ecolor": "#333", "elinewidth": 1.0, "zorder": 4})
 
-        # Línea horizontal del original
-        ax.axhline(orig_total, color="#111", lw=1.4, ls="--",
+        # Línea horizontal del original (media de los folds originales)
+        ax.axhline(orig_mean, color="#111", lw=1.4, ls="--",
                    alpha=0.75, zorder=3)
-        ax.text(len(TECHNIQUES) - 0.5, orig_total * 1.012,
-                f"Original: {int(orig_total):,}",
+        ax.text(len(TECHNIQUES) - 0.5, orig_mean * 1.012,
+                f"Original (mean): {int(orig_mean):,}",
                 ha="right", va="bottom", fontsize=8,
                 fontweight="bold", color="#111")
 
         # Valor sobre cada barra (compacto, rotado para no solapar)
-        ymax = max(heights + [orig_total]) if heights else orig_total
-        for xi, h in enumerate(heights):
+        ymax = max([h + e for h, e in zip(heights, errs)] + [orig_mean]) if heights else orig_mean
+        for xi, (h, e) in enumerate(zip(heights, errs)):
             if h > 0:
-                ax.text(xi, h + ymax * 0.012, f"{int(h):,}",
+                ax.text(xi, h + e + ymax * 0.015, f"{int(h):,}",
                         ha="center", va="bottom",
                         fontsize=6.5, color="#333", rotation=90)
 
         ax.set_xticks(x_pos)
         ax.set_xticklabels(tech_labels, rotation=38, ha="right", fontsize=8.5)
-        ax.set_ylabel("Total training samples (sum of folds)", fontsize=9.5)
+        ax.set_ylabel("Mean training samples ± SD (5 folds)", fontsize=9.5)
         ax.set_title(DATASET_LABELS.get(ds, ds), fontsize=12, fontweight="bold")
         ax.yaxis.set_major_formatter(
             mticker.FuncFormatter(lambda x, _: f"{int(x):,}"))
-        ax.set_ylim(0, ymax * 1.22)   # margen para etiquetas rotadas
+        ax.set_ylim(0, ymax * 1.25)   # margen para etiquetas rotadas
         ax.grid(axis="y", alpha=0.22, linestyle="--", color="0.6")
         ax.set_axisbelow(True)
         ax.spines["top"].set_visible(False)
         ax.spines["right"].set_visible(False)
 
     fig.suptitle(
-        f"Total train set size per balancing technique  ({dim_lbl} dimension)\n"
-        f"Bars = sum across all {N_FOLDS} folds  "
-        f"|  Dashed line = original dataset size",
+        f"Mean train set size per balancing technique  ({dim_lbl} dimension)\n"
+        f"Bars = mean across {N_FOLDS} folds  ·  error bars = ± 1 SD across folds  "
+        f"|  Dashed line = mean original dataset size",
         fontsize=11, y=1.02
     )
     plt.tight_layout()
@@ -709,12 +783,12 @@ def plot_trainsize_bars(aggregators: list, group: str):
 
 
 # ===========================================================================
-# FIG-B4: Barras divergentes Δ puntos porcentuales por rango glucémico  (3 fig)
+# FIG-B4: Barras divergentes Δ% por rango glucémico  (3 fig)
 # ===========================================================================
 
 def plot_delta_glycemic(agg: DatasetAggregator):
     """
-    Para cada técnica: barra horizontal que muestra cuántos puntos porcentuales
+    Para cada técnica: barra horizontal que muestra cuántos puntos de %
     gana (+) o pierde (-) cada rango glucémico respecto al original.
     Panel izquierdo = age, panel derecho = sex.
     Subpaneles por rango glucémico (5 rangos, 5 filas de barras).
@@ -781,14 +855,14 @@ def plot_delta_glycemic(agg: DatasetAggregator):
                         edgecolor="white", linewidth=0.4)
                 txt_x   = delta + xmax * 0.02 * np.sign(delta)
                 txt_ha  = "left" if delta >= 0 else "right"
-                ax.text(txt_x, yi, f"{delta:+.2f}pp",
+                ax.text(txt_x, yi, f"{delta:+.2f}%",
                         ha=txt_ha, va="center", fontsize=7.5, color="#222")
 
             ax.axvline(0, color="#333", lw=1.0, zorder=3)
             ax.set_xlim(-xmax, xmax)
             ax.set_yticks(y_pos)
             ax.set_yticklabels(labels, fontsize=8)
-            ax.set_xlabel("Δ percentage points", fontsize=8.5)
+            ax.set_xlabel("Δ%  (share of range, vs. original)", fontsize=8.5)
             ax.grid(axis="x", alpha=0.2, linestyle="--")
             ax.set_axisbelow(True)
 
@@ -798,7 +872,7 @@ def plot_delta_glycemic(agg: DatasetAggregator):
                          color=GLYCEMIC_COLORS[rng], fontweight="bold")
 
     fig.suptitle(
-        f"{ds_lbl}  ·  Change in glycemic range composition (Δ percentage points vs. original)\n"
+        f"{ds_lbl}  ·  Change in glycemic range composition (Δ% vs. original)\n"
         f"Positive = technique increases share of this range  "
         f"|  Negative = technique reduces it  "
         f"|  Averaged across folds and demographic classes",
@@ -808,17 +882,22 @@ def plot_delta_glycemic(agg: DatasetAggregator):
 
 
 # ===========================================================================
-# FIG-B5: Scatter trade-off TBR_2 vs TIR  (1 figura global)
+# FIG-B5: Scatter trade-off {rango} vs. TIR  (4 figuras: TBR_2, TBR_1, TAR_1, TAR_2)
 # ===========================================================================
 
-def plot_tradeoff_scatter(aggregators: list):
+def plot_tradeoff_scatter(aggregators: list, vs_range: str):
     """
-    Scatter: Δ% TBR_2 (eje X, hipoglucemia severa) vs. Δ% TIR (eje Y, en rango).
+    Scatter: Δ% de `vs_range` (eje X) vs. Δ% TIR (eje Y, en rango).
+    Se llama una vez por cada rango en TRADEOFF_RANGES (TBR_2, TBR_1, TAR_1, TAR_2),
+    generando una figura independiente por rango — así se visualiza el trade-off
+    clínico tanto en el extremo de hipoglucemia como en el de hiperglucemia.
     Un punto por (técnica × dimensión × dataset).
     Marcador = dimensión (○ age, □ sex), color = técnica.
-    Permite ver el trade-off clínico más importante del balanceo:
-    ¿ganar representación en hipo severo cuesta perder en rango normal?
     """
+    kind      = RANGE_KIND.get(vs_range, "hypo")            # "hypo" o "hyper"
+    rng_lbl   = GLYCEMIC_LABELS.get(vs_range, vs_range).split("(")[0].strip()
+    rng_units = GLYCEMIC_LABELS.get(vs_range, vs_range).split("(")[-1].rstrip(")")
+
     records = []
     for agg in aggregators:
         for group in DIMENSIONS:
@@ -838,8 +917,8 @@ def plot_tradeoff_scatter(aggregators: list):
                             if c in orig_pct.index and c in bal_pct.index]
                 if not classes:
                     continue
-                d_tbr2 = float(np.mean([
-                    bal_pct.loc[c, "TBR_2"] - orig_pct.loc[c, "TBR_2"]
+                d_rng = float(np.mean([
+                    bal_pct.loc[c, vs_range] - orig_pct.loc[c, vs_range]
                     for c in classes
                 ]))
                 d_tir  = float(np.mean([
@@ -850,12 +929,12 @@ def plot_tradeoff_scatter(aggregators: list):
                     "technique": tech,
                     "dimension": group,
                     "dataset":   agg.ds_name,
-                    "d_tbr2":    d_tbr2,
+                    "d_rng":     d_rng,
                     "d_tir":     d_tir,
                 })
 
     if not records:
-        log.warning("FIG-B5: sin datos")
+        log.warning(f"FIG-B5 ({vs_range}): sin datos")
         return
 
     df = pd.DataFrame(records)
@@ -871,36 +950,38 @@ def plot_tradeoff_scatter(aggregators: list):
         for _, row in sub.iterrows():
             marker = FAMILY_MARKER.get(row["dimension"], "o")
             color  = FAMILY_COLOR.get(row["technique"], "#888")
-            ax.scatter(row["d_tbr2"], row["d_tir"],
+            ax.scatter(row["d_rng"], row["d_tir"],
                        color=color, marker=marker, s=90,
                        edgecolors="white", linewidths=0.7, zorder=3)
             # Etiquetar solo la dimensión age para no saturar
             if row["dimension"] == "age":
                 ax.annotate(
                     TECHNIQUE_LABELS.get(row["technique"], row["technique"]),
-                    (row["d_tbr2"], row["d_tir"]),
+                    (row["d_rng"], row["d_tir"]),
                     fontsize=6.5, color="#333",
                     xytext=(4, 3), textcoords="offset points"
                 )
 
         ax.axhline(0, color="#333", lw=1.0, ls="--", alpha=0.5)
         ax.axvline(0, color="#333", lw=1.0, ls="--", alpha=0.5)
-        ax.set_xlabel("Δ% TBR_2 (Hypo L2, <54 mg/dL)", fontsize=10)
+        ax.set_xlabel(f"Δ% {rng_lbl} ({rng_units})", fontsize=10)
         if ax == axes[0]:
             ax.set_ylabel("Δ% TIR (In Range, 70–180 mg/dL)", fontsize=10)
         ax.set_title(DATASET_LABELS.get(ds, ds), fontsize=12, fontweight="bold")
         ax.grid(alpha=0.2, linestyle="--")
 
-        # Cuadrantes clínicos
+        # Cuadrantes clínicos — más Δrango a la derecha siempre es peor
+        # (más tiempo fuera de rango), tanto si el rango es hipo como hiper.
+        risk_word = "hypo" if kind == "hypo" else "hyper"
         xlim, ylim = ax.get_xlim(), ax.get_ylim()
         ax.text(xlim[1] * 0.95, ylim[1] * 0.95,
-                "↑ TIR\n→ more hypo\n(worsens safety)",
+                f"↑ TIR\n→ more {risk_word}\n(worsens safety)",
                 ha="right", va="top", fontsize=7.5, color="#c0392b", alpha=0.7)
         ax.text(xlim[1] * 0.95, ylim[0] * 0.95,
-                "↓ TIR\n→ more hypo\n(both worsen)",
+                f"↓ TIR\n→ more {risk_word}\n(both worsen)",
                 ha="right", va="bottom", fontsize=7.5, color="#888", alpha=0.7)
         ax.text(xlim[0] * 0.95, ylim[1] * 0.95,
-                "↑ TIR\n← less hypo\n(ideal)",
+                f"↑ TIR\n← less {risk_word}\n(ideal)",
                 ha="left", va="top", fontsize=7.5, color="#27ae60", alpha=0.8)
 
     # Leyenda técnicas
@@ -923,14 +1004,14 @@ def plot_tradeoff_scatter(aggregators: list):
                title_fontsize=8.5)
 
     fig.suptitle(
-        "Clinical trade-off: Hypoglycaemia L2 representation vs. In-Range  "
-        "after balancing\n"
+        f"Clinical trade-off: {rng_lbl} representation vs. In-Range after balancing\n"
         "Each point: one technique × dimension, averaged across folds and demographic classes  "
-        "|  Ideal quadrant: top-left  (↑ TIR, no increase in Hypo L2)",
+        f"|  Ideal quadrant: top-left  (↑ TIR, no increase in {rng_lbl})",
         fontsize=10, y=1.02
     )
     plt.tight_layout()
-    _save(fig, "tradeoff_tbr2_vs_tir.pdf")
+    fname = f"tradeoff_{vs_range.lower().replace('_', '')}_vs_tir.pdf"
+    _save(fig, fname)
 
 
 # ===========================================================================
@@ -960,42 +1041,48 @@ def main():
         return
 
     # -- FIG-B1: Heatmaps demográficos (6) --
+    # vmax se calcula UNA vez por dimensión, sobre todos los datasets juntos,
+    # para que la escala de color sea homogénea y comparable entre datasets.
     log.info("\nFIG-B1: Heatmaps de variación demográfica...")
+    vmax_by_group = {group: _global_heatmap_vmax(aggregators, group) for group in DIMENSIONS}
     for agg in aggregators:
         for group in DIMENSIONS:
-            plot_heatmap_balancing(agg, group)
+            plot_heatmap_balancing(agg, group, vmax=vmax_by_group[group])
 
     # -- FIG-B2: Barras apiladas glucémicas (3) --
-    # xmax calculado internamente por dataset: max total de samples entre
-    # original y todas las técnicas (suma de todos los folds, no media).
+    # xmax compartido entre los paneles age/sex de un mismo dataset;
+    # valores = media por fold (no la suma de los 5 folds).
     log.info("\nFIG-B2: Barras apiladas por rango glucémico...")
     for agg in aggregators:
         plot_stacked_bars(agg)
 
-    # -- FIG-B3: Barras de tamaño de train (2) --
-    log.info("\nFIG-B3: Barras de tamaño de train...")
+    # -- FIG-B3: Barras de tamaño de train, media ± std (2) --
+    log.info("\nFIG-B3: Barras de tamaño de train (media ± SD)...")
     for group in DIMENSIONS:
         plot_trainsize_bars(aggregators, group)
 
-    # -- FIG-B4: Δ puntos porcentuales por rango glucémico (3) --
+    # -- FIG-B4: Δ% por rango glucémico (3) --
     log.info("\nFIG-B4: Barras divergentes por rango glucémico...")
     for agg in aggregators:
         plot_delta_glycemic(agg)
 
-    # -- FIG-B5: Scatter trade-off TBR_2 vs TIR (1) --
-    log.info("\nFIG-B5: Scatter trade-off clínico...")
-    plot_tradeoff_scatter(aggregators)
+    # -- FIG-B5: Scatter trade-off vs. TIR, uno por rango (4) --
+    log.info("\nFIG-B5: Scatter trade-off clínico (TBR_2, TBR_1, TAR_1, TAR_2 vs. TIR)...")
+    for rng in TRADEOFF_RANGES:
+        plot_tradeoff_scatter(aggregators, rng)
 
     n = len(aggregators)
+    n_b5 = len(TRADEOFF_RANGES)
+    total = n * 2 + n + 2 + n + n_b5
     log.info(f"""
 Resumen de figuras generadas:
-  FIG-B1  heatmap_balancing_*       {n * 2:>3} figuras  (1 por dataset × dimensión)
-  FIG-B2  stacked_bars_*            {n:>3} figuras  (1 por dataset, xmax propio)
-  FIG-B3  boxplot_trainsize_*         2 figuras  (1 por dimensión)
-  FIG-B4  delta_glycemic_*          {n:>3} figuras  (1 por dataset)
-  FIG-B5  tradeoff_tbr2_vs_tir        1 figura
+  FIG-B1  heatmap_balancing_*       {n * 2:>3} figuras  (1 por dataset × dimensión, escala unificada por dimensión)
+  FIG-B2  stacked_bars_*            {n:>3} figuras  (1 por dataset, eje X compartido age/sex, medias por fold)
+  FIG-B3  trainsize_bars_*            2 figuras  (1 por dimensión, media ± SD)
+  FIG-B4  delta_glycemic_*          {n:>3} figuras  (1 por dataset, en %)
+  FIG-B5  tradeoff_*_vs_tir         {n_b5:>3} figuras  (TBR_2, TBR_1, TAR_1, TAR_2 vs. TIR)
   ────────────────────────────────────────────
-  Total                             {n*2 + n + 2 + n + 1:>3} figuras
+  Total                             {total:>3} figuras
 """)
 
 
