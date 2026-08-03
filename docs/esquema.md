@@ -25,9 +25,9 @@ Distribucion aproximada
 
 Capitulo 1 - Introduccion
 Capitulo 2 - Fundametnos teoricos
-Capitulo 3 - Metodologia der trabajo
-Capitulo 4 - Analisis de datos
-Capitulo 5 - Experimentacion con tecnicas
+Capitulo 3 - Desarrollo der trabajo
+    Capitulo 4 - Analisis de datos
+    Capitulo 5 - Experimentacion con tecnicas
 Capitulo 6 - Análisis de resultados
 Capitulo 7 - Discusion
 Capitulo 8 . Conclusiones y trabajo futuro

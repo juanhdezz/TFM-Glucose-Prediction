@@ -3,54 +3,115 @@
 \contentsline {section}{\numberline {1.1}Motivación}{2}{section.1.1}%
 \contentsline {section}{\numberline {1.2}Objetivos}{2}{section.1.2}%
 \contentsline {section}{\numberline {1.3}Estructura del trabajo}{3}{section.1.3}%
-\contentsline {chapter}{\numberline {2}Estado del arte}{5}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Introducción}{5}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Diabetes Tipo 1 y monitorización continua de glucosa: contexto necesario}{6}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Diabetes Mellitus Tipo 1}{6}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Monitorización continua de glucosa (CGM)}{6}{subsection.2.2.2}%
-\contentsline {subsection}{\numberline {2.2.3}\emph {Datasets} utilizados en este trabajo}{6}{subsection.2.2.3}%
-\contentsline {subsection}{\numberline {2.2.4}Predicción de glucosa mediante LSTM: formulación del problema}{7}{subsection.2.2.4}%
-\contentsline {section}{\numberline {2.3}Diferencias fisiológicas por sexo y edad en la dinámica glucémica}{7}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Diferencias por sexo}{7}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Diferencias por edad}{8}{subsection.2.3.2}%
-\contentsline {section}{\numberline {2.4}Desequilibrio demográfico en \emph {datasets} clínicos y su impacto en el aprendizaje automático}{8}{section.2.4}%
-\contentsline {subsection}{\numberline {2.4.1}Desequilibrio demográfico frente a desequilibrio de clase}{8}{subsection.2.4.1}%
-\contentsline {subsection}{\numberline {2.4.2}Evidencia de disparidad de rendimiento por subgrupo demográfico en modelos clínicos}{9}{subsection.2.4.2}%
-\contentsline {section}{\numberline {2.5}Técnicas de mitigación del desequilibrio demográfico}{10}{section.2.5}%
-\contentsline {subsection}{\numberline {2.5.1}Reponderado de muestras (\emph {Reweighting})}{10}{subsection.2.5.1}%
-\contentsline {subsection}{\numberline {2.5.2}Remuestreo dirigido por grupo demográfico}{10}{subsection.2.5.2}%
-\contentsline {subsection}{\numberline {2.5.3}Generación sintética condicionada mediante redes generativas adversarias temporales}{11}{subsection.2.5.3}%
-\contentsline {subsection}{\numberline {2.5.4}Aprendizaje de representaciones invariantes al atributo demográfico}{12}{subsection.2.5.4}%
-\contentsline {subsection}{\numberline {2.5.5}Validación cruzada con muestreo estratificado por grupo demográfico}{12}{subsection.2.5.5}%
-\contentsline {subsection}{\numberline {2.5.6}Comparativa de técnicas}{13}{subsection.2.5.6}%
-\contentsline {subsection}{\numberline {2.5.7}Discusión y técnica seleccionada}{13}{subsection.2.5.7}%
-\contentsline {section}{\numberline {2.6}Brechas en la literatura y motivación del presente trabajo}{13}{section.2.6}%
-\contentsline {chapter}{\numberline {3}Desarrollo del TFM}{15}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Cómo colocar tablas y figuras}{15}{section.3.1}%
-\contentsline {chapter}{\numberline {4}Resultados y discusión}{17}{chapter.4}%
-\contentsline {chapter}{\numberline {5}Conclusiones}{21}{chapter.5}%
-\contentsline {chapter}{Bibliografía}{25}{chapter*.15}%
-\contentsline {chapter}{\numberline {A}Ejemplo de anexo: Planificación y gestión del proyecto (opcional)}{27}{appendix.Alph1}%
-\contentsline {section}{\numberline {A.1}Metodología/Ciclo de vida}{28}{section.Alph1.1}%
-\contentsline {section}{\numberline {A.2}Herramientas y plataformas utilizadas para el desarrollo del proyecto}{28}{section.Alph1.2}%
-\contentsline {section}{\numberline {A.3}Costes del proyecto}{28}{section.Alph1.3}%
-\contentsline {section}{\numberline {A.4}Gestión del proyecto. Planificación temporal. Diagrama de Gantt}{28}{section.Alph1.4}%
-\contentsline {section}{\numberline {A.5}Texto añadido}{28}{section.Alph1.5}%
-\contentsline {chapter}{\numberline {B}Ejemplo de anexo: Innovación (opcional)}{31}{appendix.Alph2}%
-\contentsline {section}{\numberline {B.1}Estudio del Mercado}{31}{section.Alph2.1}%
-\contentsline {subsection}{\numberline {B.1.1}Segmentos de Clientes}{31}{subsection.Alph2.1.1}%
-\contentsline {subsection}{\numberline {B.1.2}Competidores}{31}{subsection.Alph2.1.2}%
-\contentsline {section}{\numberline {B.2}Propuesta de Valor}{31}{section.Alph2.2}%
-\contentsline {section}{\numberline {B.3}Recursos Clave}{31}{section.Alph2.3}%
-\contentsline {section}{\numberline {B.4}Actividades Clave}{31}{section.Alph2.4}%
-\contentsline {section}{\numberline {B.5}Socios y Alianzas Clave}{31}{section.Alph2.5}%
-\contentsline {section}{\numberline {B.6}Estructura de Costes Prevista}{32}{section.Alph2.6}%
-\contentsline {section}{\numberline {B.7}Vías de Ingresos}{32}{section.Alph2.7}%
-\contentsline {section}{\numberline {B.8}Canales de Distribución}{32}{section.Alph2.8}%
-\contentsline {section}{\numberline {B.9}Relación con los Clientes}{32}{section.Alph2.9}%
-\contentsline {section}{\numberline {B.10}Descripción del Producto Mínimo Viable}{32}{section.Alph2.10}%
-\contentsline {section}{\numberline {B.11}Roadmap de Desarrollo}{32}{section.Alph2.11}%
-\contentsline {section}{\numberline {B.12}Aspectos Legales}{32}{section.Alph2.12}%
-\contentsline {section}{\numberline {B.13}Texto añadido}{32}{section.Alph2.13}%
-\contentsline {chapter}{\numberline {C}Ejemplo de anexo: Manual de usuario (opcional)}{35}{appendix.Alph3}%
-\contentsline {section}{\numberline {C.1}Texto añadido}{35}{section.Alph3.1}%
+\contentsline {chapter}{\numberline {2}Fundamentación teórica}{5}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Contexto clínico: DM1 y monitorización continua de glucosa}{5}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Diabetes mellitus tipo 1: fisiopatología y desafíos de gestión}{5}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Monitorización continua de glucosa: principio de funcionamiento y métricas clínicas}{6}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.3}Métricas de error en predicción de glucosa}{7}{subsection.2.1.3}%
+\contentsline {section}{\numberline {2.2}Aprendizaje profundo para series temporales: redes LSTM}{7}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Redes neuronales recurrentes: motivación y limitaciones}{7}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Redes LSTM: arquitectura y mecanismo de puertas}{8}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Predicción de glucosa como regresión temporal con ventana deslizante}{8}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.4}Validación cruzada por grupos en datos de pacientes}{9}{subsection.2.2.4}%
+\contentsline {section}{\numberline {2.3}\emph {Imbalanced learning} y desequilibrio demográfico}{9}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Desequilibrio de clase: definición y consecuencias}{9}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Técnicas de remuestreo en \emph {imbalanced learning}}{9}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}Extensión al desequilibrio demográfico}{10}{subsection.2.3.3}%
+\contentsline {subsection}{\numberline {2.3.4}Métricas de evaluación en contexto de desequilibrio}{10}{subsection.2.3.4}%
+\contentsline {chapter}{\numberline {3}Estado del arte}{13}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Modelos de predicción de glucosa}{13}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Modelos fisiológicos y basados en ecuaciones}{13}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Métodos estadísticos de series temporales}{14}{subsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.1.3}Aprendizaje automático clásico}{14}{subsection.3.1.3}%
+\contentsline {subsection}{\numberline {3.1.4}Aprendizaje profundo: CNN y LSTM}{14}{subsection.3.1.4}%
+\contentsline {subsection}{\numberline {3.1.5}Tendencias actuales}{14}{subsection.3.1.5}%
+\contentsline {section}{\numberline {3.2}\emph {Datasets} para la predicción de glucosa}{15}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Categorías generales de \emph {datasets}}{15}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Repositorios abiertos y sus limitaciones}{15}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}\emph {Datasets} utilizados en este trabajo}{16}{subsection.3.2.3}%
+\contentsline {section}{\numberline {3.3}Diferencias por sexo y edad en la dinámica glucémica}{16}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Diferencias por sexo}{16}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Diferencias por edad}{17}{subsection.3.3.2}%
+\contentsline {section}{\numberline {3.4}Desequilibrio demográfico en modelos clínicos}{17}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Desequilibrio demográfico frente a desequilibrio de clase}{17}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Evidencia de disparidad de rendimiento por subgrupo}{17}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Técnicas de mitigación del desequilibrio demográfico}{18}{subsection.3.4.3}%
+\contentsline {subsubsection}{Reponderado de muestras (\emph {Reweighting})}{18}{section*.10}%
+\contentsline {subsubsection}{Remuestreo dirigido por grupo demográfico}{18}{section*.11}%
+\contentsline {subsubsection}{Generación sintética mediante redes generativas adversarias temporales}{19}{section*.12}%
+\contentsline {subsubsection}{Representaciones invariantes al atributo demográfico}{19}{section*.13}%
+\contentsline {subsubsection}{Validación cruzada con muestreo estratificado por grupo}{19}{section*.14}%
+\contentsline {subsubsection}{Comparativa de técnicas}{20}{section*.15}%
+\contentsline {section}{\numberline {3.5}Técnicas de balanceo en series temporales y datos médicos}{20}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Balanceo en datos de series temporales: estado de la cuestión}{20}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Balanceo demográfico en series temporales fisiológicas}{21}{subsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.5.3}Generación sintética de series temporales fisiológicas}{22}{subsection.3.5.3}%
+\contentsline {section}{\numberline {3.6}Brechas en la literatura y motivación del trabajo}{23}{section.3.6}%
+\contentsline {chapter}{\numberline {4}Desarrollo del trabajo}{25}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Recopilación y descripción de los datos}{25}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Criterios de selección de los \emph {datasets}}{25}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}T1DiabetesGranada}{25}{subsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.1.3}REPLACE-BG}{25}{subsection.4.1.3}%
+\contentsline {subsection}{\numberline {4.1.4}DiaTrend}{25}{subsection.4.1.4}%
+\contentsline {subsection}{\numberline {4.1.5}Estructura unificada de datos de entrada}{25}{subsection.4.1.5}%
+\contentsline {section}{\numberline {4.2}Análisis exploratorio de datos}{25}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Distribución demográfica de los \emph {datasets}}{26}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Distribución de la señal CGM}{26}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Análisis de datos ausentes}{26}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}Análisis de separabilidad demográfica}{26}{subsection.4.2.4}%
+\contentsline {section}{\numberline {4.3}Detección y cuantificación del desequilibrio demográfico}{26}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Desequilibrio a nivel de paciente frente a nivel de ventana}{26}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Desequilibrio por dimensión demográfica y \emph {fold}}{26}{subsection.4.3.2}%
+\contentsline {section}{\numberline {4.4}Investigación de técnicas de balanceo para series temporales}{26}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Criterios de selección de técnicas}{26}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Taxonomía de técnicas implementadas}{26}{subsection.4.4.2}%
+\contentsline {subsubsection}{Familia aleatoria}{26}{section*.17}%
+\contentsline {subsubsection}{Familia guiada}{26}{section*.18}%
+\contentsline {subsubsection}{Familia híbrida}{26}{section*.19}%
+\contentsline {subsection}{\numberline {4.4.3}Validación formal del \emph {pipeline} de balanceo}{26}{subsection.4.4.3}%
+\contentsline {section}{\numberline {4.5}Transformación de datos: generación de ventanas deslizantes}{26}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Parámetros de ventana}{27}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Restricciones de continuidad temporal}{27}{subsection.4.5.2}%
+\contentsline {subsection}{\numberline {4.5.3}Esquema de partición: \emph {Group K-Fold} con $K=5$}{27}{subsection.4.5.3}%
+\contentsline {section}{\numberline {4.6}Análisis exploratorio de ventanas}{27}{section.4.6}%
+\contentsline {subsection}{\numberline {4.6.1}Distribución de ventanas por grupo demográfico y \emph {fold}}{27}{subsection.4.6.1}%
+\contentsline {subsection}{\numberline {4.6.2}Distribución de la variable objetivo por grupo demográfico}{27}{subsection.4.6.2}%
+\contentsline {subsection}{\numberline {4.6.3}Verificación de integridad de las particiones}{27}{subsection.4.6.3}%
+\contentsline {section}{\numberline {4.7}Arquitectura del modelo LSTM}{27}{section.4.7}%
+\contentsline {subsection}{\numberline {4.7.1}Especificación de la arquitectura}{27}{subsection.4.7.1}%
+\contentsline {subsection}{\numberline {4.7.2}Función de pérdida y optimizador}{27}{subsection.4.7.2}%
+\contentsline {subsection}{\numberline {4.7.3}Estrategia de entrenamiento}{27}{subsection.4.7.3}%
+\contentsline {subsection}{\numberline {4.7.4}Configuración del entorno de ejecución}{27}{subsection.4.7.4}%
+\contentsline {section}{\numberline {4.8}\emph {Pipeline} de entrenamiento y evaluación}{27}{section.4.8}%
+\contentsline {subsection}{\numberline {4.8.1}Modo original y modo balanceado}{27}{subsection.4.8.1}%
+\contentsline {subsection}{\numberline {4.8.2}Flujo de datos por \emph {fold}}{27}{subsection.4.8.2}%
+\contentsline {subsection}{\numberline {4.8.3}Evaluación por rango glucémico}{27}{subsection.4.8.3}%
+\contentsline {subsection}{\numberline {4.8.4}Agregación de resultados y protocolo estadístico}{27}{subsection.4.8.4}%
+\contentsline {subsection}{\numberline {4.8.5}Trazabilidad y reproducibilidad}{27}{subsection.4.8.5}%
+\contentsline {chapter}{\numberline {5}Resultados y discusión}{29}{chapter.5}%
+\contentsline {chapter}{\numberline {6}Conclusiones}{33}{chapter.6}%
+\contentsline {chapter}{Bibliografía}{39}{chapter*.24}%
+\contentsline {chapter}{\numberline {A}Ejemplo de anexo: Planificación y gestión del proyecto (opcional)}{41}{appendix.Alph1}%
+\contentsline {section}{\numberline {A.1}Metodología/Ciclo de vida}{42}{section.Alph1.1}%
+\contentsline {section}{\numberline {A.2}Herramientas y plataformas utilizadas para el desarrollo del proyecto}{42}{section.Alph1.2}%
+\contentsline {section}{\numberline {A.3}Costes del proyecto}{42}{section.Alph1.3}%
+\contentsline {section}{\numberline {A.4}Gestión del proyecto. Planificación temporal. Diagrama de Gantt}{42}{section.Alph1.4}%
+\contentsline {section}{\numberline {A.5}Texto añadido}{42}{section.Alph1.5}%
+\contentsline {chapter}{\numberline {B}Ejemplo de anexo: Innovación (opcional)}{45}{appendix.Alph2}%
+\contentsline {section}{\numberline {B.1}Estudio del Mercado}{45}{section.Alph2.1}%
+\contentsline {subsection}{\numberline {B.1.1}Segmentos de Clientes}{45}{subsection.Alph2.1.1}%
+\contentsline {subsection}{\numberline {B.1.2}Competidores}{45}{subsection.Alph2.1.2}%
+\contentsline {section}{\numberline {B.2}Propuesta de Valor}{45}{section.Alph2.2}%
+\contentsline {section}{\numberline {B.3}Recursos Clave}{45}{section.Alph2.3}%
+\contentsline {section}{\numberline {B.4}Actividades Clave}{45}{section.Alph2.4}%
+\contentsline {section}{\numberline {B.5}Socios y Alianzas Clave}{45}{section.Alph2.5}%
+\contentsline {section}{\numberline {B.6}Estructura de Costes Prevista}{46}{section.Alph2.6}%
+\contentsline {section}{\numberline {B.7}Vías de Ingresos}{46}{section.Alph2.7}%
+\contentsline {section}{\numberline {B.8}Canales de Distribución}{46}{section.Alph2.8}%
+\contentsline {section}{\numberline {B.9}Relación con los Clientes}{46}{section.Alph2.9}%
+\contentsline {section}{\numberline {B.10}Descripción del Producto Mínimo Viable}{46}{section.Alph2.10}%
+\contentsline {section}{\numberline {B.11}Roadmap de Desarrollo}{46}{section.Alph2.11}%
+\contentsline {section}{\numberline {B.12}Aspectos Legales}{46}{section.Alph2.12}%
+\contentsline {section}{\numberline {B.13}Texto añadido}{46}{section.Alph2.13}%
+\contentsline {chapter}{\numberline {C}Ejemplo de anexo: Manual de usuario (opcional)}{49}{appendix.Alph3}%
+\contentsline {section}{\numberline {C.1}Texto añadido}{49}{section.Alph3.1}%

@@ -1,38 +1,118 @@
 \begin{thebibliography}{10}
 
-\bibitem{hochreiter1997long}
-S.~Hochreiter and J.~Schmidhuber, ``Long short-term memory,'' {\em Neural Computation}, vol.~9, no.~8, pp.~1735--1780, 1997.
-
-\bibitem{mirshekarian2019using}
-S.~Mirshekarian, H.~Shen, R.~Bunescu, and C.~Marling, ``Lstms and neural attention models for blood glucose prediction: comparative experiments on real and synthetic data,'' 2019.
-
 \bibitem{atkinson2014type1}
 M.~A. Atkinson, G.~S. Eisenbarth, and A.~W. Michels, ``Type 1 diabetes,'' {\em The Lancet}, vol.~383, no.~9911, pp.~69--82, 2014.
+
+\bibitem{divers2020prevalence}
+J.~Divers, E.~J. Mayer-Davis, J.~M. Lawrence, S.~Isom, D.~Dabelea, L.~Dolan, G.~Imperatore, S.~Marcovina, D.~J. Pettitt, C.~Pihoker, R.~F. Hamman, S.~Saydah, and L.~E. Wagenknecht, ``Trends in incidence of type 1 and type 2 diabetes among youths --- selected counties and indian reservations, united states, 2002--2015,'' {\em MMWR. Morbidity and Mortality Weekly Report}, vol.~69, no.~6, pp.~161--165, 2020.
+
+\bibitem{sediabetes2023}
+{Sociedad Española de Diabetes}, ``Informe sobre la prevalencia e incidencia de la diabetes en españa.'' \url{https://www.sediabetes.org}, 2023.
+\newblock Accedido en 2025.
 
 \bibitem{kovatchev2019metrics}
 B.~Kovatchev, ``Metrics for glycaemic control — from {HbA1c} to continuous glucose monitoring,'' {\em Nature Reviews Endocrinology}, vol.~13, no.~7, pp.~425--436, 2019.
 
+\bibitem{brownlee2005pathobiology}
+M.~Brownlee, ``The pathobiology of diabetic complications: A unifying mechanism,'' {\em Diabetes}, vol.~54, no.~6, pp.~1615--1625, 2005.
+
 \bibitem{klonoff2017cgm}
 D.~C. Klonoff, D.~Ahn, and A.~Drincic, ``Continuous glucose monitoring: a review of the technology and clinical use,'' {\em Diabetes Research and Clinical Practice}, vol.~133, pp.~178--192, 2017.
 
-\bibitem{little2019statistical}
-R.~J.~A. Little and D.~B. Rubin, {\em Statistical Analysis with Missing Data}.
-\newblock Wiley, 3rd~ed., 2019.
+\bibitem{rebrin2000subcutaneous}
+K.~Rebrin, G.~M. Steil, W.~P. van Antwerp, and J.~J. Mastrototaro, ``Subcutaneous glucose predicts plasma glucose independent of insulin: Implications for continuous monitoring,'' {\em American Journal of Physiology --- Endocrinology and Metabolism}, vol.~277, no.~3, pp.~E561--E571, 2000.
 
-\bibitem{sun2023diatrend}
-Q.~Sun, T.~S. Bhatt, R.~Nambhore, {\em et~al.}, ``{DIATREND}: A multivariate longitudinal clinical dataset of type 1 diabetes patients to advance glucose forecasting,'' {\em Scientific Data}, vol.~10, no.~1, p.~612, 2023.
+\bibitem{battelino2019clinical}
+T.~Battelino, T.~Danne, R.~M. Bergenstal, {\em et~al.}, ``Clinical targets for continuous glucose monitoring data interpretation: recommendations from the international consensus on time in range,'' {\em Diabetes Care}, vol.~42, no.~8, pp.~1593--1603, 2019.
 
-\bibitem{aleppo2017replace}
-G.~Aleppo, K.~L. Ruedy, T.~T. Riddlesworth, {\em et~al.}, ``{REPLACE-BG}: A randomized trial comparing continuous glucose monitoring with and without routine blood glucose monitoring in adults with well-controlled type 1 diabetes,'' {\em Diabetes Care}, vol.~40, no.~4, pp.~538--545, 2017.
+\bibitem{clarke1987evaluating}
+W.~L. Clarke, D.~Cox, L.~A. Gonder-Frederick, W.~Carter, and S.~L. Pohl, ``Evaluating clinical accuracy of systems for self-monitoring of blood glucose,'' {\em Diabetes Care}, vol.~10, no.~5, pp.~622--628, 1987.
 
-\bibitem{diaz2023t1dgranada}
-J.~D. D{\'i}az-L{\'o}pez, R.~Capel-Delgado, {\em et~al.}, ``T1diabetesgranada dataset,'' 2023.
+\bibitem{rumelhart1986learning}
+D.~E. Rumelhart, G.~E. Hinton, and R.~J. Williams, ``Learning representations by back-propagating errors,'' {\em Nature}, vol.~323, no.~6088, pp.~533--536, 1986.
+
+\bibitem{bengio1994learning}
+Y.~Bengio, P.~Simard, and P.~Frasconi, ``Learning long-term dependencies with gradient descent is difficult,'' {\em IEEE Transactions on Neural Networks}, vol.~5, no.~2, pp.~157--166, 1994.
+
+\bibitem{hochreiter1997long}
+S.~Hochreiter and J.~Schmidhuber, ``Long short-term memory,'' {\em Neural Computation}, vol.~9, no.~8, pp.~1735--1780, 1997.
 
 \bibitem{sparacino2007glucose}
 G.~Sparacino, F.~Zanderigo, S.~Corazza, {\em et~al.}, ``Glucose concentration can be predicted ahead in time from continuous glucose monitoring sensor time-series,'' {\em IEEE Transactions on Biomedical Engineering}, vol.~54, no.~5, pp.~931--937, 2007.
 
+\bibitem{groupkfold_sklearn}
+{scikit-learn developers}, ``{GroupKFold} --- scikit-learn 1.4 documentation.'' \url{https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GroupKFold.html}, 2024.
+\newblock Accedido en 2025.
+
+\bibitem{he2009learning}
+H.~He and E.~A. Garcia, ``Learning from imbalanced data,'' {\em IEEE Transactions on Knowledge and Data Engineering}, vol.~21, no.~9, pp.~1263--1284, 2009.
+
+\bibitem{branco2016survey}
+P.~Branco, L.~Torgo, and R.~P. Ribeiro, ``A survey of predictive modelling under imbalanced distributions,'' {\em ACM Computing Surveys}, vol.~49, no.~2, pp.~31:1--31:50, 2016.
+
+\bibitem{fernandez2018learning}
+A.~Fern{\'a}ndez, S.~Garc{\'i}a, M.~Galar, R.~C. Prati, B.~Krawczyk, and F.~Herrera, {\em Learning from Imbalanced Data Sets}.
+\newblock Springer, 2018.
+
+\bibitem{tomek1976two}
+I.~Tomek, ``Two modifications of {CNN},'' {\em IEEE Transactions on Systems, Man, and Cybernetics}, vol.~6, no.~11, pp.~769--772, 1976.
+
+\bibitem{chawla2002smote}
+N.~V. Chawla, K.~W. Bowyer, L.~O. Hall, and W.~P. Kegelmeyer, ``Smote: Synthetic minority over-sampling technique,'' {\em Journal of Artificial Intelligence Research}, vol.~16, pp.~321--357, 2002.
+
+\bibitem{batista2004study}
+G.~E. A. P.~A. Batista, R.~C. Prati, and M.~C. Monard, ``A study of the behavior of several methods for balancing machine learning training data,'' {\em ACM SIGKDD Explorations Newsletter}, vol.~6, no.~1, pp.~20--29, 2004.
+
+\bibitem{bergman1979minimal}
+R.~N. Bergman, Y.~Z. Ider, C.~R. Bowden, and C.~Cobelli, ``Quantitative estimation of insulin sensitivity,'' {\em American Journal of Physiology-Endocrinology and Metabolism}, vol.~236, no.~6, pp.~E667--E677, 1979.
+
+\bibitem{contreras2003arima}
+J.~Contreras, R.~Espínola, F.~J. Nogales, and A.~J. Conejo, ``{ARIMA} models to predict next-day electricity prices,'' {\em IEEE Transactions on Power Systems}, vol.~18, no.~3, pp.~1014--1020, 2003.
+\newblock Referencia metodológica seminal para modelos ARIMA en series temporales. Para aplicación específica a glucosa, véase también Sparacino et al. (2007).
+
+\bibitem{reifman2007predictive}
+J.~Reifman, S.~Rajaraman, A.~Gribok, and W.~K. Ward, ``Predictive monitoring for improved management of glucose levels,'' {\em Journal of Diabetes Science and Technology}, vol.~1, no.~4, pp.~478--486, 2007.
+
+\bibitem{pappada2011development}
+S.~M. Pappada, B.~D. Cameron, P.~M. Rosman, and T.~J. Papadimos, ``Development of a neural network for prediction of glucose concentration in type 1 diabetes patients,'' {\em Journal of Diabetes Science and Technology}, vol.~2, no.~5, pp.~792--801, 2008.
+
+\bibitem{fraccaro2016prediction}
+M.~Fraccaro, D.~Bhatt, U.~Bhatt, and M.~Welling, ``Prediction of blood glucose concentration in type 1 diabetes using kernel adaptive filtering,'' in {\em Proceedings of the NIPS 2016 Workshop on Machine Learning for Health}, 2016.
+\newblock Disponible en: \url{https://arxiv.org/abs/1612.00901}.
+
+\bibitem{li2019convolutional}
+K.~Li, C.~Liu, T.~Zhu, P.~Herrero, and P.~Georgiou, ``Glunet: a deep learning framework for accurate glucose forecasting,'' {\em IEEE Journal of Biomedical and Health Informatics}, vol.~24, no.~2, pp.~414--423, 2019.
+
+\bibitem{mirshekarian2019using}
+S.~Mirshekarian, H.~Shen, R.~Bunescu, and C.~Marling, ``Lstms and neural attention models for blood glucose prediction: comparative experiments on real and synthetic data,'' 2019.
+
+\bibitem{naumova2010multivariable}
+V.~Naumova, S.~V. Pereverzyev, and S.~Sivananthan, ``A meta-learning approach to the regularized learning---case study: Blood glucose prediction,'' {\em Neural Networks}, vol.~33, pp.~181--193, 2012.
+
+\bibitem{li2023gluctx}
+Z.~Li, S.~Vyas, I.~Kang, J.~Wu, and A.~E. Solomonides, ``{GluCTx}: Glucose prediction leveraging transformer architecture with contextual data,'' {\em arXiv preprint}, 2023.
+\newblock arXiv:2311.01232. Disponible en: \url{https://arxiv.org/abs/2311.01232}.
+
 \bibitem{oviedo2017review}
 S.~Oviedo, J.~Veh{\'i}, R.~Calm, and J.~Armengol, ``A review of personalized blood glucose prediction strategies for {T1DM} patients,'' {\em International Journal for Numerical Methods in Biomedical Engineering}, vol.~33, no.~6, 2017.
+
+\bibitem{man2014uva}
+C.~D. Man, F.~Micheletto, D.~Lv, M.~Breton, B.~Kovatchev, and C.~Cobelli, ``The {UVA/PADOVA} type 1 diabetes simulator: New features,'' {\em Journal of Diabetes Science and Technology}, vol.~8, no.~1, pp.~26--34, 2014.
+
+\bibitem{marling2020ohiot1dm}
+C.~Marling and R.~Bunescu, ``The {OhioT1DM} dataset for blood glucose level prediction: update 2020,'' 2020.
+
+\bibitem{dubosson2018d1namo}
+F.~Dubosson, J.-E. Ranvier, S.~Bromuri, {\em et~al.}, ``The open {D1NAMO} dataset: a multi-modal dataset for research on non-invasive type 1 diabetes management,'' {\em Informatics in Medicine Unlocked}, vol.~13, pp.~92--100, 2018.
+
+\bibitem{aleppo2017replace}
+G.~Aleppo, K.~L. Ruedy, T.~T. Riddlesworth, {\em et~al.}, ``{REPLACE-BG}: A randomized trial comparing continuous glucose monitoring with and without routine blood glucose monitoring in adults with well-controlled type 1 diabetes,'' {\em Diabetes Care}, vol.~40, no.~4, pp.~538--545, 2017.
+
+\bibitem{sun2023diatrend}
+Q.~Sun, T.~S. Bhatt, R.~Nambhore, {\em et~al.}, ``{DIATREND}: A multivariate longitudinal clinical dataset of type 1 diabetes patients to advance glucose forecasting,'' {\em Scientific Data}, vol.~10, no.~1, p.~612, 2023.
+
+\bibitem{diaz2023t1dgranada}
+J.~D. D{\'i}az-L{\'o}pez, R.~Capel-Delgado, {\em et~al.}, ``T1diabetesgranada dataset,'' 2023.
 
 \bibitem{mauvaisjarvis2023sexdiff}
 F.~Mauvais-Jarvis {\em et~al.}, ``Sex differences in glucose homeostasis,'' {\em Sex and Gender Effects in Pharmacology, Handbook of Experimental Pharmacology}, 2023.
@@ -77,12 +157,12 @@ I.~{\v{Z}}liobait{\.e}, ``Measuring discrimination in algorithmic decision makin
 J.~Wi{\'s}niewski and P.~Biecek, ``fairmodels: A flexible tool for bias detection, visualization, and mitigation,'' 2021.
 \newblock arXiv:2104.00507.
 
-\bibitem{krasanakis2018reweighting}
-E.~Krasanakis, E.~Spyromitros-Xioufis, S.~Papadopoulos, and Y.~Kompatsiaris, ``Adaptive sensitive reweighting to mitigate bias in fairness-aware classification,'' in {\em Proceedings of the 2018 World Wide Web Conference (WWW)}, 2018.
-
 \bibitem{bellamy2018ai360}
 R.~K.~E. Bellamy {\em et~al.}, ``Ai fairness 360: An extensible toolkit for detecting, understanding, and mitigating unwanted algorithmic bias,'' 2018.
 \newblock arXiv:1810.01943.
+
+\bibitem{krasanakis2018reweighting}
+E.~Krasanakis, E.~Spyromitros-Xioufis, S.~Papadopoulos, and Y.~Kompatsiaris, ``Adaptive sensitive reweighting to mitigate bias in fairness-aware classification,'' in {\em Proceedings of the 2018 World Wide Web Conference (WWW)}, 2018.
 
 \bibitem{algorithmfairnessmedicine2021}
 M.~A. Ahmad {\em et~al.}, ``Algorithm fairness in ai for medicine and healthcare,'' 2021.
@@ -109,12 +189,21 @@ H.~Edwards and A.~Storkey, ``Censoring representations with an adversary,'' in {
 \bibitem{zemel2013fairrepr}
 R.~Zemel, Y.~Wu, K.~Swersky, T.~Pitassi, and C.~Dwork, ``Learning fair representations,'' in {\em Proceedings of the 30th International Conference on Machine Learning (ICML)}, 2013.
 
-\bibitem{du2019fairnessdeeplearning}
-M.~Du, F.~Yang, N.~Zou, and X.~Hu, ``Fairness in deep learning: A computational perspective,'' 2019.
-\newblock arXiv:1908.08843.
-
 \bibitem{yang2024datasetrepresentativeness}
 J.~Yang {\em et~al.}, ``Dataset representativeness and downstream task fairness,'' 2024.
 \newblock arXiv:2407.00170.
+
+\bibitem{machado2023balancing}
+D.~Machado, V.~Santos~Costa, and P.~Brandão, ``Using balancing methods to improve glycaemia-based data mining,'' in {\em Proceedings of the 16th International Joint Conference on Biomedical Engineering Systems and Technologies (BIOSTEC 2023), Volume 5: HEALTHINF}, pp.~188--198, 2023.
+
+\bibitem{thomsen2025racial}
+H.~B. Thomsen, L.~Y. Li, A.~A. Isaksen, B.~Lebiecka-Johansen, C.~Bour, G.~Fagherazzi, W.~P. T.~M. van Doorn, T.~V. Varga, and A.~Hulman, ``Racial disparities in continuous glucose monitoring-based 60-min glucose predictions among people with type 1 diabetes,'' {\em PLOS Digital Health}, vol.~4, no.~6, p.~e0000918, 2025.
+
+\bibitem{tashiro2021csdi}
+Y.~Tashiro, J.~Song, Y.~Song, and S.~Ermon, ``{CSDI}: Conditional score-based diffusion models for probabilistic time series imputation,'' in {\em Advances in Neural Information Processing Systems (NeurIPS 2021)}, vol.~34, pp.~24804--24816, 2021.
+\newblock Disponible en: \url{https://arxiv.org/abs/2107.03502}.
+
+\bibitem{bing2022healthgen}
+A.~Bing {\em et~al.}, ``Healthgen: Equitable synthetic ehr generation,'' {\em PMC}, 2022.
 
 \end{thebibliography}

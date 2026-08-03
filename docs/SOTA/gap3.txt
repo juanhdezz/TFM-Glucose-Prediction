@@ -1,0 +1,9 @@
+GAP 3 — Conditional synthetic generation of CGM time-series by demographic attributes
+
+The only direct CGM conditional-generation paper I found is the CGAN for CGM signals, but it conditions on HbA1c category, not sex or age.
+
+https://pmc.ncbi.nlm.nih.gov/articles/PMC9445350/
+
+The best demographic-conditioning paper is on medical time series generally, with age/sex/ethnicity control, and it explicitly argues this can improve downstream fairness—but it is not CGM-specific.
+
+https://journals.plos.org/digitalhealth/article?id=10.1371/journal.pdig.0000074

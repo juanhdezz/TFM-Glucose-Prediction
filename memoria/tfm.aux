@@ -19,199 +19,382 @@
 \newlabel{section:objetivos}{{1.2}{2}{Objetivos}{section.1.2}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {1.3}Estructura del trabajo}{3}{section.1.3}\protected@file@percent }
 \newlabel{section:estructura}{{1.3}{3}{Estructura del trabajo}{section.1.3}{}}
-\newlabel{chapter:estado-arte}{{1.3}{4}{Estructura del trabajo}{section.1.3}{}}
-\citation{hochreiter1997long}
-\citation{mirshekarian2019using}
+\newlabel{chapter:fundamentos}{{1.3}{4}{Estructura del trabajo}{section.1.3}{}}
 \citation{atkinson2014type1}
+\citation{divers2020prevalence}
+\citation{sediabetes2023}
 \citation{kovatchev2019metrics}
-\@writefile{toc}{\contentsline {chapter}{\numberline {2}Estado del arte}{5}{chapter.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {2}Fundamentación teórica}{5}{chapter.2}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {2.1}Introducción}{5}{section.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2.1}Contexto clínico: DM1 y monitorización continua de glucosa}{5}{section.2.1}\protected@file@percent }
+\newlabel{sec:conceptos_clinicos}{{2.1}{5}{Contexto clínico: DM1 y monitorización continua de glucosa}{section.2.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.1}Diabetes mellitus tipo 1: fisiopatología y desafíos de gestión}{5}{subsection.2.1.1}\protected@file@percent }
+\newlabel{subsec:dm1_fisiopatologia}{{2.1.1}{5}{Diabetes mellitus tipo 1: fisiopatología y desafíos de gestión}{subsection.2.1.1}{}}
+\citation{brownlee2005pathobiology}
 \citation{klonoff2017cgm}
-\citation{little2019statistical}
-\citation{sun2023diatrend}
-\citation{aleppo2017replace}
-\citation{diaz2023t1dgranada}
-\@writefile{toc}{\contentsline {section}{\numberline {2.2}Diabetes Tipo 1 y monitorización continua de glucosa: contexto necesario}{6}{section.2.2}\protected@file@percent }
-\newlabel{sec:contexto_dm1_cgm}{{2.2}{6}{Diabetes Tipo 1 y monitorización continua de glucosa: contexto necesario}{section.2.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.1}Diabetes Mellitus Tipo 1}{6}{subsection.2.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.2}Monitorización continua de glucosa (CGM)}{6}{subsection.2.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.3}\emph  {Datasets} utilizados en este trabajo}{6}{subsection.2.2.3}\protected@file@percent }
-\newlabel{subsec:datasets_utilizados}{{2.2.3}{6}{\emph {Datasets} utilizados en este trabajo}{subsection.2.2.3}{}}
-\citation{sparacino2007glucose}
+\citation{rebrin2000subcutaneous}
+\citation{battelino2019clinical}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.2}Monitorización continua de glucosa: principio de funcionamiento y métricas clínicas}{6}{subsection.2.1.2}\protected@file@percent }
+\newlabel{subsec:cgm_metricas}{{2.1.2}{6}{Monitorización continua de glucosa: principio de funcionamiento y métricas clínicas}{subsection.2.1.2}{}}
+\citation{clarke1987evaluating}
+\citation{rumelhart1986learning}
+\citation{bengio1994learning}
+\citation{hochreiter1997lstm}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.3}Métricas de error en predicción de glucosa}{7}{subsection.2.1.3}\protected@file@percent }
+\newlabel{subsec:metricas_error}{{2.1.3}{7}{Métricas de error en predicción de glucosa}{subsection.2.1.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.2}Aprendizaje profundo para series temporales: redes LSTM}{7}{section.2.2}\protected@file@percent }
+\newlabel{sec:deep_learning_lstm}{{2.2}{7}{Aprendizaje profundo para series temporales: redes LSTM}{section.2.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.1}Redes neuronales recurrentes: motivación y limitaciones}{7}{subsection.2.2.1}\protected@file@percent }
+\newlabel{subsec:rnn_motivacion}{{2.2.1}{7}{Redes neuronales recurrentes: motivación y limitaciones}{subsection.2.2.1}{}}
 \citation{hochreiter1997long}
+\citation{sparacino2007glucose}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.2}Redes LSTM: arquitectura y mecanismo de puertas}{8}{subsection.2.2.2}\protected@file@percent }
+\newlabel{subsec:lstm_arquitectura}{{2.2.2}{8}{Redes LSTM: arquitectura y mecanismo de puertas}{subsection.2.2.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.3}Predicción de glucosa como regresión temporal con ventana deslizante}{8}{subsection.2.2.3}\protected@file@percent }
+\newlabel{subsec:prediccion_glucosa_formulacion}{{2.2.3}{8}{Predicción de glucosa como regresión temporal con ventana deslizante}{subsection.2.2.3}{}}
+\citation{groupkfold_sklearn}
+\citation{he2009learning}
+\citation{branco2016survey}
+\citation{fernandez2018learning}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.4}Validación cruzada por grupos en datos de pacientes}{9}{subsection.2.2.4}\protected@file@percent }
+\newlabel{subsec:group_kfold}{{2.2.4}{9}{Validación cruzada por grupos en datos de pacientes}{subsection.2.2.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.3}\emph  {Imbalanced learning} y desequilibrio demográfico}{9}{section.2.3}\protected@file@percent }
+\newlabel{sec:imbalanced_learning}{{2.3}{9}{\emph {Imbalanced learning} y desequilibrio demográfico}{section.2.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.1}Desequilibrio de clase: definición y consecuencias}{9}{subsection.2.3.1}\protected@file@percent }
+\newlabel{subsec:class_imbalance}{{2.3.1}{9}{Desequilibrio de clase: definición y consecuencias}{subsection.2.3.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.2}Técnicas de remuestreo en \emph  {imbalanced learning}}{9}{subsection.2.3.2}\protected@file@percent }
+\newlabel{subsec:tecnicas_remuestreo}{{2.3.2}{9}{Técnicas de remuestreo en \emph {imbalanced learning}}{subsection.2.3.2}{}}
+\citation{tomek1976two}
+\citation{chawla2002smote}
+\citation{batista2004study}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.3}Extensión al desequilibrio demográfico}{10}{subsection.2.3.3}\protected@file@percent }
+\newlabel{subsec:desequilibrio_demografico_extension}{{2.3.3}{10}{Extensión al desequilibrio demográfico}{subsection.2.3.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.4}Métricas de evaluación en contexto de desequilibrio}{10}{subsection.2.3.4}\protected@file@percent }
+\newlabel{subsec:metricas_imbalanced}{{2.3.4}{10}{Métricas de evaluación en contexto de desequilibrio}{subsection.2.3.4}{}}
+\newlabel{chapter:estado-arte}{{2.3.4}{11}{Métricas de evaluación en contexto de desequilibrio}{subsection.2.3.4}{}}
+\citation{bergman1979minimal}
+\citation{contreras2003arima}
+\citation{reifman2007predictive}
+\@writefile{toc}{\contentsline {chapter}{\numberline {3}Estado del arte}{13}{chapter.3}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\@writefile{toc}{\contentsline {section}{\numberline {3.1}Modelos de predicción de glucosa}{13}{section.3.1}\protected@file@percent }
+\newlabel{sec:prediccion_glucosa_literatura}{{3.1}{13}{Modelos de predicción de glucosa}{section.3.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.1}Modelos fisiológicos y basados en ecuaciones}{13}{subsection.3.1.1}\protected@file@percent }
+\newlabel{subsec:modelos_fisiologicos}{{3.1.1}{13}{Modelos fisiológicos y basados en ecuaciones}{subsection.3.1.1}{}}
+\citation{pappada2011development}
+\citation{fraccaro2016prediction}
+\citation{li2019convolutional}
 \citation{mirshekarian2019using}
+\citation{naumova2010multivariable}
+\citation{li2023gluctx}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.2}Métodos estadísticos de series temporales}{14}{subsection.3.1.2}\protected@file@percent }
+\newlabel{subsec:modelos_estadisticos}{{3.1.2}{14}{Métodos estadísticos de series temporales}{subsection.3.1.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.3}Aprendizaje automático clásico}{14}{subsection.3.1.3}\protected@file@percent }
+\newlabel{subsec:modelos_clasicos_ml}{{3.1.3}{14}{Aprendizaje automático clásico}{subsection.3.1.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.4}Aprendizaje profundo: CNN y LSTM}{14}{subsection.3.1.4}\protected@file@percent }
+\newlabel{subsec:modelos_dl}{{3.1.4}{14}{Aprendizaje profundo: CNN y LSTM}{subsection.3.1.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.5}Tendencias actuales}{14}{subsection.3.1.5}\protected@file@percent }
+\newlabel{subsec:tendencias_prediccion}{{3.1.5}{14}{Tendencias actuales}{subsection.3.1.5}{}}
 \citation{oviedo2017review}
+\citation{man2014uva}
+\citation{marling2020ohiot1dm}
+\citation{dubosson2018d1namo}
+\citation{aleppo2017replace}
+\@writefile{toc}{\contentsline {section}{\numberline {3.2}\emph  {Datasets} para la predicción de glucosa}{15}{section.3.2}\protected@file@percent }
+\newlabel{sec:datasets_literatura}{{3.2}{15}{\emph {Datasets} para la predicción de glucosa}{section.3.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.1}Categorías generales de \emph  {datasets}}{15}{subsection.3.2.1}\protected@file@percent }
+\newlabel{subsec:categorias_datasets}{{3.2.1}{15}{Categorías generales de \emph {datasets}}{subsection.3.2.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.2}Repositorios abiertos y sus limitaciones}{15}{subsection.3.2.2}\protected@file@percent }
+\newlabel{subsec:repositorios_limitaciones}{{3.2.2}{15}{Repositorios abiertos y sus limitaciones}{subsection.3.2.2}{}}
+\citation{sun2023diatrend}
+\citation{diaz2023t1dgranada}
+\citation{divers2020prevalence}
 \citation{mauvaisjarvis2023sexdiff}
 \citation{conti2025sexcgm}
 \citation{vanderheijden2025sexdisparity}
-\@writefile{lot}{\contentsline {table}{\numberline {2.1}{\ignorespaces \emph  {Datasets} utilizados en este trabajo y disponibilidad de variables demográficas.}}{7}{table.caption.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.3}\emph  {Datasets} utilizados en este trabajo}{16}{subsection.3.2.3}\protected@file@percent }
+\newlabel{subsec:datasets_utilizados}{{3.2.3}{16}{\emph {Datasets} utilizados en este trabajo}{subsection.3.2.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.1}{\ignorespaces \emph  {Datasets} utilizados en este trabajo y disponibilidad de variables demográficas.}}{16}{table.caption.9}\protected@file@percent }
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{tab:datasets_comparacion_demografico}{{2.1}{7}{\emph {Datasets} utilizados en este trabajo y disponibilidad de variables demográficas}{table.caption.9}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.4}Predicción de glucosa mediante LSTM: formulación del problema}{7}{subsection.2.2.4}\protected@file@percent }
-\newlabel{subsec:formulacion_problema}{{2.2.4}{7}{Predicción de glucosa mediante LSTM: formulación del problema}{subsection.2.2.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {2.3}Diferencias fisiológicas por sexo y edad en la dinámica glucémica}{7}{section.2.3}\protected@file@percent }
-\newlabel{sec:diferencias_fisiologicas_sexo_edad}{{2.3}{7}{Diferencias fisiológicas por sexo y edad en la dinámica glucémica}{section.2.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.1}Diferencias por sexo}{7}{subsection.2.3.1}\protected@file@percent }
+\newlabel{tab:datasets_comparacion_demografico}{{3.1}{16}{\emph {Datasets} utilizados en este trabajo y disponibilidad de variables demográficas}{table.caption.9}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}Diferencias por sexo y edad en la dinámica glucémica}{16}{section.3.3}\protected@file@percent }
+\newlabel{sec:diferencias_fisiologicas_sexo_edad}{{3.3}{16}{Diferencias por sexo y edad en la dinámica glucémica}{section.3.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}Diferencias por sexo}{16}{subsection.3.3.1}\protected@file@percent }
+\newlabel{subsec:diferencias_sexo}{{3.3.1}{16}{Diferencias por sexo}{subsection.3.3.1}{}}
 \citation{deng2022schooldays}
 \citation{nwokolo2024agecgm}
 \citation{straw2022sexbias}
 \citation{ricci2024sociodemographic}
 \citation{ricci2024sociodemographic}
 \citation{straw2022sexbias}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.2}Diferencias por edad}{8}{subsection.2.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2.4}Desequilibrio demográfico en \emph  {datasets} clínicos y su impacto en el aprendizaje automático}{8}{section.2.4}\protected@file@percent }
-\newlabel{sec:desequilibrio_demografico_impacto_ml}{{2.4}{8}{Desequilibrio demográfico en \emph {datasets} clínicos y su impacto en el aprendizaje automático}{section.2.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.1}Desequilibrio demográfico frente a desequilibrio de clase}{8}{subsection.2.4.1}\protected@file@percent }
-\newlabel{subsec:desequilibrio_demografico_vs_clase}{{2.4.1}{8}{Desequilibrio demográfico frente a desequilibrio de clase}{subsection.2.4.1}{}}
 \citation{wang2024disparate}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}Diferencias por edad}{17}{subsection.3.3.2}\protected@file@percent }
+\newlabel{subsec:diferencias_edad}{{3.3.2}{17}{Diferencias por edad}{subsection.3.3.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.4}Desequilibrio demográfico en modelos clínicos}{17}{section.3.4}\protected@file@percent }
+\newlabel{sec:desequilibrio_demografico_literatura}{{3.4}{17}{Desequilibrio demográfico en modelos clínicos}{section.3.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.1}Desequilibrio demográfico frente a desequilibrio de clase}{17}{subsection.3.4.1}\protected@file@percent }
+\newlabel{subsec:desequilibrio_demografico_vs_clase}{{3.4.1}{17}{Desequilibrio demográfico frente a desequilibrio de clase}{subsection.3.4.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.2}Evidencia de disparidad de rendimiento por subgrupo}{17}{subsection.3.4.2}\protected@file@percent }
+\newlabel{subsec:evidencia_disparidad_rendimiento}{{3.4.2}{17}{Evidencia de disparidad de rendimiento por subgrupo}{subsection.3.4.2}{}}
 \citation{yan2022doubleprioritized}
 \citation{ovalle2024racial}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.2}Evidencia de disparidad de rendimiento por subgrupo demográfico en modelos clínicos}{9}{subsection.2.4.2}\protected@file@percent }
-\newlabel{subsec:evidencia_disparidad_rendimiento}{{2.4.2}{9}{Evidencia de disparidad de rendimiento por subgrupo demográfico en modelos clínicos}{subsection.2.4.2}{}}
 \citation{kamiran2012data}
 \citation{zliobaite2017measuring}
 \citation{fairmodels2021}
-\citation{krasanakis2018reweighting}
 \citation{bellamy2018ai360}
 \citation{ricci2024sociodemographic}
 \citation{fairmodels2021}
 \citation{kamiran2012data}
-\@writefile{toc}{\contentsline {section}{\numberline {2.5}Técnicas de mitigación del desequilibrio demográfico}{10}{section.2.5}\protected@file@percent }
-\newlabel{sec:tecnicas_balanceo_demografico}{{2.5}{10}{Técnicas de mitigación del desequilibrio demográfico}{section.2.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.1}Reponderado de muestras (\emph  {Reweighting})}{10}{subsection.2.5.1}\protected@file@percent }
-\newlabel{subsec:reweighting}{{2.5.1}{10}{Reponderado de muestras (\emph {Reweighting})}{subsection.2.5.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.2}Remuestreo dirigido por grupo demográfico}{10}{subsection.2.5.2}\protected@file@percent }
-\newlabel{subsec:group_resampling}{{2.5.2}{10}{Remuestreo dirigido por grupo demográfico}{subsection.2.5.2}{}}
 \citation{krasanakis2018reweighting}
 \citation{algorithmfairnessmedicine2021}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.3}Técnicas de mitigación del desequilibrio demográfico}{18}{subsection.3.4.3}\protected@file@percent }
+\newlabel{sec:tecnicas_balanceo_demografico}{{3.4.3}{18}{Técnicas de mitigación del desequilibrio demográfico}{subsection.3.4.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Reponderado de muestras (\emph  {Reweighting})}{18}{section*.10}\protected@file@percent }
+\newlabel{subsec:reweighting}{{3.4.3}{18}{Reponderado de muestras (\emph {Reweighting})}{section*.10}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Remuestreo dirigido por grupo demográfico}{18}{section*.11}\protected@file@percent }
+\newlabel{subsec:group_resampling}{{3.4.3}{18}{Remuestreo dirigido por grupo demográfico}{section*.11}{}}
 \citation{chu2024agebias}
 \citation{yan2022doubleprioritized}
 \citation{yoon2019timegan}
 \citation{dong2023tsgan}
 \citation{dahmen2022conditionalgan}
-\citation{dong2023tsgan}
-\citation{dahmen2022conditionalgan}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.3}Generación sintética condicionada mediante redes generativas adversarias temporales}{11}{subsection.2.5.3}\protected@file@percent }
-\newlabel{subsec:timegan_demografico}{{2.5.3}{11}{Generación sintética condicionada mediante redes generativas adversarias temporales}{subsection.2.5.3}{}}
 \citation{louizos2016variational}
 \citation{edwards2016censoring}
 \citation{zemel2013fairrepr}
-\citation{du2019fairnessdeeplearning}
-\citation{du2019fairnessdeeplearning}
-\citation{louizos2016variational}
-\citation{edwards2016censoring}
-\citation{algorithmfairnessmedicine2021}
 \citation{yang2024datasetrepresentativeness}
-\citation{yang2024datasetrepresentativeness}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.4}Aprendizaje de representaciones invariantes al atributo demográfico}{12}{subsection.2.5.4}\protected@file@percent }
-\newlabel{subsec:adversarial_debiasing}{{2.5.4}{12}{Aprendizaje de representaciones invariantes al atributo demográfico}{subsection.2.5.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.5}Validación cruzada con muestreo estratificado por grupo demográfico}{12}{subsection.2.5.5}\protected@file@percent }
-\newlabel{subsec:stratified_cv_demografico}{{2.5.5}{12}{Validación cruzada con muestreo estratificado por grupo demográfico}{subsection.2.5.5}{}}
-\citation{wang2024disparate}
+\@writefile{toc}{\contentsline {subsubsection}{Generación sintética mediante redes generativas adversarias temporales}{19}{section*.12}\protected@file@percent }
+\newlabel{subsec:timegan_demografico}{{3.4.3}{19}{Generación sintética mediante redes generativas adversarias temporales}{section*.12}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Representaciones invariantes al atributo demográfico}{19}{section*.13}\protected@file@percent }
+\newlabel{subsec:adversarial_debiasing}{{3.4.3}{19}{Representaciones invariantes al atributo demográfico}{section*.13}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Validación cruzada con muestreo estratificado por grupo}{19}{section*.14}\protected@file@percent }
+\newlabel{subsec:stratified_cv_demografico}{{3.4.3}{19}{Validación cruzada con muestreo estratificado por grupo}{section*.14}{}}
+\citation{machado2023balancing}
+\@writefile{toc}{\contentsline {subsubsection}{Comparativa de técnicas}{20}{section*.15}\protected@file@percent }
+\newlabel{subsec:comparativa_balanceo_demografico}{{3.4.3}{20}{Comparativa de técnicas}{section*.15}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.2}{\ignorespaces Comparativa de técnicas para la mitigación del desequilibrio demográfico.}}{20}{table.caption.16}\protected@file@percent }
+\newlabel{tab:comparativa_balanceo_demografico}{{3.2}{20}{Comparativa de técnicas para la mitigación del desequilibrio demográfico}{table.caption.16}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.5}Técnicas de balanceo en series temporales y datos médicos}{20}{section.3.5}\protected@file@percent }
+\newlabel{sec:tecnicas_balanceo_series_temporales}{{3.5}{20}{Técnicas de balanceo en series temporales y datos médicos}{section.3.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.1}Balanceo en datos de series temporales: estado de la cuestión}{20}{subsection.3.5.1}\protected@file@percent }
+\newlabel{subsec:balanceo_series_temporales}{{3.5.1}{20}{Balanceo en datos de series temporales: estado de la cuestión}{subsection.3.5.1}{}}
 \citation{ovalle2024racial}
-\citation{yan2022doubleprioritized}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.6}Comparativa de técnicas}{13}{subsection.2.5.6}\protected@file@percent }
-\newlabel{subsec:comparativa_balanceo_demografico}{{2.5.6}{13}{Comparativa de técnicas}{subsection.2.5.6}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {2.2}{\ignorespaces Comparativa de técnicas para la mitigación del desequilibrio demográfico.}}{13}{table.caption.10}\protected@file@percent }
-\newlabel{tab:comparativa_balanceo_demografico}{{2.2}{13}{Comparativa de técnicas para la mitigación del desequilibrio demográfico}{table.caption.10}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.7}Discusión y técnica seleccionada}{13}{subsection.2.5.7}\protected@file@percent }
-\newlabel{subsec:discusion_balanceo_demografico}{{2.5.7}{13}{Discusión y técnica seleccionada}{subsection.2.5.7}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {2.6}Brechas en la literatura y motivación del presente trabajo}{13}{section.2.6}\protected@file@percent }
-\newlabel{sec:brechas_motivacion}{{2.6}{13}{Brechas en la literatura y motivación del presente trabajo}{section.2.6}{}}
-\citation{wang2024disparate}
-\citation{yan2022doubleprioritized}
-\citation{ricci2024sociodemographic}
-\@writefile{toc}{\contentsline {chapter}{\numberline {3}Desarrollo del TFM}{15}{chapter.3}\protected@file@percent }
+\citation{dahmen2022conditionalgan}
+\citation{thomsen2025racial}
+\citation{yoon2019timegan}
+\citation{dong2023tsgan}
+\citation{tashiro2021csdi}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.2}Balanceo demográfico en series temporales fisiológicas}{21}{subsection.3.5.2}\protected@file@percent }
+\newlabel{subsec:balanceo_demografico_series}{{3.5.2}{21}{Balanceo demográfico en series temporales fisiológicas}{subsection.3.5.2}{}}
+\citation{bing2022healthgen}
+\citation{mayo2019glycemic}
+\citation{thomsen2025racial}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.3}Generación sintética de series temporales fisiológicas}{22}{subsection.3.5.3}\protected@file@percent }
+\newlabel{subsec:generacion_sintetica_series}{{3.5.3}{22}{Generación sintética de series temporales fisiológicas}{subsection.3.5.3}{}}
+\citation{thomsen2025racial}
+\citation{sandig2020cgm}
+\citation{machado2023balancing}
+\citation{mayo2019glycemic}
+\citation{thomsen2025racial}
+\@writefile{toc}{\contentsline {section}{\numberline {3.6}Brechas en la literatura y motivación del trabajo}{23}{section.3.6}\protected@file@percent }
+\newlabel{sec:brechas_motivacion}{{3.6}{23}{Brechas en la literatura y motivación del trabajo}{section.3.6}{}}
+\newlabel{chapter:desarrollo}{{3.6}{24}{Brechas en la literatura y motivación del trabajo}{section.3.6}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {4}Desarrollo del trabajo}{25}{chapter.4}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{chapter:desarrollo}{{3}{15}{Desarrollo del TFM}{chapter.3}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.1}Cómo colocar tablas y figuras}{15}{section.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {4}Resultados y discusión}{17}{chapter.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.1}Recopilación y descripción de los datos}{25}{section.4.1}\protected@file@percent }
+\newlabel{sec:recopilacion_datos}{{4.1}{25}{Recopilación y descripción de los datos}{section.4.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.1}Criterios de selección de los \emph  {datasets}}{25}{subsection.4.1.1}\protected@file@percent }
+\newlabel{subsec:criterios_seleccion}{{4.1.1}{25}{Criterios de selección de los \emph {datasets}}{subsection.4.1.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.2}T1DiabetesGranada}{25}{subsection.4.1.2}\protected@file@percent }
+\newlabel{subsec:dataset_t1dgranada}{{4.1.2}{25}{T1DiabetesGranada}{subsection.4.1.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.3}REPLACE-BG}{25}{subsection.4.1.3}\protected@file@percent }
+\newlabel{subsec:dataset_replacebg}{{4.1.3}{25}{REPLACE-BG}{subsection.4.1.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.4}DiaTrend}{25}{subsection.4.1.4}\protected@file@percent }
+\newlabel{subsec:dataset_diatrend}{{4.1.4}{25}{DiaTrend}{subsection.4.1.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.5}Estructura unificada de datos de entrada}{25}{subsection.4.1.5}\protected@file@percent }
+\newlabel{subsec:estructura_datos_entrada}{{4.1.5}{25}{Estructura unificada de datos de entrada}{subsection.4.1.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.2}Análisis exploratorio de datos}{25}{section.4.2}\protected@file@percent }
+\newlabel{sec:eda}{{4.2}{25}{Análisis exploratorio de datos}{section.4.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}Distribución demográfica de los \emph  {datasets}}{26}{subsection.4.2.1}\protected@file@percent }
+\newlabel{subsec:eda_demografico}{{4.2.1}{26}{Distribución demográfica de los \emph {datasets}}{subsection.4.2.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}Distribución de la señal CGM}{26}{subsection.4.2.2}\protected@file@percent }
+\newlabel{subsec:eda_cgm}{{4.2.2}{26}{Distribución de la señal CGM}{subsection.4.2.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.3}Análisis de datos ausentes}{26}{subsection.4.2.3}\protected@file@percent }
+\newlabel{subsec:eda_missing}{{4.2.3}{26}{Análisis de datos ausentes}{subsection.4.2.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.4}Análisis de separabilidad demográfica}{26}{subsection.4.2.4}\protected@file@percent }
+\newlabel{subsec:eda_separabilidad}{{4.2.4}{26}{Análisis de separabilidad demográfica}{subsection.4.2.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.3}Detección y cuantificación del desequilibrio demográfico}{26}{section.4.3}\protected@file@percent }
+\newlabel{sec:deteccion_imbalance}{{4.3}{26}{Detección y cuantificación del desequilibrio demográfico}{section.4.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.1}Desequilibrio a nivel de paciente frente a nivel de ventana}{26}{subsection.4.3.1}\protected@file@percent }
+\newlabel{subsec:imbalance_paciente_vs_ventana}{{4.3.1}{26}{Desequilibrio a nivel de paciente frente a nivel de ventana}{subsection.4.3.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.2}Desequilibrio por dimensión demográfica y \emph  {fold}}{26}{subsection.4.3.2}\protected@file@percent }
+\newlabel{subsec:imbalance_por_fold}{{4.3.2}{26}{Desequilibrio por dimensión demográfica y \emph {fold}}{subsection.4.3.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.4}Investigación de técnicas de balanceo para series temporales}{26}{section.4.4}\protected@file@percent }
+\newlabel{sec:investigacion_tecnicas}{{4.4}{26}{Investigación de técnicas de balanceo para series temporales}{section.4.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.1}Criterios de selección de técnicas}{26}{subsection.4.4.1}\protected@file@percent }
+\newlabel{subsec:criterios_tecnicas}{{4.4.1}{26}{Criterios de selección de técnicas}{subsection.4.4.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.2}Taxonomía de técnicas implementadas}{26}{subsection.4.4.2}\protected@file@percent }
+\newlabel{subsec:taxonomia_tecnicas}{{4.4.2}{26}{Taxonomía de técnicas implementadas}{subsection.4.4.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Familia aleatoria}{26}{section*.17}\protected@file@percent }
+\newlabel{subsubsec:familia_aleatoria}{{4.4.2}{26}{Familia aleatoria}{section*.17}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Familia guiada}{26}{section*.18}\protected@file@percent }
+\newlabel{subsubsec:familia_guiada}{{4.4.2}{26}{Familia guiada}{section*.18}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Familia híbrida}{26}{section*.19}\protected@file@percent }
+\newlabel{subsubsec:familia_hibrida}{{4.4.2}{26}{Familia híbrida}{section*.19}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.3}Validación formal del \emph  {pipeline} de balanceo}{26}{subsection.4.4.3}\protected@file@percent }
+\newlabel{subsec:validacion_pipeline}{{4.4.3}{26}{Validación formal del \emph {pipeline} de balanceo}{subsection.4.4.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.5}Transformación de datos: generación de ventanas deslizantes}{26}{section.4.5}\protected@file@percent }
+\newlabel{sec:transformacion_ventanas}{{4.5}{26}{Transformación de datos: generación de ventanas deslizantes}{section.4.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.1}Parámetros de ventana}{27}{subsection.4.5.1}\protected@file@percent }
+\newlabel{subsec:parametros_ventana}{{4.5.1}{27}{Parámetros de ventana}{subsection.4.5.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.2}Restricciones de continuidad temporal}{27}{subsection.4.5.2}\protected@file@percent }
+\newlabel{subsec:restricciones_continuidad}{{4.5.2}{27}{Restricciones de continuidad temporal}{subsection.4.5.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.3}Esquema de partición: \emph  {Group K-Fold} con $K=5$}{27}{subsection.4.5.3}\protected@file@percent }
+\newlabel{subsec:group_kfold_implementacion}{{4.5.3}{27}{Esquema de partición: \emph {Group K-Fold} con $K=5$}{subsection.4.5.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.6}Análisis exploratorio de ventanas}{27}{section.4.6}\protected@file@percent }
+\newlabel{sec:eda_ventanas}{{4.6}{27}{Análisis exploratorio de ventanas}{section.4.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.1}Distribución de ventanas por grupo demográfico y \emph  {fold}}{27}{subsection.4.6.1}\protected@file@percent }
+\newlabel{subsec:eda_ventanas_demografico}{{4.6.1}{27}{Distribución de ventanas por grupo demográfico y \emph {fold}}{subsection.4.6.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.2}Distribución de la variable objetivo por grupo demográfico}{27}{subsection.4.6.2}\protected@file@percent }
+\newlabel{subsec:eda_ventanas_objetivo}{{4.6.2}{27}{Distribución de la variable objetivo por grupo demográfico}{subsection.4.6.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.3}Verificación de integridad de las particiones}{27}{subsection.4.6.3}\protected@file@percent }
+\newlabel{subsec:eda_ventanas_integridad}{{4.6.3}{27}{Verificación de integridad de las particiones}{subsection.4.6.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.7}Arquitectura del modelo LSTM}{27}{section.4.7}\protected@file@percent }
+\newlabel{sec:arquitectura_lstm}{{4.7}{27}{Arquitectura del modelo LSTM}{section.4.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.7.1}Especificación de la arquitectura}{27}{subsection.4.7.1}\protected@file@percent }
+\newlabel{subsec:arquitectura_especificacion}{{4.7.1}{27}{Especificación de la arquitectura}{subsection.4.7.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.7.2}Función de pérdida y optimizador}{27}{subsection.4.7.2}\protected@file@percent }
+\newlabel{subsec:loss_optimizador}{{4.7.2}{27}{Función de pérdida y optimizador}{subsection.4.7.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.7.3}Estrategia de entrenamiento}{27}{subsection.4.7.3}\protected@file@percent }
+\newlabel{subsec:estrategia_entrenamiento}{{4.7.3}{27}{Estrategia de entrenamiento}{subsection.4.7.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.7.4}Configuración del entorno de ejecución}{27}{subsection.4.7.4}\protected@file@percent }
+\newlabel{subsec:entorno_ejecucion}{{4.7.4}{27}{Configuración del entorno de ejecución}{subsection.4.7.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.8}\emph  {Pipeline} de entrenamiento y evaluación}{27}{section.4.8}\protected@file@percent }
+\newlabel{sec:pipeline_entrenamiento}{{4.8}{27}{\emph {Pipeline} de entrenamiento y evaluación}{section.4.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.8.1}Modo original y modo balanceado}{27}{subsection.4.8.1}\protected@file@percent }
+\newlabel{subsec:modos_pipeline}{{4.8.1}{27}{Modo original y modo balanceado}{subsection.4.8.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.8.2}Flujo de datos por \emph  {fold}}{27}{subsection.4.8.2}\protected@file@percent }
+\newlabel{subsec:flujo_datos_fold}{{4.8.2}{27}{Flujo de datos por \emph {fold}}{subsection.4.8.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.8.3}Evaluación por rango glucémico}{27}{subsection.4.8.3}\protected@file@percent }
+\newlabel{subsec:evaluacion_por_rango}{{4.8.3}{27}{Evaluación por rango glucémico}{subsection.4.8.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.8.4}Agregación de resultados y protocolo estadístico}{27}{subsection.4.8.4}\protected@file@percent }
+\newlabel{subsec:agregacion_resultados}{{4.8.4}{27}{Agregación de resultados y protocolo estadístico}{subsection.4.8.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.8.5}Trazabilidad y reproducibilidad}{27}{subsection.4.8.5}\protected@file@percent }
+\newlabel{subsec:trazabilidad}{{4.8.5}{27}{Trazabilidad y reproducibilidad}{subsection.4.8.5}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {5}Resultados y discusión}{29}{chapter.5}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{chapter:resultados}{{4}{17}{Resultados y discusión}{chapter.4}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces Tabla grande}}{17}{table.caption.11}\protected@file@percent }
-\newlabel{tab:mi-tabla-grande}{{4.1}{17}{Tabla grande}{table.caption.11}{}}
-\newlabel{RF1}{18}
-\@writefile{lot}{\contentsline {table}{\numberline {4.2}{\ignorespaces Tabla enorme}}{18}{table.caption.12}\protected@file@percent }
-\newlabel{tab:mi-tabla-enorme}{{4.2}{18}{Tabla enorme}{table.caption.12}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Mi logo}}{19}{figure.caption.13}\protected@file@percent }
-\newlabel{fig:logo}{{4.1}{19}{Mi logo}{figure.caption.13}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces Lista de distribuciones}}{19}{figure.caption.14}\protected@file@percent }
-\newlabel{fig:grafica}{{4.2}{19}{Lista de distribuciones}{figure.caption.14}{}}
+\newlabel{chapter:resultados}{{5}{29}{Resultados y discusión}{chapter.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.1}{\ignorespaces Tabla grande}}{29}{table.caption.20}\protected@file@percent }
+\newlabel{tab:mi-tabla-grande}{{5.1}{29}{Tabla grande}{table.caption.20}{}}
+\newlabel{RF1}{30}
+\@writefile{lot}{\contentsline {table}{\numberline {5.2}{\ignorespaces Tabla enorme}}{30}{table.caption.21}\protected@file@percent }
+\newlabel{tab:mi-tabla-enorme}{{5.2}{30}{Tabla enorme}{table.caption.21}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces Mi logo}}{31}{figure.caption.22}\protected@file@percent }
+\newlabel{fig:logo}{{5.1}{31}{Mi logo}{figure.caption.22}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces Lista de distribuciones}}{32}{figure.caption.23}\protected@file@percent }
+\newlabel{fig:grafica}{{5.2}{32}{Lista de distribuciones}{figure.caption.23}{}}
 \bibstyle{ieeetr}
 \bibdata{bibliografia}
-\@writefile{toc}{\contentsline {chapter}{\numberline {5}Conclusiones}{21}{chapter.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {6}Conclusiones}{33}{chapter.6}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{chapter:conclusiones}{{5}{21}{Conclusiones}{chapter.5}{}}
-\bibcite{hochreiter1997long}{1}
-\bibcite{mirshekarian2019using}{2}
-\bibcite{atkinson2014type1}{3}
+\newlabel{chapter:conclusiones}{{6}{33}{Conclusiones}{chapter.6}{}}
+\bibcite{atkinson2014type1}{1}
+\bibcite{divers2020prevalence}{2}
+\bibcite{sediabetes2023}{3}
 \bibcite{kovatchev2019metrics}{4}
-\bibcite{klonoff2017cgm}{5}
-\bibcite{little2019statistical}{6}
-\bibcite{sun2023diatrend}{7}
-\bibcite{aleppo2017replace}{8}
-\bibcite{diaz2023t1dgranada}{9}
-\bibcite{sparacino2007glucose}{10}
-\bibcite{oviedo2017review}{11}
-\bibcite{mauvaisjarvis2023sexdiff}{12}
-\bibcite{conti2025sexcgm}{13}
-\bibcite{vanderheijden2025sexdisparity}{14}
-\bibcite{deng2022schooldays}{15}
-\bibcite{nwokolo2024agecgm}{16}
-\bibcite{straw2022sexbias}{17}
-\bibcite{ricci2024sociodemographic}{18}
-\bibcite{wang2024disparate}{19}
-\bibcite{yan2022doubleprioritized}{20}
-\bibcite{ovalle2024racial}{21}
-\bibcite{kamiran2012data}{22}
-\bibcite{zliobaite2017measuring}{23}
-\bibcite{fairmodels2021}{24}
-\bibcite{krasanakis2018reweighting}{25}
-\bibcite{bellamy2018ai360}{26}
-\bibcite{algorithmfairnessmedicine2021}{27}
-\bibcite{chu2024agebias}{28}
-\bibcite{yoon2019timegan}{29}
-\bibcite{dong2023tsgan}{30}
-\bibcite{dahmen2022conditionalgan}{31}
-\bibcite{louizos2016variational}{32}
-\bibcite{edwards2016censoring}{33}
-\bibcite{zemel2013fairrepr}{34}
-\bibcite{du2019fairnessdeeplearning}{35}
-\bibcite{yang2024datasetrepresentativeness}{36}
-\@writefile{toc}{\contentsline {chapter}{Bibliografía}{25}{chapter*.15}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {A}Ejemplo de anexo: Planificación y gestión del proyecto (opcional)}{27}{appendix.Alph1}\protected@file@percent }
+\bibcite{brownlee2005pathobiology}{5}
+\bibcite{klonoff2017cgm}{6}
+\bibcite{rebrin2000subcutaneous}{7}
+\bibcite{battelino2019clinical}{8}
+\bibcite{clarke1987evaluating}{9}
+\bibcite{rumelhart1986learning}{10}
+\bibcite{bengio1994learning}{11}
+\bibcite{hochreiter1997long}{12}
+\bibcite{sparacino2007glucose}{13}
+\bibcite{groupkfold_sklearn}{14}
+\bibcite{he2009learning}{15}
+\bibcite{branco2016survey}{16}
+\bibcite{fernandez2018learning}{17}
+\bibcite{tomek1976two}{18}
+\bibcite{chawla2002smote}{19}
+\bibcite{batista2004study}{20}
+\bibcite{bergman1979minimal}{21}
+\bibcite{contreras2003arima}{22}
+\bibcite{reifman2007predictive}{23}
+\bibcite{pappada2011development}{24}
+\bibcite{fraccaro2016prediction}{25}
+\bibcite{li2019convolutional}{26}
+\bibcite{mirshekarian2019using}{27}
+\bibcite{naumova2010multivariable}{28}
+\bibcite{li2023gluctx}{29}
+\bibcite{oviedo2017review}{30}
+\bibcite{man2014uva}{31}
+\bibcite{marling2020ohiot1dm}{32}
+\bibcite{dubosson2018d1namo}{33}
+\bibcite{aleppo2017replace}{34}
+\bibcite{sun2023diatrend}{35}
+\bibcite{diaz2023t1dgranada}{36}
+\bibcite{mauvaisjarvis2023sexdiff}{37}
+\bibcite{conti2025sexcgm}{38}
+\bibcite{vanderheijden2025sexdisparity}{39}
+\bibcite{deng2022schooldays}{40}
+\bibcite{nwokolo2024agecgm}{41}
+\bibcite{straw2022sexbias}{42}
+\bibcite{ricci2024sociodemographic}{43}
+\bibcite{wang2024disparate}{44}
+\bibcite{yan2022doubleprioritized}{45}
+\bibcite{ovalle2024racial}{46}
+\bibcite{kamiran2012data}{47}
+\bibcite{zliobaite2017measuring}{48}
+\bibcite{fairmodels2021}{49}
+\bibcite{bellamy2018ai360}{50}
+\bibcite{krasanakis2018reweighting}{51}
+\bibcite{algorithmfairnessmedicine2021}{52}
+\bibcite{chu2024agebias}{53}
+\bibcite{yoon2019timegan}{54}
+\bibcite{dong2023tsgan}{55}
+\bibcite{dahmen2022conditionalgan}{56}
+\bibcite{louizos2016variational}{57}
+\bibcite{edwards2016censoring}{58}
+\bibcite{zemel2013fairrepr}{59}
+\bibcite{yang2024datasetrepresentativeness}{60}
+\bibcite{machado2023balancing}{61}
+\bibcite{thomsen2025racial}{62}
+\bibcite{tashiro2021csdi}{63}
+\bibcite{bing2022healthgen}{64}
+\@writefile{toc}{\contentsline {chapter}{Bibliografía}{39}{chapter*.24}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {A}Ejemplo de anexo: Planificación y gestión del proyecto (opcional)}{41}{appendix.Alph1}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {A.1}Metodología/Ciclo de vida}{28}{section.Alph1.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {A.2}Herramientas y plataformas utilizadas para el desarrollo del proyecto}{28}{section.Alph1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {A.3}Costes del proyecto}{28}{section.Alph1.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {A.4}Gestión del proyecto. Planificación temporal. Diagrama de Gantt}{28}{section.Alph1.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {A.5}Texto añadido}{28}{section.Alph1.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {B}Ejemplo de anexo: Innovación (opcional)}{31}{appendix.Alph2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {A.1}Metodología/Ciclo de vida}{42}{section.Alph1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {A.2}Herramientas y plataformas utilizadas para el desarrollo del proyecto}{42}{section.Alph1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {A.3}Costes del proyecto}{42}{section.Alph1.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {A.4}Gestión del proyecto. Planificación temporal. Diagrama de Gantt}{42}{section.Alph1.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {A.5}Texto añadido}{42}{section.Alph1.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {B}Ejemplo de anexo: Innovación (opcional)}{45}{appendix.Alph2}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {B.1}Estudio del Mercado}{31}{section.Alph2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {B.1.1}Segmentos de Clientes}{31}{subsection.Alph2.1.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {B.1.2}Competidores}{31}{subsection.Alph2.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.2}Propuesta de Valor}{31}{section.Alph2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.3}Recursos Clave}{31}{section.Alph2.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.4}Actividades Clave}{31}{section.Alph2.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.5}Socios y Alianzas Clave}{31}{section.Alph2.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.6}Estructura de Costes Prevista}{32}{section.Alph2.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.7}Vías de Ingresos}{32}{section.Alph2.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.8}Canales de Distribución}{32}{section.Alph2.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.9}Relación con los Clientes}{32}{section.Alph2.9}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.10}Descripción del Producto Mínimo Viable}{32}{section.Alph2.10}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.11}Roadmap de Desarrollo}{32}{section.Alph2.11}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.12}Aspectos Legales}{32}{section.Alph2.12}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.13}Texto añadido}{32}{section.Alph2.13}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {C}Ejemplo de anexo: Manual de usuario (opcional)}{35}{appendix.Alph3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B.1}Estudio del Mercado}{45}{section.Alph2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.1.1}Segmentos de Clientes}{45}{subsection.Alph2.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.1.2}Competidores}{45}{subsection.Alph2.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B.2}Propuesta de Valor}{45}{section.Alph2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B.3}Recursos Clave}{45}{section.Alph2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B.4}Actividades Clave}{45}{section.Alph2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B.5}Socios y Alianzas Clave}{45}{section.Alph2.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B.6}Estructura de Costes Prevista}{46}{section.Alph2.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B.7}Vías de Ingresos}{46}{section.Alph2.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B.8}Canales de Distribución}{46}{section.Alph2.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B.9}Relación con los Clientes}{46}{section.Alph2.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B.10}Descripción del Producto Mínimo Viable}{46}{section.Alph2.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B.11}Roadmap de Desarrollo}{46}{section.Alph2.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B.12}Aspectos Legales}{46}{section.Alph2.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B.13}Texto añadido}{46}{section.Alph2.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {C}Ejemplo de anexo: Manual de usuario (opcional)}{49}{appendix.Alph3}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {C.1}Texto añadido}{35}{section.Alph3.1}\protected@file@percent }
-\gdef \@abspage@last{60}
+\@writefile{toc}{\contentsline {section}{\numberline {C.1}Texto añadido}{49}{section.Alph3.1}\protected@file@percent }
+\gdef \@abspage@last{76}

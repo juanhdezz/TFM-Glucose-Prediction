@@ -1,0 +1,13 @@
+ADDITIONAL GAP — Sex and age differences in glycemic variability measurable from CGM metrics (TIR, CV, MAGE)
+
+Age differences are the most consistent signal in adult T1D CGM data: older adults often show slightly higher TIR and lower CV, though sometimes with modestly higher TBR.
+
+https://pubmed.ncbi.nlm.nih.gov/32522039/
+
+Sex differences in objective CGM metrics are often small or absent; one recent cohort found similar TIR and CV in women and men.
+
+https://pubmed.ncbi.nlm.nih.gov/32522039/
+
+CV and TBR are clinically linked: lower CV generally tracks with less hypoglycemia, even when HbA1c is similar.
+
+https://pmc.ncbi.nlm.nih.gov/articles/PMC11307211/

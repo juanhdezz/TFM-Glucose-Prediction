@@ -1,13 +1,509 @@
-\chapter{Desarrollo del TFM}\label{chapter:desarrollo}
+% =========================================================
+%  CAPÍTULO 3 — DESARROLLO DEL TRABAJO
+%  RELIEF-T1D: Impacto del balanceo demográfico (sexo, edad)
+%  en la predicción de glucosa mediante LSTM sobre datos CGM
+% =========================================================
+\label{chapter:desarrollo}
+\chapter{Desarrollo del trabajo}
 
-En esta parte describirás el trabajo desarrollado, y utilizarás las secciones que creas conveniente para explicarlo.
+Este capítulo describe en detalle el proceso completo llevado a cabo para abordar la pregunta de investigación planteada en el capítulo~\ref{chapter:introduccion}. Se sigue el orden cronológico y lógico del trabajo: desde la recopilación y comprensión de los datos hasta la construcción del \emph{pipeline} de entrenamiento y evaluación que produce los resultados analizados en el capítulo~\ref{chapter:resultados}. Cada sección documenta las decisiones de diseño adoptadas, las alternativas consideradas y los criterios que motivaron la elección final, con el objetivo de garantizar la reproducibilidad del trabajo y la trazabilidad de cada decisión metodológica.
 
-\section{Cómo colocar tablas y figuras}
+La figura~\ref{fig:pipeline_global} ofrece una visión de conjunto del flujo de trabajo completo, que se detalla a lo largo de las secciones siguientes.
 
-Por ejemplo, en esta sección se explica como colocar tablas y figuras en \LaTeX{}. Al escribir un documento en \LaTeX{}, es importante saber cómo posicionar correctamente imágenes y tablas. \LaTeX{} ofrece varias opciones para controlar la posición de estos elementos en la página. Por ejemplo, se puede utilizar las opciones ``h'', ``t'', ``b'', ``p'', ``!'' para indicar que la imagen debe ser colocada "aquí" (\emph{here}), en la parte superior (\emph{top}) o inferior (\emph{bottom}) de la página, en una página separada (\emph{page}) o en la posición exacta especificada (!), respectivamente.
+% INSTRUCCIÓN: Insertar aquí una figura de diagrama de flujo global del pipeline
+% (recopilación → EDA → detección de imbalance → transformación a ventanas →
+%  análisis de ventanas → balanceo → entrenamiento LSTM → evaluación)
+% Ejemplo:
+% \begin{figure}[htbp]
+%   \centering
+%   \includegraphics[width=\textwidth]{figures/pipeline_global.pdf}
+%   \caption{Visión general del flujo de trabajo del proyecto RELIEF-T1D.}
+%   \label{fig:pipeline_global}
+% \end{figure}
 
-Tanto las imágenes como las tablas son consideradas como "objetos flotantes" en \LaTeX{}. Esto significa que \LaTeX{} intentará posicionarlos en la página de la mejor manera posible, teniendo en cuenta el flujo del texto y el espacio disponible. En algunos casos, esto puede resultar en un posicionamiento inesperado de los objetos flotantes.
+% =========================================================
+\section{Recopilación y descripción de los datos}
+\label{sec:recopilacion_datos}
+% =========================================================
 
-Para tener un mayor control sobre el flotado de imágenes y tablas, se pueden utilizar los paquetes \textbf{\textbackslash usepackage\{float\}} y \textbf{\textbackslash usepackage\{caption\}}. Estos paquetes ofrecen opciones adicionales para controlar la posición y el comportamiento de los objetos flotantes. Por ejemplo, se puede utilizar la opción ``H'' para forzar a \LaTeX{} a colocar el objeto flotante exactamente en la posición especificada, sin ajustes. 
+Esta sección describe el proceso de recopilación de los tres conjuntos de datos utilizados en el trabajo, los criterios de selección que motivaron su elección y las características estructurales relevantes de cada uno de ellos desde el punto de vista del problema de balanceo demográfico. La descripción clínica y demográfica de los \emph{datasets} se introduce en el capítulo~\ref{chapter:estado-arte}; aquí se documentan los aspectos prácticos de su obtención y las particularidades que condicionaron las decisiones de preprocesado posteriores.
 
-Revisa esta web para más información: \url{https://www.overleaf.com/learn/latex/Positioning_images_and_tables}.
+\subsection{Criterios de selección de los \emph{datasets}}
+\label{subsec:criterios_seleccion}
+
+% INSTRUCCIÓN: Explicar los criterios de selección: disponibilidad pública,
+% presencia de variables demográficas (sexo Y edad) a nivel de paciente,
+% frecuencia de muestreo CGM adecuada, y diversidad estructural entre datasets.
+% Mencionar por qué se descartan otros datasets revisados durante la investigación.
+% ~200-300 palabras.
+
+
+\subsection{T1DiabetesGranada}
+\label{subsec:dataset_t1dgranada}
+
+% INSTRUCCIÓN: Describir el proceso de obtención del dataset local (Hospital
+% Universitario Virgen de las Nieves, Granada). Características técnicas:
+% 643 pacientes, muestreo a 15 minutos, periodo 2018-2022, >30M mediciones.
+% Describir el formato de los archivos, estructura de patient_info,
+% el patrón MNAR de missingness identificado en el análisis exploratorio inicial,
+% y las propiedades estadísticas relevantes descubiertas en mayo 2026
+% (separabilidad por Cohen's d en ventanas clínicas de 1, 14 y 90 días).
+% ~300-400 palabras.
+
+\subsection{REPLACE-BG}
+\label{subsec:dataset_replacebg}
+
+% INSTRUCCIÓN: Describir origen (ensayo clínico aleatorizado, Aleppo et al. 2017),
+% proceso de descarga, 226 participantes, muestreo a 5 minutos, 26 semanas
+% de seguimiento. Destacar que es el único dataset con diseño controlado,
+% lo que le confiere una distribución demográfica más homogénea por construcción.
+% Variables demográficas disponibles: sexo, edad, HbA1c, duración de la enfermedad.
+% ~200-250 palabras.
+
+\subsection{DiaTrend}
+\label{subsec:dataset_diatrend}
+
+% INSTRUCCIÓN: Describir origen (Sun et al. 2023), proceso de descarga,
+% 54 pacientes, muestreo a 5 minutos, seguimiento de hasta 7 años.
+% Destacar que es el dataset de menor tamaño muestral y el que presenta
+% mayor concentración de ventanas en un número reducido de pacientes
+% por grupo demográfico. Señalar la ausencia de anotaciones de insulina
+% y carbohidratos.
+% ~150-200 palabras.
+
+\subsection{Estructura unificada de datos de entrada}
+\label{subsec:estructura_datos_entrada}
+
+% INSTRUCCIÓN: Describir el formato unificado al que se normalizan los tres
+% datasets para el pipeline: el archivo de ventanas (parquet con columnas
+% x0..x7, y, x_date_7, x_time_7, patient_id, fold_0..fold_4) y el archivo
+% patient_info con las variables demográficas (patient_id, sex, age/birth_year).
+% Describir los límites de sensor por dataset:
+%   DIATREND / REPLACE-BG: [39.0, 401.0] mg/dL
+%   T1DiabetesGranada:     [40.0, 500.0] mg/dL
+% Incluir tabla resumen con los tres datasets.
+% ~200 palabras + tabla.
+
+% Ejemplo de tabla:
+% \begin{table}[htbp]
+% \centering
+% \caption{Características de los datasets utilizados.}
+% \label{tab:datasets_caracteristicas}
+% \begin{tabular}{lcccccc}
+% \hline
+% \textbf{Dataset} & \textbf{Pacientes} & \textbf{Muestreo} & \textbf{Seguimiento}
+%   & \textbf{Mediciones} & \textbf{Rango sensor (mg/dL)} \\
+% \hline
+% T1DGranada  & 643 & 15 min & $\leq$4 años & >30M & {[}40, 500{]} \\
+% REPLACE-BG  & 226 &  5 min & 26 sem       & --   & {[}39, 401{]} \\
+% DiaTrend    &  54 &  5 min & $\leq$7 años & --   & {[}39, 401{]} \\
+% \hline
+% \end{tabular}
+% \end{table}
+
+% =========================================================
+\section{Análisis exploratorio de datos}
+\label{sec:eda}
+% =========================================================
+
+Antes de proceder a la construcción del \emph{pipeline} experimental, se realizó un análisis exploratorio de datos (EDA) con dos objetivos: comprender las propiedades estadísticas y estructurales de cada \emph{dataset}, y obtener evidencia cuantitativa de la presencia —o ausencia— de desequilibrio demográfico en la composición de los datos de partida. Este análisis es el que justifica y motiva las decisiones de diseño del \emph{pipeline} de balanceo descritas en la sección~\ref{sec:pipeline_balanceo}.
+
+\subsection{Distribución demográfica de los \emph{datasets}}
+\label{subsec:eda_demografico}
+
+% INSTRUCCIÓN: Describir la distribución de pacientes por sexo y por grupo
+% de edad (bins: <31, 31-45, 46-65, >=66) en cada uno de los tres datasets.
+% Incluir figuras de distribución (barplot o pie chart por dataset y dimensión).
+% Cuantificar el ratio de desequilibrio entre el grupo mayoritario y el minoritario
+% para cada dimensión demográfica.
+% ~200-300 palabras + figuras.
+
+\subsection{Distribución de la señal CGM}
+\label{subsec:eda_cgm}
+
+% INSTRUCCIÓN: Análisis de la distribución de valores de glucosa por dataset:
+% histogramas, boxplots por rango glucémico (TBR-2, TBR-1, TIR, TAR-1, TAR-2),
+% estadísticos descriptivos (media, mediana, IQR, percentiles).
+% Mencionar las diferencias en el rango de la señal entre datasets
+% (T1DGranada permite hasta 500 mg/dL; los otros hasta 401 mg/dL).
+% ~200-250 palabras + figuras.
+
+\subsection{Análisis de datos ausentes}
+\label{subsec:eda_missing}
+
+% INSTRUCCIÓN: Describir el patrón de missingness identificado en cada dataset.
+% Especialmente para T1DiabetesGranada: patrón MNAR (Missing Not at Random),
+% concentración de ausencias en eventos clínicos relevantes, fragmentación
+% temporal de los registros.
+% Cuantificar: porcentaje de datos ausentes por paciente, distribución de
+% la longitud de los segmentos continuos de registro.
+% Justificar por qué esto impone la restricción de generar ventanas solo
+% dentro de segmentos continuos.
+% ~200-300 palabras + figuras.
+
+\subsection{Análisis de separabilidad demográfica}
+\label{subsec:eda_separabilidad}
+
+% INSTRUCCIÓN: Describir el análisis de separabilidad realizado sobre
+% T1DiabetesGranada en mayo 2026: cálculo de Cohen's d para comparar
+% las distribuciones glucémicas entre subgrupos de sexo y de edad,
+% en ventanas clínicas de 1, 14 y 90 días.
+% Explicar los resultados: diferencias estadísticas existentes pero de
+% magnitud moderada, lo que motiva estudiar si el modelo LSTM las captura
+% diferencialmente según la composición del entrenamiento.
+% ~200-250 palabras + tabla de Cohen's d por ventana clínica.
+
+% =========================================================
+\section{Detección y cuantificación del desequilibrio demográfico}
+\label{sec:deteccion_imbalance}
+% =========================================================
+
+Una vez comprendidas las propiedades estructurales de los \emph{datasets} a nivel de paciente, el siguiente paso es cuantificar el desequilibrio demográfico a nivel de \textbf{ventana de entrenamiento}, que es la unidad de balanceo relevante en este trabajo. Como se argumenta en la sección~\ref{subsec:desequilibrio_demografico_extension}, la unidad de balanceo en el contexto de series temporales generadas mediante ventana deslizante no es el paciente sino la ventana, y el desequilibrio a nivel de ventana puede ser sustancialmente mayor que el desequilibrio a nivel de paciente.
+
+\subsection{Desequilibrio a nivel de paciente frente a nivel de ventana}
+\label{subsec:imbalance_paciente_vs_ventana}
+
+% INSTRUCCIÓN: Cuantificar y comparar, para cada dataset y dimensión demográfica:
+%   (a) ratio de desequilibrio a nivel de paciente (nº pacientes por grupo)
+%   (b) ratio de desequilibrio a nivel de ventana (nº ventanas por grupo,
+%       antes de aplicar ninguna técnica de balanceo)
+% Mostrar que (b) puede diferir significativamente de (a) debido a la
+% heterogeneidad en la longitud de las series de los distintos pacientes.
+% Incluir tabla comparativa y/o figura de barplot.
+% ~200-250 palabras + tabla/figura.
+
+\subsection{Desequilibrio por dimensión demográfica y \emph{fold}}
+\label{subsec:imbalance_por_fold}
+
+% INSTRUCCIÓN: Mostrar que el ratio de desequilibrio varía entre folds
+% debido al esquema Group K-Fold (los pacientes se asignan íntegramente
+% a un único fold, por lo que la composición demográfica de cada fold
+% de entrenamiento depende de qué pacientes caen en él).
+% Describir la variabilidad del desequilibrio entre folds para cada
+% dataset y dimensión.
+% ~150-200 palabras + figura.
+
+% =========================================================
+\section{Investigación de técnicas de balanceo para series temporales}
+\label{sec:investigacion_tecnicas}
+% =========================================================
+
+La selección de las técnicas de balanceo a implementar requirió una fase de investigación específica orientada a evaluar la compatibilidad de las técnicas estándar de \emph{imbalanced learning} con las restricciones propias de la señal CGM. Esta sección describe los criterios de selección y la taxonomía de técnicas resultante.
+
+\subsection{Criterios de selección de técnicas}
+\label{subsec:criterios_tecnicas}
+
+% INSTRUCCIÓN: Describir los tres criterios de selección aplicados:
+%   1. Compatibilidad con la unidad de balanceo (ventana temporal, no paciente)
+%   2. Respeto de los límites fisiológicos del sensor (clip a [min, max] por dataset)
+%   3. Aplicabilidad exclusiva al conjunto de entrenamiento de cada fold
+%      (val y test deben permanecer intactos bit a bit entre condiciones)
+% Mencionar técnicas descartadas y por qué (e.g., técnicas que requieren
+% modificar la arquitectura del modelo, técnicas con dependencia entre
+% ventanas que violan la restricción de segmentos continuos).
+% ~150-200 palabras.
+
+\subsection{Taxonomía de técnicas implementadas}
+\label{subsec:taxonomia_tecnicas}
+
+% INSTRUCCIÓN: Presentar la taxonomía de las 10 técnicas implementadas,
+% organizadas en tres familias según su mecanismo de acción.
+% Para cada técnica describir brevemente su funcionamiento específico
+% tal como se implementa en este trabajo (no la definición genérica,
+% que ya está en el capítulo de fundamentos).
+
+\subsubsection{Familia aleatoria}
+\label{subsubsec:familia_aleatoria}
+
+% INSTRUCCIÓN: Describir RUS (undersampling) y ROS (oversampling).
+% Para RUS: reducción al tamaño del grupo minoritario mediante muestreo
+% aleatorio sin reemplazo (rng.choice sin replace).
+% Para ROS: expansión al tamaño del grupo mayoritario mediante muestreo
+% con reemplazo (rng.choice con replace=True).
+% ~100-150 palabras por técnica.
+
+\subsubsection{Familia guiada}
+\label{subsubsec:familia_guiada}
+
+% INSTRUCCIÓN: Describir SMOTE, Tomek Links y Jittering.
+% Para SMOTE: implementación propia con normalización z-score, k=min(5, n-1)
+% vecinos, interpolación lambda~U(0,1), clip a límites del sensor.
+% Para Tomek Links: detección de pares mutualmente vecinos de grupos distintos,
+% eliminación del representante del grupo mayoritario de cada par.
+% Para Jittering: expansión con ruido gaussiano proporcional a la desviación
+% estándar local (jitter_scale=0.20), clip a límites del sensor.
+% ~150-200 palabras por técnica.
+
+\subsubsection{Familia híbrida}
+\label{subsubsec:familia_hibrida}
+
+% INSTRUCCIÓN: Describir las cinco técnicas combinadas:
+%   - patient_aware_undersampling: RUS con cuota por paciente (patient_cap)
+%     para no vaciar ningún paciente del grupo mayoritario.
+%   - undersampling_oversampling: RUS + ROS preservando el tamaño total
+%     del conjunto de entrenamiento con distribución equitativa entre grupos.
+%   - undersampling_smote: RUS + SMOTE preservando el tamaño total.
+%   - smote_tomek: SMOTE para aumentar grupos minoritarios + Tomek para
+%     limpiar la frontera, con reparto equitativo.
+%   - oversampling_tomek: ROS + Tomek preservando el tamaño total.
+% ~100-150 palabras por técnica.
+
+\subsection{Validación formal del \emph{pipeline} de balanceo}
+\label{subsec:validacion_pipeline}
+
+% INSTRUCCIÓN: Describir el notebook de verificación de restricciones
+% construido para validar que el pipeline de balanceo cumple las
+% propiedades esperadas. Las restricciones verificadas son:
+%   1. Efecto direccional sobre el tamaño (oversampling aumenta, undersampling reduce)
+%   2. Distribución demográfica post-balanceo más equitativa que la original
+%   3. Ausencia de solapamiento de pacientes entre train y val/test
+%   4. Invarianza bit a bit de val y test entre condiciones (mismas ventanas,
+%      mismo orden, mismos valores)
+%   5. Los puntos sintéticos (SMOTE, Jittering) están dentro del rango del sensor
+%   6. Consistencia cross-técnica de val/test
+% ~200-250 palabras.
+
+% =========================================================
+\section{Transformación de datos: generación de ventanas deslizantes}
+\label{sec:transformacion_ventanas}
+% =========================================================
+
+La transformación de las series temporales CGM originales en el formato de entrada requerido por el modelo LSTM es un paso crítico del \emph{pipeline}, ya que determina la granularidad de la unidad de balanceo y la forma en que se materializan las particiones de validación cruzada. Esta sección describe el proceso de generación de ventanas y sus parámetros.
+
+\subsection{Parámetros de ventana}
+\label{subsec:parametros_ventana}
+
+% INSTRUCCIÓN: Describir los parámetros fijos de la ventana:
+%   - History Window (HW) = 8 mediciones
+%   - Prediction Horizon (PH) = 4 mediciones
+%   - Significado en tiempo según el dataset:
+%     T1DGranada (15 min): HW = 2h de historial, PH = 1h de horizonte
+%     DiaTrend / REPLACE-BG (5 min): HW = 40 min, PH = 20 min
+%   - Justificación clínica del horizonte de 1h (margen para intervención terapéutica)
+%   - Formato de la ventana: columnas x0..x7 (historial), y (objetivo),
+%     x_date_7 y x_time_7 (marca temporal del último punto del historial)
+% ~200-250 palabras.
+
+\subsection{Restricciones de continuidad temporal}
+\label{subsec:restricciones_continuidad}
+
+% INSTRUCCIÓN: Describir la restricción de que las ventanas solo se generan
+% dentro de segmentos continuos de registro CGM, sin cruzar huecos de datos
+% ausentes. Explicar la razón clínica y metodológica: cruzar un hueco produciría
+% una transición glucémica artificialmente abrupta que no existe en la realidad.
+% Describir el criterio de continuidad utilizado (gap máximo entre mediciones
+% consecutivas dentro de una ventana).
+% ~150-200 palabras.
+
+\subsection{Esquema de partición: \emph{Group K-Fold} con $K=5$}
+\label{subsec:group_kfold_implementacion}
+
+% INSTRUCCIÓN: Describir la implementación concreta del Group K-Fold:
+%   - Asignación de pacientes a folds (íntegra, sin solapamiento)
+%   - Codificación de la asignación como columnas fold_0..fold_4 en el parquet
+%     (valores: 'train', 'val', 'test')
+%   - Fijación del conjunto de test: para cada fold i, el test es siempre
+%     el mismo subconjunto de pacientes, independientemente de la condición
+%     de balanceo. Esto garantiza comparabilidad directa entre condiciones.
+%   - El balanceo se aplica SOLO sobre el subconjunto 'train' de cada fold.
+%   - Val y test permanecen bit a bit idénticos en todas las condiciones.
+% ~200-250 palabras.
+
+% =========================================================
+\section{Análisis exploratorio de ventanas}
+\label{sec:eda_ventanas}
+% =========================================================
+
+Una vez generadas las ventanas, se realizó un segundo análisis exploratorio centrado en las propiedades de la distribución de ventanas resultante, distinto del EDA sobre la señal CGM bruta descrito en la sección~\ref{sec:eda}. Este análisis tiene como objetivo caracterizar el desequilibrio demográfico a nivel de ventana —la unidad de balanceo efectiva del \emph{pipeline}— y verificar que las propiedades de las ventanas son coherentes con las restricciones metodológicas.
+
+\subsection{Distribución de ventanas por grupo demográfico y \emph{fold}}
+\label{subsec:eda_ventanas_demografico}
+
+% INSTRUCCIÓN: Mostrar, para cada dataset, dimensión demográfica y fold:
+%   - Número de ventanas por grupo demográfico en el conjunto de entrenamiento
+%   - Ratio de desequilibrio entre grupos
+%   - Variabilidad del ratio entre folds (boxplot o tabla)
+% Comparar con el desequilibrio a nivel de paciente (sección anterior)
+% para evidenciar que el desequilibrio de ventanas puede ser mayor.
+% ~150-200 palabras + figuras/tablas.
+
+\subsection{Distribución de la variable objetivo por grupo demográfico}
+\label{subsec:eda_ventanas_objetivo}
+
+% INSTRUCCIÓN: Para cada dataset, mostrar si la distribución de la variable
+% objetivo y (valor de glucosa a predecir) difiere significativamente entre
+% grupos demográficos. Esto es evidencia adicional de que el modelo puede
+% aprender dinámicas distintas según la composición del entrenamiento.
+% Usar violinplots, boxplots o histogramas superpuestos.
+% ~150-200 palabras + figuras.
+
+\subsection{Verificación de integridad de las particiones}
+\label{subsec:eda_ventanas_integridad}
+
+% INSTRUCCIÓN: Descripción breve de las verificaciones de integridad
+% realizadas sobre el conjunto de ventanas generado:
+%   - Ausencia de solapamiento de pacientes entre train, val y test en cada fold
+%   - Ausencia de ventanas que crucen huecos de datos ausentes
+%   - Distribución temporal de las ventanas (no hay concentración anómala
+%     en periodos concretos que pudiera sesgar los resultados)
+% ~100-150 palabras.
+
+% =========================================================
+\section{Arquitectura del modelo LSTM}
+\label{sec:arquitectura_lstm}
+% =========================================================
+
+El modelo de predicción de glucosa utilizado en este trabajo es una red LSTM de una sola capa recurrente con una capa densa de salida lineal. La elección de esta arquitectura está motivada por su consolidación en la literatura de predicción de glucosa (véase capítulo~\ref{chapter:estado-arte}) y por el objetivo de este trabajo, que no es optimizar la arquitectura del modelo sino cuantificar el efecto del balanceo del conjunto de entrenamiento sobre un modelo de referencia bien establecido.
+
+\subsection{Especificación de la arquitectura}
+\label{subsec:arquitectura_especificacion}
+
+% INSTRUCCIÓN: Describir la arquitectura concreta implementada:
+%   - Capa de entrada: shape (8, 1) — 8 pasos temporales, 1 feature (glucosa)
+%   - Capa LSTM: 128 unidades ocultas, dropout=0.1, recurrent_dropout=0.0
+%   - Capa Dense de salida: 1 unidad, activación lineal (None)
+%   - Total de parámetros entrenables: calcular y reportar
+%   - Framework: TensorFlow/Keras
+% Incluir diagrama de la arquitectura (figura).
+% ~150-200 palabras + figura.
+
+% Ejemplo de tabla de hiperparámetros:
+% \begin{table}[htbp]
+% \centering
+% \caption{Hiperparámetros del modelo LSTM.}
+% \label{tab:hiperparametros_lstm}
+% \begin{tabular}{ll}
+% \hline
+% \textbf{Hiperparámetro} & \textbf{Valor} \\
+% \hline
+% Unidades ocultas LSTM   & 128 \\
+% Dropout                 & 0.1 \\
+% Recurrent dropout       & 0.0 \\
+% Capa de salida          & Dense(1), activación lineal \\
+% \hline
+% \end{tabular}
+% \end{table}
+
+\subsection{Función de pérdida y optimizador}
+\label{subsec:loss_optimizador}
+
+% INSTRUCCIÓN: Describir la función de pérdida utilizada (RMSE customizado)
+% y el optimizador (Adam con parámetros por defecto de Keras).
+% Mencionar también la ClinicalPenaltyMetric usada como métrica de monitorización
+% adicional (no como función de pérdida).
+% Justificar la elección del RMSE como función de pérdida (misma motivación
+% que para su uso como métrica primaria de evaluación: penalización cuadrática
+% de los errores más grandes, que coinciden con los clínicamente más graves).
+% ~150-200 palabras.
+
+\subsection{Estrategia de entrenamiento}
+\label{subsec:estrategia_entrenamiento}
+
+% INSTRUCCIÓN: Describir los parámetros de entrenamiento:
+%   - Batch size: 4096
+%   - Máximo de épocas: 500
+%   - Early stopping: patience=10, monitor='val_loss', restore_best_weights=True
+%   - ModelCheckpoint: guarda los mejores pesos en .weights.h5
+%   - Reproducibilidad: semillas fijadas (numpy=50, tensorflow=50, random=50,
+%     TF_DETERMINISTIC_OPS=1)
+%   - Callbacks adicionales: TensorBoard, CSVLogger
+% Justificar el batch size de 4096 en el contexto del tamaño de los conjuntos
+% de entrenamiento (miles a decenas de miles de ventanas).
+% ~200-250 palabras.
+
+\subsection{Configuración del entorno de ejecución}
+\label{subsec:entorno_ejecucion}
+
+% INSTRUCCIÓN: Describir el entorno de ejecución en el servidor:
+%   - Hardware: GPU/CPU disponible, RAM
+%   - Software: versión de Python, TensorFlow, dependencias principales
+%   - Estructura de directorios de salida por experimento:
+%       /data/output/{DATASET}/{balancing_condition}/
+%         EXP-{date}-prediction-RMSE-LSTM-H8-PH4-{condition}-v{N}/
+%           models/, plots/training/, results/predictions/,
+%           results/evaluation/metrics/, results/evaluation/figures/,
+%           summaries/, readmes/
+%   - Número total de experimentos ejecutados:
+%       3 datasets × (10 técnicas × 2 dimensiones + 1 original) × 5 folds
+%       = 3 × 21 × 5 = 315 entrenamientos
+%       (menos la condición T1DGranada/age/oversampling ausente → 310)
+% ~150-200 palabras.
+
+% =========================================================
+\section{\emph{Pipeline} de entrenamiento y evaluación}
+\label{sec:pipeline_entrenamiento}
+% =========================================================
+
+Esta sección describe el \emph{pipeline} completo de entrenamiento y evaluación, integrando todos los componentes descritos en las secciones anteriores. Se detalla el flujo de datos desde los archivos \emph{parquet} de entrada hasta los archivos de métricas que alimentan el análisis estadístico del capítulo~\ref{chapter:resultados}.
+
+\subsection{Modo original y modo balanceado}
+\label{subsec:modos_pipeline}
+
+% INSTRUCCIÓN: Describir los dos modos de operación del script de entrenamiento:
+%   Modo original: un único parquet con columnas fold_0..fold_4.
+%     El script filtra por columna fold_i para obtener train/val/test de cada fold.
+%   Modo balanceado: 5 parquets por condición (uno por fold), sin columnas fold_*,
+%     con columna 'split' (train/val/test). El balanceo ya está materializado.
+%   Explicar por qué esta separación de responsabilidades (balanceo vs entrenamiento
+%   en scripts distintos) mejora la reproducibilidad y la trazabilidad.
+% ~150-200 palabras.
+
+\subsection{Flujo de datos por \emph{fold}}
+\label{subsec:flujo_datos_fold}
+
+% INSTRUCCIÓN: Describir paso a paso el flujo de datos dentro de cada fold:
+%   1. Carga del parquet (modo original o balanceado)
+%   2. Separación en train / val / test
+%   3. Clip de valores a los límites del sensor del dataset
+%   4. Reshape a (n_samples, history_length, 1) para el input de la LSTM
+%   5. Entrenamiento con early stopping
+%   6. Generación de predicciones sobre test
+%   7. Evaluación por rango glucémico (TBR-2, TBR-1, TIR, TAR-1, TAR-2, ENTIRE)
+%      mediante test_by_range(): RMSE, MAE, MAPE, MSE, CEG zones A/B/C/D/E, A+B
+%   8. Guardado de artefactos: pesos, historial CSV, predicciones parquet,
+%      summary JSON, README Markdown
+% ~250-300 palabras.
+
+\subsection{Evaluación por rango glucémico}
+\label{subsec:evaluacion_por_rango}
+
+% INSTRUCCIÓN: Explicar la decisión de evaluar el rendimiento desagregado
+% por rango glucémico (no solo sobre el rango completo).
+% Describir los rangos y sus umbrales (en mg/dL):
+%   TBR_2: < 54    (hipoglucemia grave)
+%   TBR_1: 54–69   (hipoglucemia clínicamente significativa)
+%   TIR:   70–180  (rango objetivo)
+%   TAR_1: 181–250 (hiperglucemia moderada)
+%   TAR_2: > 250   (hiperglucemia severa)
+%   ENTIRE: rango completo
+% Justificar por qué esta desagregación es esencial: el balanceo puede
+% mejorar el rendimiento en un rango a costa de degradarlo en otro,
+% y esta dinámica de compensación no sería detectable con una sola métrica global.
+% ~200-250 palabras.
+
+\subsection{Agregación de resultados y protocolo estadístico}
+\label{subsec:agregacion_resultados}
+
+% INSTRUCCIÓN: Describir cómo se agregan los resultados de los 5 folds
+% de cada condición experimental (media y desviación estándar de las métricas).
+% Introducir brevemente el protocolo estadístico utilizado para el análisis
+% comparativo (Friedman, Nemenyi, Cohen's d, Borda), remitiendo al lector
+% al capítulo de resultados para el análisis completo.
+% Describir la estructura de los archivos CSV de salida que alimentan
+% el sistema de análisis estadístico.
+% ~150-200 palabras.
+
+\subsection{Trazabilidad y reproducibilidad}
+\label{subsec:trazabilidad}
+
+% INSTRUCCIÓN: Describir las medidas implementadas para garantizar
+% la reproducibilidad completa del trabajo:
+%   - Semillas fijas (numpy=50, tf=50, random=50, TF_DETERMINISTIC_OPS=1)
+%   - Versionado de experimentos (sufijo -v{N} en el directorio de salida)
+%   - Registro de metadatos completos por fold en summary JSON
+%     (parámetros, hardware, versión de software, commit de git, timestamps)
+%   - Invarianza bit a bit de val y test entre condiciones (verificada
+%     en el notebook de validación)
+%   - Estructura de directorios autoexplicativa que mapea biunívocamente
+%     cada directorio a una condición experimental (dataset / balancing_condition)
+% ~150-200 palabras.

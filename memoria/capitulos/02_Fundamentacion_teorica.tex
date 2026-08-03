@@ -1,0 +1,594 @@
+% =========================================================
+%  CAPÍTULO 2 — FUNDAMENTACIÓN TEÓRICA
+%  Impacto del balanceo demográfico (sexo, edad) en la
+%  predicción de glucosa mediante LSTM sobre datos CGM
+% =========================================================
+\label{chapter:fundamentos}
+\chapter[Fundamentación teórica]{Fundamentación teórica}
+
+Este capítulo proporciona la base conceptual necesaria para comprender el problema abordado en este trabajo y las decisiones metodológicas que lo articulan. Se organiza en tres bloques.
+
+El primer bloque (sección~\ref{sec:conceptos_clinicos}) desarrolla el contexto clínico de la diabetes mellitus tipo 1 y de los sistemas CGM, incluyendo las métricas clínicas y de error que articulan la evaluación de los modelos predictivos.
+
+El segundo bloque (sección~\ref{sec:deep_learning_lstm}) expone las bases del aprendizaje profundo para series temporales, con especial atención a las redes LSTM: su arquitectura, su mecanismo de puertas y la formulación del problema de predicción de glucosa como regresión temporal con ventana deslizante.
+
+El tercer bloque (sección~\ref{sec:imbalanced_learning}) introduce los fundamentos del \emph{imbalanced learning}, explica su extensión al desequilibrio de composición demográfica del conjunto de entrenamiento y revisa las métricas de evaluación pertinentes en este contexto.
+
+% =========================================================
+\section{Contexto clínico: DM1 y monitorización continua de glucosa}
+\label{sec:conceptos_clinicos}
+% =========================================================
+
+\subsection{Diabetes mellitus tipo 1: fisiopatología y desafíos de gestión}
+\label{subsec:dm1_fisiopatologia}
+
+La diabetes mellitus tipo 1 (DM1) es una enfermedad autoinmune crónica caracterizada por la destrucción selectiva de las células beta de los islotes de Langerhans del páncreas, mediada por linfocitos T autorreactivos~\cite{atkinson2014type1}. La consecuencia directa de esta destrucción es la deficiencia absoluta de insulina: el páncreas pierde progresivamente —y en la mayoría de los casos de forma irreversible— su capacidad de producir la hormona responsable de facilitar la captación de glucosa por los tejidos periféricos. A diferencia de la diabetes tipo 2, en la que la resistencia a la insulina y el déficit relativo de producción constituyen los mecanismos fisiopatológicos predominantes, la DM1 convierte al paciente en dependiente de la administración exógena de insulina desde el momento del diagnóstico y de forma permanente.
+
+La prevalencia global de la DM1 se estima en torno a 8,75 millones de personas, con una incidencia creciente en las últimas décadas especialmente en países de renta alta~\cite{divers2020prevalence}. En España, los datos del registro nacional estiman una prevalencia de entre 0,3 y 0,5 casos por cada 100 habitantes, con una incidencia anual de entre 10 y 17 nuevos casos por cada 100.000 habitantes menores de 15 años~\cite{sediabetes2023}.
+
+El desafío clínico central en la DM1 no es únicamente la deficiencia de insulina en sí misma, sino la enorme variabilidad de los requerimientos de insulina exógena a lo largo del día y entre días. La glucosa en sangre fluctúa en respuesta a múltiples factores: la cantidad y composición de los alimentos ingeridos, el tipo e intensidad del ejercicio físico, el estrés psicológico, la fase del ciclo menstrual en mujeres, las enfermedades intercurrentes y la farmacocinética de la propia insulina administrada, entre otros~\cite{kovatchev2019metrics}. Esta variabilidad multifactorial convierte la gestión glucémica diaria en una tarea de control continuo que exige al paciente —o a los sistemas automáticos que le asisten— tomar decisiones clínicas frecuentes y adaptadas al contexto, a menudo con información incompleta o retardada.
+
+Las consecuencias clínicas de una gestión subóptima son bidireccionales. La \textbf{hipoglucemia} —concentración de glucosa en sangre inferior a 70~mg/dL en su nivel~1, e inferior a 54~mg/dL en el nivel~2 con riesgo vital inmediato— es la complicación aguda más temida: puede producir alteración de la consciencia, convulsiones y, en casos extremos, la muerte. La \textbf{hiperglucemia sostenida} —definida clínicamente por tiempos prolongados por encima de 180~mg/dL— produce a largo plazo complicaciones microvasculares y macrovasculares graves, incluyendo retinopatía, nefropatía, neuropatía periférica y enfermedad cardiovascular~\cite{brownlee2005pathobiology}. El objetivo terapéutico es, por tanto, mantener la glucosa dentro de un rango euglucémico de seguridad —convencionalmente 70--180~mg/dL, denominado \emph{Time in Range} (TIR)— durante el mayor tiempo posible, minimizando simultáneamente el tiempo en hipoglucemia y el tiempo en hiperglucemia.
+
+La gestión glucémica es, en definitiva, un problema de control dinámico bajo incertidumbre: el paciente o el sistema que le asiste debe anticipar la trayectoria futura de la glucosa con suficiente antelación para actuar de forma preventiva antes de que se produzca una desviación clínicamente relevante. Esta necesidad de anticipación es precisamente la que motiva el desarrollo de modelos de predicción de glucosa.
+
+\subsection{Monitorización continua de glucosa: principio de funcionamiento y métricas clínicas}
+\label{subsec:cgm_metricas}
+
+Los sistemas de monitorización continua de glucosa (CGM, del inglés \emph{Continuous Glucose Monitoring}) miden la concentración de glucosa de forma automática y continuada mediante electrodos enzimáticos subcutáneos que detectan la glucosa en el líquido intersticial. A diferencia de la glucometría capilar tradicional, los sistemas CGM generan señales de alta frecuencia con periodos de muestreo de entre 5 y 15 minutos~\cite{klonoff2017cgm}. Un paciente con seguimiento CGM durante un año acumula entre 35.000 y 105.000 puntos de medición, lo que hace de estos datos un sustrato natural para el entrenamiento de modelos de series temporales.
+
+Es importante precisar que la señal CGM no mide directamente la glucosa en sangre (glucosa plasmática), sino la glucosa en el líquido intersticial. Existe un retardo fisiológico de entre 5 y 15 minutos entre ambas señales durante los periodos de cambio rápido de glucosa —como tras la ingesta o durante el ejercicio— denominado \emph{lag} intersticial~\cite{rebrin2000subcutaneous}. Este retardo introduce una fuente de error sistemático en las predicciones a corto plazo que los modelos basados en CGM deben compensar implícitamente.
+
+Las métricas clínicas estándar derivadas de la señal CGM están formalizadas en el consenso del \emph{Ambulatory Glucose Profile} (AGP) y en las recomendaciones de la \emph{Advanced Technologies and Treatments for Diabetes} (ATTD)~\cite{battelino2019clinical}. Las más relevantes para este trabajo son:
+
+\begin{itemize}
+    \item \textbf{\emph{Time in Range} (TIR)}: porcentaje de tiempo con glucosa entre 70 y 180~mg/dL. Métrica primaria de control glucémico en la práctica clínica moderna.
+    \item \textbf{\emph{Time Below Range} nivel~1 (TBR-1)}: porcentaje de tiempo con glucosa entre 54 y 69~mg/dL (hipoglucemia clínicamente significativa).
+    \item \textbf{\emph{Time Below Range} nivel~2 (TBR-2)}: porcentaje de tiempo con glucosa inferior a 54~mg/dL (hipoglucemia grave con riesgo vital).
+    \item \textbf{\emph{Time Above Range} nivel~1 (TAR-1)}: porcentaje de tiempo con glucosa entre 181 y 250~mg/dL (hiperglucemia moderada).
+    \item \textbf{\emph{Time Above Range} nivel~2 (TAR-2)}: porcentaje de tiempo con glucosa superior a 250~mg/dL (hiperglucemia severa).
+\end{itemize}
+
+En el contexto de la evaluación de modelos predictivos, el rendimiento se mide frecuentemente mediante la \emph{Clarke Error Grid} (CEG)~\cite{clarke1987evaluating}, una representación bidimensional que clasifica las predicciones en cinco zonas (A--E) según su consecuencia clínica. La zona~A agrupa las predicciones clínicamente exactas (error relativo inferior al 20\%); las zonas~C, D y E corresponden a errores con consecuencias clínicas crecientes, incluyendo decisiones terapéuticas potencialmente peligrosas.
+
+\subsection{Métricas de error en predicción de glucosa}
+\label{subsec:metricas_error}
+
+La evaluación cuantitativa de los modelos de predicción de glucosa utiliza métricas de error estándar en regresión. Las más empleadas en la literatura son:
+
+\begin{itemize}
+    \item \textbf{RMSE} (\emph{Root Mean Squared Error}): raíz cuadrada del error cuadrático medio, expresada en mg/dL. Penaliza los errores grandes de forma cuadrática, lo que la hace especialmente sensible a los errores en rangos extremos (hipoglucemia severa, hiperglucemia severa). Es la métrica de referencia dominante en la literatura de predicción de glucosa.
+    \item \textbf{MAE} (\emph{Mean Absolute Error}): media del valor absoluto de los errores, expresada en mg/dL. Más robusta frente a valores atípicos y directamente interpretable como el error medio esperado.
+    \item \textbf{MAPE} (\emph{Mean Absolute Percentage Error}): error porcentual absoluto medio. Adimensional, pero con inestabilidad numérica en rangos de hipoglucemia severa, donde el denominador se aproxima a cero.
+\end{itemize}
+
+La elección del RMSE como métrica primaria en este trabajo —siguiendo la convención dominante en la literatura— responde a su sensibilidad diferencial hacia los errores clínicamente más graves: una predicción errónea en hipoglucemia severa produce un error cuadrático desproporcionadamente mayor que un error de pequeña magnitud clínica, lo que se traduce en una penalización implícita de los errores más peligrosos.
+
+% =========================================================
+\section{Aprendizaje profundo para series temporales: redes LSTM}
+\label{sec:deep_learning_lstm}
+% =========================================================
+
+\subsection{Redes neuronales recurrentes: motivación y limitaciones}
+\label{subsec:rnn_motivacion}
+
+Las redes neuronales recurrentes (RNN, del inglés \emph{Recurrent Neural Networks}) son una familia de arquitecturas de aprendizaje profundo diseñadas para procesar secuencias de longitud arbitraria mediante la introducción de conexiones recurrentes: la salida —o un resumen interno— del paso temporal $t$ se retroalimenta como entrada adicional en el paso $t+1$, de modo que la red mantiene un estado oculto $\mathbf{h}_t$ que actúa como memoria comprimida de la historia de la secuencia hasta el instante $t$~\cite{rumelhart1986learning}.
+
+Formalmente, la actualización del estado oculto en una RNN estándar en el instante $t$ se expresa como:
+\begin{equation}
+    \mathbf{h}_t = f\!\left(\mathbf{W}_h \mathbf{h}_{t-1} + \mathbf{W}_x \mathbf{x}_t + \mathbf{b}\right)
+\end{equation}
+donde $\mathbf{x}_t$ es el vector de entrada en el instante $t$, $\mathbf{W}_h$ y $\mathbf{W}_x$ son matrices de pesos entrenables, $\mathbf{b}$ es un vector de sesgo y $f$ es una función de activación no lineal (habitualmente $\tanh$). La predicción se obtiene aplicando una transformación lineal al estado oculto: $\hat{y}_t = \mathbf{W}_y \mathbf{h}_t + \mathbf{b}_y$.
+
+La limitación fundamental de las RNN estándar reside en el entrenamiento mediante retropropagación a través del tiempo (\emph{Backpropagation Through Time}, BPTT): el gradiente involucra productos reiterados de la matriz jacobiana de la función de transición. Cuando la secuencia es larga, este producto puede converger exponencialmente a cero (\emph{vanishing gradient}) o crecer exponencialmente (\emph{exploding gradient}), impidiendo en la práctica que la red aprenda dependencias temporales de largo alcance~\cite{bengio1994learning,hochreiter1997lstm}.
+
+\subsection{Redes LSTM: arquitectura y mecanismo de puertas}
+\label{subsec:lstm_arquitectura}
+
+Las redes \emph{Long Short-Term Memory} (LSTM), propuestas por Hochreiter y Schmidhuber en 1997~\cite{hochreiter1997long}, resuelven el problema del gradiente evanescente mediante la introducción de una celda de memoria $\mathbf{c}_t$ con flujo de gradiente controlado y un sistema de \emph{puertas} (\emph{gates}) que regulan de forma diferenciable qué información se retiene, qué información se descarta y qué información nueva se incorpora en cada paso temporal.
+
+\textbf{Puerta de olvido} (\emph{forget gate}, $\mathbf{f}_t$): determina qué fracción de la celda de memoria anterior $\mathbf{c}_{t-1}$ se conserva:
+\begin{equation}
+    \mathbf{f}_t = \sigma\!\left(\mathbf{W}_f [\mathbf{h}_{t-1}, \mathbf{x}_t] + \mathbf{b}_f\right)
+\end{equation}
+
+\textbf{Puerta de entrada} (\emph{input gate}, $\mathbf{i}_t$) y \textbf{candidato de celda} ($\tilde{\mathbf{c}}_t$): determinan qué nueva información se escribe en la celda de memoria:
+\begin{equation}
+    \mathbf{i}_t = \sigma\!\left(\mathbf{W}_i [\mathbf{h}_{t-1}, \mathbf{x}_t] + \mathbf{b}_i\right), \qquad
+    \tilde{\mathbf{c}}_t = \tanh\!\left(\mathbf{W}_c [\mathbf{h}_{t-1}, \mathbf{x}_t] + \mathbf{b}_c\right)
+\end{equation}
+
+\textbf{Actualización de la celda}: combina la información retenida y la nueva información candidata:
+\begin{equation}
+    \mathbf{c}_t = \mathbf{f}_t \odot \mathbf{c}_{t-1} + \mathbf{i}_t \odot \tilde{\mathbf{c}}_t
+\end{equation}
+donde $\odot$ denota el producto elemento a elemento (\emph{Hadamard product}).
+
+\textbf{Puerta de salida} (\emph{output gate}, $\mathbf{o}_t$): filtra la información de la celda de memoria que se propaga al estado oculto:
+\begin{equation}
+    \mathbf{o}_t = \sigma\!\left(\mathbf{W}_o [\mathbf{h}_{t-1}, \mathbf{x}_t] + \mathbf{b}_o\right), \qquad
+    \mathbf{h}_t = \mathbf{o}_t \odot \tanh(\mathbf{c}_t)
+\end{equation}
+
+La clave del mecanismo es que la celda $\mathbf{c}_t$ se actualiza mediante suma —no multiplicación— de la información nueva, lo que permite que el gradiente fluya a través de la secuencia sin atenuarse de forma multiplicativa. Este flujo de gradiente no obstruido habilita a las LSTM para capturar dependencias temporales de largo alcance, una propiedad esencial para modelar la dinámica glucémica, en la que patrones ocurridos horas antes pueden seguir influyendo en la señal CGM observada mucho tiempo después.
+
+\subsection{Predicción de glucosa como regresión temporal con ventana deslizante}
+\label{subsec:prediccion_glucosa_formulacion}
+
+En el contexto de este trabajo, la predicción de glucosa se formula como un problema de regresión de un paso a horizonte fijo: dado un historial de mediciones CGM de longitud fija $\{g_{t-n+1}, \ldots, g_t\}$ —denominado \emph{Historical Window} (HW)— se estima el valor de glucosa en un instante futuro $\hat{g}_{t+PH}$, donde $PH$ es el horizonte de predicción (\emph{Prediction Horizon}). Este trabajo utiliza $HW = 8$ mediciones y $PH = 4$ mediciones, lo que corresponde a una ventana de observación de 2 horas y un horizonte de predicción de 1 hora a una frecuencia de muestreo de 15 minutos (T1DiabetesGranada), y de 40 minutos de observación con 20 minutos de horizonte a 5 minutos de muestreo (DiaTrend, REPLACE-BG). El horizonte de una hora es clínicamente relevante por ofrecer margen suficiente para ajustes terapéuticos preventivos antes de que se produzca una desviación glucémica~\cite{sparacino2007glucose}.
+
+El proceso de generación de instancias de entrenamiento se realiza mediante \textbf{ventana deslizante} (\emph{sliding window}): para cada posición $t$ válida en la serie de un paciente, se extrae una ventana de entrada $\mathbf{x}^{(t)} = [g_{t-n+1}, \ldots, g_t]$ y un valor objetivo $y^{(t)} = g_{t+PH}$. Esta formulación introduce una propiedad estructural relevante: la unidad de análisis no es el paciente sino la ventana. Un paciente con una serie de alta densidad puede aportar decenas de miles de ventanas; un paciente con una serie fragmentada puede aportar apenas unos centenares. Esta disparidad en la contribución de ventanas entre pacientes —independiente de la distribución demográfica del \emph{dataset}— constituye por sí misma una forma de desequilibrio de representación en el conjunto de entrenamiento.
+
+\subsection{Validación cruzada por grupos en datos de pacientes}
+\label{subsec:group_kfold}
+
+La validación cruzada estándar (\emph{K-Fold}) distribuye las observaciones aleatoriamente entre los \emph{folds}, lo que en el contexto de series temporales CGM producidas por ventana deslizante introduce \emph{data leakage}: ventanas del mismo paciente —y frecuentemente ventanas temporalmente contiguas— pueden aparecer simultáneamente en el conjunto de entrenamiento y en el de validación del mismo \emph{fold}. Este solapamiento produce una estimación artificialmente optimista del rendimiento del modelo.
+
+La \textbf{validación cruzada por grupos} (\emph{Group K-Fold}) resuelve este problema garantizando que ningún paciente aparece simultáneamente en el conjunto de entrenamiento y en el de validación de un mismo \emph{fold}: todos los pacientes se asignan íntegramente a un único \emph{fold}~\cite{groupkfold_sklearn}. Esta estrategia produce una evaluación más pesimista pero más realista del rendimiento sobre pacientes no vistos durante el entrenamiento, que es el escenario clínico relevante.
+
+En este trabajo se utiliza un esquema de 5-fold \emph{Group K-Fold}, con la restricción adicional de que el conjunto de test permanece fijo e idéntico en todas las condiciones experimentales (con y sin balanceo, para todas las técnicas), de modo que las diferencias de rendimiento observadas sean atribuibles exclusivamente a las transformaciones aplicadas al conjunto de entrenamiento.
+
+% =========================================================
+\section{\emph{Imbalanced learning} y desequilibrio demográfico}
+\label{sec:imbalanced_learning}
+% =========================================================
+
+\subsection{Desequilibrio de clase: definición y consecuencias}
+\label{subsec:class_imbalance}
+
+El aprendizaje sobre datos desequilibrados (\emph{imbalanced learning}) estudia cómo diseñar, entrenar y evaluar modelos cuando las clases de la variable objetivo tienen frecuencias muy dispares. En la formulación clásica del problema, el desequilibrio de clase se produce cuando la clase mayoritaria representa una fracción dominante del conjunto de entrenamiento mientras que la clase minoritaria —a menudo la más relevante desde el punto de vista del dominio— representa una fracción marginal~\cite{he2009learning}.
+
+Las consecuencias del desequilibrio de clase en el entrenamiento son bien conocidas: un modelo que minimiza una función de pérdida agregada sobre un conjunto de entrenamiento desequilibrado tiende a aprender preferentemente la distribución de la clase mayoritaria. En clasificación, esto se manifiesta como sesgo sistemático hacia la clase dominante. En regresión —el tipo de problema abordado en este trabajo— el efecto es análogo: el modelo aprende preferentemente la distribución de los valores objetivo más frecuentes, produciendo predicciones menos precisas para los valores que aparecen con menor frecuencia, aunque estos sean clínicamente los más relevantes~\cite{branco2016survey}.
+
+\subsection{Técnicas de remuestreo en \emph{imbalanced learning}}
+\label{subsec:tecnicas_remuestreo}
+
+Las estrategias para mitigar el impacto del desequilibrio de clase pueden clasificarse en tres niveles: preprocesado de los datos (\emph{pre-processing}), modificación del proceso de entrenamiento (\emph{in-processing}) y postprocesado de las predicciones (\emph{post-processing})~\cite{fernandez2018learning}. Las técnicas de preprocesado son las más compatibles con el requisito metodológico de este trabajo —el balanceo debe materializarse exclusivamente como una transformación de los datos de entrada— y son las más estudiadas en la literatura.
+
+Dentro de las técnicas de preprocesado, las de \textbf{remuestreo} son las más utilizadas:
+
+\textbf{\emph{Undersampling} (submuestreo)}: reduce el tamaño de la clase mayoritaria eliminando observaciones. La estrategia más simple es el submuestreo aleatorio (\emph{Random Undersampling}, RUS). Estrategias más sofisticadas, como \emph{Tomek Links}~\cite{tomek1976two}, identifican y eliminan selectivamente los pares de observaciones de clases opuestas que son vecinos mutuos en el espacio de características. La limitación principal del \emph{undersampling} es la pérdida de información.
+
+\textbf{\emph{Oversampling} (sobremuestreo)}: aumenta el tamaño de la clase minoritaria generando nuevas observaciones. La técnica más influyente es SMOTE (\emph{Synthetic Minority Oversampling Technique})~\cite{chawla2002smote}, que genera observaciones sintéticas interpolando linealmente entre observaciones reales de la clase minoritaria y sus $k$ vecinos más cercanos. Su limitación es la introducción de puntos sintéticos que pueden no respetar la distribución real de la clase minoritaria.
+
+\textbf{Técnicas híbridas}: combinan \emph{undersampling} y \emph{oversampling} de forma secuencial. \emph{SMOTE+Tomek} aplica SMOTE para aumentar la clase minoritaria y a continuación elimina mediante \emph{Tomek Links} los pares ruidosos en la frontera de decisión~\cite{batista2004study}.
+
+\subsection{Extensión al desequilibrio demográfico}
+\label{subsec:desequilibrio_demografico_extension}
+
+El problema abordado en este trabajo no es el desequilibrio de clase en su formulación clásica —desequilibrio entre clases glucémicas (hipoglucemia, normoglucemia, hiperglucemia)—, sino un tipo de desequilibrio cualitativamente diferente: el \textbf{desequilibrio de composición demográfica} del conjunto de entrenamiento. Este problema surge cuando la proporción de ventanas de entrenamiento procedentes de distintos grupos demográficos —definidos por sexo o por grupo de edad— es muy dispar, no porque los pacientes de distintos grupos tengan dinámicas glucémicas intrínsecamente distintas en frecuencia, sino porque el \emph{dataset} contiene más pacientes de algunos grupos que de otros, o porque los pacientes de distintos grupos tienen series CGM de longitud o densidad diferente.
+
+La distinción conceptual es importante: en el desequilibrio de clase clásico, la variable desequilibrada es la etiqueta de clase que el modelo intenta predecir. En el desequilibrio demográfico, la variable desequilibrada es un atributo del sujeto que produjo los datos, no el valor que el modelo predice. Un modelo que minimiza el error de predicción sobre un conjunto demográficamente desequilibrado aprende preferentemente la dinámica glucémica del subgrupo mayoritario, produciendo predicciones sistemáticamente menos precisas para los subgrupos infrarrepresentados.
+
+Las técnicas de remuestreo clásicas no fueron diseñadas para corregir este tipo de desequilibrio. La adaptación de estas técnicas al desequilibrio demográfico requiere redefinir la unidad de remuestreo: en lugar de operar sobre la distribución de la variable objetivo, se opera sobre la distribución de la variable demográfica. Esta redefinición es precisamente lo que diferencia metodológicamente el \emph{pipeline} de balanceo demográfico implementado en este trabajo de la aplicación directa de las técnicas estándar de \emph{imbalanced learning}.
+
+\subsection{Métricas de evaluación en contexto de desequilibrio}
+\label{subsec:metricas_imbalanced}
+
+La evaluación del rendimiento de modelos entrenados sobre datos desequilibrados requiere métricas que sean sensibles a la disparidad de rendimiento entre subgrupos, y no únicamente al rendimiento medio agregado. En el contexto de regresión, un modelo puede obtener un RMSE global bajo mientras produce predicciones sistemáticamente peores para el subgrupo demográfico minoritario, sin que esta disparidad sea detectable en la métrica agregada. Por este motivo, el análisis estadístico de este trabajo examina tanto el rendimiento global como el rendimiento desagregado por rango glucémico y por subgrupo demográfico.
+
+El protocolo estadístico formal utilizado —pruebas de Friedman, comparaciones \emph{post-hoc} de Nemenyi, tamaños del efecto de Cohen's $d$ y agregación de \emph{rankings} mediante el método de Borda— responde a la necesidad de comparar simultáneamente múltiples técnicas sobre múltiples \emph{datasets} y rangos glucémicos, controlando el error de tipo~I en comparaciones múltiples. La elección de pruebas no paramétricas está motivada por la imposibilidad de asumir normalidad en las distribuciones de error entre \emph{folds} para todas las condiciones experimentales.
+
+% =========================================================
+%  CAPÍTULO 3 — ESTADO DEL ARTE
+%  Impacto del balanceo demográfico (sexo, edad) en la
+%  predicción de glucosa mediante LSTM sobre datos CGM
+% =========================================================
+\label{chapter:estado-arte}
+\chapter[Estado del arte]{Estado del arte}
+
+Este capítulo revisa la evidencia científica sobre tres líneas de investigación cuya confluencia define el presente trabajo: la predicción de glucosa mediante modelos de series temporales, los sesgos demográficos en modelos clínicos de aprendizaje automático y las técnicas para su mitigación. La revisión no tiene por objeto explicar los conceptos que sustentan estas líneas —tratados en el capítulo anterior— sino identificar la frontera del conocimiento actual y las brechas que este trabajo aborda.
+
+Se organiza en cuatro secciones. La sección~\ref{sec:prediccion_glucosa_literatura} revisa el estado del arte en modelos de predicción de glucosa. La sección~\ref{sec:datasets_literatura} describe los \emph{datasets} disponibles y sus limitaciones para el análisis de subgrupos. La sección~\ref{sec:diferencias_fisiologicas_sexo_edad} establece la evidencia fisiológica y clínica de que el sexo y la edad modulan la dinámica glucémica. La sección~\ref{sec:desequilibrio_demografico_literatura} revisa la literatura sobre desequilibrio demográfico y técnicas de mitigación. La sección~\ref{sec:tecnicas_balanceo_series_temporales} revisa la literatura sobre técnicas de balanceo aplicadas específicamente a series temporales y datos médicos. El capítulo concluye con la identificación de las brechas específicas que motivan este trabajo.
+
+% =========================================================
+\section{Modelos de predicción de glucosa}
+\label{sec:prediccion_glucosa_literatura}
+% =========================================================
+
+A lo largo de las últimas décadas se han propuesto para la predicción de glucosa en sangre en pacientes con DM1 metodologías muy diversas, cuya progresión refleja tanto la evolución de las herramientas computacionales como la mayor disponibilidad de datos CGM. Esta sección revisa las principales familias de modelos que han conformado el estado del arte, con énfasis en su rendimiento comparado y en los aspectos no resueltos que motivan el presente trabajo.
+
+\subsection{Modelos fisiológicos y basados en ecuaciones}
+\label{subsec:modelos_fisiologicos}
+
+Los primeros intentos de predicción de glucosa se apoyaron en modelos fisiológicos que describen la dinámica de la glucosa y la insulina mediante sistemas de ecuaciones diferenciales~\cite{bergman1979minimal}. Los modelos más conocidos son los modelos mínimos de regulación glucosa-insulina, que capturan el efecto de la sensibilidad a la insulina, la producción hepática de glucosa y la absorción de hidratos de carbono. Estos modelos ofrecen resultados interpretables y una comprensión mecanicista de la enfermedad, pero presentan limitaciones importantes: requieren calibración individual, son costosos de diseñar y carecen de escalabilidad cuando se incorporan nuevas variables. Pese a estas limitaciones, los modelos basados en ecuaciones han servido históricamente como \emph{baseline} de referencia y continúan utilizándose en enfoques híbridos.
+
+\subsection{Métodos estadísticos de series temporales}
+\label{subsec:modelos_estadisticos}
+
+Con el crecimiento de los datos CGM, los investigadores adoptaron técnicas de predicción estadística. El modelo ARIMA (\emph{AutoRegressive Integrated Moving Average})~\cite{contreras2003arima} ha sido durante décadas el estándar en análisis de series temporales y se ha aplicado a la captura de la estructura autorregresiva de la glucosa, a veces con órdenes adaptativos para abordar la no estacionariedad. Aunque interpretables y eficientes computacionalmente, estos modelos tienen dificultades para capturar dependencias no lineales y de largo alcance. Otros métodos estadísticos, como los filtros de Kalman~\cite{reifman2007predictive} y los filtros bayesianos, también han sido aplicados con resultados variables. En general, estos enfoques alcanzan una precisión moderada para horizontes cortos (15--30 minutos) pero se degradan significativamente cuando el horizonte se amplía.
+
+\subsection{Aprendizaje automático clásico}
+\label{subsec:modelos_clasicos_ml}
+
+La introducción de algoritmos de aprendizaje automático ofreció mayor flexibilidad para capturar relaciones no lineales. Los algoritmos más empleados incluyen la regresión de vectores de soporte (SVR)~\cite{pappada2011development}, los bosques aleatorios (RF), los procesos gaussianos (GP)~\cite{fraccaro2016prediction} y las máquinas de aprendizaje extremo (ELM). Entre estos, los procesos gaussianos han atraído interés por su naturaleza probabilística y su capacidad para cuantificar la incertidumbre predictiva. Sin embargo, estos métodos suelen requerir características diseñadas manualmente (tendencias pasadas de glucosa, marcadores de ingesta o dosis de insulina) y no pueden explotar directamente secuencias largas en bruto. Su rendimiento es también sensible al tamaño y calidad del \emph{dataset}, lo que ha limitado su adopción generalizada en los últimos años.
+
+\subsection{Aprendizaje profundo: CNN y LSTM}
+\label{subsec:modelos_dl}
+
+La última década ha estado dominada por el aprendizaje profundo, impulsado por la mayor disponibilidad de datos y los avances en arquitecturas neuronales. Estos modelos aprenden representaciones automáticamente a partir de secuencias CGM en bruto, sin requerir extracción manual de características.
+
+Las dos familias de arquitecturas de aprendizaje profundo más utilizadas en predicción de glucosa son las redes convolucionales (CNN) y las redes recurrentes (RNN), especialmente LSTM y GRU. Las CNN unidimensionales capturan patrones temporales locales en las trayectorias de glucosa; las CNN dilatadas extienden el campo receptivo sin aumentar el número de parámetros~\cite{li2019convolutional}. Los modelos LSTM y GRU retienen por diseño memoria de estados pasados y capturan dependencias secuenciales. Los modelos LSTM personalizados —entrenados individualmente para cada paciente— han demostrado superar en algunos casos a los modelos globales, mientras que otros enfoques han intentado entrenar LSTM generalizados capaces de manejar cohortes heterogéneas~\cite{mirshekarian2019using}.
+
+Varios trabajos han explorado también modelos de conjunto (\emph{ensemble})~\cite{naumova2010multivariable}, que combinan las salidas de múltiples algoritmos para mejorar la robustez, y más recientemente arquitecturas \emph{Transformer} aplicadas a predicción glucémica~\cite{li2023gluctx}. Estos modelos reportan mejoras incrementales respecto a las LSTM en algunos benchmarks, aunque a costa de una mayor complejidad computacional y de una menor interpretabilidad.
+
+\subsection{Tendencias actuales}
+\label{subsec:tendencias_prediccion}
+
+La evidencia disponible permite identificar las siguientes tendencias consolidadas en la literatura reciente:
+
+\begin{itemize}
+    \item Las arquitecturas basadas en LSTM permanecen como el enfoque dominante para la predicción de glucosa a corto plazo (15--60 minutos), con un rendimiento bien documentado en múltiples \emph{datasets} públicos.
+    \item Los modelos híbridos que combinan distintas arquitecturas neuronales, o integran elementos fisiológicos y basados en datos, son cada vez más frecuentes.
+    \item El interés por los modelos personalizados —que adaptan sus parámetros a la dinámica específica de cada paciente— contrasta con el de los modelos generalizables desplegables sobre poblaciones amplias~\cite{oviedo2017review}.
+    \item A pesar de los avances técnicos, la mayoría de los trabajos se centra en minimizar el error de predicción medio, sin explorar cómo se distribuye ese error entre distintos subgrupos de pacientes. La equidad (\emph{fairness}), la interpretabilidad y la usabilidad clínica permanecen como dimensiones sistemáticamente subexploradas.
+\end{itemize}
+
+En resumen, la trayectoria de los modelos de predicción de glucosa ha evolucionado de métodos interpretativos pero rígidos hacia arquitecturas de aprendizaje profundo altamente flexibles. El reto pendiente no es únicamente mejorar la precisión bruta, sino comprender cómo se comportan estos modelos en distintas poblaciones de pacientes, un aspecto central para este trabajo.
+
+% =========================================================
+\section{\emph{Datasets} para la predicción de glucosa}
+\label{sec:datasets_literatura}
+% =========================================================
+
+La calidad y diversidad del \emph{dataset} juegan un papel decisivo en el éxito y la generalización de los modelos de predicción de glucosa. Esta sección revisa el panorama de \emph{datasets} disponibles, con énfasis en sus limitaciones para el análisis de subgrupos demográficos.
+
+\subsection{Categorías generales de \emph{datasets}}
+\label{subsec:categorias_datasets}
+
+Los \emph{datasets} empleados en la literatura pueden clasificarse en dos categorías principales:
+
+Los \textbf{\emph{datasets} in-silico} se generan mediante simuladores fisiológicos validados, siendo el más utilizado el simulador UVA/Padova T1D~\cite{man2014uva}, aceptado por la FDA como sustituto de algunos ensayos clínicos. Los datos \emph{in-silico} pueden generarse en grandes volúmenes bajo condiciones controladas, pero los pacientes simulados no capturan plenamente la complejidad de la DM1 real, por lo que los modelos entrenados exclusivamente sobre datos sintéticos frecuentemente no generalizan a entornos clínicos.
+
+Los \textbf{\emph{datasets} del mundo real} se obtienen directamente de pacientes con dispositivos CGM, ya sea en condiciones controladas de ensayo clínico o durante la vida libre. Son más representativos de la variabilidad real, pero más costosos y difíciles de recopilar; muchos permanecen privados y los públicos presentan limitaciones en tamaño, duración o diversidad clínica.
+
+\subsection{Repositorios abiertos y sus limitaciones}
+\label{subsec:repositorios_limitaciones}
+
+La disponibilidad de repositorios abiertos ha sido clave para acelerar la investigación en este campo, al permitir la reproducibilidad de resultados y proporcionar \emph{benchmarks} comunes. Los repositorios clásicos más utilizados incluyen OhioT1DM~\cite{marling2020ohiot1dm} y D1NAMO~\cite{dubosson2018d1namo}, que involucran típicamente decenas de pacientes y semanas de datos. Aunque valiosos para el desarrollo de modelos, su reducido tamaño limita la evaluación de la generalización a subpoblaciones específicas.
+
+Esta limitación motiva la necesidad de \emph{datasets} más amplios y diversos, capaces de capturar la variabilidad glucémica entre grupos de edad, sexos y distintos entornos clínicos. El presente trabajo se apoya en tres repositorios de este tipo.
+
+\subsection{\emph{Datasets} utilizados en este trabajo}
+\label{subsec:datasets_utilizados}
+
+\textbf{REPLACE-BG}~\cite{aleppo2017replace}: ensayo clínico aleatorizado realizado en Estados Unidos con el objetivo de evaluar si los adultos con DM1 que utilizan CGM podían reemplazar de forma segura las mediciones capilares rutinarias. El \emph{dataset} incluye registros CGM de 226 adultos recogidos durante 182 días en un entorno altamente estructurado y controlado. Desde la perspectiva de este trabajo, REPLACE-BG es valioso porque representa condiciones de ensayo clínico estandarizadas, aunque esto implica que la variabilidad es limitada respecto a los datos de vida libre y que la diversidad demográfica es más estrecha que en \emph{datasets} poblacionales.
+
+\textbf{DiaTrend}~\cite{sun2023diatrend}: repositorio que agrega registros de dos estudios liderados por Dartmouth: \emph{Digital SMD} (2019), con 17 adultos de 25 a 74 años, y \emph{SweetGoals} (en curso), con 37 adultos jóvenes de 19 a 29 años. En total, DiaTrend incluye 54 adultos con DM1, con una media de 510 días de datos CGM y de bomba de insulina por participante. La composición de la cohorte es especialmente relevante para este trabajo: incluye adultos jóvenes con mayor variabilidad glucémica y participantes de mayor edad con patrones más estables, permitiendo comparaciones entre grupos de edad.
+
+\textbf{T1DiabetesGranada}~\cite{diaz2023t1dgranada}: uno de los mayores \emph{datasets} abiertos de registros CGM para DM1 publicados hasta la fecha. Recogido en la Unidad Clínica de Endocrinología y Nutrición del Hospital Universitario San Cecilio (Granada, España), incluye más de 22 millones de mediciones de glucosa de 736 pacientes a lo largo de un periodo de cuatro años. A diferencia de REPLACE-BG o DiaTrend, este \emph{dataset} refleja la práctica clínica rutinaria bajo condiciones de vida real. Su gran escala y diversidad demográfica lo hacen especialmente adecuado para analizar el rendimiento de los modelos predictivos entre subgrupos.
+
+La tabla~\ref{tab:datasets_comparacion_demografico} resume las características de los tres \emph{datasets} desde la perspectiva relevante para este trabajo.
+
+\begin{table}[htbp]
+\centering
+\caption{\emph{Datasets} utilizados en este trabajo y disponibilidad de variables demográficas.}
+\label{tab:datasets_comparacion_demografico}
+\begin{tabular}{lcccl}
+\hline
+\textbf{Dataset} & \textbf{Pacientes} & \textbf{Muestreo} & \textbf{Seguimiento} & \textbf{Variables demográficas} \\
+\hline
+DiaTrend & 54 & 5 min & $\leq$7 años & Sexo, edad \\
+REPLACE-BG & 226 & 5 min & 26 sem & Sexo, edad, HbA1c, duración \\
+T1DGranada & 643 & 15 min & $\leq$4 años & Sexo, edad \\
+\hline
+\end{tabular}
+\end{table}
+
+% =========================================================
+\section{Diferencias por sexo y edad en la dinámica glucémica}
+\label{sec:diferencias_fisiologicas_sexo_edad}
+% =========================================================
+
+Antes de revisar las técnicas de balanceo demográfico, es necesario establecer la premisa fisiológica que justifica su pertinencia: si el sexo y la edad no tuvieran ninguna relación demostrable con la dinámica glucémica, equilibrar su representación en el conjunto de entrenamiento carecería de motivación clínica. La evidencia disponible indica lo contrario.
+
+\subsection{Diferencias por sexo}
+\label{subsec:diferencias_sexo}
+
+La DM1 presenta una predominancia masculina documentada en su incidencia~\cite{divers2020prevalence}, y la literatura ha identificado dimorfismo sexual en la homeostasis de la glucosa derivado de factores fisiológicos como las hormonas sexuales, la distribución de masa grasa y muscular y diferencias cromosómicas~\cite{mauvaisjarvis2023sexdiff}. Conti et al.~\cite{conti2025sexcgm} evaluaron de forma prospectiva, en una cohorte de 176 adultos con DM1 tratados con sistemas de circuito cerrado híbrido avanzado, las diferencias por sexo en métricas CGM y variabilidad glucémica a lo largo de un año de seguimiento, encontrando diferencias sistemáticas en el control glucémico entre hombres y mujeres pese a recibir idéntica terapia. En la misma línea, un estudio publicado en \emph{The Lancet Diabetes \& Endocrinology} documentó disparidades por sexo entre el control glucémico percibido por el paciente y el objetivo medido por CGM, señalando explícitamente la necesidad de investigar más a fondo el papel del sexo en la heterogeneidad fisiopatológica de la enfermedad~\cite{vanderheijden2025sexdisparity}.
+
+\subsection{Diferencias por edad}
+\label{subsec:diferencias_edad}
+
+La dinámica glucémica difiere también de forma sustancial entre grupos etarios. En el extremo pediátrico y adolescente, un estudio sobre control glucémico en horario escolar encontró que las niñas presentaban un riesgo significativamente mayor de deterioro del control glucémico nocturno que los niños (OR = 3.26, IC95\% 1.17--9.72)~\cite{deng2022schooldays}, lo que sugiere además una interacción entre edad y sexo en la dinámica glucémica. En el extremo de mayor edad, un estudio sobre 2.260 pacientes adultos con diabetes comparó el control glucémico entre pacientes de hasta 65 años y mayores de 65 años, encontrando que solo el 23,2\% de los pacientes más jóvenes alcanzaba su objetivo individualizado de TIR, frente al 69\% de los pacientes mayores de 65 años~\cite{nwokolo2024agecgm}. Esta diferencia confirma que la edad modula el comportamiento glucémico observable en CGM y advierte de que la relación entre edad y control glucémico no es monótona ni trivial.
+
+En conjunto, esta evidencia establece que tanto el sexo como la edad están asociados a patrones de dinámica glucémica distinguibles, lo que proporciona la motivación necesaria para estudiar si un modelo LSTM entrenado sobre una composición demográfica desequilibrada generaliza peor a los subgrupos infrarrepresentados.
+
+% =========================================================
+\section{Desequilibrio demográfico en modelos clínicos}
+\label{sec:desequilibrio_demografico_literatura}
+% =========================================================
+
+\subsection{Desequilibrio demográfico frente a desequilibrio de clase}
+\label{subsec:desequilibrio_demografico_vs_clase}
+
+El desarrollo de modelos de aprendizaje automático en contextos sanitarios plantea un problema distinto del desequilibrio de clases. Mientras que el desequilibrio de clases hace referencia a la proporción desigual entre las categorías de la variable objetivo, el desequilibrio demográfico se refiere a la proporción desigual de observaciones pertenecientes a distintos grupos poblacionales dentro del conjunto de entrenamiento, con independencia de cuál sea la variable objetivo del modelo. Cuando esto ocurre, los algoritmos de aprendizaje —especialmente las redes neuronales recurrentes— tienden a ajustar sus representaciones internas preferentemente a la dinámica del subgrupo mayoritario, lo que puede traducirse en una degradación sistemática del rendimiento predictivo en los subgrupos infrarrepresentados~\cite{straw2022sexbias,ricci2024sociodemographic}.
+
+Una revisión sistemática publicada en el \emph{Journal of Clinical Epidemiology} identificó múltiples mecanismos por los cuales el sesgo se introduce en modelos clínicos, señalando el reponderado de muestras como una de las estrategias de mitigación más eficaces, con un 83\% de efectividad reportada en los estudios analizados~\cite{ricci2024sociodemographic}. Straw y Wu~\cite{straw2022sexbias} demostraron en un estudio de predicción de enfermedad hepática que modelos entrenados sin considerar el desequilibrio por sexo presentaban disparidades de rendimiento sistemáticas entre subgrupos, replicando inequidades clínicas ya documentadas en la literatura médica.
+
+\subsection{Evidencia de disparidad de rendimiento por subgrupo}
+\label{subsec:evidencia_disparidad_rendimiento}
+
+La pregunta de si la composición demográfica del entrenamiento afecta al rendimiento de un modelo predictivo ha sido investigada de forma directa en varios trabajos recientes.
+
+Wang et al.~\cite{wang2024disparate} analizaron datos de más de 25.000 individuos con enfermedades crónicas —incluyendo diabetes— procedentes de siete \emph{datasets} distintos, encontrando disparidades de rendimiento predictivo sistemáticas por sexo, favoreciendo la precisión en pacientes varones, y disparidades más acusadas por edad, con mejor precisión en pacientes jóvenes y un comportamiento inconsistente en pacientes de mayor edad. Un hallazgo central de este trabajo es que \textbf{la paridad demográfica en la composición del \emph{dataset} no garantiza por sí sola la paridad en el rendimiento del modelo resultante}: incluso conjuntos de datos demográficamente equilibrados pueden producir modelos con disparidad de rendimiento.
+
+Yan et al.~\cite{yan2022doubleprioritized} propusieron un método de corrección de sesgo de representación (\emph{double prioritized bias correction}) y lo compararon sistemáticamente contra ocho técnicas de muestreo existentes —incluyendo SMOTE y ADASYN— para mitigar disparidades de rendimiento por edad y raza en pronóstico clínico. Un resultado especialmente relevante es que las \textbf{técnicas estándar de remuestreo de clase no están diseñadas para abordar sesgos de subgrupo demográfico}, ya que muestrean toda la clase minoritaria de la variable objetivo sin diferenciar a qué subgrupo demográfico pertenece cada observación.
+
+En el dominio específico de la predicción de glucosa mediante CGM, Ovalle et al.~\cite{ovalle2024racial} entrenaron modelos LSTM para predecir glucosa a 60 minutos a partir de datos CGM, evaluando la disparidad de rendimiento (medida en RMSE) entre subgrupos raciales en función de la composición demográfica del conjunto de entrenamiento. Esta constituye la referencia metodológicamente más próxima al presente trabajo. La diferencia sustancial es la variable de estratificación: mientras que Ovalle et al. estudian la raza, este trabajo estudia el sexo y la edad, dos dimensiones no exploradas en dicho estudio y con fundamento fisiológico propio.
+
+\subsection{Técnicas de mitigación del desequilibrio demográfico}
+\label{sec:tecnicas_balanceo_demografico}
+
+Esta sección revisa las familias de técnicas disponibles para corregir el desequilibrio en la representación de subgrupos demográficos dentro de un conjunto de entrenamiento, evaluando para cada una su fundamento, sus ventajas y limitaciones, y su compatibilidad con la restricción metodológica de este trabajo: el balanceo debe operar exclusivamente sobre las ventanas de entrenamiento, sin modificar el modelo LSTM ni su procedimiento de entrenamiento.
+
+\subsubsection{Reponderado de muestras (\emph{Reweighting})}
+\label{subsec:reweighting}
+
+El reponderado, propuesto originalmente por Kamiran y Calders~\cite{kamiran2012data}, asigna un peso distinto a cada observación en función de su pertenencia a un grupo demográfico, de modo que el grupo infrarrepresentado adquiere mayor influencia relativa en la función de pérdida sin necesidad de alterar físicamente el número de observaciones:
+\begin{equation}
+    w(a) = \frac{P_{\text{teórica}}(a)}{P_{\text{empírica}}(a)} = \frac{1/|A|}{n_a / N}
+\end{equation}
+donde $n_a$ es el número de observaciones del grupo $a$ y $N$ el número total. Los grupos infrarrepresentados reciben así un peso $w(a) > 1$, mientras que los sobrerrepresentados reciben $w(a) < 1$~\cite{zliobaite2017measuring,fairmodels2021}. Su aplicación estándar requiere que el algoritmo de entrenamiento acepte un parámetro de peso por muestra (\texttt{sample\_weight}), lo que constituye una modificación del proceso de entrenamiento. Dado que en este trabajo el balanceo debe producirse exclusivamente como una transformación de los datos de entrada, el reponderado puro \textbf{no es aplicable} salvo que se aproxime mediante remuestreo proporcional a los pesos calculados. Esta técnica está ampliamente utilizada en el ecosistema de \emph{IBM AI Fairness 360}~\cite{bellamy2018ai360} y ha sido evaluada extensamente como referencia en estudios de equidad clínica~\cite{ricci2024sociodemographic}.
+
+\subsubsection{Remuestreo dirigido por grupo demográfico}
+\label{subsec:group_resampling}
+
+El remuestreo dirigido por grupo es la contrapartida basada en remuestreo del reponderado: se duplican (\emph{oversampling}) o eliminan (\emph{undersampling}) físicamente observaciones hasta alcanzar la proporción demográfica deseada~\cite{fairmodels2021,kamiran2012data}. A esta familia pertenecen las técnicas implementadas en este trabajo —\emph{Random Oversampling}, \emph{Random Undersampling}, \emph{Patient-Aware Undersampling}, SMOTE y \emph{Jittering}—, aplicadas sobre la distribución de ventanas por grupo demográfico en lugar de sobre la distribución de clase glucémica. Su principal ventaja es la compatibilidad total con un \emph{pipeline} en el que el balanceo debe materializarse como una transformación de los datos de entrada sin modificar el proceso de entrenamiento posterior. El riesgo de introducir sesgos está documentado~\cite{krasanakis2018reweighting,algorithmfairnessmedicine2021}: el remuestreo uniforme corrige la proporción global del grupo, pero puede mantener la concentración de las muestras añadidas en un subconjunto reducido de individuos, un riesgo de pseudo-replicación especialmente relevante en \emph{datasets} de tamaño muestral reducido como DiaTrend.
+
+Chu et al.~\cite{chu2024agebias} en \emph{JMIR Aging} describen el caso de un estudio de neuroimagen en el que se duplicaron muestras de grupos etarios sobrerrepresentados para igualar la representación de grupos etarios minoritarios, observando que un sesgo residual persistió tras el balanceo. Yan et al.~\cite{yan2022doubleprioritized} mostraron empíricamente que las técnicas de remuestreo estándar de clase (incluido SMOTE) ofrecen una mitigación limitada de la disparidad por subgrupo demográfico precisamente por no diferenciar el subgrupo dentro de la clase remuestreada, motivando la necesidad de aplicar el remuestreo directamente sobre la variable demográfica, como se hace en este trabajo.
+
+\subsubsection{Generación sintética mediante redes generativas adversarias temporales}
+\label{subsec:timegan_demografico}
+
+TimeGAN~\cite{yoon2019timegan} combina un \emph{autoencoder} con una arquitectura GAN y un componente supervisado adicional que preserva explícitamente la dinámica temporal de las secuencias generadas. A diferencia de las GAN convencionales que tratan cada muestra como independiente, TimeGAN aprende conjuntamente un espacio latente y una dinámica de transición en dicho espacio, optimizando simultáneamente una pérdida adversaria, una pérdida de reconstrucción y una pérdida supervisada de predicción del siguiente paso temporal. La aplicabilidad a balanceo por sexo y por edad requiere generación condicionada: el generador debe condicionarse a la etiqueta de grupo demográfico del paciente de origen, de forma que las ventanas sintéticas hereden las características temporales del subgrupo infrarrepresentado. Su limitación principal es que requiere entrenar un modelo generativo adicional, lo que añade complejidad sustancial. En el dominio de sensores corporales, TS-GAN~\cite{dong2023tsgan} y un estudio de detección de estrés mediante GAN condicionales con arquitectura LSTM~\cite{dahmen2022conditionalgan} confirman la viabilidad técnica de generar series fisiológicas sintéticas de calidad suficiente para aumentar el entrenamiento de modelos de clasificación, si bien ninguno de los dos evalúa explícitamente el sexo o la edad como variable de balanceo.
+
+\subsubsection{Representaciones invariantes al atributo demográfico}
+\label{subsec:adversarial_debiasing}
+
+Esta familia de técnicas modifica el proceso de entrenamiento añadiendo un clasificador adversario que intenta predecir el atributo demográfico sensible a partir de la representación interna de la red. El modelo principal se entrena para minimizar simultáneamente su pérdida de predicción y maximizar la pérdida del adversario~\cite{louizos2016variational,edwards2016censoring,zemel2013fairrepr}. Su limitación es decisiva para este trabajo: es por definición una técnica de \emph{in-processing}, que exige modificar la arquitectura y el proceso de entrenamiento del modelo LSTM, lo que la sitúa \textbf{fuera del alcance metodológico} de este trabajo.
+
+\subsubsection{Validación cruzada con muestreo estratificado por grupo}
+\label{subsec:stratified_cv_demografico}
+
+Esta técnica garantiza que la composición demográfica del conjunto de entrenamiento sea representativa de la composición demográfica global del \emph{dataset}, evitando que el proceso de partición en \emph{folds} introduzca o amplifique un desequilibrio adicional al ya presente~\cite{yang2024datasetrepresentativeness}. Su ventaja es el bajo coste de implementación y un riesgo metodológico mínimo; su limitación es que por sí sola no resuelve el problema central: si la población de pacientes está intrínsecamente desequilibrada en número de ventanas por grupo, una partición estratificada simplemente replicará ese desequilibrio en cada \emph{fold} sin corregirlo.
+
+\subsubsection{Comparativa de técnicas}
+\label{subsec:comparativa_balanceo_demografico}
+
+La tabla~\ref{tab:comparativa_balanceo_demografico} resume las familias de técnicas revisadas según su tipo, su compatibilidad con la restricción metodológica, su complejidad de implementación y la evidencia disponible en el dominio sanitario.
+
+
+\begin{table}[htbp]
+\centering
+\caption{Comparativa de técnicas para la mitigación del desequilibrio demográfico.}
+\label{tab:comparativa_balanceo_demografico}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{3.0cm}p{2.0cm}p{2.8cm}p{1.4cm}p{1.7cm}p{2.0cm}}
+\toprule
+\textbf{Técnica} &
+\textbf{Tipo} &
+\textbf{Compat.\newline restricción} &
+\textbf{Edad/\newline Sexo} &
+\textbf{Complej.} &
+\textbf{Evidencia\newline \emph{Healthcare}} \\
+\midrule
+Reponderado & Pre-procesado & Parcial & Sí & Baja & Alta \\
+Remuestreo dirigido por grupo & Pre-procesado & Sí & Sí & Baja & Alta \\
+GAN temporal condicionada & Generativa & Sí & Sí & Alta & Media \\
+{Representaciones invariantes} & In-processing & No & Sí & Alta & Alta \\   % <--- AQUÍ ESTÁ EL CAMBIO
+CV estratificada por grupo & Estructural & Sí & Sí & Baja & Media \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% =========================================================
+\section{Técnicas de balanceo en series temporales y datos médicos}
+\label{sec:tecnicas_balanceo_series_temporales}
+% =========================================================
+
+La sección anterior ha revisado las técnicas de mitigación del desequilibrio demográfico desde la perspectiva de la equidad algorítmica. Esta sección complementa esa revisión examinando la literatura específica sobre técnicas de balanceo aplicadas a series temporales clínicas y, cuando existe evidencia directa, a la predicción de glucosa.
+
+\subsection{Balanceo en datos de series temporales: estado de la cuestión}
+\label{subsec:balanceo_series_temporales}
+
+La aplicación de técnicas de remuestreo a series temporales plantea desafíos específicos que no se presentan en datos tabulares independientes. El principal es la preservación de la autocorrelación temporal y de las propiedades distribucionales de la serie: duplicar una ventana temporal introduce redundancia exacta que puede sesgar la estimación de las autocorrelaciones durante el entrenamiento; interpolar mediante SMOTE entre ventanas de distintos pacientes puede generar trayectorias fisiológicamente implausibles.
+
+En el contexto de la predicción de glucosa, la aplicación de SMOTE a los rangos glucémicos minoritarios (hipoglucemia, hiperglucemia severa) ha sido estudiada como estrategia para mejorar el rendimiento del modelo en los eventos clínicamente más relevantes.
+
+En el contexto específico de datos glucémicos, el trabajo de Machado et al.\
+\cite{machado2023balancing} constituye la referencia más completa hasta la fecha
+sobre el impacto de los métodos de balanceo en minería de datos basada en señales
+CGM. Los autores evaluaron una batería amplia de técnicas de sobremuestreo
+(\emph{random oversampling}, SMOTE, Borderline-SMOTE, ADASYN), submuestreo
+(\emph{near miss}, ENN, \emph{Tomek links}) e híbridas (SMOTE+ENN,
+SMOTE+\emph{Tomek}) sobre los conjuntos de datos Ohio y St.~Louis, abordando el
+problema como clasificación de episodios glucémicos (hipoglucemia, normoglucemia,
+hiperglucemia). Sus resultados muestran que, contrariamente a la intuición, las
+técnicas de sobremuestreo aisladas no producen mejoras consistentes: la limpieza
+de la frontera de decisión aportada por los métodos de submuestreo —en particular
+ENN— resulta tan o más determinante que la generación de ejemplos sintéticos. La
+combinación SMOTE+ENN es la que mayor robustez exhibe a lo largo de todos los
+experimentos, alcanzando ganancias de hasta un 21\,\% en F1 para hipoglucemia
+respecto a la condición sin balanceo en la validación \emph{leave-one-out} sobre
+datos CGM. Los autores también señalan que el impacto del balanceo es irregular
+entre rangos glucémicos: las ganancias son pronunciadas para hipoglucemia e
+hiperglucemia, pero modestas para normoglucemia, anticipando la heterogeneidad
+por rango que se analiza sistemáticamente en el presente trabajo.
+
+\subsection{Balanceo demográfico en series temporales fisiológicas}
+\label{subsec:balanceo_demografico_series}
+
+En el dominio de las señales fisiológicas de series temporales —electrocardiogramas, registros de actividad, señales CGM— la mayoría de los trabajos sobre desequilibrio se han centrado en el desequilibrio de clase de la variable objetivo (p.\,ej., detección de arritmias en señales ECG con clases minoritarias muy infrecuentes), no en el desequilibrio de la composición demográfica del conjunto de entrenamiento.
+
+Sin embargo, algunos trabajos recientes constituyen excepciones relevantes. Ovalle et al.~\cite{ovalle2024racial} —revisado en la sección anterior— aplican balanceo demográfico por raza en ventanas CGM para LSTM de predicción de glucosa. En el dominio de señales de actividad y estrés, Dahmen et al.~\cite{dahmen2022conditionalgan} entrenan GAN condicionales sobre señales de sensores corporales para generar muestras sintéticas de subgrupos infrarrepresentados, si bien el atributo de balanceo es la clase de actividad, no un atributo demográfico.
+
+La evidencia empírica más directa de que la composición demográfica del conjunto
+de entrenamiento afecta al rendimiento de modelos LSTM de predicción de glucosa
+sobre señales CGM proviene de Thomsen et al.~\cite{thomsen2025racial}. En un
+diseño experimental riguroso, los autores entrenaron modelos LSTM sobre 11
+configuraciones de datos construidas variando la proporción de participantes de
+raza blanca (\emph{non-Hispanic White}) y raza negra (\emph{non-Hispanic Black})
+entre 0\,\% y 100\,\%, utilizando datos CGM de 205 participantes con DM1
+recogidos por el centro JAEB. Los resultados del modelo generalizado (\emph{Base-Generalized})
+revelan una interacción estadísticamente significativa ($p=0.02$) entre la raza y
+la proporción racial del conjunto de entrenamiento: a medida que aumenta la
+proporción de participantes blancos, el RMSE crece $0.04$ mmol/L más en los
+participantes negros que en los blancos, es decir, el modelo favorece
+progresivamente al grupo mayoritario en entrenamiento. Esta disparidad desaparece
+al aplicar \emph{transfer learning} personalizado ($p=0.20$), lo que sugiere que
+la personalización es una estrategia complementaria eficaz. El estudio también
+encuentra que la edad es un predictor significativo del error ($p<0.001$): la
+predicción de glucosa en niños produce errores sistemáticamente mayores que en
+adultos, independientemente de la raza o la composición del entrenamiento. Esta
+evidencia establece que la composición demográfica del conjunto de entrenamiento
+no es un factor neutral en los modelos de predicción CGM y que atributos como la
+edad constituyen una fuente de heterogeneidad que merece intervención explícita,
+motivando directamente el enfoque de balanceo por edad y por sexo adoptado en el
+presente trabajo.
+
+\subsection{Generación sintética de series temporales fisiológicas}
+\label{subsec:generacion_sintetica_series}
+
+La generación de series temporales sintéticas mediante modelos generativos profundos ha recibido atención creciente en los últimos años como alternativa al remuestreo exacto o a la interpolación lineal. Las familias de modelos más relevantes son las GAN temporales (TimeGAN~\cite{yoon2019timegan}, TS-GAN~\cite{dong2023tsgan}), los modelos de difusión sobre series temporales~\cite{tashiro2021csdi} y los \emph{variational autoencoders} condicionales.
+
+En el dominio de la diabetes y la glucosa específicamente, la generación de pacientes sintéticos se ha explorado principalmente como estrategia de aumento de datos para mejorar el rendimiento global del modelo, no como mecanismo de balanceo demográfico:
+
+Una línea de trabajo emergente propone la generación sintética condicional de
+series temporales médicas como estrategia para compensar el desequilibrio de
+subpoblaciones en los conjuntos de entrenamiento. Bing et al.~\cite{bing2022healthgen}
+presentan \textsc{HealthGen}, un modelo generativo basado en VAE secuencial que
+permite sintetizar historiales clínicos longitudinales condicionados sobre
+variables estáticas del paciente —incluyendo edad, sexo y etnia— respetando
+además los patrones de datos ausentes de los registros reales. Los autores
+demuestran sobre el conjunto MIMIC-III que la generación condicional de cohortes
+de subpoblaciones infrarrepresentadas y su incorporación al conjunto de
+entrenamiento mejora significativamente la equidad de los modelos resultantes,
+elevando el rendimiento en los grupos minoritarios sin degradar el de los grupos
+mayoritarios. Esta aproximación es conceptualmente análoga a la filosofía del
+balanceo demográfico explorado en el presente trabajo, si bien opera sobre la
+distribución de pacientes completos (generación a nivel de sujeto) en lugar de
+sobre la distribución de ventanas temporales (balanceo a nivel de instancia de
+entrenamiento). La ausencia de un modelo de generación condicional específicamente
+validado para señales CGM con atributos de edad y sexo como factores de
+condicionamiento constituye una de las brechas que delimitan la contribución del
+presente trabajo.
+
+
+El trabajo más directamente relacionado con el diseño experimental del presente
+estudio es el de Mayo et al.~\cite{mayo2019glycemic}, que introduce dos
+contribuciones metodológicas relevantes. La primera es la propuesta de métricas
+de error \emph{glucemia-conscientes}: en lugar de evaluar el RMSE o el MARD
+sobre el rango completo, los autores desagregan el error por rango glucémico
+(hipoglucemia, normoglucemia, hiperglucemia), demostrando que la selección del
+mejor modelo varía sustancialmente según el rango considerado. La segunda es la
+aplicación de técnicas de sobremuestreo (\emph{random oversampling}, SMOTE,
+ADASYN) al problema de regresión glucémica sobre el conjunto OhioT1DM, para lo
+cual adaptan las etiquetas de clase mediante \emph{pseudolabels} basados en los
+rangos glucémicos. Sus resultados muestran que las redes MLP entrenadas con
+sobremuestreo superan a los modelos lineales en el rango hipoglucémico, con
+diferencias estadísticamente significativas ($p=0.025$) frente al mejor modelo
+sin balanceo, mientras que para el rango normoglucémico el modelo lineal sin
+balanceo es más competitivo. Esta asimetría por rango sugiere que el impacto del
+balanceo no es uniforme a lo largo de la escala glucémica, lo que anticipa la
+necesidad de analizar el rendimiento desagregado por rango que se adopta como eje
+central del análisis de resultados en este trabajo. No obstante, Mayo et al.\
+abordan el desequilibrio de clase glucémica —la distribución desigual de valores
+objetivo entre rangos— y no el desequilibrio demográfico del conjunto de
+entrenamiento, que es el objeto específico de esta investigación.
+
+El estudio de Thomsen et al.~\cite{thomsen2025racial}, ya citado en la
+sección~\ref{subsec:desequilibrio_demografico_extension}, proporciona además la
+única evidencia disponible de disparidad de rendimiento por subgrupo demográfico
+en predicción de glucosa con modelos LSTM sobre señales CGM reales, confirmando
+que la composición racial del entrenamiento produce efectos mesurables y
+estadísticamente significativos. La extensión de este análisis a las dimensiones
+de sexo y edad en una taxonomía sistemática de técnicas de balanceo —en lugar de
+limitarse a la composición racial del conjunto de entrenamiento— constituye la
+principal brecha que el presente trabajo aborda.
+
+
+% =========================================================
+\section{Brechas en la literatura y motivación del trabajo}
+\label{sec:brechas_motivacion}
+% =========================================================
+
+La revisión anterior permite identificar tres brechas específicas que motivan y
+delimitan la contribución de este trabajo.
+
+\textbf{Primera brecha: el único estudio de disparidad demográfica en predicción
+de glucosa con LSTM sobre señales CGM se restringe a la dimensión racial y no
+cubre sexo ni grupos de edad.} La evidencia de que la composición demográfica del
+conjunto de entrenamiento afecta al rendimiento de modelos de predicción en DM1
+ha quedado establecida recientemente por Thomsen et al.~\cite{thomsen2025racial},
+que demostraron una divergencia estadísticamente significativa en el RMSE entre
+participantes blancos y negros al variar la proporción racial del conjunto de
+entrenamiento de modelos LSTM sobre datos CGM. Sin embargo, ese estudio no
+evalúa las dimensiones de sexo ni de edad, pese a que la
+sección~\ref{sec:diferencias_fisiologicas_sexo_edad} establece que ambas
+variables están asociadas a diferencias fisiológicas demostrables en la dinámica
+glucémica~\cite{sandig2020cgm}. La propia discusión de Thomsen et al.\ señala
+explícitamente que ``\textit{Future studies on investigating algorithmic fairness
+by other sensitive attributes are warranted}'', identificando sexo y edad como
+las dimensiones prioritarias de análisis. Este trabajo responde directamente a
+esa llamada, evaluando por primera vez y de forma sistemática la disparidad de
+rendimiento predictivo por sexo y por grupos de edad en modelos LSTM de
+predicción de glucosa sobre datos CGM, junto con estrategias de mitigación
+mediante balanceo.
+
+\textbf{Segunda brecha: las técnicas de remuestreo aplicadas a predicción de
+glucosa corrigen el desequilibrio de clase glucémica, no la composición
+demográfica del conjunto de entrenamiento.} Los trabajos de Machado et
+al.~\cite{machado2023balancing} y Mayo et al.~\cite{mayo2019glycemic}
+demuestran que el balanceo del conjunto de entrenamiento mejora el rendimiento de
+los modelos de predicción glucémica, especialmente en los rangos de hipoglucemia.
+No obstante, en ambos casos la variable remuestreada es la clase glucémica de la
+variable objetivo (hipoglucemia, normoglucemia, hiperglucemia): se trata de
+corregir cuántas ventanas de entrenamiento pertenecen a cada rango de glucosa, no
+cuántas proceden de cada subgrupo demográfico. Esta distinción es conceptualmente
+fundamental: un conjunto de entrenamiento puede estar perfectamente equilibrado en
+la distribución de rangos glucémicos y, al mismo tiempo, presentar un desequilibrio
+severo en la proporción de ventanas procedentes de distintos grupos de edad o
+sexo. Las técnicas de balanceo estándar —incluyendo SMOTE y sus variantes— no
+diferencian ni corrigen este desequilibrio demográfico porque fueron diseñadas
+para operar sobre la variable objetivo, no sobre los atributos del sujeto que
+generó los datos. Este trabajo aplica explícitamente estas mismas técnicas
+redefiniendo la unidad de balanceo: en lugar de operar sobre la distribución de
+clases glucémicas, se opera sobre la distribución de grupos demográficos (sexo o
+grupo de edad) dentro del conjunto de entrenamiento, una distinción metodológica
+que la literatura señala como necesaria pero que no ha sido implementada ni
+evaluada de forma sistemática en el contexto de predicción de glucosa.
+
+\textbf{Tercera brecha: la literatura de equidad algorítmica en salud no contempla
+la distinción entre balanceo a nivel de paciente y balanceo a nivel de ventana
+temporal.} Los trabajos existentes sobre disparidad demográfica en aprendizaje
+automático clínico, incluido el de Thomsen et al.~\cite{thomsen2025racial},
+operan sobre observaciones donde la unidad de análisis es el paciente o el
+episodio clínico discreto. En el contexto de series temporales generadas mediante
+ventana deslizante sobre señales CGM, la unidad de balanceo efectiva no es el
+paciente sino la ventana: un mismo paciente con una serie temporal larga y densa
+puede aportar órdenes de magnitud más ventanas de entrenamiento que otro paciente
+con una serie corta o fragmentada, incluso perteneciendo ambos al mismo grupo
+demográfico nominal. En consecuencia, el desequilibrio demográfico en el conjunto
+de ventanas puede ser cualitativamente distinto —y a menudo más severo— que el
+desequilibrio a nivel de paciente, y ambos niveles pueden divergir por razones
+ajenas a la composición demográfica de la cohorte, como el patrón de datos
+ausentes o la heterogeneidad en el tiempo de seguimiento entre pacientes. La
+gestión de esta distinción entre balanceo a nivel de paciente y balanceo a nivel
+de ventana, y su impacto sobre el rendimiento y la equidad del modelo resultante,
+no ha sido abordada en ninguno de los trabajos revisados.
+
+Este trabajo se sitúa en la intersección de estas tres brechas: aplica un conjunto
+sistemático de técnicas de balanceo demográfico —adaptadas explícitamente a la
+unidad de ventana temporal en lugar de a la unidad de paciente— para evaluar
+empíricamente, en tres \emph{datasets} públicos de DM1 y mediante un modelo LSTM
+de referencia validado, si la corrección de la composición demográfica del
+conjunto de entrenamiento por sexo y por edad mejora el rendimiento predictivo y
+reduce la disparidad entre subgrupos en la predicción de glucosa, con especial
+atención a los rangos glucémicos clínicamente críticos.
+
+% =========================================================
+%  Las entradas bibliográficas se mantienen en los archivos
+%  bibliografia.bib y bibliografia_capitulos.bib.
+%  No deben insertarse directamente en el cuerpo del capítulo.
+% =========================================================

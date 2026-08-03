@@ -1,0 +1,6 @@
+GAP 1 — SMOTE and resampling variants applied to CGM glucose prediction
+
+
+The strongest directly relevant hit from the search results is “Using Balancing Methods to Improve Glycaemia-Based Classification”, because it explicitly mentions random oversampling, SMOTE, SMOTE+Tomek, and SMOTE+ENN, and concludes SMOTE+ENN performed best.
+
+https://www.scitepress.org/Papers/2023/117971/117971.pdf

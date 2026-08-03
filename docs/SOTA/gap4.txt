@@ -1,0 +1,9 @@
+GAP 4 — Systematic comparison of balancing techniques on glucose prediction: global vs subgroup performance
+
+The OhioT1DM oversampling paper is the closest direct comparison of multiple resampling techniques for glucose prediction, because it explicitly compares random oversampling, SMOTE, and ADASYN and reports which strategies help hypoglycemia more than normo-/hyperglycemia
+
+https://pmc.ncbi.nlm.nih.gov/articles/PMC6886807/
+
+The racial-disparity CGM paper is the strongest example of subgroup-disaggregated prediction performance on real CGM data, but it uses training-data composition + transfer learning, not a formal resampling suite such as SMOTE/undersampling.
+
+https://journals.plos.org/digitalhealth/article/file?id=10.1371/journal.pdig.0000918&type=printable

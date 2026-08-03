@@ -1,0 +1,5 @@
+GAP 2 — Demographic balancing (sex or age) applied to physiological time-series windows
+
+The CGM racial-disparity paper is the only clearly relevant hit I found that directly addresses demographic subgroup performance in a physiological time-series prediction setting. It does not use SMOTE-style balancing; it studies how changing the racial composition of training data affects performance and shows the gap can be reduced by personalization/transfer learning.
+
+10.1371/journal.pdig.0000918
