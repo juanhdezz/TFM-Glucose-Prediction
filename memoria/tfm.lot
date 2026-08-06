@@ -5,9 +5,15 @@
 \contentsline {table}{\numberline {3.1}{\ignorespaces \emph {Datasets} utilizados en este trabajo y disponibilidad de variables demográficas.}}{16}{table.caption.9}%
 \contentsline {table}{\numberline {3.2}{\ignorespaces Comparativa de técnicas para la mitigación del desequilibrio demográfico.}}{20}{table.caption.16}%
 \addvspace {10\p@ }
+\contentsline {table}{\numberline {4.1}{\ignorespaces Características principales de los \textit {datasets} utilizados.}}{29}{table.caption.29}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Tamaño del efecto de Cohen (\textit {d}) para las diferencias glucémicas entre subgrupos demográficos en T1DiabetesGranada, calculado sobre ventanas clínicas de 1, 14 y 90 días.}}{34}{table.caption.49}%
+\contentsline {table}{\numberline {4.3}{\ignorespaces Ratio de desequilibrio a nivel de ventana (grupo mayoritario / grupo minoritario) por \textit {fold}, dimensión demográfica y \textit {dataset} (horizonte PH=4). Los valores ilustran la variabilidad introducida por el esquema Group K-Fold.}}{35}{table.caption.57}%
+\contentsline {table}{\numberline {4.4}{\ignorespaces Taxonomía de las diez técnicas de balanceo implementadas.}}{39}{table.caption.59}%
+\contentsline {table}{\numberline {4.5}{\ignorespaces Hiperparámetros del modelo LSTM.}}{46}{table.caption.73}%
+\contentsline {table}{\numberline {4.6}{\ignorespaces Rangos glucémicos para la evaluación desagregada del rendimiento.}}{50}{table.caption.76}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {5.1}{\ignorespaces Tabla grande}}{29}{table.caption.20}%
-\contentsline {table}{\numberline {5.2}{\ignorespaces Tabla enorme}}{30}{table.caption.21}%
+\contentsline {table}{\numberline {5.1}{\ignorespaces Tabla grande}}{53}{table.caption.82}%
+\contentsline {table}{\numberline {5.2}{\ignorespaces Tabla enorme}}{54}{table.caption.83}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

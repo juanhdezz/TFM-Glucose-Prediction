@@ -24,7 +24,7 @@ DATASET_ORDER = ["T1DiabetesGranada", "DIATREND", "REPLACE-BG"]
 DATASET_LABELS = {
     "DIATREND":          "DiaTrend",
     "REPLACE-BG":        "ReplaceBG",
-    "T1DiabetesGranada": "T1DGranada",
+    "T1DiabetesGranada": "T1DiabetesGranada",
 }
 
 # ---------------------------------------------------------------------------

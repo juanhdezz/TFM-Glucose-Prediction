@@ -3,9 +3,22 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Distribución de pacientes por grupo de edad ($<$31, 31--45, 46--65, $\geq $66) en cada \textit {dataset}.}}{29}{figure.caption.30}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Distribución de pacientes por sexo en cada \textit {dataset}.}}{30}{figure.caption.31}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces \textit {Heatmap} de la distribución conjunta edad~$\times $~sexo por \textit {dataset}. Cada celda muestra el número de pacientes en esa combinación demográfica.}}{30}{figure.caption.32}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Distribución de los valores de glucosa (mg/dL) por grupo de edad en cada \textit {dataset}. Las líneas horizontales internas indican la mediana; los límites del violín, el rango intercuartílico (IQR).}}{31}{figure.caption.36}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Porcentaje de mediciones en cada rango glucémico (TBR-2, TBR-1, TIR, TAR-1, TAR-2) desagregado por sexo y \textit {dataset}.}}{31}{figure.caption.37}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Distribución de mediciones por rango glucémico (TBR-2, TBR-1, TIR, TAR-1, TAR-2) según grupo de edad, por \textit {dataset}.}}{32}{figure.caption.38}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Número de mediciones por paciente desagregado por grupo de edad y \textit {dataset}. La gran dispersión inter-paciente refleja la heterogeneidad en la duración efectiva del seguimiento y en la adherencia al sensor.}}{32}{figure.caption.42}%
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Duración del seguimiento (en días) por grupo de edad y \textit {dataset}.}}{33}{figure.caption.43}%
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Glucemia media por grupo de edad y \textit {dataset}. Las barras de error representan la desviación típica inter-paciente dentro de cada grupo.}}{34}{figure.caption.47}%
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Variabilidad glucémica intra-grupo por dimensión demográfica y \textit {dataset}.}}{34}{figure.caption.48}%
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Distribución del número de ventanas de entrenamiento por grupo de edad en cada \textit {dataset} (horizonte PH=4, fold de referencia). Los valores absolutos y porcentuales permiten comparar el desequilibrio a nivel de ventana con el desequilibrio a nivel de paciente de la figura~\ref {fig:age_group_dist}.}}{36}{figure.caption.52}%
+\contentsline {figure}{\numberline {4.12}{\ignorespaces Ratio de desequilibrio (grupo mayoritario / grupo minoritario) a nivel de ventana por dimensión de edad y \textit {dataset}. Un ratio de 1,0 indica distribución perfectamente equilibrada.}}{37}{figure.caption.53}%
+\contentsline {figure}{\numberline {4.13}{\ignorespaces Distribución del número de ventanas de entrenamiento por sexo en cada \textit {dataset}.}}{37}{figure.caption.54}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Mi logo}}{31}{figure.caption.22}%
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Lista de distribuciones}}{32}{figure.caption.23}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Mi logo}}{55}{figure.caption.84}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Lista de distribuciones}}{56}{figure.caption.85}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

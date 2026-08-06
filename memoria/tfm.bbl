@@ -206,4 +206,29 @@ Y.~Tashiro, J.~Song, Y.~Song, and S.~Ermon, ``{CSDI}: Conditional score-based di
 \bibitem{bing2022healthgen}
 A.~Bing {\em et~al.}, ``Healthgen: Equitable synthetic ehr generation,'' {\em PMC}, 2022.
 
+\bibitem{antoniotfg}
+A.~Alemán~Granados, ``Demographic bias in blood glucose prediction: Evaluating sex and age effects in type 1 diabetes forecasting,'' trabajo de fin de grado, Universidad de Granada, 2025.
+\newblock Proyecto RELIEF-T1D, Hospital Universitario Virgen de las Nieves.
+
+\bibitem{aleppo2017}
+G.~Aleppo, K.~J. Ruedy, T.~D. Riddlesworth, D.~F. Kruger, A.~L. Peters, I.~Hirsch, R.~M. Bergenstal, A.~Bhargava, R.~Rich-Haigh, R.~Pop-Busui, W.~H. Polonsky, L.~Y. Yeoh, and R.~W. Beck, ``{REPLACE-BG}: A randomized trial comparing continuous glucose monitoring with and without routine blood glucose monitoring in adults with well-controlled type 1 diabetes,'' {\em Diabetes Care}, vol.~40, no.~4, pp.~538--545, 2017.
+
+\bibitem{sun2023}
+Q.~Sun, M.~V. Jankovic, L.~Bally, and S.~Mougiakakou, ``{DiaTrend}: A dataset to advance deep learning research for glucose forecasting in type 1 diabetes,'' {\em Scientific Data}, vol.~10, no.~1, p.~150, 2023.
+
+\bibitem{fawaz2018data}
+H.~I. Fawaz, G.~Forestier, J.~Weber, L.~Idoumghar, and P.-A. Muller, ``Data augmentation using synthetic data for time series classification with deep residual networks,'' in {\em ECML/PKDD Workshop on Advanced Analytics and Learning on Temporal Data}, 2018.
+
+\bibitem{he2008adasyn}
+H.~He, Y.~Bai, E.~A. Garcia, and S.~Li, ``Adasyn: Adaptive synthetic sampling approach for imbalanced learning,'' in {\em Proceedings of the IEEE International Joint Conference on Neural Networks (IJCNN)}, pp.~1322--1328, 2008.
+
+\bibitem{dubosson2018diatrend}
+F.~Dubosson, J.-E. Ranvier, S.~Bromuri, J.-P. Calbimonte, J.~Ruiz, and M.~Schumacher, ``The open {D}ia{T}rend dataset, a dataset of type 1 diabetic patient glucose time series and associated event data,'' {\em Data in Brief}, vol.~29, p.~104978, 2020.
+
+\bibitem{lin2017focal}
+T.-Y. Lin, P.~Goyal, R.~Girshick, K.~He, and P.~Dollar, ``Focal loss for dense object detection,'' in {\em Proceedings of the IEEE International Conference on Computer Vision (ICCV)}, pp.~2980--2988, 2017.
+
+\bibitem{um2017data}
+T.~T. Um, F.~M.~J. Pfister, D.~Pichler, S.~Endo, M.~Lang, S.~Hirche, U.~Fietzek, and D.~Kulić, ``Data augmentation of wearable sensor data for {Parkinson's} disease monitoring using convolutional neural networks,'' in {\em Proceedings of the 19th ACM International Conference on Multimodal Interaction (ICMI)}, pp.~216--220, 2017.
+
 \end{thebibliography}
