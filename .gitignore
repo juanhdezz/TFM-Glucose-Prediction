@@ -27,3 +27,18 @@ results/
 
 
 cache/
+
+
+# LaTeX complementary files
+*.toc
+*.aux
+*.out
+*.lot
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+*.log
+*.synctex.gz
+*.lof
+*.idx
