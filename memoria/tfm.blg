@@ -8,51 +8,48 @@ Warning--entry type for "diaz2023t1dgranada" isn't style-file defined
 Warning--I didn't find a database entry for "hochreiter1997lstm"
 Warning--I didn't find a database entry for "mayo2019glycemic"
 Warning--I didn't find a database entry for "sandig2020cgm"
-Warning--I didn't find a database entry for "marling2020"
-Warning--I didn't find a database entry for "delfavero2012"
-Warning--I didn't find a database entry for "battelino2019tir"
 Warning--empty journal in mirshekarian2019using
 Warning--empty journal in marling2020ohiot1dm
 Warning--empty journal in wang2024disparate
-You've used 72 entries,
+You've used 74 entries,
             1876 wiz_defined-function locations,
-            870 strings with 18570 characters,
-and the built_in function-call counts, 19997 in all, are:
-= -- 1941
-> -- 923
+            873 strings with 18694 characters,
+and the built_in function-call counts, 20751 in all, are:
+= -- 2022
+> -- 951
 < -- 0
-+ -- 334
-- -- 262
-* -- 1417
-:= -- 2860
-add.period$ -- 87
-call.type$ -- 72
-change.case$ -- 72
++ -- 344
+- -- 270
+* -- 1475
+:= -- 2961
+add.period$ -- 89
+call.type$ -- 74
+change.case$ -- 74
 chr.to.int$ -- 0
-cite$ -- 75
-duplicate$ -- 1017
-empty$ -- 1824
-format.name$ -- 262
-if$ -- 4844
+cite$ -- 77
+duplicate$ -- 1053
+empty$ -- 1887
+format.name$ -- 270
+if$ -- 5028
 int.to.chr$ -- 0
-int.to.str$ -- 72
-missing$ -- 65
-newline$ -- 234
-num.names$ -- 72
-pop$ -- 248
+int.to.str$ -- 74
+missing$ -- 67
+newline$ -- 240
+num.names$ -- 74
+pop$ -- 250
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 694
+skip$ -- 725
 stack$ -- 0
-substring$ -- 1227
-swap$ -- 421
+substring$ -- 1299
+swap$ -- 441
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 3
-while$ -- 182
-width$ -- 74
-write$ -- 714
-(There were 10 warnings)
+while$ -- 190
+width$ -- 76
+write$ -- 736
+(There were 7 warnings)

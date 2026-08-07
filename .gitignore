@@ -30,15 +30,15 @@ cache/
 
 
 # LaTeX complementary files
-*.toc
-*.aux
-*.out
-*.lot
-*.bbl
-*.blg
-*.fls
-*.fdb_latexmk
-*.log
-*.synctex.gz
-*.lof
-*.idx
+/memoria/*.toc
+/memoria/*.aux
+/memoria/*.out
+/memoria/*.lot
+/memoria/*.bbl
+/memoria/*.blg
+/memoria/*.fls
+/memoria/*.fdb_latexmk
+/memoria/*.log
+/memoria/*.synctex.gz
+/memoria/*.lof
+/memoria/*.idx

@@ -5,15 +5,18 @@
 \contentsline {table}{\numberline {3.1}{\ignorespaces \emph {Datasets} utilizados en este trabajo y disponibilidad de variables demográficas.}}{16}{table.caption.9}%
 \contentsline {table}{\numberline {3.2}{\ignorespaces Comparativa de técnicas para la mitigación del desequilibrio demográfico.}}{20}{table.caption.16}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces Características principales de los \textit {datasets} utilizados.}}{29}{table.caption.29}%
-\contentsline {table}{\numberline {4.2}{\ignorespaces Tamaño del efecto de Cohen (\textit {d}) para las diferencias glucémicas entre subgrupos demográficos en T1DiabetesGranada, calculado sobre ventanas clínicas de 1, 14 y 90 días.}}{34}{table.caption.49}%
-\contentsline {table}{\numberline {4.3}{\ignorespaces Ratio de desequilibrio a nivel de ventana (grupo mayoritario / grupo minoritario) por \textit {fold}, dimensión demográfica y \textit {dataset} (horizonte PH=4). Los valores ilustran la variabilidad introducida por el esquema Group K-Fold.}}{35}{table.caption.57}%
-\contentsline {table}{\numberline {4.4}{\ignorespaces Taxonomía de las diez técnicas de balanceo implementadas.}}{39}{table.caption.59}%
-\contentsline {table}{\numberline {4.5}{\ignorespaces Hiperparámetros del modelo LSTM.}}{46}{table.caption.73}%
-\contentsline {table}{\numberline {4.6}{\ignorespaces Rangos glucémicos para la evaluación desagregada del rendimiento.}}{50}{table.caption.76}%
+\contentsline {table}{\numberline {4.1}{\ignorespaces Características de los \textit {datasets} en su estado original.}}{30}{table.caption.31}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Características de los \textit {datasets} tras el preprocesado aplicado en~\cite {antoniotfg}.}}{31}{table.caption.32}%
+\contentsline {table}{\numberline {4.3}{\ignorespaces Tamaño del efecto de Cohen (\textit {d}) para las diferencias glucémicas entre subgrupos demográficos en T1DiabetesGranada, calculado sobre ventanas clínicas de 1, 14 y 90 días.}}{38}{table.caption.51}%
+\contentsline {table}{\numberline {4.4}{\ignorespaces Ratios de desequilibrio demográfico por dimensión y \textit {dataset}. Para la dimensión edad se muestra el ratio a nivel de ventana (grupo mayoritario / grupo minoritario, proxy $N_\text {pac} \times \text {días mediana}$) y el rango inter-\textit {fold} estimado con Group 5-Fold. Para la dimensión sexo se muestra el ratio a nivel de paciente. Un ratio de 1{,}0 indica distribución equilibrada.}}{43}{table.caption.60}%
+\contentsline {table}{\numberline {4.5}{\ignorespaces Taxonomía de las diez técnicas de balanceo implementadas.}}{45}{table.caption.63}%
+\contentsline {table}{\numberline {4.6}{\ignorespaces Hiperparámetros del modelo LSTM.}}{52}{table.caption.77}%
+\contentsline {table}{\numberline {4.7}{\ignorespaces Rangos glucémicos para la evaluación desagregada del rendimiento.}}{59}{table.caption.83}%
+\contentsline {table}{\numberline {4.8}{\ignorespaces Ejemplo de archivo plano MTA para un único \textit {fold} (LSTM, horizonte H4, condición sin balanceo). Las columnas A--E corresponden a las zonas de la Clarke Error Grid (\%), A+B es su suma acumulada (\%), y RMSE, MSE, MAE y MAPE son métricas de regresión.}}{60}{table.caption.84}%
+\contentsline {table}{\numberline {4.9}{\ignorespaces Ejemplo de archivo de reporte agregado MTA (LSTM, horizonte H4, condición sin balanceo). Cada celda expresa el valor medio con su desviación estándar inter-\textit {fold} en la línea inferior, calculados sobre los cinco \textit {folds}.}}{60}{table.caption.85}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {5.1}{\ignorespaces Tabla grande}}{53}{table.caption.82}%
-\contentsline {table}{\numberline {5.2}{\ignorespaces Tabla enorme}}{54}{table.caption.83}%
+\contentsline {table}{\numberline {5.1}{\ignorespaces Tabla grande}}{63}{table.caption.91}%
+\contentsline {table}{\numberline {5.2}{\ignorespaces Tabla enorme}}{64}{table.caption.92}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

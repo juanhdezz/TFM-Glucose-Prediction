@@ -1,5 +1,9 @@
 \begin{thebibliography}{10}
 
+\bibitem{antoniotfg}
+A.~Alemán~Granados, ``Demographic bias in blood glucose prediction: Evaluating sex and age effects in type 1 diabetes forecasting,'' trabajo de fin de grado, Universidad de Granada, 2025.
+\newblock Proyecto RELIEF-T1D, Hospital Universitario Virgen de las Nieves.
+
 \bibitem{atkinson2014type1}
 M.~A. Atkinson, G.~S. Eisenbarth, and A.~W. Michels, ``Type 1 diabetes,'' {\em The Lancet}, vol.~383, no.~9911, pp.~69--82, 2014.
 
@@ -206,10 +210,6 @@ Y.~Tashiro, J.~Song, Y.~Song, and S.~Ermon, ``{CSDI}: Conditional score-based di
 \bibitem{bing2022healthgen}
 A.~Bing {\em et~al.}, ``Healthgen: Equitable synthetic ehr generation,'' {\em PMC}, 2022.
 
-\bibitem{antoniotfg}
-A.~Alemán~Granados, ``Demographic bias in blood glucose prediction: Evaluating sex and age effects in type 1 diabetes forecasting,'' trabajo de fin de grado, Universidad de Granada, 2025.
-\newblock Proyecto RELIEF-T1D, Hospital Universitario Virgen de las Nieves.
-
 \bibitem{aleppo2017}
 G.~Aleppo, K.~J. Ruedy, T.~D. Riddlesworth, D.~F. Kruger, A.~L. Peters, I.~Hirsch, R.~M. Bergenstal, A.~Bhargava, R.~Rich-Haigh, R.~Pop-Busui, W.~H. Polonsky, L.~Y. Yeoh, and R.~W. Beck, ``{REPLACE-BG}: A randomized trial comparing continuous glucose monitoring with and without routine blood glucose monitoring in adults with well-controlled type 1 diabetes,'' {\em Diabetes Care}, vol.~40, no.~4, pp.~538--545, 2017.
 
@@ -230,5 +230,11 @@ T.-Y. Lin, P.~Goyal, R.~Girshick, K.~He, and P.~Dollar, ``Focal loss for dense o
 
 \bibitem{um2017data}
 T.~T. Um, F.~M.~J. Pfister, D.~Pichler, S.~Endo, M.~Lang, S.~Hirche, U.~Fietzek, and D.~Kulić, ``Data augmentation of wearable sensor data for {Parkinson's} disease monitoring using convolutional neural networks,'' in {\em Proceedings of the 19th ACM International Conference on Multimodal Interaction (ICMI)}, pp.~216--220, 2017.
+
+\bibitem{delfavero2012}
+S.~Del~Favero, A.~Facchinetti, and C.~Cobelli, ``A glucose-specific metric to assess predictors and identify models,'' {\em IEEE Transactions on Biomedical Engineering}, vol.~59, no.~5, pp.~1281--1290, 2012.
+
+\bibitem{clarke1987}
+W.~L. Clarke, D.~Cox, L.~A. Gonder-Frederick, W.~Carter, and S.~L. Pohl, ``Evaluating clinical accuracy of systems for self-monitoring of blood glucose,'' {\em Diabetes Care}, vol.~10, no.~5, pp.~622--628, 1987.
 
 \end{thebibliography}

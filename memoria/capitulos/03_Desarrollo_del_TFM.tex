@@ -6,7 +6,13 @@
 \label{chapter:desarrollo}
 \chapter{Desarrollo del trabajo}
 
+
 Este capítulo describe en detalle el proceso completo llevado a cabo para abordar la pregunta de investigación planteada en el capítulo~\ref{chapter:introduccion}. Se sigue el orden cronológico y lógico del trabajo: desde la recopilación y comprensión de los datos hasta la construcción del \emph{pipeline} de entrenamiento y evaluación que produce los resultados analizados en el capítulo~\ref{chapter:resultados}. Cada sección documenta las decisiones de diseño adoptadas, las alternativas consideradas y los criterios que motivaron la elección final, con el objetivo de garantizar la reproducibilidad del trabajo y la trazabilidad de cada decisión metodológica.
+
+El desarrollo metodológico se estructura en una secuencia de etapas claramente diferenciadas, en las que la salida de cada una constituye la entrada de la siguiente. En primer lugar, se recopilan e integran los conjuntos de datos utilizados en el estudio y se realiza un análisis exploratorio con el fin de caracterizar sus principales propiedades, identificar posibles problemas de calidad y comprender la distribución de las variables de interés. Posteriormente, se lleva a cabo un análisis específico del desbalance presente en los datos, centrado en la representación de los distintos grupos demográficos considerados en este trabajo. A partir de este diagnóstico, se revisan y comparan diferentes técnicas de balanceo descritas en la literatura, evaluando su adecuación a las restricciones metodológicas y a las características particulares del problema.
+
+Una vez definida la estrategia de balanceo, las series temporales de glucosa se transforman en un conjunto de muestras supervisadas mediante un esquema de ventanas deslizantes, obteniendo el formato requerido para el entrenamiento de los modelos predictivos. Sobre estas muestras se aplican las técnicas de balanceo seleccionadas exclusivamente en los conjuntos de entrenamiento, preservando en todo momento la independencia entre las particiones y evitando cualquier forma de fuga de información. Finalmente, los diferentes conjuntos de datos generados se emplean para entrenar modelos basados en redes neuronales LSTM, cuyos resultados son evaluados mediante la metodología experimental definida, permitiendo comparar de forma objetiva el impacto de las distintas estrategias de balanceo sobre el rendimiento predictivo y la equidad entre grupos demográficos.
+
 
 La figura~\ref{fig:pipeline_global} ofrece una visión de conjunto del flujo de trabajo completo, que se detalla a lo largo de las secciones siguientes.
 
@@ -20,6 +26,13 @@ La figura~\ref{fig:pipeline_global} ofrece una visión de conjunto del flujo de 
 %   \caption{Visión general del flujo de trabajo del proyecto RELIEF-T1D.}
 %   \label{fig:pipeline_global}
 % \end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{imagenes/pipeline_global.png}
+    \caption{Visión general del flujo de trabajo del proyecto RELIEF-T1D.}
+    \label{fig:pipeline_global}
+\end{figure}
 
 % =========================================================
 \section{Recopilación y descripción de los datos}
@@ -43,23 +56,18 @@ La selección de los conjuntos de datos estuvo guiada por cuatro criterios compl
 
 \paragraph{Diversidad estructural entre repositorios.} Se buscó deliberadamente que los tres \textit{datasets} seleccionados presentaran características estructurales heterogéneas ---tamaño muestral, duración del seguimiento, cadencia nativa del sensor, origen clínico o de estudio--- con el fin de que los resultados del análisis de balanceo no dependieran de las particularidades de una única fuente de datos. Esta diversidad estructural constituye también una garantía de generalidad de las conclusiones obtenidas.
 
-Otros repositorios revisados durante la fase de selección ---entre ellos el \textit{OhioT1DM dataset}~\cite{marling2020} y diversas cohortes de proyectos europeos--- fueron descartados bien por ausencia de la variable edad a nivel de paciente, bien por tamaños muestrales insuficientes para sostener la validación cruzada estratificada por paciente, o bien por no estar disponibles en acceso abierto en el momento de inicio del trabajo.
+\paragraph{Continuidad con investigación previa en curso.} La selección de \textit{T1DiabetesGranada} responde asimismo a la alineación directa con el proyecto de investigación activo PID2023-148188OA-I00, \textit{RELIEF-T1D: Avances en modelos IA para la predicción clínicamente fiable de eventos glicémicos adversos de cara a mejorar la calidad de vida de los pacientes diabéticos tipo 1}, financiado por el Ministerio de Ciencia e Innovación. Dicho proyecto utiliza este repositorio como fuente de datos principal, por lo que su inclusión en el presente trabajo no solo garantiza coherencia metodológica con la línea de investigación del grupo, sino que permite que los resultados obtenidos sobre el efecto del balanceo demográfico sean directamente aplicables y transferibles al contexto del proyecto.
+
 
 % ---------------------------------------------------------
 \subsection{T1DiabetesGranada}
 \label{subsec:dataset_t1dgranada}
 % ---------------------------------------------------------
-
-El \textit{dataset} T1DiabetesGranada fue proporcionado directamente por el Hospital Universitario Virgen de las Nieves de Granada en el marco del proyecto RELIEF-T1D. Se trata de uno de los repositorios de monitorización continua de glucosa más completos disponibles en diabetes de tipo 1, tanto por su volumen ---más de 30 millones de mediciones--- como por la duración del seguimiento ---entre 2018 y 2022, con periodos individuales de hasta cuatro años por paciente.
-
+El \textit{dataset} T1DiabetesGranada fue proporcionado directamente por el Hospital Universitario San Cecilio de Granada (Unidad Clínica de Endocrinología y Nutrición) en el marco del proyecto RELIEF-T1D. Se trata de uno de los repositorios de monitorización continua de glucosa más completos disponibles en diabetes de tipo 1, tanto por su volumen ---más de 30 millones de mediciones en los 643 pacientes seleccionados--- como por la duración del seguimiento ---desde enero de 2018 hasta marzo de 2022, con periodos individuales de hasta cuatro años por paciente.
 \paragraph{Estructura de los archivos.} El repositorio crudo se compone de dos componentes principales. El primero es el archivo de mediciones glucémicas (\texttt{Glucose\_measurements.csv}), con las columnas \texttt{Patient\_ID}, \texttt{Measurement\_date} (formato \texttt{YYYY-MM-DD}), \texttt{Measurement\_time} (\texttt{HH:MM:SS}) y \texttt{GlucoseValue}. El segundo es el archivo de información de paciente (\texttt{Patient\_info.csv}), que incluye variables demográficas (\texttt{Sex}, \texttt{Birth\_year}), fechas de inicio y fin de monitorización, y conteos de disponibilidad de datos (\texttt{Number\_of\_days\_with\_measures}, \texttt{Number\_of\_measurements}), entre otras variables clínicas adicionales. La edad de cada paciente se calculó dinámicamente como la diferencia entre el año de la primera medición disponible y el año de nacimiento, garantizando una alineación temporal precisa entre la variable demográfica y el periodo de monitorización~\cite{antoniotfg}.
-
 \paragraph{Cadencia nativa de 15 minutos.} A diferencia de los otros dos \textit{datasets}, T1DiabetesGranada emplea dispositivos CGM con cadencia nativa de 15 minutos. Esta particularidad impuso adaptaciones específicas en el algoritmo de remuestreo (véase sección~\ref{subsec:pipeline_preprocesado}): mientras que REPLACE-BG y DiaTrend se procesan con un paso $\Delta = 300$\,s y tolerancias estrechas ($\pm 2$\,s), Granada utiliza $\Delta = 900$\,s con tolerancias relajadas ($\pm 120$\,s) y una sonda de punto medio más amplia, preservando la fase nativa del dispositivo sin forzar una expansión a cuadrícula de 5 minutos que introduciría un sesgo de fase sistemático~\cite{antoniotfg}.
-
-\paragraph{Patrón MNAR de missingness.} El análisis exploratorio inicial (mayo 2026) identificó un patrón de datos faltantes de tipo MNAR (\textit{Missing Not At Random}): los huecos en las series temporales no son aleatorios sino que se concentran en episodios de alta variabilidad glucémica o en periodos de baja adherencia al sensor, ambos correlacionados con el estado clínico del paciente. Este hallazgo tuvo implicaciones directas sobre la estrategia de ventaneo: las ventanas que contenían huecos en cualquiera de sus ocho posiciones de entrada o en la posición objetivo fueron descartadas, en lugar de imputadas, para evitar introducir información artificial que distorsionara el análisis de balanceo posterior.
-
-\paragraph{Separabilidad demográfica.} El mismo análisis exploratorio cuantificó la separabilidad de los subgrupos demográficos mediante el tamaño del efecto de Cohen (\textit{d}) sobre ventanas clínicas de 1, 14 y 90 días. Los resultados evidenciaron diferencias estadísticamente significativas en la distribución glucémica entre grupos de edad y entre sexos, confirmando que el balanceo demográfico tiene potencial de efecto real sobre el rendimiento del modelo predictivo y justificando la inclusión de este \textit{dataset} como caso de estudio principal.
-
+\paragraph{Patrón de missingness y descarte de ventanas.} El análisis exploratorio identificó que los huecos en las series temporales no son aleatorios, sino que se deben a causas relacionadas con el estado del paciente ---problemas técnicos del sensor, falta de cumplimiento o desprendimiento del dispositivo---, todos ellos correlacionados con el estado clínico. Este hallazgo tuvo implicaciones directas sobre la estrategia de ventaneo: las ventanas que contenían huecos en cualquiera de sus ocho posiciones de entrada o en la posición objetivo fueron descartadas, en lugar de imputadas, para evitar introducir información artificial que distorsionara el análisis de balanceo posterior.
+\paragraph{Separabilidad demográfica.} La justificación para estudiar el sesgo demográfico se apoya en la literatura clínica previa y en la observación de que la variabilidad glucémica cambia con la edad y el sexo, lo que implica que las distribuciones de glucosa difieren entre subgrupos. Esta variabilidad diferencial entre grupos confirma que el balanceo demográfico tiene potencial de efecto real sobre el rendimiento del modelo predictivo, justificando la inclusión de este \textit{dataset} como caso de estudio principal.
 El conjunto resultante comprende \textbf{643 pacientes}, con un rango de sensor de [40,~500]\,mg/dL y más de 30 millones de mediciones brutas, que tras el remuestreo y la generación de ventanas válidas producen el mayor conjunto de instancias de los tres repositorios considerados.
 
 % ---------------------------------------------------------
@@ -79,12 +87,11 @@ Las variables demográficas disponibles a nivel de paciente incluyen sexo, edad,
 \subsection{DiaTrend}
 \label{subsec:dataset_diatrend}
 % ---------------------------------------------------------
+DiaTrend es un repositorio de CGM longitudinal publicado por Prioleau \textit{et al.}~\cite{sun2023} que recoge datos de vida real de pacientes adultos con diabetes de tipo 1, con un seguimiento medio de 510 días y casos individuales que superan los 1\,600 días. El repositorio está disponible en acceso abierto y fue diseñado específicamente para facilitar el desarrollo y la evaluación de modelos de predicción de glucosa a largo plazo.
 
-DiaTrend es un repositorio de CGM longitudinal publicado por Sun \textit{et al.}~\cite{sun2023} que recoge datos de vida real de pacientes adultos con diabetes de tipo 1, con seguimientos de hasta siete años. El repositorio está disponible en acceso abierto y fue diseñado específicamente para facilitar el desarrollo y la evaluación de modelos de predicción de glucosa a largo plazo.
+\paragraph{Estructura y preprocesado.} En su forma original, DiaTrend consiste en 54 libros de Excel individuales (\texttt{Subject01.xlsx}, \ldots, \texttt{Subject54.xlsx}), con hojas de CGM, bolos de insulina, carbohidratos y perfil basal, entre otras. El preprocesado aplicado por Alemán Granados~\cite{antoniotfg} extrajo únicamente la hoja de CGM de cada archivo ---coherentemente con la arquitectura LSTM univariante empleada en este trabajo, que se basa exclusivamente en la historia glucémica--- y unificó los 54 archivos en un único \textit{dataset} estructurado, añadiendo la columna \texttt{Patient\_ID} para preservar la trazabilidad individual y estandarizando las columnas a \texttt{Timestamp} y \texttt{GlucoseValue}.
 
-\paragraph{Estructura y preprocesado.} En su forma original, DiaTrend consiste en 54 archivos individuales, uno por paciente (\texttt{Subject1.csv}, \ldots, \texttt{Subject54.csv}), con las columnas \texttt{date} y concentración de glucosa en sangre (mg/dL). El preprocesado aplicado por Alemán Granados~\cite{antoniotfg} unificó los 54 archivos en un único \textit{dataset} estructurado, añadiendo la columna \texttt{Patient\_ID} para preservar la trazabilidad individual y estandarizando los nombres de columna a \texttt{Timestamp} y \texttt{GlucoseValue}.
-
-\paragraph{Limitaciones del repositorio.} DiaTrend es el \textit{dataset} de menor tamaño muestral de los tres considerados ---\textbf{54 pacientes}--- lo que implica que, tras la partición en cinco \textit{folds} y la separación por subgrupo demográfico, el número de pacientes por celda (grupo de edad $\times$ \textit{fold}) es reducido. Esta circunstancia amplifica la variabilidad de los resultados de balanceo y hace que el análisis de estabilidad inter-\textit{fold} sea especialmente relevante para este repositorio. Adicionalmente, DiaTrend no incluye anotaciones de insulina ni de ingesta de carbohidratos, lo que limita su uso a escenarios de predicción basados exclusivamente en la historia glucémica, coherentemente con la arquitectura LSTM univariante utilizada en este trabajo. El rango de sensor es de [39,~401]\,mg/dL con cadencia nativa de 5 minutos.
+\paragraph{Limitaciones del repositorio.} DiaTrend es el \textit{dataset} de menor tamaño muestral de los tres considerados ---\textbf{51 pacientes} tras aplicar los criterios de inclusión--- lo que implica que, tras la partición en cinco \textit{folds} y la separación por subgrupo demográfico, el número de pacientes por celda (grupo de edad $\times$ \textit{fold}) es reducido. Esta circunstancia amplifica la variabilidad de los resultados de balanceo y hace que el análisis de estabilidad inter-\textit{fold} sea especialmente relevante para este repositorio. Cabe señalar que, si bien el repositorio original sí incluye trazas de bomba de insulina y eventos de carbohidratos, estas fuentes de información no se utilizaron en este trabajo dado el carácter univariante del modelo. El rango de sensor es de [40,~400]\,mg/dL con cadencia nativa de 5 minutos.
 
 % ---------------------------------------------------------
 \subsection{Estructura unificada de datos de entrada}
@@ -105,17 +112,34 @@ Además del archivo de ventanas, cada \textit{dataset} dispone de un archivo de 
 
 Los límites de sensor aplicados durante el proceso de \textit{clipping} ---paso previo al entrenamiento, descrito en la sección~\ref{subsec:flujo_datos_fold}--- son específicos de cada \textit{dataset} y reflejan el rango operativo declarado por el fabricante del dispositivo CGM correspondiente:
 
+Las tablas~\ref{tab:datasets_original} y~\ref{tab:datasets_procesado} recogen, respectivamente, las características de los tres repositorios en su estado original y tras el preprocesado llevado a cabo por Alemán Granados~\cite{antoniotfg}. El pipeline de limpieza aplicó criterios de densidad de datos que redujeron el número de pacientes incluidos en cada cohorte ---de 736 a 643 en T1DGranada, de 226 a 223 en REPLACE-BG y de 54 a 51 en DiaTrend--- y estandarizó las series temporales mediante un algoritmo de remuestreo que genera una cuadrícula temporal completa a la cadencia nativa de cada dispositivo. Como consecuencia de esta expansión a cuadrícula, el volumen de filas resultante puede superar al número de lecturas brutas originales, ya que se crean entradas explícitas para los instantes sin lectura disponible. Los conjuntos procesados así obtenidos ---y no los repositorios originales--- son los que se han utilizado como entrada del pipeline de balanceo demográfico y generación de ventanas desarrollado en este trabajo.
+
 \begin{table}[htbp]
 \centering
-\caption{Características principales de los \textit{datasets} utilizados.}
-\label{tab:datasets_caracteristicas}
+\caption{Características de los \textit{datasets} en su estado original.}
+\label{tab:datasets_original}
 \begin{tabular}{lccccc}
 \hline
 \textbf{Dataset} & \textbf{Pacientes} & \textbf{Cadencia} & \textbf{Seguimiento} & \textbf{Mediciones} & \textbf{Rango sensor (mg/dL)} \\
 \hline
-T1DGranada  & 643 & 15 min & $\leq$4 años  & $>$30\,M  & {[}40,\;500{]} \\
-REPLACE-BG  & 226 &  5 min & 26 semanas    & $\sim$9\,M  & {[}39,\;401{]} \\
-DiaTrend    &  54 &  5 min & $\leq$7 años  & $\sim$0{,}8\,M & {[}39,\;401{]} \\
+T1DGranada  & 736 & 15 min & $\leq$4 años     & $>$22\,M  & {[}40,\;500{]} \\
+REPLACE-BG  & 226 &  5 min & 26 semanas       & $\sim$15\,M & {[}39,\;401{]} \\
+DiaTrend    &  54 &  5 min & $\leq$4{,}4 años & $\sim$6\,M  & {[}40,\;400{]} \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Características de los \textit{datasets} tras el preprocesado aplicado en~\cite{antoniotfg}.}
+\label{tab:datasets_procesado}
+\begin{tabular}{lccccc}
+\hline
+\textbf{Dataset} & \textbf{Pacientes} & \textbf{Cadencia} & \textbf{Seguimiento} & \textbf{Mediciones} & \textbf{Rango sensor (mg/dL)} \\
+\hline
+T1DGranada  & 643 & 15 min & $\leq$4 años     & $\sim$30{,}5\,M & {[}40,\;500{]} \\
+REPLACE-BG  & 223 &  5 min & 26 semanas       & $\sim$11{,}6\,M & {[}39,\;401{]} \\
+DiaTrend    &  51 &  5 min & $\leq$4{,}4 años & $\sim$9{,}2\,M  & {[}40,\;400{]} \\
 \hline
 \end{tabular}
 \end{table}
@@ -141,46 +165,89 @@ Antes de proceder a la construcción del \textit{pipeline} experimental, se real
 %   global. Las individuales por dataset (DIATREND/REPLACE-BG/T1DGranada/B1*)
 %   son redundantes; se relegan a un apéndice si el director lo exige.
 
-La composición demográfica de los tres \textit{datasets} presenta desequilibrios marcados tanto en la dimensión de sexo como en la de grupo de edad, aunque con patrones distintos entre repositorios. Las figuras~\ref{fig:age_group_dist}, \ref{fig:sex_dist} y~\ref{fig:age_sex_heatmap} muestran, de forma agregada para los tres conjuntos, la distribución de pacientes por grupo de edad, por sexo y la interacción entre ambas dimensiones.
+La composición demográfica de los tres \textit{datasets} presenta desequilibrios
+marcados tanto en la dimensión de sexo como en la de grupo de edad, aunque con
+patrones distintos entre repositorios. Las
+figuras~\ref{fig:age_group_dist}, \ref{fig:sex_dist} y~\ref{fig:age_sex_heatmap}
+muestran, de forma agregada para los tres conjuntos, la distribución de pacientes
+por grupo de edad, por sexo y la interacción entre ambas dimensiones.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{../../EDA/cross/B1a_age_group_distribution}
-    \caption{Distribución de pacientes por grupo de edad ($<$31, 31--45, 46--65, $\geq$66) en cada \textit{dataset}.}
+    \caption{Distribución de pacientes por grupo de edad
+             ($<$31, 31--45, 46--65, $\geq$66) en cada \textit{dataset}.}
     \label{fig:age_group_dist}
 \end{figure}
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.75\textwidth]{../../EDA/cross/B1b_sex_distribution}
-    \caption{Distribución de pacientes por sexo en cada \textit{dataset}.}
-    \label{fig:sex_dist}
-\end{figure}
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.75\textwidth]{../../EDA/cross/B1c_age_sex_heatmap}
-    \caption{\textit{Heatmap} de la distribución conjunta edad~$\times$~sexo por \textit{dataset}. Cada celda muestra el número de pacientes en esa combinación demográfica.}
-    \label{fig:age_sex_heatmap}
-\end{figure}
-
 \paragraph{Distribución por grupo de edad.}
-% TODO: rellenar con los valores reales de B1_demographic_summary.csv
-% Estructura sugerida del párrafo:
-%   «En T1DiabetesGranada el grupo mayoritario es [X] con [N] pacientes ([P]\%),
-%   frente al grupo minoritario [Y] con [M] pacientes ([Q]\%), lo que produce
-%   un ratio de desequilibrio de [R]:1. En REPLACE-BG [...]. En DiaTrend [...].»
-El grupo de edad dominante varía entre repositorios. T1DiabetesGranada, al proceder de un registro hospitalario de larga duración, concentra la mayor parte de sus pacientes en las franjas de mediana edad (31--45 y 46--65 años), con una representación notablemente inferior del grupo más joven ($<$31) y del grupo de mayor edad ($\geq$66). % TODO: insertar cifras exactas y ratio de desequilibrio.
-REPLACE-BG, por su diseño de ensayo clínico con criterios de inclusión acotados, presenta una distribución por edad % TODO: describir.
-DiaTrend, con solo 54 pacientes, muestra la mayor variabilidad relativa entre grupos etarios, con celdas de muy baja frecuencia que condicionan directamente la aplicabilidad de las técnicas de balanceo. % TODO: insertar cifras.
+El grupo de edad dominante varía entre repositorios.
+T1DiabetesGranada concentra la mayoría de sus 736 pacientes en la franja de 46--65
+años (281 pacientes, 38\,\%), seguida del grupo 31--45 (214, 29\,\%), mientras que
+el grupo más joven ($<$31) aporta 158 pacientes (21\,\%) y el de mayor edad
+($\geq$66) es el minoritario con solo 83 (11\,\%), lo que produce un ratio de
+desequilibrio máximo de 3{,}4:1 entre el grupo dominante y el más pequeño.
+REPLACE-BG presenta un patrón similar: el grupo 46--65 es el más numeroso
+(86 pacientes, 38\,\%), seguido de 31--45 (69, 31\,\%), $<$31 (51, 23\,\%) y
+$\geq$66 (17, 8\,\%), con un ratio máximo de 5{,}1:1.
+DiaTrend, con solo 54 pacientes en total, muestra el desequilibrio más extremo:
+el grupo $<$31 agrupa 38 pacientes (70\,\%) frente a un único paciente en el
+grupo $\geq$66 (2\,\%), lo que produce un ratio de 38:1 que hace prácticamente
+inviable el balanceo por edad en este repositorio sin recurrir a técnicas de
+síntesis agresiva.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../../EDA/cross/B1b_sex_distribution}
+        \caption{Distribución por sexo en cada \textit{dataset}.}
+        \label{fig:sex_dist}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../../EDA/cross/B1c_age_sex_heatmap}
+        \caption{\textit{Heatmap} de la distribución conjunta
+                 edad~$\times$~sexo por \textit{dataset}.}
+        \label{fig:age_sex_heatmap}
+    \end{subfigure}
+    \caption{Distribución por sexo (izquierda) e interacción edad~$\times$~sexo
+             (derecha). Cada celda del \textit{heatmap} indica el número de
+             pacientes en esa combinación demográfica.}
+    \label{fig:sex_heatmap_combined}
+\end{figure}
 
 \paragraph{Distribución por sexo.}
-% TODO: rellenar con los valores reales.
-% Estructura: ratio H:M o M:F por dataset, señalar cuál es el más desbalanceado.
-Los tres \textit{datasets} presentan un cierto predominio de uno de los sexos, aunque la magnitud del desequilibrio difiere. % TODO: describir dirección y ratio por dataset. Señalar si alguno supera el umbral 2:1 que la literatura considera problemático para el entrenamiento.
+En T1DiabetesGranada la distribución por sexo es la más equilibrada de los tres
+repositorios: 373 mujeres (51\,\%) frente a 363 hombres (49\,\%), con un ratio
+prácticamente unitario que sugiere que el desequilibrio de sexo apenas justificará
+intervención en este dataset.
+REPLACE-BG invierte ligeramente la proporción hacia los hombres: 112 mujeres
+(50\,\%) y 111 hombres (50\,\%) globalmente, aunque con variación intra-grupo
+---el grupo 46--65 presenta el sesgo más acusado, con 52 hombres frente a
+34 mujeres (ratio 1{,}5:1).
+DiaTrend muestra el mayor desequilibrio de sexo: 37 mujeres (69\,\%) frente a
+17 hombres (31\,\%), con un ratio de 2{,}2:1 que supera el umbral habitualmente
+considerado problemático en la literatura y que, combinado con el desequilibrio
+etario, hace de este repositorio el caso más exigente para las técnicas de
+balanceo demográfico.
 
 \paragraph{Interacción edad~$\times$~sexo.}
-El \textit{heatmap} de la figura~\ref{fig:age_sex_heatmap} revela que el desequilibrio no es independiente entre dimensiones: % TODO: describir la celda o celdas con menor representación. Mencionar si alguna combinación edad×sexo tiene cero o muy pocos pacientes en algún dataset, lo que impone restricciones al balanceo simultáneo por ambas dimensiones.
+El \textit{heatmap} de la figura~\ref{fig:age_sex_heatmap} revela que los
+desequilibrios de edad y sexo no son independientes.
+En DiaTrend la celda $\geq$66 contiene un único paciente (mujer), lo que implica
+que cualquier técnica de balanceo que opere simultáneamente sobre ambas dimensiones
+en este dataset carece de representación masculina en ese grupo etario, imponiendo
+una restricción estructural que limita la generalizabilidad del balanceo combinado.
+En T1DiabetesGranada la interacción es moderada: el grupo $<$31 presenta un ligero
+predominio masculino (56\,\%) mientras que los grupos de mediana y mayor edad se
+decantan hacia las mujeres (51--58\,\%), sin que ninguna celda quede vacía.
+REPLACE-BG mantiene celdas pobladas en todas las combinaciones, aunque con el
+sesgo ya señalado en 46--65 (más hombres) que se invierte en $<$31 (65\,\% mujeres),
+lo que sugiere que un balanceo por edad podría interactuar de forma no trivial con
+la distribución de sexo en este repositorio.
+
 
 % ---------------------------------------------------------
 \subsection{Distribución de la señal CGM}
@@ -197,23 +264,65 @@ El \textit{heatmap} de la figura~\ref{fig:age_sex_heatmap} revela que el desequi
 %   muestran si la distribución por rangos varía con la edad dentro de cada dataset.
 %   B3a (media por edad) es redundante con el violín; se omite del cuerpo.
 
-La distribución de los valores de glucosa presenta diferencias tanto entre \textit{datasets} como entre subgrupos demográficos dentro de cada uno de ellos. La figura~\ref{fig:glucose_violin} muestra, mediante diagramas de violín, la distribución de la glucemia por grupo de edad en los tres repositorios. La figura~\ref{fig:tir_tbr_tar_sex} desagrega el tiempo en rango por sexo.
+La distribución de los valores de glucosa presenta diferencias tanto entre
+\textit{datasets} como entre subgrupos demográficos dentro de cada uno de ellos.
+La figura~\ref{fig:glucose_violin} muestra, mediante diagramas de violín, la
+distribución de la glucemia por grupo de edad en los tres repositorios.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{../../EDA/cross/B3d_glucose_violin_age}
-    \caption{Distribución de los valores de glucosa (mg/dL) por grupo de edad en cada \textit{dataset}. Las líneas horizontales internas indican la mediana; los límites del violín, el rango intercuartílico (IQR).}
+    \caption{Distribución de los valores de glucosa (mg/dL) por grupo de edad en
+             cada \textit{dataset}. Las líneas horizontales internas indican la
+             mediana; los límites del violín, el rango intercuartílico (IQR).
+             Las líneas discontinuas indican los umbrales de hipoglucemia
+             (70\,mg/dL) e hiperglucemia (180\,mg/dL).}
     \label{fig:glucose_violin}
 \end{figure}
 
-\begin{figure}[htbp]
+\paragraph{Estadísticos descriptivos globales.}
+Los tres \textit{datasets} presentan distribuciones de glucosa con asimetría positiva
+característica de las poblaciones con diabetes de tipo 1, con una cola derecha más
+pronunciada que refleja los episodios de hiperglucemia.
+En T1DiabetesGranada la media global oscila entre 160 y 168\,mg/dL según el grupo de
+edad, con medianas entre 149 y 155\,mg/dL ---consistentemente por debajo de la media---
+y un IQR de aproximadamente 80--100\,mg/dL, lo que confirma la asimetría positiva.
+DiaTrend presenta los valores medios más elevados (163--187\,mg/dL) y la mayor
+dispersión en el grupo $<$31 ($\sigma = 74{,}6$\,mg/dL), mientras que REPLACE-BG
+muestra las medias más bajas (156--165\,mg/dL) y la menor dispersión global, lo
+que es coherente con su origen en un ensayo clínico controlado con criterios de
+inclusión que probablemente excluían los perfiles glucémicos más inestables.
+En los tres repositorios la mediana es sistemáticamente inferior a la media en todos
+los grupos de edad, y los percentiles 75 superan el umbral de hiperglucemia
+(180\,mg/dL) en la mayoría de subgrupos, lo que indica que una fracción relevante de
+las mediciones cae en zona TAR.
+
+\paragraph{Diferencias entre rangos de sensor.}
+T1DiabetesGranada emplea dispositivos con un rango operativo de [40,~500]\,mg/dL,
+mientras que REPLACE-BG y DiaTrend utilizan sensores con rango [39,~401]\,mg/dL.
+Esta diferencia implica que la cola superior de la distribución glucémica de
+T1DiabetesGranada captura episodios de hiperglucemia severa que los otros dos
+repositorios truncan al valor máximo del sensor (401\,mg/dL). En los diagramas de
+violín de la figura~\ref{fig:glucose_violin} se aprecia que los violines de
+T1DiabetesGranada alcanzan los 500\,mg/dL en todos los grupos de edad, mientras
+que los de DiaTrend y REPLACE-BG quedan truncados en torno a 400\,mg/dL,
+confirmando visualmente el efecto del techo instrumental.
+
+La figura~\ref{fig:tir_tbr_tar_sex} desagrega el tiempo en rango por sexo en los
+tres repositorios.
+
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{../../EDA/cross/B3c_tir_tbr_tar_by_sex}
-    \caption{Porcentaje de mediciones en cada rango glucémico (TBR-2, TBR-1, TIR, TAR-1, TAR-2) desagregado por sexo y \textit{dataset}.}
+    \caption{Porcentaje de mediciones en cada rango glucémico (TBR, TIR, TAR)
+             desagregado por sexo y \textit{dataset}.}
     \label{fig:tir_tbr_tar_sex}
 \end{figure}
 
-\begin{figure}[htbp]
+La figura~\ref{fig:glucose_ranges_age} desglosa la distribución por rangos
+glucémicos y grupo de edad de forma independiente para cada repositorio.
+
+\begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.32\textwidth}
         \includegraphics[width=\textwidth]{../../EDA/T1DiabetesGranada/B3b_glucose_ranges_age}
@@ -229,29 +338,46 @@ La distribución de los valores de glucosa presenta diferencias tanto entre \tex
         \includegraphics[width=\textwidth]{../../EDA/DIATREND/B3b_glucose_ranges_age}
         \caption{DiaTrend}
     \end{subfigure}
-    \caption{Distribución de mediciones por rango glucémico (TBR-2, TBR-1, TIR, TAR-1, TAR-2) según grupo de edad, por \textit{dataset}.}
+    \caption{Distribución de mediciones por rango glucémico (TBR-2, TBR-1, TIR,
+             TAR-1, TAR-2) según grupo de edad, por \textit{dataset}.}
     \label{fig:glucose_ranges_age}
 \end{figure}
 
-\paragraph{Estadísticos descriptivos globales.}
-% TODO: rellenar con valores de B3_glucose_stats_age.csv y B3_glycemic_metrics_sex.csv
-% Estructura sugerida:
-%   Media ± desv. típica global por dataset; mediana; percentiles 10 y 90.
-%   Señalar la asimetría derecha característica de las distribuciones CGM en T1D.
-Los tres \textit{datasets} presentan distribuciones de glucosa con asimetría positiva característica de las poblaciones con diabetes de tipo 1, con una cola derecha más pronunciada que refleja los episodios de hiperglucemia. % TODO: insertar estadísticos descriptivos (media, mediana, IQR, percentiles 10/90) por dataset.
 
-\paragraph{Diferencias entre rangos de sensor.}
-T1DiabetesGranada emplea dispositivos con un rango operativo de [40,~500]\,mg/dL, mientras que REPLACE-BG y DiaTrend utilizan sensores con rango [39,~401]\,mg/dL. Esta diferencia implica que la cola superior de la distribución glucémica de T1DiabetesGranada captura episodios de hiperglucemia severa que los otros dos repositorios truncan al valor máximo del sensor (401\,mg/dL). % TODO: cuantificar qué porcentaje de mediciones de T1DGranada supera 401 mg/dL.
 
 \paragraph{Variabilidad glucémica por subgrupo demográfico.}
-% TODO: describir los patrones visibles en las figuras. Estructura sugerida:
-%   ¿Hay diferencias en TIR entre grupos de edad? ¿Y entre sexos?
-%   ¿El grupo con peor control (menor TIR) es consistente entre datasets?
-%   Mencionar si las diferencias son visualmente marcadas o sutiles,
-%   lo que motivará el análisis formal de separabilidad de §4.4.
-Los diagramas de violín revelan % TODO: describir las diferencias observadas entre grupos de edad.
-La desagregación por sexo (figura~\ref{fig:tir_tbr_tar_sex}) muestra % TODO: describir diferencias en TIR/TBR/TAR entre hombres y mujeres por dataset.
+Los diagramas de violín de la figura~\ref{fig:glucose_violin} revelan un patrón
+consistente entre los tres repositorios: el grupo de menor edad ($<$31) presenta
+las medianas más elevadas y las distribuciones más anchas en la zona de
+hiperglucemia, mientras que el grupo de mayor edad ($\geq$66) tiende a mostrar
+medianas más bajas y violines más estrechos, sugiriendo un mejor control glucémico
+medio o una menor variabilidad intra-grupo. Este gradiente es especialmente
+pronunciado en DiaTrend, donde la mediana del grupo $<$31 (176\,mg/dL) supera en
+20\,mg/dL a la del grupo $\geq$66 (156\,mg/dL), y donde el cuerpo del violín
+$<$31 se extiende notablemente por encima de la línea de hiperglucemia
+(180\,mg/dL, línea discontinua roja). En T1DiabetesGranada y REPLACE-BG el
+gradiente existe pero es más moderado (diferencias de 8 y 8\,mg/dL en mediana
+entre extremos etarios, respectivamente), lo que anticipa que el efecto del
+balanceo por edad podría ser más detectable en DiaTrend.
 
+La desagregación por sexo (figura~\ref{fig:tir_tbr_tar_sex}) muestra diferencias
+de magnitud variable según el repositorio.
+En T1DiabetesGranada los hombres presentan un TIR ligeramente superior al de las
+mujeres (45{,}1\,\% frente a 42{,}3\,\%), acompañado de mayor TAR (27{,}1\,\%
+frente a 25{,}0\,\%) y mayor TBR (3{,}7\,\% frente a 3{,}3\,\%), lo que sugiere
+que el perfil masculino tiende hacia glucemias más elevadas con mayor variabilidad
+en ambas colas.
+En DiaTrend las diferencias entre sexos son mínimas en TIR (42{,}8\,\% mujeres
+frente a 42{,}2\,\% hombres) y TBR (1{,}7\,\% frente a 1{,}2\,\%), y el TAR es
+prácticamente idéntico ($\approx$39\,\%) en ambos grupos, lo que indica que en
+este repositorio el sexo no es un factor diferenciador del control glucémico.
+REPLACE-BG es el repositorio con mayor diferencia por sexo en TIR: los hombres
+alcanzan un 59{,}4\,\% frente al 55{,}2\,\% de las mujeres, con el TAR invertido
+(31{,}0\,\% en mujeres frente a 27{,}9\,\% en hombres), patrón que sugiere que
+las mujeres de este ensayo clínico tienden a más tiempo en hiperglucemia. En
+conjunto, las diferencias por sexo son más sutiles que las observadas por grupo de
+edad, lo que anticipa que el balanceo por esta dimensión producirá efectos más
+moderados sobre el rendimiento del modelo.
 % ---------------------------------------------------------
 \subsection{Análisis de datos ausentes}
 \label{subsec:eda_missing}
@@ -283,18 +409,66 @@ La presencia de datos ausentes en series temporales CGM no es aleatoria. En los 
 \end{figure}
 
 \paragraph{Heterogeneidad inter-paciente.}
-% TODO: describir lo que muestran las figuras B2a y B2b.
-% Estructura: rango del nº de mediciones por paciente en cada dataset (mín, máx, mediana).
-% Señalar si existe correlación entre grupo de edad y duración de seguimiento.
-La figura~\ref{fig:meas_per_patient_age} pone de manifiesto una elevada dispersión en el número de mediciones por paciente dentro de cada \textit{dataset}. % TODO: insertar rango y mediana por dataset.
-Esta heterogeneidad no es independiente del grupo demográfico: % TODO: describir si algún grupo de edad o sexo tiene sistemáticamente menos mediciones.
+La figura~\ref{fig:meas_per_patient_age} pone de manifiesto una elevada dispersión
+en el número de mediciones por paciente dentro de cada \textit{dataset}, reflejo
+directo de la heterogeneidad en duración de seguimiento y adherencia al sensor.
+En T1DiabetesGranada la dispersión es la más pronunciada: los boxplots muestran
+rangos intercuartílicos de varias decenas de miles de mediciones por paciente,
+con \textit{outliers} que superan las 120\,000 mediciones, y una mediana que
+decrece con la edad ---de aproximadamente 40\,000 mediciones en el grupo $<$31
+a unas 18\,000 en el grupo $\geq$66---, patrón consistente con la mayor duración
+de seguimiento de los pacientes más jóvenes (mediana de 616 días en $<$31 frente
+a 253 días en $\geq$66, según la figura~\ref{fig:followup_age}).
+En DiaTrend el contraste entre grupos es extremo: el grupo $<$31 ($n=38$) presenta
+una mediana de seguimiento de 494 días con un IQR amplísimo (209--1\,300 días) y
+mediciones por paciente que llegan a superar las 400\,000, mientras que los grupos
+31--45 ($n=4$) y 46--65 ($n=8$) se sitúan en medianas de 77 y 91 días
+respectivamente, con muy poca dispersión. Esta asimetría no es demográficamente
+neutra: la enorme masa de datos del grupo $<$31 de DiaTrend domina cualquier
+análisis basado en conteo de ventanas, lo que amplifica artificialmente el peso
+de ese subgrupo antes de aplicar ninguna técnica de balanceo.
+En REPLACE-BG la situación es opuesta: al tratarse de un ensayo clínico con
+protocolo estandarizado, la duración de seguimiento es prácticamente idéntica
+en todos los grupos de edad ($\approx$182 días, IQR $<$7 días), y el número de
+mediciones por paciente es homogéneo entre grupos, con boxplots compactos y
+centrados entre 40\,000 y 50\,000 mediciones. Este diseño controlado hace de
+REPLACE-BG el repositorio con menor desequilibrio estructural inducido por
+heterogeneidad de seguimiento.
 
 \paragraph{Patrón MNAR en T1DiabetesGranada.}
-T1DiabetesGranada es el \textit{dataset} en el que el patrón MNAR es más pronunciado, dada la duración de seguimiento de hasta cuatro años y la naturaleza observacional de los datos. Los huecos se concentran en episodios de alta variabilidad glucémica y en periodos de baja adherencia al sensor, ambos correlacionados con el estado clínico del paciente. % TODO: cuantificar: porcentaje de slots de 15 min sin medición sobre el total de slots posibles; longitud mediana de los segmentos continuos.
+T1DiabetesGranada es el \textit{dataset} en el que el patrón MNAR es más
+pronunciado, dada la duración de seguimiento de hasta cuatro años y la naturaleza
+observacional del registro. La figura~\ref{fig:followup_age} muestra que incluso
+dentro de cada grupo de edad la variabilidad en duración es muy elevada: el grupo
+$<$31 presenta un IQR de 308--1\,063 días, lo que implica que algunos pacientes
+contribuyen con más de tres veces más días de datos que la mediana del mismo grupo.
+Los huecos en las series se concentran en episodios de alta variabilidad glucémica
+y en periodos de baja adherencia al sensor, ambos correlacionados con el estado
+clínico del paciente: un paciente que abandona temporalmente el sensor es,
+con mayor probabilidad, un paciente en un periodo de peor control glucémico,
+lo que hace que los datos ausentes no sean una muestra aleatoria de la señal.
+Este patrón MNAR tiene una consecuencia directa sobre la representatividad de
+las ventanas generadas: los pacientes con mayor adherencia ---y por tanto mayor
+número de segmentos continuos--- contribuyen desproporcionadamente al conjunto
+de entrenamiento, sesgando la distribución de ventanas hacia los perfiles
+glucémicos más estables.
 
 \paragraph{Impacto sobre la generación de ventanas.}
-El patrón MNAR impone una restricción fundamental sobre la estrategia de ventaneo: las ventanas de historia que contienen uno o más valores ausentes en cualquiera de sus ocho posiciones de entrada, o en la posición objetivo, son descartadas íntegramente en lugar de imputadas. Esta decisión evita introducir información artificial que distorsionaría el análisis de balanceo posterior, pero implica que el número de ventanas válidas por paciente es proporcional a la longitud de sus segmentos continuos de registro, amplificando el desequilibrio demográfico a nivel de ventana respecto al desequilibrio a nivel de paciente (véase sección~\ref{subsec:imbalance_paciente_vs_ventana}).
-
+El patrón MNAR impone una restricción fundamental sobre la estrategia de
+ventaneo: las ventanas de historia que contienen uno o más valores ausentes en
+cualquiera de sus ocho posiciones de entrada, o en la posición objetivo, son
+descartadas íntegramente en lugar de imputadas. Esta decisión evita introducir
+información artificial que distorsionaría el análisis de balanceo posterior,
+pero implica que el número de ventanas válidas por paciente es proporcional a
+la longitud de sus segmentos continuos de registro, amplificando el desequilibrio
+demográfico a nivel de ventana respecto al desequilibrio a nivel de paciente
+(véase sección~\ref{subsec:imbalance_paciente_vs_ventana}). En DiaTrend este
+efecto es especialmente marcado: dado que casi el 70\,\% de los pacientes
+pertenece al grupo $<$31 y ese grupo acumula además seguimientos
+desproporcionadamente largos, la fracción de ventanas válidas atribuibles a ese
+subgrupo supera con creces su peso demográfico, haciendo del balanceo una
+intervención tanto más necesaria como más exigente en términos de síntesis de
+datos para los grupos minoritarios.
 % ---------------------------------------------------------
 \subsection{Análisis de separabilidad demográfica}
 \label{subsec:eda_separabilidad}
@@ -379,112 +553,108 @@ La existencia de diferencias glucémicas entre subgrupos demográficos, aunque d
 \section{Detección y cuantificación del desequilibrio demográfico}
 \label{sec:deteccion_imbalance}
 % =========================================================
-
 Una vez comprendidas las propiedades estructurales de los \textit{datasets} a nivel de paciente, el siguiente paso es cuantificar el desequilibrio demográfico a nivel de \textbf{ventana de entrenamiento}, que es la unidad de balanceo relevante en este trabajo. Como se argumenta en la sección~\ref{subsec:desequilibrio_demografico_extension}, la unidad de balanceo en el contexto de series temporales generadas mediante ventana deslizante no es el paciente sino la ventana, y el desequilibrio a nivel de ventana puede ser sustancialmente mayor que el desequilibrio a nivel de paciente.
 
 % ---------------------------------------------------------
 \subsection{Desequilibrio a nivel de paciente frente a nivel de ventana}
 \label{subsec:imbalance_paciente_vs_ventana}
 % ---------------------------------------------------------
-
 % FIGURAS SELECCIONADAS:
-%   - cross/B4a_class_distribution_age  → distribución de VENTANAS por grupo de edad
-%   - cross/B4b_imbalance_ratio_age     → ratio de desequilibrio de ventanas por grupo de edad
-%   - cross/B4c_class_distribution_sex  → distribución de VENTANAS por sexo
-% JUSTIFICACIÓN: B4* muestran directamente el desequilibrio a nivel de ventana,
-%   que es la magnitud operativa del problema. B4b añade el ratio numérico que
-%   permite comparar entre datasets. Combinadas con los números de paciente
-%   de B1*, permiten mostrar la amplificación del desequilibrio al pasar de
-%   paciente a ventana.
+%   - cross/B4a_class_distribution_age  → distribución porcentual de clases glucémicas
+%                                          (hypo/normo/hyper) por grupo de edad y dataset
+%   - cross/B4b_imbalance_ratio_age     → ratio normoglucemia/hipoglucemia por grupo de edad
+%   - cross/B4c_class_distribution_sex  → distribución de clases glucémicas por sexo
 
-El desequilibrio demográfico a nivel de paciente puede amplificarse o atenuarse al calcular el desequilibrio a nivel de ventana, dependiendo de si los pacientes de los grupos mayoritarios tienen series temporales más largas o más cortas que los de los grupos minoritarios. Las figuras~\ref{fig:class_dist_age}, \ref{fig:imbalance_ratio_age} y~\ref{fig:class_dist_sex} cuantifican este efecto.
+El desequilibrio demográfico observable por el modelo durante el entrenamiento opera en dos dimensiones complementarias: el desequilibrio \emph{entre grupos} (cuántas ventanas aporta cada grupo demográfico) y el desequilibrio \emph{de clases glucémicas dentro de cada grupo} (cuántas ventanas normoglucémicas existen por cada ventana hipoglucémica). Esta subsección cuantifica ambas dimensiones.
 
-\begin{figure}[htbp]
+\paragraph{Amplificación del desequilibrio demográfico al pasar de paciente a ventana.}
+El número de ventanas de entrenamiento que genera cada paciente es aproximadamente proporcional a la duración de su serie temporal. Por tanto, cuando los grupos demográficos presentan duraciones de seguimiento heterogéneas, el desequilibrio a nivel de ventana puede diferir sustancialmente del desequilibrio a nivel de paciente.
+
+En \textbf{T1DiabetesGranada}, el grupo $<$31 años es el más numeroso a nivel de paciente (158 pacientes) frente al grupo $\geq$66, que es el minoritario (83 pacientes), lo que arroja un ratio demográfico de $1{,}90$:1. Sin embargo, los pacientes más jóvenes presentan seguimientos significativamente más largos (mediana 616 días) que los de mayor edad (mediana 253 días), lo que amplifica el desequilibrio a nivel de ventana hasta aproximadamente $4{,}64$:1, un factor de amplificación de ${\approx}2{,}4\times$.
+
+En \textbf{DiaTrend}, el escenario es más extremo: el ratio demográfico a nivel de paciente entre el grupo $<$31 (38 pacientes) y el grupo $\geq$66 (1 paciente) es ya de $38$:1, y se amplifica hasta ${\approx}89$:1 a nivel de ventana porque los pacientes más jóvenes tienen un seguimiento mediano de 494 días frente a 210 del único paciente de mayor edad. Dado el pequeño tamaño muestral de DiaTrend, la variabilidad de estos ratios entre folds de validación cruzada es especialmente elevada, como refleja el amplio IQR de la figura~\ref{fig:imbalance_ratio_age}.
+
+En \textbf{REPLACE-BG}, en cambio, el desequilibrio demográfico apenas se amplifica al pasar a nivel de ventana: el ratio entre los grupos 46--65 (86 pacientes, mayoritario) y $\geq$66 (17 pacientes, minoritario) es de $5{,}06$:1 a nivel de paciente y de ${\approx}5{,}14$:1 a nivel de ventana (factor $1{,}02\times$). Este comportamiento se explica por el diseño del estudio REPLACE-BG, en el que todos los participantes tienen una duración de seguimiento prácticamente idéntica (mediana ${\approx}182$ días independientemente del grupo de edad), de modo que la composición demográfica de ventanas es proporcional a la de pacientes.
+
+\paragraph{Desequilibrio glucémico de clases dentro de cada grupo.}
+Más allá del desequilibrio demográfico entre grupos, existe un desequilibrio pronunciado entre las clases glucémicas (hipoglucemia, normoglucemia, hiperglucemia) que el modelo debe aprender a predecir. La figura~\ref{fig:class_dist_age} muestra la distribución porcentual de ventanas por clase glucémica y grupo de edad en cada \textit{dataset}.
+
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{../../EDA/cross/B4a_class_distribution_age}
-    \caption{Distribución del número de ventanas de entrenamiento por grupo de edad en cada \textit{dataset} (horizonte PH=4, fold de referencia). Los valores absolutos y porcentuales permiten comparar el desequilibrio a nivel de ventana con el desequilibrio a nivel de paciente de la figura~\ref{fig:age_group_dist}.}
+    \caption{Distribución porcentual de ventanas de entrenamiento por clase glucémica (hipoglucemia $<$70\,mg/dL, normoglucemia 70--180\,mg/dL, hiperglucemia $>$180\,mg/dL) y grupo de edad en cada \textit{dataset} (horizonte PH\,=\,4, fold de referencia). Los porcentajes permiten comparar el desequilibrio glucémico entre grupos de edad y con la figura~\ref{fig:age_group_dist}.}
     \label{fig:class_dist_age}
 \end{figure}
 
-\begin{figure}[htbp]
+En los tres \textit{datasets}, la normoglucemia domina la distribución (entre el 50\,\% y el 68\,\% de las ventanas según el grupo), mientras que la hipoglucemia es sistemáticamente la clase minoritaria ($<$6\,\% en T1DiabetesGranada y REPLACE-BG; prácticamente residual en DiaTrend). La hiperglucemia ocupa una posición intermedia pero relevante, con proporciones que oscilan entre el 30\,\% y el 48\,\%. La distribución glucémica es relativamente estable entre grupos de edad dentro de cada \textit{dataset}, aunque en DiaTrend el grupo $<$31 años muestra una fracción de hiperglucemia notablemente superior (47{,}7\,\%) respecto al resto de grupos (35--39\,\%).
+
+La figura~\ref{fig:imbalance_ratio_age} cuantifica este desequilibrio mediante el ratio normoglucemia/hipoglucemia calculado a nivel de paciente individual (mediana e IQR entre folds).
+
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{../../EDA/cross/B4b_imbalance_ratio_age}
-    \caption{Ratio de desequilibrio (grupo mayoritario / grupo minoritario) a nivel de ventana por dimensión de edad y \textit{dataset}. Un ratio de 1,0 indica distribución perfectamente equilibrada.}
+    \includegraphics[width=0.85\textwidth]{../../EDA/cross/B4b_imbalance_ratio_age}
+    \caption{Ratio de desequilibrio glucémico (ventanas normoglucémicas / ventanas hipoglucémicas) por grupo de edad y \textit{dataset}, expresado como mediana $\pm$ IQR entre pacientes del fold de referencia. Un ratio de 1{,}0 indicaría distribución perfectamente equilibrada entre ambas clases.}
     \label{fig:imbalance_ratio_age}
 \end{figure}
 
-\begin{figure}[htbp]
+Los ratios son sustanciales en todos los \textit{datasets}. En \textbf{T1DiabetesGranada} el ratio mediano oscila entre 13:1 en el grupo $<$31 años y 31:1 en el grupo $\geq$66, lo que evidencia que los pacientes de mayor edad generan ventanas con una proporción aún menor de hipoglucemia en relación a la normoglucemia. En \textbf{REPLACE-BG} el patrón es similar: de 14:1 en el grupo $<$31 a 36:1 en el grupo $\geq$66. En \textbf{DiaTrend} los ratios son extremos y de alta variabilidad: la mediana en el grupo 46--65 alcanza 111:1 (IQR 44--179), reflejo de que los pocos pacientes adultos de DiaTrend presentan poca hipoglucemia registrada. Esta alta variabilidad, visible en los amplios IQR de la figura, es consecuencia directa del reducido número de pacientes por grupo en este \textit{dataset}.
+
+Finalmente, la figura~\ref{fig:class_dist_sex} muestra que el desequilibrio glucémico es prácticamente idéntico entre sexos en los tres \textit{datasets}.
+
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{../../EDA/cross/B4c_class_distribution_sex}
-    \caption{Distribución del número de ventanas de entrenamiento por sexo en cada \textit{dataset}.}
+    \includegraphics[width=\textwidth]{../../EDA/cross/B4c_class_distribution_sex}
+    \caption{Distribución porcentual de ventanas de entrenamiento por clase glucémica y sexo en cada \textit{dataset}. La similitud entre grupos sugiere que el sexo no introduce desequilibrio glucémico diferencial.}
     \label{fig:class_dist_sex}
 \end{figure}
 
-\paragraph{Amplificación del desequilibrio al pasar de paciente a ventana.}
-% TODO: rellenar con los valores de B4_imbalance_ratio_age.csv.
-% Estructura sugerida:
-%   «En T1DiabetesGranada, el ratio de desequilibrio a nivel de paciente
-%   para la dimensión edad es [X]:1, mientras que a nivel de ventana asciende
-%   a [Y]:1, una amplificación de factor [Y/X]. Este efecto se debe a que
-%   los pacientes del grupo [Z] presentan series temporales
-%   significativamente más largas, con una mediana de [N] ventanas por paciente
-%   frente a [M] del grupo minoritario.»
-% Repetir para REPLACE-BG y DiaTrend.
-% Señalar si para algún dataset el desequilibrio se atenúa en lugar de amplificarse.
-En T1DiabetesGranada, el paso de la unidad de análisis de paciente a ventana produce una amplificación del desequilibrio en la dimensión edad. % TODO: insertar ratio a nivel de paciente y a nivel de ventana, y factor de amplificación.
-En REPLACE-BG % TODO.
-En DiaTrend % TODO. Señalar que, dado el pequeño tamaño muestral, la variabilidad del ratio entre folds es especialmente elevada en este dataset.
+En T1DiabetesGranada, la diferencia entre mujeres (4{,}6\,\% de hipoglucemia, 59{,}9\,\% normoglucemia) y hombres (4{,}9\,\% y 59{,}4\,\% respectivamente) es inferior a 0{,}5 puntos porcentuales en ambas clases. En REPLACE-BG la distribución es igualmente homogénea entre sexos, con una ligera mayor proporción de normoglucemia en hombres (65{,}4\,\%) que en mujeres (61{,}8\,\%). En DiaTrend, donde el desequilibrio glucémico es más pronunciado, tampoco se observan diferencias apreciables entre sexos (47{,}2\,\% vs.\ 47{,}6\,\% de hiperglucemia en mujeres y hombres respectivamente).
 
 \paragraph{Implicación para la elección de la unidad de balanceo.}
-Este análisis confirma que operar directamente sobre ventanas, en lugar de sobre pacientes, es la decisión correcta para este problema: el desequilibrio observable por el modelo durante el entrenamiento es el desequilibrio a nivel de ventana, no a nivel de paciente. Las técnicas de balanceo descritas en la sección~\ref{sec:pipeline_balanceo} actúan por tanto sobre la distribución de ventanas, no sobre la de pacientes.
+Este análisis confirma que operar directamente sobre ventanas, en lugar de sobre pacientes, es la decisión correcta para este problema: el desequilibrio observable por el modelo durante el entrenamiento es el desequilibrio a nivel de ventana, no a nivel de paciente. En T1DiabetesGranada y DiaTrend, dicho desequilibrio demográfico se amplifica respecto al observado a nivel de paciente, mientras que en REPLACE-BG se mantiene prácticamente inalterado gracias a la homogeneidad de duración del seguimiento. En todos los casos, el desequilibrio glucémico entre clases (normoglucemia frente a hipoglucemia) es el dominante, con ratios de al menos 13:1, lo que justifica las técnicas de balanceo descritas en la sección~\ref{sec:pipeline_balanceo}.
+
 
 % ---------------------------------------------------------
 \subsection{Desequilibrio por dimensión demográfica y \textit{fold}}
 \label{subsec:imbalance_por_fold}
 % ---------------------------------------------------------
+El esquema de validación cruzada Group K-Fold asigna cada paciente íntegramente a un único \textit{fold}, de modo que la composición demográfica de cada partición de entrenamiento depende de qué pacientes concretos quedan excluidos en ese \textit{fold} (los del conjunto de test). Como resultado, el ratio de desequilibrio demográfico no es constante entre \textit{folds}: varía en función de la distribución demográfica de los pacientes asignados al conjunto de test de cada iteración.
 
-% FIGURAS SELECCIONADAS:
-%   - cross/B5a_cv_by_age  →  puede reutilizarse para mostrar la variabilidad
-%                              inter-fold si se ha calculado por fold, O BIEN
-%   - Se recomienda generar ad-hoc una figura de líneas o boxplot con el
-%     ratio de desequilibrio por fold (fold_0..fold_4) para cada dataset
-%     y dimensión demográfica. Si no existe aún, describir con palabras
-%     y remitir a la tabla B4_imbalance_ratio_age.csv.
-% NOTA: si no tienes una figura específica de variabilidad inter-fold,
-%   incluye solo la tabla y describe en prosa.
+La tabla~\ref{tab:imbalance_by_fold} resume los ratios de desequilibrio observados, desglosados por dataset, dimensión demográfica y tipo de desequilibrio. Dado que los datos EDA no incluyen la asignación de pacientes a \textit{fold} como variable explícita, los ratios de la dimensión edad se calculan como el cociente entre el grupo de edad mayoritario y el minoritario a nivel de ventana (proxy $N_\text{pac} \times \text{días}$), y el rango inter-fold se estima considerando la exclusión de aproximadamente $1/5$ de los pacientes de cada grupo en cada iteración. Los ratios de la dimensión sexo se calculan a nivel de paciente, que en este caso coincide con el nivel de ventana dado que la duración de seguimiento no difiere sistemáticamente entre sexos.
 
-El esquema de validación cruzada Group K-Fold asigna cada paciente íntegramente a un único \textit{fold}, de modo que la composición demográfica de cada partición de entrenamiento depende de qué pacientes concretos quedan excluidos en ese \textit{fold} (los del test). Como resultado, el ratio de desequilibrio demográfico no es constante entre \textit{folds}: varía en función de la distribución demográfica de los pacientes asignados al conjunto de test de cada iteración.
-
-% TODO: incluir aquí una figura o tabla mostrando la variación del ratio de
-% desequilibrio entre los 5 folds para cada dataset × dimensión.
-% Si no existe la figura, sustituir por:
-
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
-\caption{Ratio de desequilibrio a nivel de ventana (grupo mayoritario / grupo minoritario) por \textit{fold}, dimensión demográfica y \textit{dataset} (horizonte PH=4). Los valores ilustran la variabilidad introducida por el esquema Group K-Fold.}
+\caption{Ratios de desequilibrio demográfico por dimensión y \textit{dataset}. Para la dimensión edad se muestra el ratio a nivel de ventana (grupo mayoritario / grupo minoritario, proxy $N_\text{pac} \times \text{días mediana}$) y el rango inter-\textit{fold} estimado con Group 5-Fold. Para la dimensión sexo se muestra el ratio a nivel de paciente. Un ratio de 1{,}0 indica distribución equilibrada.}
 \label{tab:imbalance_by_fold}
-\begin{tabular}{llccccc}
+\setlength{\tabcolsep}{6pt}
+\begin{tabular}{llcll}
 \hline
-\textbf{Dataset} & \textbf{Dimensión} & \textbf{Fold 0} & \textbf{Fold 1} & \textbf{Fold 2} & \textbf{Fold 3} & \textbf{Fold 4} \\
+\textbf{Dataset} & \textbf{Dimensión} & \textbf{Par grupos} & \textbf{Ratio global} & \textbf{Rango inter-\textit{fold}} \\
 \hline
-T1DGranada  & Edad & TODO & TODO & TODO & TODO & TODO \\
-T1DGranada  & Sexo & TODO & TODO & TODO & TODO & TODO \\
-REPLACE-BG  & Edad & TODO & TODO & TODO & TODO & TODO \\
-REPLACE-BG  & Sexo & TODO & TODO & TODO & TODO & TODO \\
-DiaTrend    & Edad & TODO & TODO & TODO & TODO & TODO \\
-DiaTrend    & Sexo & TODO & TODO & TODO & TODO & TODO \\
+T1DGranada  & Edad & $<$31 vs.\ $\geq$66 & 4{,}64:1 & 3{,}70–5{,}84:1 \\
+T1DGranada  & Sexo & F vs.\ M            & 1{,}03:1 & ${\approx}$1{,}0:1 \\
 \hline
+REPLACE-BG  & Edad & 46–65 vs.\ $\geq$66 & 5{,}14:1 & 4{,}12–6{,}24:1 \\
+REPLACE-BG  & Sexo & F vs.\ M            & 1{,}01:1 & ${\approx}$1{,}0:1 \\
+\hline
+DiaTrend    & Edad & $<$31 vs.\ $\geq$66 & 89{,}4:1 & 70{,}6–89{,}4:1\textsuperscript{†} \\
+DiaTrend    & Sexo & F vs.\ M            & 2{,}18:1 & alta variabilidad\textsuperscript{†} \\
+\hline
+\multicolumn{5}{l}{\footnotesize \textsuperscript{†}DiaTrend tiene un único paciente en el grupo $\geq$66 y solo 17 pacientes en total;}\\
+\multicolumn{5}{l}{\footnotesize su exclusión en cualquier \textit{fold} hace el ratio indefinido o extremo.}\\
 \end{tabular}
 \end{table}
 
 \paragraph{Variabilidad inter-\textit{fold} del desequilibrio.}
-% TODO: describir el rango de variación del ratio entre folds para cada dataset.
-% Estructura: «En T1DiabetesGranada, el ratio de desequilibrio por edad oscila
-%   entre [mín] y [máx] según el fold, con una desviación estándar de [σ].
-%   Esta variabilidad es consecuencia de [...]. En DiaTrend, la variabilidad
-%   es mayor porque [...].»
-La tabla~\ref{tab:imbalance_by_fold} muestra que el ratio de desequilibrio no es estable entre \textit{folds}. % TODO: describir la magnitud de la variación y si es mayor en algún dataset o dimensión en particular.
-Esta variabilidad tiene una implicación directa sobre la interpretación de los resultados: las diferencias de rendimiento entre condiciones de balanceo observadas en un \textit{fold} concreto pueden ser parcialmente atribuibles a la composición demográfica de ese \textit{fold}, no exclusivamente a la técnica de balanceo. Esta es una de las razones por las que el protocolo de evaluación adopta la agregación sobre los cinco \textit{folds} (media y desviación estándar) y el análisis estadístico de Friedman en lugar de comparaciones punto a punto entre condiciones.
+En \textbf{T1DiabetesGranada}, el ratio de desequilibrio demográfico por edad oscila entre aproximadamente 3{,}70:1 y 5{,}84:1 según el \textit{fold}, con un valor global de 4{,}64:1. Esta variabilidad (${\approx}$2:1 entre el fold más equilibrado y el menos equilibrado) es consecuencia de la heterogeneidad en el número de pacientes por grupo: el grupo $<$31 años, con 158 pacientes y seguimientos medianos de 616 días, es el más sensible a la exclusión de un subconjunto de sus pacientes en el test. La dimensión sexo es prácticamente irrelevante como fuente de desequilibrio en este dataset (ratio ${\approx}$1{,}03:1), ya que la cohorte está casi equilibrada entre hombres (363) y mujeres (373).
+
+En \textbf{REPLACE-BG}, el rango inter-fold estimado es 4{,}12–6{,}24:1 para la dimensión edad. La magnitud es similar a T1DiabetesGranada, aunque el par de grupos problemático es distinto (46–65 vs.\ $\geq$66). La dimensión sexo es igualmente irrelevante (ratio ${\approx}$1{,}01:1 entre los 112 pacientes femeninos y los 111 masculinos). El protocolo de REPLACE-BG, con seguimientos de ${\approx}$182 días para todos los grupos, elimina la amplificación de duración y hace que el ratio de ventana sea casi idéntico al ratio de paciente.
+
+En \textbf{DiaTrend}, la variabilidad inter-fold es extrema para la dimensión edad: con un único paciente en el grupo $\geq$66, basta con que ese paciente quede en el test de un fold para que el grupo minoritario desaparezca del entrenamiento, haciendo el ratio indefinido. El rango estimado de 70{,}6–89{,}4:1 asume que el paciente del grupo $\geq$66 permanece en entrenamiento, pero en el fold en que quede en test el desequilibrio es técnicamente infinito. La dimensión sexo presenta también una variabilidad notable (ratio global 2{,}18:1 entre 37 mujeres y 17 hombres), con oscilaciones inter-fold que pueden ser relevantes dado el pequeño tamaño muestral.
+
+\paragraph{Implicación para el protocolo de evaluación.}
+La variabilidad inter-fold del desequilibrio tiene una implicación directa sobre la interpretación de los resultados: las diferencias de rendimiento entre condiciones de balanceo observadas en un \textit{fold} concreto pueden ser parcialmente atribuibles a la composición demográfica de ese \textit{fold}, y no exclusivamente a la técnica de balanceo evaluada. Esta es una de las razones por las que el protocolo de evaluación adopta la agregación sobre los cinco \textit{folds} (media y desviación estándar) y el contraste estadístico de Friedman con corrección post-hoc de Nemenyi, en lugar de comparaciones punto a punto entre condiciones en un único fold.
+
 
 \section{Investigación de técnicas de balanceo para series temporales}
 \label{sec:investigacion_tecnicas}
@@ -505,7 +675,12 @@ La elección de las diez técnicas implementadas no fue arbitraria: cada candida
 \subsection{Taxonomía de técnicas implementadas}
 \label{subsec:taxonomia_tecnicas}
 
-Las diez técnicas seleccionadas se organizan en tres familias según su mecanismo de acción: aleatorias (modifican la distribución sin crear información nueva), guiadas (incorporan información estructural del espacio de features o de la topología de los datos) e híbridas (combinan un mecanismo de aumento con uno de reducción para preservar el tamaño total del conjunto de entrenamiento). La Tabla~\ref{tab:taxonomia_tecnicas} resume la clasificación.
+Las diez técnicas seleccionadas se organizan en tres familias según su mecanismo de acción:
+aleatorias (modifican la distribución sin explotar información estructural de los datos),
+guiadas (incorporan información estructural del espacio de \textit{features}, de la
+topología de los datos o de la identidad del paciente) e híbridas (combinan un mecanismo
+de aumento con uno de reducción con el objetivo de preservar el tamaño total del conjunto
+de entrenamiento). La Tabla~\ref{tab:taxonomia_tecnicas} resume la clasificación.
 
 \begin{table}[ht]
 \centering
@@ -516,22 +691,21 @@ Las diez técnicas seleccionadas se organizan en tres familias según su mecanis
 \toprule
 \textbf{Familia} & \textbf{Técnica} & \textbf{Mecanismo} & \textbf{Tamaño post-balanceo} \\
 \midrule
-Aleatoria  & RUS (\texttt{undersampling})           & Eliminación aleatoria     & $< N_\text{train}$ \\
-Aleatoria  & ROS (\texttt{oversampling})            & Duplicación aleatoria     & $> N_\text{train}$ \\
+Aleatoria & RUS  & Eliminación aleatoria          & $< N_\text{train}$ \\
+Aleatoria & ROS  & Duplicación aleatoria          & $> N_\text{train}$ \\
 \midrule
-Guiada     & SMOTE (\texttt{smote})                 & Interpolación k-NN        & $> N_\text{train}$ \\
-Guiada     & Tomek Links (\texttt{tomek\_links})    & Limpieza de frontera      & $\leq N_\text{train}$ \\
-Guiada     & Jittering (\texttt{jittering})         & Ruido gaussiano local     & $> N_\text{train}$ \\
+Guiada    & SMOTE                    & Interpolación $k$-NN           & $> N_\text{train}$ \\
+Guiada    & Tomek Links              & Limpieza de frontera           & $\leq N_\text{train}$ \\
+Guiada    & Jittering                & Ruido gaussiano local          & $> N_\text{train}$ \\
+Guiada    & Patient-aware undersampling & RUS con cuota por paciente  & $< N_\text{train}$ \\
 \midrule
-Híbrida    & \texttt{patient\_aware\_undersampling} & RUS con cuota por paciente& $< N_\text{train}$ \\
-Híbrida    & \texttt{undersampling\_oversampling}   & RUS + ROS                 & $= N_\text{train}$ \\
-Híbrida    & \texttt{undersampling\_smote}          & RUS + SMOTE               & $= N_\text{train}$ \\
-Híbrida    & \texttt{smote\_tomek}                  & SMOTE + Tomek             & $\approx N_\text{train}$ \\
-Híbrida    & \texttt{oversampling\_tomek}           & ROS + Tomek               & $= N_\text{train}$ \\
+Híbrida   & Undersampling + Oversampling & RUS + ROS                  & $= N_\text{train}$ \\
+Híbrida   & Undersampling + SMOTE        & RUS + SMOTE                & $= N_\text{train}$ \\
+Híbrida   & SMOTE + Tomek                & SMOTE + Tomek              & $\approx N_\text{train}$ \\
+Híbrida   & Oversampling + Tomek         & ROS + Tomek                & $= N_\text{train}$ \\
 \bottomrule
 \end{tabular}
 \end{table}
-
 \subsubsection{Familia aleatoria}
 \label{subsubsec:familia_aleatoria}
 
@@ -624,14 +798,7 @@ Jittering es una técnica de aumento basada en la adición de ruido gaussiano a 
 
 El parámetro $\alpha = 0.20$ implica que el ruido añadido tiene una amplitud del 20\% de la variabilidad observada en el grupo, lo que produce perturbaciones pequeñas pero suficientes para evitar la duplicación exacta. Al estar calibrado sobre la desviación estándar del grupo, el jitter es proporcionalmente mayor en grupos con alta variabilidad (p.~ej., pacientes con grandes oscilaciones glucémicas) y menor en grupos más homogéneos.
 
-\subsubsection{Familia híbrida}
-\label{subsubsec:familia_hibrida}
-
-Las técnicas híbridas combinan un mecanismo de aumento con uno de reducción para preservar el número total de ventanas de entrenamiento ($N_\text{train}$ original), distribuyendo ese total equitativamente entre los grupos. Esta restricción de tamaño constante hace que el efecto del balanceo sea \emph{neutro en volumen}: el modelo LSTM recibe siempre el mismo número de ventanas, y cualquier diferencia en rendimiento se atribuye exclusivamente al cambio de distribución demográfica.
-
-El reparto equitativo se implementa en \texttt{compute\_equal\_targets}: dado un total $N$ y $K$ grupos, cada grupo recibe $\lfloor N/K \rfloor$ ventanas, y los primeros $N \bmod K$ grupos reciben una ventana extra para que la suma sea exactamente $N$.
-
-\paragraph{\texttt{patient\_aware\_undersampling}.}
+\paragraph{Patient-aware undersampling.}
 Variante de RUS que introduce una restricción adicional: ningún paciente del grupo mayoritario puede quedar sin representación en el conjunto de entrenamiento tras el undersampling. La función \texttt{patient\_aware\_undersample\_group} calcula una cuota por paciente:
 \begin{equation}
   c_\text{patient} = \left\lceil \frac{n^*}{P_k} \right\rceil
@@ -639,24 +806,47 @@ Variante de RUS que introduce una restricción adicional: ningún paciente del g
 \end{equation}
 donde $P_k$ es el número de pacientes distintos en el grupo $g_k$. Para cada paciente se seleccionan $\min(n_p, c_\text{patient})$ ventanas sin reemplazo, y si el total resultante supera $n^*$ se aplica un segundo paso de RUS global. Esta técnica es especialmente relevante para el dataset T1DiabetesGranada, donde algunos grupos de edad tienen un número muy pequeño de pacientes representativos.
 
-\paragraph{\texttt{undersampling\_oversampling} (RUS + ROS).}
+
+\subsubsection{Familia híbrida}
+\label{subsubsec:familia_hibrida}
+
+Las técnicas híbridas combinan un mecanismo de aumento con uno de reducción con el
+objetivo de preservar el número total de ventanas de entrenamiento ($N_\text{train}$
+original), distribuyendo ese total equitativamente entre los grupos. En la mayoría de
+combinaciones el tamaño resultante es exactamente $N_\text{train}$; la excepción es
+SMOTE\,+\,Tomek, donde la fase de limpieza de Tomek Links puede eliminar un número
+variable de puntos sintéticos, dejando el tamaño final en $\approx N_\text{train}$.
+Esta restricción de tamaño aproximadamente constante hace que el efecto del balanceo sea
+\emph{neutro en volumen}: el modelo LSTM recibe siempre un número similar de ventanas,
+y cualquier diferencia en rendimiento se atribuye principalmente al cambio de distribución
+demográfica.
+
+El reparto equitativo se implementa en \texttt{compute\_equal\_targets}: dado un total
+$N$ y $K$ grupos, cada grupo recibe $\lfloor N/K \rfloor$ ventanas, y los primeros
+$N \bmod K$ grupos reciben una ventana extra para que la suma sea exactamente $N$.
+
+\paragraph{RUS + ROS.}
 Combina RUS sobre los grupos mayoritarios y ROS sobre los minoritarios, asignando a todos el mismo target $n^* = \lfloor N_\text{train} / K \rfloor$. Los grupos con más ventanas que $n^*$ se submuestrean aleatoriamente sin reemplazo; los que tienen menos se sobremuestrean con reemplazo. El resultado tiene exactamente $N_\text{train}$ ventanas con distribución $\approx 1/K$ por grupo.
 
-\paragraph{\texttt{undersampling\_smote} (RUS + SMOTE).}
+\paragraph{RUS + SMOTE.}
 Funciona de forma análoga a la técnica anterior pero sustituye ROS por SMOTE para los grupos minoritarios. Los grupos mayoritarios se reducen con RUS hasta el target equitativo; los grupos deficitarios se amplían con muestras sintéticas generadas por interpolación k-NN. Esta técnica preserva el tamaño total y evita la duplicación exacta de ventanas minoritarias a costa de un mayor coste computacional.
 
-\paragraph{\texttt{smote\_tomek} (SMOTE + Tomek).}
-Esta técnica, adaptada de la propuesta original de Batista et al.~\cite{batista2004study}, opera en tres pasos: (1) se aumentan los grupos minoritarios con SMOTE hasta el target equitativo; (2) se aplican Tomek Links sobre el conjunto resultante para eliminar ejemplos ambiguos en la frontera; (3) si algún grupo supera su target tras la limpieza, se aplica un RUS compensatorio. El efecto neto es un conjunto de tamaño $\approx N_\text{train}$ con frontera de decisión más limpia que el obtenido con SMOTE puro.
-
-\paragraph{\texttt{oversampling\_tomek} (ROS + Tomek).}
+\paragraph{SMOTE + Tomek.}
+Esta técnica, adaptada de la propuesta original de Batista et al.~\cite{batista2004study}, opera en dos pasos: (1) se aumentan los grupos minoritarios con SMOTE hasta el target equitativo calculado sobre el total original $N_\text{train}$; (2) se aplican Tomek Links sobre el conjunto resultante para eliminar ejemplos ambiguos en la frontera, reduciendo preferentemente los grupos mayoritarios. No existe un paso de sobremuestreo restaurador, por lo que \textbf{el tamaño final no es exactamente $N_\text{train}$}, sino que viene dado por:
+\begin{equation}
+  N_\text{final} = N_\text{train} + \sum_{k: n_k < t_k} (t_k - n_k) - n_\text{tomek} 
+  \label{eq:smote_tomek_final}
+\end{equation}
+donde $t_k$ es el target equitativo, $n_k$ el tamaño original del grupo, $n_\text{tomek}$ el número de ejemplos eliminados por Tomek Links (variable, dependiente de la geometría de los datos) . En la práctica, el tamaño final es $\approx N_\text{train}$ cuando Tomek Links elimina un número de ejemplos similar al exceso creado por SMOTE; sin embargo, \textbf{no hay garantía de que ambas cantidades coincidan}, por lo que el tamaño final puede ser ligeramente superior o inferior a $N_\text{train}$ dependiendo del fold y del dataset. El beneficio principal de esta técnica no es la preservación exacta del tamaño, sino la combinación de la generación de muestras sintéticas con la limpieza de la frontera de decisión, lo que produce un conjunto de entrenamiento con una distribución más equilibrada y menos ambigüedad cerca de la zona de separación entre grupos.
+\paragraph{ROS + Tomek.}
 Parte de la lógica inversa: primero se aplican Tomek Links sobre el conjunto de grupos principales para eliminar pares ruidosos, reduciendo el total en $n_\text{removed}$ ventanas; después se restaura el tamaño original añadiendo $n_\text{removed}$ ventanas mediante ROS equitativo entre los grupos. El resultado preserva exactamente $N_\text{train}$ ventanas y combina la limpieza de frontera de Tomek con la corrección de distribución de ROS.
 
 \subsection{Validación formal del \emph{pipeline} de balanceo}
 \label{subsec:validacion_pipeline}
 
-La corrección del pipeline de balanceo fue verificada mediante un \emph{notebook} de validación construido específicamente para este fin, ejecutado sobre los archivos \texttt{.parquet} de salida de \texttt{2-server\_balancing.py} antes de lanzar los experimentos de entrenamiento. El notebook verifica seis propiedades formales:
+La corrección del pipeline de balanceo fue verificada mediante un \emph{notebook} de validación construido específicamente para este fin, ejecutado sobre los archivos \texttt{.parquet} de salida del módulo de balanceo de datasets, antes de lanzar los experimentos de entrenamiento. El notebook verifica seis propiedades formales:
 
-\textbf{1. Efecto direccional sobre el tamaño del conjunto de entrenamiento.} Las técnicas de oversampling puro (ROS, SMOTE, Jittering) deben producir estrictamente más ventanas que el baseline no balanceado, y las de undersampling puro (RUS, Tomek Links, \texttt{patient\_aware\_undersampling}) deben producir estrictamente menos o igual. Las técnicas híbridas deben conservar el tamaño original con una tolerancia de $\pm 1$ ventana (debida al redondeo en el reparto equitativo). Esta propiedad se verifica contando las filas con \texttt{split == "train"} en cada archivo de salida.
+\textbf{1. Efecto direccional sobre el tamaño del conjunto de entrenamiento.} Las técnicas de oversampling puro (ROS, SMOTE, Jittering) deben producir estrictamente más ventanas que el baseline no balanceado, y las de undersampling puro (RUS, Tomek Links, Patient-aware undersampling) deben producir estrictamente menos o igual. Las técnicas híbridas deben conservar el tamaño original con una tolerancia de $\pm 1$ ventana (debida al redondeo en el reparto equitativo). Esta propiedad se verifica contando las filas con \texttt{split == "train"} en cada archivo de salida.
 
 \textbf{2. Distribución demográfica post-balanceo más equitativa.} Para cada técnica y fold, se compara la entropía de Shannon de la distribución de grupos antes y después del balanceo. Se verifica que $H_\text{post} \geq H_\text{pre}$ para técnicas orientadas al balanceo, con excepción de Tomek Links (cuyo objetivo no es la equidad sino la limpieza de frontera).
 
@@ -676,8 +866,23 @@ Todas las verificaciones se superaron sin excepciones para los tres datasets y l
 \section{Transformación de datos: generación de ventanas deslizantes}
 \label{sec:transformacion_ventanas}
 % =========================================================
-La transformación de las series temporales CGM originales en el formato de entrada requerido por el modelo LSTM es un paso crítico del \emph{pipeline}, ya que determina la granularidad de la unidad de balanceo y la forma en que se materializan las particiones de validación cruzada. Esta sección describe el proceso de generación de ventanas y sus parámetros.
 
+\begin{quote}
+\small\itshape
+El componente descrito en esta sección ---generación de ventanas deslizantes,
+restricciones de continuidad temporal y esquema de partición \emph{Group K-Fold}---
+fue desarrollado por el equipo del proyecto RELIEF-T1D con anterioridad al inicio
+de este TFM y se emplea aquí sin modificaciones. Se documenta en detalle porque
+constituye la base sobre la que se construye el \textit{pipeline} de balanceo y
+determina la unidad de análisis (ventana) y la estructura de folds que el presente
+trabajo extiende.
+\end{quote}
+
+La transformación de las series temporales CGM originales en el formato de entrada
+requerido por el modelo LSTM es un paso crítico del \emph{pipeline}, ya que determina
+la granularidad de la unidad de balanceo y la forma en que se materializan las
+particiones de validación cruzada. Esta sección describe el proceso de generación de
+ventanas y sus parámetros.
 \subsection{Parámetros de ventana}
 \label{subsec:parametros_ventana}
 
@@ -719,7 +924,7 @@ Adicionalmente, para evitar que patrones glucémicos idénticos dentro de un mis
 
 Para respetar la independencia entre pacientes a lo largo de todo el ciclo experimental, la validación cruzada sigue un esquema \emph{Group K-Fold} con $K=5$ folds: cada paciente se asigna \emph{íntegramente} a exactamente uno de los cinco subconjuntos de test, de modo que ninguna ventana de un mismo paciente aparece simultáneamente en entrenamiento y evaluación dentro de un mismo fold. Esta decisión es crítica en dominios clínicos, donde la heterogeneidad inter-paciente puede provocar sobreoptimismo severo si se permite que el modelo ``recuerde'' fragmentos de la curva glucémica de un paciente durante el entrenamiento y los evalúe después en el mismo fold.
 
-La asignación de pacientes a folds sigue un algoritmo voraz balanceado en dos etapas, implementado en \texttt{make\_folds\_greedy\_splits\_valanced\_priority}:
+La asignación de pacientes a folds sigue un algoritmo voraz balanceado en dos etapas, implementado mediante un algoritmo voraz con prioridad balanceada:
 
 \begin{enumerate}
     \item \textbf{Asignación al subconjunto de test.} Los pacientes se ordenan de mayor a menor número de ventanas. Se procesan en bloques de tamaño $K=5$; dentro de cada bloque se permuta aleatoriamente y se asigna un paciente a cada fold, de forma que los pacientes con mayor carga se distribuyan uniformemente entre todos los folds. Los pacientes sobrantes (cuando el total no es múltiplo de $K$) se asignan al fold con menor carga acumulada.
@@ -731,52 +936,16 @@ La asignación resultante se codifica directamente en el fichero Parquet de vent
 
 Un aspecto metodológico fundamental es que \textbf{los subconjuntos de validación y test son idénticos en todas las condiciones de balanceo experimentales}: el balanceo (sobremuestreo, submuestreo, técnicas híbridas H1--H5) se aplica \emph{exclusivamente} sobre el subconjunto \texttt{'train'} de cada fold, dejando \texttt{'val'} y \texttt{'test'} inalterados. Esto garantiza que las métricas de evaluación entre condiciones son directamente comparables, ya que se obtienen siempre sobre exactamente el mismo conjunto de instancias reales no modificadas.
 
-La integridad de los folds generados se verifica mediante la función \texttt{validate\_folds}, que comprueba: (R1) exclusividad mutua entre train, val y test dentro de cada fold; (R2) que cada paciente aparece en el conjunto de test exactamente una vez en todo el esquema de $K$ folds; (R3) que la unión de los tres subconjuntos cubre la totalidad del conjunto de pacientes; y (R4) que la carga de test entre folds no difiere en más de un 10\,\% respecto a la media, como indicador de balanceo.
+La integridad de los folds generados se verifica automáticamente al término de la
+generación, comprobando: (R1) exclusividad mutua entre train, val y test dentro de cada fold; (R2) que cada paciente aparece en el conjunto de test exactamente una vez en todo el esquema de $K$ folds; (R3) que la unión de los tres subconjuntos cubre la totalidad del conjunto de pacientes; y (R4) que la carga de test entre folds no difiere en más de un 10\,\% respecto a la media, como indicador de balanceo.
 
-% =========================================================
-\section{Análisis exploratorio de ventanas}
-\label{sec:eda_ventanas}
-% =========================================================
 
-Una vez generadas las ventanas, se realizó un segundo análisis exploratorio centrado en las propiedades de la distribución de ventanas resultante, distinto del EDA sobre la señal CGM bruta descrito en la sección~\ref{sec:eda}. Este análisis tiene como objetivo caracterizar el desequilibrio demográfico a nivel de ventana —la unidad de balanceo efectiva del \emph{pipeline}— y verificar que las propiedades de las ventanas son coherentes con las restricciones metodológicas.
-
-\subsection{Distribución de ventanas por grupo demográfico y \emph{fold}}
-\label{subsec:eda_ventanas_demografico}
-
-% INSTRUCCIÓN: Mostrar, para cada dataset, dimensión demográfica y fold:
-%   - Número de ventanas por grupo demográfico en el conjunto de entrenamiento
-%   - Ratio de desequilibrio entre grupos
-%   - Variabilidad del ratio entre folds (boxplot o tabla)
-% Comparar con el desequilibrio a nivel de paciente (sección anterior)
-% para evidenciar que el desequilibrio de ventanas puede ser mayor.
-% ~150-200 palabras + figuras/tablas.
-
-\subsection{Distribución de la variable objetivo por grupo demográfico}
-\label{subsec:eda_ventanas_objetivo}
-
-% INSTRUCCIÓN: Para cada dataset, mostrar si la distribución de la variable
-% objetivo y (valor de glucosa a predecir) difiere significativamente entre
-% grupos demográficos. Esto es evidencia adicional de que el modelo puede
-% aprender dinámicas distintas según la composición del entrenamiento.
-% Usar violinplots, boxplots o histogramas superpuestos.
-% ~150-200 palabras + figuras.
-
-\subsection{Verificación de integridad de las particiones}
-\label{subsec:eda_ventanas_integridad}
-
-% INSTRUCCIÓN: Descripción breve de las verificaciones de integridad
-% realizadas sobre el conjunto de ventanas generado:
-%   - Ausencia de solapamiento de pacientes entre train, val y test en cada fold
-%   - Ausencia de ventanas que crucen huecos de datos ausentes
-%   - Distribución temporal de las ventanas (no hay concentración anómala
-%     en periodos concretos que pudiera sesgar los resultados)
-% ~100-150 palabras.
 
 % =========================================================
 \section{Arquitectura del modelo LSTM}
 \label{sec:arquitectura_lstm}
 % =========================================================
-El modelo de predicción de glucosa utilizado en este trabajo es una red LSTM de una sola capa recurrente con una capa densa de salida lineal. La elección de esta arquitectura está motivada por su consolidación en la literatura de predicción de glucosa (véase capítulo~\ref{chapter:estado-arte}) y por el objetivo de este trabajo, que no es optimizar la arquitectura del modelo sino cuantificar el efecto del balanceo del conjunto de entrenamiento sobre un modelo de referencia bien establecido.
+El modelo de predicción de glucosa utilizado en este trabajo es una red LSTM de una sola capa recurrente con una capa densa de salida lineal. La elección de esta arquitectura está motivada por su consolidación en la literatura de predicción de glucosa (véase capítulo~\ref{chapter:estado-arte}) y por el objetivo de este trabajo, que no es optimizar la arquitectura del modelo sino cuantificar el efecto del balanceo del conjunto de entrenamiento sobre un modelo de referencia bien establecido. En línea con esto, la misma arquitectura LSTM monocapa constituye el modelo base empleado en el estudio RELIEF-T1D, desarrollado por el grupo de investigación de la Universidad de Granada en el contexto de la diabetes tipo 1, en el que se utiliza para la predicción de glucemia futura a partir de datos de monitorización continua de glucosa (CGM). El hecho de compartir arquitectura con dicho estudio —que usa precisamente el conjunto \textit{T1DiabetesGranada}, uno de los datasets empleados en este TFM— refuerza la pertinencia de la elección: permite que los resultados obtenidos aquí sean directamente comparables e interpretables dentro del mismo marco clínico y experimental, y que las conclusiones sobre el impacto del balanceo puedan trasladarse de forma natural al contexto real del proyecto.
 
 % ---------------------------------------------------------
 \subsection{Especificación de la arquitectura}
@@ -807,23 +976,56 @@ Framework                           & TensorFlow/Keras \\
 \end{tabular}
 \end{table}
 
+La Figura~\ref{fig:lstm_architecture} resume la arquitectura del modelo LSTM empleada en este trabajo para la predicción de glucosa con un horizonte de 60 minutos (PH4). En ella se representan de forma esquemática las distintas etapas del flujo de datos, desde la secuencia de entrada hasta la capa de salida, así como la estructura interna de la celda LSTM y las principales características de la configuración utilizada.
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{imagenes/lstm_architecture_vertical.png}
+    \caption{Arquitectura del modelo LSTM.}
+    \label{fig:lstm_architecture}
+\end{figure}
+
+
 % ---------------------------------------------------------
 \subsection{Función de pérdida y optimizador}
 \label{subsec:loss_optimizador}
 % ---------------------------------------------------------
-
 El modelo se compila con la función de pérdida RMSE (\textit{Root Mean Squared Error}) implementada como función personalizada en TensorFlow:
-
 \begin{equation}
 \mathrm{RMSE}(y, \hat{y}) = \sqrt{\dfrac{1}{N}\sum_{i=1}^{N}(\hat{y}_i - y_i)^2}
 \end{equation}
-
 La elección del RMSE como función de pérdida responde a la misma motivación que justifica su uso como métrica primaria de evaluación: la penalización cuadrática de los errores más grandes, que en el contexto de la predicción de glucosa tienden a coincidir con los episodios clínicamente más graves ---hipoglucemia severa e hiperglucemia marcada---. A diferencia del MAE, que pondera todos los errores por igual, el RMSE penaliza de forma creciente las desviaciones de mayor magnitud, lo que es coherente con el riesgo clínico asimétrico asociado a los valores extremos de glucemia.
 
 Como optimizador se emplea Adam con los valores por defecto de Keras ($\alpha = 0{,}001$, $\beta_1 = 0{,}9$, $\beta_2 = 0{,}999$, $\varepsilon = 10^{-7}$), que combina el ajuste adaptativo del paso de aprendizaje por parámetro con el impulso de primer y segundo orden, mostrando una convergencia robusta en la mayoría de escenarios de aprendizaje profundo.
 
 Durante el entrenamiento se monitorizan métricas adicionales sin influir en la optimización: el \texttt{RootMeanSquaredError} de Keras y la \texttt{ClinicalPenaltyMetric}, implementación como subclase de \texttt{tf.keras.losses.Loss} de la penalización clínica de Del Favero \textit{et al.}~\cite{delfavero2012}. Esta segunda métrica permite observar en tiempo de entrenamiento si el modelo mejora no solo en error absoluto sino también en el criterio clínico específico para glucosa.
 
+\subsubsection*{Métricas de evaluación}
+
+La evaluación de los modelos entrenados se realiza mediante dos tipos de métricas complementarias: estadística y clínica.
+
+Como \textbf{métrica estadística} se emplea el RMSE, que cuantifica la magnitud media del error de predicción en las mismas unidades que la glucemia (mg/dL). Su interpretación es directa: valores más bajos indican predicciones más precisas en términos globales.
+
+Sin embargo, la precisión estadística no captura completamente la relevancia clínica de los errores. Un error de 20\,mg/dL en zona normoglucémica (80--140\,mg/dL) no tiene el mismo riesgo que el mismo error absoluto en zona hipoglucémica ($<$70\,mg/dL), donde puede conducir a una actuación terapéutica equivocada. Por ello, la \textbf{métrica clínica} central de este trabajo es el \textbf{Clarke Error Grid} (CEG)~\cite{clarke1987}, que clasifica cada par predicción--valor real $(y_i, \hat{y}_i)$ en una de cinco zonas según su riesgo clínico asociado (figura~\ref{fig:clarke-zones}):
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{imagenes/CEG__RMSE_LSTM_H4_ALL}
+    \caption{Clark Error Grid de una ejecucion de LSTM para el dataset T1DiabetesGranada.}
+    \label{fig:clarke-zones}
+\end{figure}
+
+
+\begin{itemize}
+    \item \textbf{Zona A}: errores clínicamente irrelevantes ($\pm 20\%$ del valor real, o ambos por debajo de 70\,mg/dL). Sin consecuencias para el paciente.
+    \item \textbf{Zona B}: errores que no conducen a tratamiento erróneo, aunque la predicción se aleje más del 20\% del valor real.
+    \item \textbf{Zona C}: errores que llevarían a una corrección innecesaria, con riesgo moderado.
+    \item \textbf{Zona D}: errores de detección fallida: el modelo no anticipa un episodio hipoglucémico o hiperglucémico peligroso.
+    \item \textbf{Zona E}: errores que inducen una actuación terapéutica opuesta a la necesaria ---la más peligrosa clínicamente---.
+\end{itemize}
+
+El criterio de calidad clínica estándar exige que la suma \textbf{A+B supere el 98\%} de las predicciones~\cite{clarke1987}, siendo la zona A+B el indicador principal empleado en este trabajo para comparar las distintas estrategias de balanceo. Las zonas D y E, aunque con menor frecuencia esperada, se reportan igualmente por su especial gravedad. El RMSE se mantiene como referencia estadística secundaria para facilitar la comparabilidad con otros trabajos de la literatura.
 % ---------------------------------------------------------
 \subsection{Estrategia de entrenamiento}
 \label{subsec:estrategia_entrenamiento}
@@ -866,22 +1068,20 @@ El número total de entrenamientos ejecutados se obtiene del diseño experimenta
 \section{\emph{Pipeline} de entrenamiento y evaluación}
 \label{sec:pipeline_entrenamiento}
 % =========================================================
-
 Esta sección describe el \textit{pipeline} completo de entrenamiento y evaluación, integrando todos los componentes descritos en las secciones anteriores. Se detalla el flujo de datos desde los archivos \textit{parquet} de entrada hasta los archivos de métricas que alimentan el análisis estadístico del capítulo~\ref{chapter:resultados}.
 
+El \textit{pipeline} de entrenamiento y evaluación tomó como punto de partida el desarrollo previo del proyecto RELIEF-T1D, que ya contemplaba la partición de datos en cinco \textit{folds} mediante validación cruzada grupal y el entrenamiento de modelos LSTM. La contribución de este TFM consistió en extender dicho \textit{pipeline} para soportar condiciones balanceadas, introduciendo un módulo de balanceo previo al entrenamiento e integrando sus salidas en el flujo de datos existente sin alterar la lógica de validación y test heredada.
 % ---------------------------------------------------------
 \subsection{Modo original y modo balanceado}
 \label{subsec:modos_pipeline}
 % ---------------------------------------------------------
+El componente de entrenamiento opera en dos modos según la naturaleza del archivo de entrada, gestionados por la clase \texttt{ExperimentTarget}:
 
-El script de entrenamiento (\texttt{3-train.py}) opera en dos modos según la naturaleza del archivo de entrada, gestionados por la clase \texttt{ExperimentTarget}:
+\paragraph{Modo original.} Se lee un único archivo \textit{parquet} que contiene todas las ventanas del \textit{dataset} con cinco columnas adicionales \texttt{fold\_0}~\ldots~\texttt{fold\_4}. Para cada \textit{fold~i}, el proceso filtra las filas cuya columna \texttt{fold\_i} toma el valor \texttt{'train'}, \texttt{'val'} o \texttt{'test'}, obteniendo así las particiones correspondientes. Los datos de validación y test son idénticos entre la condición original y cualquier condición balanceada, ya que el balanceo solo afecta al conjunto de entrenamiento.
 
-\paragraph{Modo original.} Se lee un único archivo \textit{parquet} que contiene todas las ventanas del \textit{dataset} con cinco columnas adicionales \texttt{fold\_0}~\ldots~\texttt{fold\_4}. Para cada \textit{fold~i}, el script filtra las filas cuya columna \texttt{fold\_i} toma el valor \texttt{'train'}, \texttt{'val'} o \texttt{'test'}, obteniendo así las particiones correspondientes. Los datos de validación y test son idénticos entre la condición original y cualquier condición balanceada, ya que el balanceo solo afecta al conjunto de entrenamiento.
+\paragraph{Modo balanceado.} Se leen cinco archivos \textit{parquet} independientes, uno por \textit{fold}, generados por el módulo de balanceo desarrollado en este TFM. Cada archivo ya contiene una columna \texttt{'split'} con los valores \texttt{'train'}, \texttt{'val'} y \texttt{'test'}, donde el subconjunto de entrenamiento ha sido transformado por la técnica de balanceo correspondiente.
 
-\paragraph{Modo balanceado.} Se leen cinco archivos \textit{parquet} independientes, uno por \textit{fold}, generados por el script de balanceo (\texttt{2b-trainset\_balancing.py}). Cada archivo ya contiene una columna \texttt{'split'} con los valores \texttt{'train'}, \texttt{'val'} y \texttt{'test'}, donde el subconjunto de entrenamiento ha sido transformado por la técnica de balanceo correspondiente.
-
-Esta separación de responsabilidades ---balanceo en un script dedicado, entrenamiento en otro--- mejora la reproducibilidad y la trazabilidad: el \textit{parquet} balanceado es un artefacto intermedio verificable, independiente del proceso de entrenamiento. Cualquier auditoría puede comprobar el estado exacto del conjunto de entrenamiento sin necesidad de re-ejecutar el balanceo. Además, permite lanzar múltiples condiciones de entrenamiento en paralelo sobre los mismos archivos de entrada sin riesgo de condiciones de carrera.
-
+Esta separación de responsabilidades ---balanceo en un módulo dedicado, entrenamiento en otro--- mejora la reproducibilidad y la trazabilidad: el \textit{parquet} balanceado es un artefacto intermedio verificable, independiente del proceso de entrenamiento. Cualquier auditoría puede comprobar el estado exacto del conjunto de entrenamiento sin necesidad de re-ejecutar el balanceo. Además, permite lanzar múltiples condiciones de entrenamiento en paralelo sobre los mismos archivos de entrada sin riesgo de condiciones de carrera.
 % ---------------------------------------------------------
 \subsection{Flujo de datos por \emph{fold}}
 \label{subsec:flujo_datos_fold}
@@ -916,7 +1116,7 @@ Tras completar los cinco \textit{folds}, el pipeline aplica el protocolo \textit
 
 La evaluación del rendimiento del modelo se realiza de forma desagregada por rango glucémico, en lugar de calcularse exclusivamente sobre el rango completo de mediciones. Esta decisión metodológica responde a la naturaleza clínica del problema: el riesgo asociado a un error de predicción no es uniforme a lo largo del espectro glucémico, sino que presenta una fuerte dependencia del valor absoluto de glucosa en que se produce dicho error.
 
-Los rangos empleados siguen la nomenclatura estándar del \textit{Time in Range} (TIR) propuesta por el consenso internacional~\cite{battelino2019tir}:
+Los rangos empleados siguen la nomenclatura estándar del \textit{Time in Range} (TIR) propuesta por el consenso internacional~\cite{battelino2019clinical}:
 
 \begin{table}[htbp]
 \centering
@@ -944,13 +1144,120 @@ Para cada rango y cada \textit{fold}, la función \texttt{test\_by\_range()} sel
 \subsection{Agregación de resultados y protocolo estadístico}
 \label{subsec:agregacion_resultados}
 % ---------------------------------------------------------
-
 Los resultados de los cinco \textit{folds} de cada condición experimental se agregan siguiendo el protocolo \textit{Metric-Then-Aggregate} (MTA): para cada combinación de (rango glucémico, métrica), se calcula la media y la desviación estándar de los cinco valores obtenidos en los \textit{folds} individuales. Esta estrategia es preferible a la alternativa \textit{Aggregate-Then-Metric} (ATM) ---que concatena todas las predicciones antes de calcular métricas--- porque proporciona una estimación de la variabilidad inter-\textit{fold} del rendimiento, un indicador de la estabilidad del modelo frente a distintas particiones de pacientes.
 
-Los archivos CSV de salida que alimentan el sistema de análisis estadístico presentan una estructura tabular con las columnas: \texttt{Range} (rango glucémico), \texttt{Metric} (nombre de la métrica), \texttt{Value} (valor numérico) y \texttt{Fold} (índice del \textit{fold}), junto con información del experimento (\textit{dataset}, condición de balanceo). El archivo plano (\texttt{mta\_flat.csv}) contiene una fila por cada combinación (\textit{fold}, rango, métrica), mientras que el archivo de reporte (\texttt{mta\_report.csv}) contiene la media y la desviación estándar agregadas.
+El \textit{pipeline} genera tres familias de archivos CSV que alimentan el sistema de análisis estadístico:
+
+\begin{itemize}
+    \item \textbf{Archivo plano por \textit{fold} (ATM/MTA individual).} Contiene una fila por rango glucémico para un único \textit{fold}, con las métricas de clasificación de zonas glucémicas (zonas A--E de la Clarke Error Grid, suma A+B) y las métricas de regresión (RMSE, MSE, MAE, MAPE). Permite auditar el comportamiento de cada partición de forma independiente. La Tabla~\ref{tab:ejemplo_mta_fold} muestra un ejemplo representativo correspondiente a un único \textit{fold}.
+
+    \item \textbf{Archivo plano multi-\textit{fold} (MTA flat).} Apila las filas de los cinco \textit{folds} en un único fichero, añadiendo una columna \texttt{Fold} que identifica la partición. Es el insumo directo para los tests estadísticos inter-condición (Friedman, Nemenyi), ya que expone los cinco valores por condición sobre los que se calcula el estadístico. La Tabla~\ref{tab:ejemplo_mta_fold} ilustra también el formato de este archivo: cada fila incluye el índice de \textit{fold} correspondiente.
+
+    \item \textbf{Archivo de reporte agregado (MTA report).} Condensa los cinco \textit{folds} en una única fila por rango glucémico, expresando cada métrica como \(\mu \pm \sigma\). Es el archivo más útil para la inspección rápida del rendimiento de una condición experimental, ya que ofrece de un vistazo tanto el valor central como la dispersión inter-\textit{fold}; su compacidad lo hace además directamente legible por el sistema de análisis estadístico para generar tablas comparativas. La Tabla~\ref{tab:ejemplo_mta_report} muestra un ejemplo de este formato.
+\end{itemize}
+
+\begin{table}[htbp]
+\centering
+\caption{Ejemplo de archivo plano MTA para un único \textit{fold} (LSTM, horizonte H4, condición sin balanceo). Las columnas A--E corresponden a las zonas de la Clarke Error Grid (\%), A+B es su suma acumulada (\%), y RMSE, MSE, MAE y MAPE son métricas de regresión.}
+\label{tab:ejemplo_mta_fold}
+\small
+\begin{tabular}{lrrrrrrrrrr}
+\toprule
+\textbf{Range} & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} & \textbf{E} & \textbf{A+B} & \textbf{RMSE} & \textbf{MSE} & \textbf{MAE} & \textbf{MAPE} \\
+\midrule
+ENTIRE & 66.75 & 27.65 & 0.20 & 5.36 & 0.04 & 94.40 & 39.26 & 1541.71 & 28.58 & 0.18 \\
+TBR\_2 & 26.89 &  0.00 & 0.00 & 72.73 & 0.38 & 26.89 & 39.47 & 1557.62 & 34.48 & 0.72 \\
+TBR\_1 & 15.02 &  0.00 & 0.00 & 84.47 & 0.51 & 15.02 & 35.82 & 1283.13 & 30.27 & 0.49 \\
+TIR    & 70.99 & 28.72 & 0.29 &  0.00 & 0.00 & 99.71 & 27.37 &  748.99 & 19.90 & 0.16 \\
+TAR\_1 & 69.76 & 28.20 & 0.09 &  1.89 & 0.06 & 97.96 & 43.76 & 1914.91 & 34.37 & 0.16 \\
+TAR\_2 & 60.06 & 32.26 & 0.04 &  7.64 & 0.01 & 92.32 & 68.37 & 4675.00 & 57.81 & 0.19 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Ejemplo de archivo de reporte agregado MTA (LSTM, horizonte H4, condición sin balanceo). Cada celda expresa el valor medio con su desviación estándar inter-\textit{fold} en la línea inferior, calculados sobre los cinco \textit{folds}.}
+\label{tab:ejemplo_mta_report}
+\small
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{lcccccccccc}
+\toprule
+\textbf{Range}
+  & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} & \textbf{E}
+  & \textbf{A+B} & \textbf{RMSE} & \textbf{MSE} & \textbf{MAE} & \textbf{MAPE} \\
+\midrule
+ENTIRE
+  & \shortstack{67.60\\\scriptsize$\pm$0.81}
+  & \shortstack{26.92\\\scriptsize$\pm$0.57}
+  & \shortstack{0.16\\\scriptsize$\pm$0.03}
+  & \shortstack{5.29\\\scriptsize$\pm$0.27}
+  & \shortstack{0.03\\\scriptsize$\pm$0.01}
+  & \shortstack{94.52\\\scriptsize$\pm$0.29}
+  & \shortstack{37.93\\\scriptsize$\pm$0.89}
+  & \shortstack{1438.96\\\scriptsize$\pm$67.64}
+  & \shortstack{27.59\\\scriptsize$\pm$0.69}
+  & \shortstack{0.18\\\scriptsize$\pm$0.00} \\
+TBR\_2
+  & \shortstack{22.93\\\scriptsize$\pm$2.69}
+  & \shortstack{0.00\\\scriptsize$\pm$0.00}
+  & \shortstack{0.00\\\scriptsize$\pm$0.00}
+  & \shortstack{76.74\\\scriptsize$\pm$2.74}
+  & \shortstack{0.33\\\scriptsize$\pm$0.06}
+  & \shortstack{22.93\\\scriptsize$\pm$2.69}
+  & \shortstack{39.05\\\scriptsize$\pm$1.08}
+  & \shortstack{1525.49\\\scriptsize$\pm$84.92}
+  & \shortstack{34.51\\\scriptsize$\pm$0.84}
+  & \shortstack{0.72\\\scriptsize$\pm$0.02} \\
+TBR\_1
+  & \shortstack{13.65\\\scriptsize$\pm$2.39}
+  & \shortstack{0.00\\\scriptsize$\pm$0.00}
+  & \shortstack{0.00\\\scriptsize$\pm$0.00}
+  & \shortstack{85.83\\\scriptsize$\pm$2.44}
+  & \shortstack{0.51\\\scriptsize$\pm$0.06}
+  & \shortstack{13.65\\\scriptsize$\pm$2.39}
+  & \shortstack{35.63\\\scriptsize$\pm$0.83}
+  & \shortstack{1269.82\\\scriptsize$\pm$59.00}
+  & \shortstack{30.16\\\scriptsize$\pm$0.74}
+  & \shortstack{0.49\\\scriptsize$\pm$0.01} \\
+TIR
+  & \shortstack{71.85\\\scriptsize$\pm$0.85}
+  & \shortstack{27.91\\\scriptsize$\pm$0.81}
+  & \shortstack{0.23\\\scriptsize$\pm$0.04}
+  & \shortstack{0.00\\\scriptsize$\pm$0.00}
+  & \shortstack{0.00\\\scriptsize$\pm$0.00}
+  & \shortstack{99.77\\\scriptsize$\pm$0.04}
+  & \shortstack{26.62\\\scriptsize$\pm$0.68}
+  & \shortstack{709.18\\\scriptsize$\pm$36.10}
+  & \shortstack{19.36\\\scriptsize$\pm$0.46}
+  & \shortstack{0.16\\\scriptsize$\pm$0.00} \\
+TAR\_1
+  & \shortstack{70.50\\\scriptsize$\pm$0.60}
+  & \shortstack{27.58\\\scriptsize$\pm$0.51}
+  & \shortstack{0.06\\\scriptsize$\pm$0.02}
+  & \shortstack{1.82\\\scriptsize$\pm$0.06}
+  & \shortstack{0.04\\\scriptsize$\pm$0.02}
+  & \shortstack{98.08\\\scriptsize$\pm$0.09}
+  & \shortstack{43.07\\\scriptsize$\pm$0.49}
+  & \shortstack{1855.45\\\scriptsize$\pm$41.96}
+  & \shortstack{33.86\\\scriptsize$\pm$0.36}
+  & \shortstack{0.16\\\scriptsize$\pm$0.00} \\
+TAR\_2
+  & \shortstack{60.78\\\scriptsize$\pm$0.82}
+  & \shortstack{31.52\\\scriptsize$\pm$0.91}
+  & \shortstack{0.03\\\scriptsize$\pm$0.02}
+  & \shortstack{7.66\\\scriptsize$\pm$0.37}
+  & \shortstack{0.00\\\scriptsize$\pm$0.00}
+  & \shortstack{92.31\\\scriptsize$\pm$0.36}
+  & \shortstack{66.87\\\scriptsize$\pm$1.44}
+  & \shortstack{4472.71\\\scriptsize$\pm$192.47}
+  & \shortstack{56.60\\\scriptsize$\pm$1.27}
+  & \shortstack{0.19\\\scriptsize$\pm$0.00} \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 El análisis estadístico comparativo entre condiciones experimentales ---descrito en detalle en el capítulo~\ref{chapter:resultados}--- emplea los tests de Friedman y Nemenyi para comparaciones múltiples no paramétricas, el tamaño del efecto de Cohen (\textit{d}) para cuantificar la magnitud de las diferencias, y el método de Borda para obtener un ranking global de condiciones de balanceo por rango glucémico.
-
 % ---------------------------------------------------------
 \subsection{Trazabilidad y reproducibilidad}
 \label{subsec:trazabilidad}
