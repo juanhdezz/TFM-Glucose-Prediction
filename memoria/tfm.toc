@@ -131,29 +131,66 @@
 \contentsline {paragraph}{Invarianza de validación y test.}{61}{section*.89}%
 \contentsline {paragraph}{Estructura de directorios autoexplicativa.}{61}{section*.90}%
 \contentsline {chapter}{\numberline {5}Resultados y discusión}{63}{chapter.5}%
-\contentsline {chapter}{\numberline {6}Conclusiones}{67}{chapter.6}%
-\contentsline {chapter}{Bibliografía}{74}{chapter*.95}%
-\contentsline {chapter}{\numberline {A}Ejemplo de anexo: Planificación y gestión del proyecto (opcional)}{75}{appendix.Alph1}%
-\contentsline {section}{\numberline {A.1}Metodología/Ciclo de vida}{76}{section.Alph1.1}%
-\contentsline {section}{\numberline {A.2}Herramientas y plataformas utilizadas para el desarrollo del proyecto}{76}{section.Alph1.2}%
-\contentsline {section}{\numberline {A.3}Costes del proyecto}{76}{section.Alph1.3}%
-\contentsline {section}{\numberline {A.4}Gestión del proyecto. Planificación temporal. Diagrama de Gantt}{76}{section.Alph1.4}%
-\contentsline {section}{\numberline {A.5}Texto añadido}{76}{section.Alph1.5}%
-\contentsline {chapter}{\numberline {B}Ejemplo de anexo: Innovación (opcional)}{79}{appendix.Alph2}%
-\contentsline {section}{\numberline {B.1}Estudio del Mercado}{79}{section.Alph2.1}%
-\contentsline {subsection}{\numberline {B.1.1}Segmentos de Clientes}{79}{subsection.Alph2.1.1}%
-\contentsline {subsection}{\numberline {B.1.2}Competidores}{79}{subsection.Alph2.1.2}%
-\contentsline {section}{\numberline {B.2}Propuesta de Valor}{79}{section.Alph2.2}%
-\contentsline {section}{\numberline {B.3}Recursos Clave}{79}{section.Alph2.3}%
-\contentsline {section}{\numberline {B.4}Actividades Clave}{79}{section.Alph2.4}%
-\contentsline {section}{\numberline {B.5}Socios y Alianzas Clave}{79}{section.Alph2.5}%
-\contentsline {section}{\numberline {B.6}Estructura de Costes Prevista}{80}{section.Alph2.6}%
-\contentsline {section}{\numberline {B.7}Vías de Ingresos}{80}{section.Alph2.7}%
-\contentsline {section}{\numberline {B.8}Canales de Distribución}{80}{section.Alph2.8}%
-\contentsline {section}{\numberline {B.9}Relación con los Clientes}{80}{section.Alph2.9}%
-\contentsline {section}{\numberline {B.10}Descripción del Producto Mínimo Viable}{80}{section.Alph2.10}%
-\contentsline {section}{\numberline {B.11}Roadmap de Desarrollo}{80}{section.Alph2.11}%
-\contentsline {section}{\numberline {B.12}Aspectos Legales}{80}{section.Alph2.12}%
-\contentsline {section}{\numberline {B.13}Texto añadido}{80}{section.Alph2.13}%
-\contentsline {chapter}{\numberline {C}Ejemplo de anexo: Manual de usuario (opcional)}{83}{appendix.Alph3}%
-\contentsline {section}{\numberline {C.1}Texto añadido}{83}{section.Alph3.1}%
+\contentsline {section}{\numberline {5.1}Efecto del balanceo sobre el conjunto de entrenamiento}{63}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Impacto sobre el tamaño del conjunto de entrenamiento}{64}{subsection.5.1.1}%
+\contentsline {paragraph}{Técnicas de reducción (RUS y PA-Undersampling).}{64}{section*.92}%
+\contentsline {paragraph}{Técnicas de aumento (ROS, SMOTE, Jittering).}{64}{section*.93}%
+\contentsline {paragraph}{Técnicas híbridas (RUS+ROS, RUS+SMOTE, SMOTE+Tomek, ROS+Tomek).}{65}{section*.94}%
+\contentsline {paragraph}{Implicación metodológica.}{65}{section*.96}%
+\contentsline {subsection}{\numberline {5.1.2}Impacto sobre la distribución demográfica del entrenamiento}{65}{subsection.5.1.2}%
+\contentsline {subsection}{\numberline {5.1.3}Impacto sobre la distribución glucémica del entrenamiento}{69}{subsection.5.1.3}%
+\contentsline {paragraph}{T1DiabetesGranada.}{70}{figure.caption.101}%
+\contentsline {paragraph}{DiaTrend.}{72}{figure.caption.104}%
+\contentsline {paragraph}{REPLACE-BG.}{74}{figure.caption.107}%
+\contentsline {paragraph}{Síntesis y conexión con los resultados de predicción.}{75}{section*.109}%
+\contentsline {subsection}{\numberline {5.1.4}Trade-off clínico del balanceo: hipoglucemia, normoglucemia e hiperglucemia}{76}{subsection.5.1.4}%
+\contentsline {paragraph}{Trade-off TBR-2 (hipoglucemia severa, $<$54\,mg/dL) vs.\ TIR.}{76}{figure.caption.111}%
+\contentsline {paragraph}{Trade-off TBR-1 (hipoglucemia leve, 54--69\,mg/dL) vs.\ TIR.}{77}{figure.caption.113}%
+\contentsline {paragraph}{Trade-off TAR-1 (hiperglucemia leve, 181--250\,mg/dL) vs.\ TIR.}{78}{figure.caption.115}%
+\contentsline {paragraph}{Trade-off TAR-2 (hiperglucemia severa, $>$250\,mg/dL) vs.\ TIR.}{79}{figure.caption.117}%
+\contentsline {paragraph}{Síntesis del análisis de trade-off.}{79}{section*.118}%
+\contentsline {section}{\numberline {5.2}Impacto del balanceo sobre el rendimiento del modelo LSTM}{80}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Distribución global de métricas por técnica}{80}{subsection.5.2.1}%
+\contentsline {paragraph}{RMSE global (ENTIRE).}{80}{section*.120}%
+\contentsline {paragraph}{RMSE en TBR-2 (hipoglucemia severa).}{81}{section*.122}%
+\contentsline {paragraph}{Consistencia inter-fold del ranking de técnicas.}{82}{section*.124}%
+\contentsline {subsection}{\numberline {5.2.2}Análisis de mejora y deterioro respecto al modelo original}{83}{subsection.5.2.2}%
+\contentsline {paragraph}{Panorama global (ENTIRE).}{85}{section*.126}%
+\contentsline {paragraph}{Perspectiva clínica: disociación ENTIRE vs.\ TBR-2.}{87}{section*.128}%
+\contentsline {paragraph}{Ranking por técnica y rango glucémico.}{88}{section*.130}%
+\contentsline {paragraph}{Magnitud máxima de mejora alcanzable.}{89}{section*.132}%
+\contentsline {paragraph}{Efecto diferencial de la dimensión demográfica.}{90}{section*.134}%
+\contentsline {subsection}{\numberline {5.2.3}Análisis por familia de tamaño: desacoplando balanceo y volumen}{91}{subsection.5.2.3}%
+\contentsline {subsection}{\numberline {5.2.4}Análisis estadístico: prueba de Friedman y corrección de Nemenyi}{92}{subsection.5.2.4}%
+\contentsline {section}{\numberline {5.3}Discusión integradora}{93}{section.5.3}%
+\contentsline {paragraph}{¿Mejora el balanceo demográfico el rendimiento del modelo LSTM?}{93}{section*.141}%
+\contentsline {paragraph}{¿Qué familia de técnicas ofrece mejor relación beneficio/coste?}{94}{section*.142}%
+\contentsline {paragraph}{¿Es el efecto del balanceo dataset-dependiente?}{94}{section*.143}%
+\contentsline {paragraph}{¿Qué dimensión demográfica —edad o sexo— es más relevante?}{94}{section*.144}%
+\contentsline {paragraph}{Limitaciones del análisis.}{94}{section*.145}%
+\contentsline {chapter}{\numberline {6}Conclusiones}{95}{chapter.6}%
+\contentsline {chapter}{Bibliografía}{102}{chapter*.146}%
+\contentsline {chapter}{\numberline {A}Ejemplo de anexo: Planificación y gestión del proyecto (opcional)}{103}{appendix.Alph1}%
+\contentsline {section}{\numberline {A.1}Metodología/Ciclo de vida}{104}{section.Alph1.1}%
+\contentsline {section}{\numberline {A.2}Herramientas y plataformas utilizadas para el desarrollo del proyecto}{104}{section.Alph1.2}%
+\contentsline {section}{\numberline {A.3}Costes del proyecto}{104}{section.Alph1.3}%
+\contentsline {section}{\numberline {A.4}Gestión del proyecto. Planificación temporal. Diagrama de Gantt}{104}{section.Alph1.4}%
+\contentsline {section}{\numberline {A.5}Texto añadido}{104}{section.Alph1.5}%
+\contentsline {chapter}{\numberline {B}Ejemplo de anexo: Innovación (opcional)}{107}{appendix.Alph2}%
+\contentsline {section}{\numberline {B.1}Estudio del Mercado}{107}{section.Alph2.1}%
+\contentsline {subsection}{\numberline {B.1.1}Segmentos de Clientes}{107}{subsection.Alph2.1.1}%
+\contentsline {subsection}{\numberline {B.1.2}Competidores}{107}{subsection.Alph2.1.2}%
+\contentsline {section}{\numberline {B.2}Propuesta de Valor}{107}{section.Alph2.2}%
+\contentsline {section}{\numberline {B.3}Recursos Clave}{107}{section.Alph2.3}%
+\contentsline {section}{\numberline {B.4}Actividades Clave}{107}{section.Alph2.4}%
+\contentsline {section}{\numberline {B.5}Socios y Alianzas Clave}{107}{section.Alph2.5}%
+\contentsline {section}{\numberline {B.6}Estructura de Costes Prevista}{108}{section.Alph2.6}%
+\contentsline {section}{\numberline {B.7}Vías de Ingresos}{108}{section.Alph2.7}%
+\contentsline {section}{\numberline {B.8}Canales de Distribución}{108}{section.Alph2.8}%
+\contentsline {section}{\numberline {B.9}Relación con los Clientes}{108}{section.Alph2.9}%
+\contentsline {section}{\numberline {B.10}Descripción del Producto Mínimo Viable}{108}{section.Alph2.10}%
+\contentsline {section}{\numberline {B.11}Roadmap de Desarrollo}{108}{section.Alph2.11}%
+\contentsline {section}{\numberline {B.12}Aspectos Legales}{108}{section.Alph2.12}%
+\contentsline {section}{\numberline {B.13}Texto añadido}{108}{section.Alph2.13}%
+\contentsline {chapter}{\numberline {C}Ejemplo de anexo: Manual de usuario (opcional)}{111}{appendix.Alph3}%
+\contentsline {section}{\numberline {C.1}Texto añadido}{111}{section.Alph3.1}%

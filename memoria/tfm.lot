@@ -15,8 +15,6 @@
 \contentsline {table}{\numberline {4.8}{\ignorespaces Ejemplo de archivo plano MTA para un único \textit {fold} (LSTM, horizonte H4, condición sin balanceo). Las columnas A--E corresponden a las zonas de la Clarke Error Grid (\%), A+B es su suma acumulada (\%), y RMSE, MSE, MAE y MAPE son métricas de regresión.}}{60}{table.caption.84}%
 \contentsline {table}{\numberline {4.9}{\ignorespaces Ejemplo de archivo de reporte agregado MTA (LSTM, horizonte H4, condición sin balanceo). Cada celda expresa el valor medio con su desviación estándar inter-\textit {fold} en la línea inferior, calculados sobre los cinco \textit {folds}.}}{60}{table.caption.85}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {5.1}{\ignorespaces Tabla grande}}{63}{table.caption.91}%
-\contentsline {table}{\numberline {5.2}{\ignorespaces Tabla enorme}}{64}{table.caption.92}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

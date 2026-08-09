@@ -12,7 +12,7 @@ Organización. -> Meter en el contexto los estudios previos de Ciro,oresti y Ant
 el contenido de la memoria. --> En fundamentacion incluir explicaciones sobre los conceptos claves para entender el TFM(aprendizaj profundo , lstms,series temporales,conceptos clinicos diabetes t1, imbalanced learning,tecnicas de balanceo,),despues incluyo el estado del arte 
 - 5.3. Metodología de trabajo. -> Recopilacion de datos,Analisis de datos (EDA),detecccion de imabalance,investigacion de tecnicas usadas en series temporales,transformacion de datos(convertir a ventanas),analisis exploratorio de ventanas (en total metdologia deberia ocupar unas 8 paginas,arquitectura de la LSTM usada y explicacion del pipeline de training)
 - 5.4. Resultados, Análisis y Discusión. --> Dividir la seccion en :
-    - subseccion de analisis impacto tamaños datasets y distribucion de clases
+    - subseccion de analisis impacto tamaños datasets y distribucion de clases (aqui hay que comentar el tema del impacto de las tecnicas, para explicarq eu cuando se modifica el tamaño de un dataset no se puede atribuir el resultado obtenido solo a la tecnica de balanceo )
     - subsesccion de analisis de mejora/empeoramiento del modelo
 - 5.5. Conclusiones y trabajos futuros. --> Incluir en trabajos futuros un pipeline distribuido en Spark para hacer el estudio escalable
 6. Referencias Bibliográficas. Uso del formato APA
