@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex tfm"] 1786268391.73552 "tfm.aux" "tfm.bbl" "tfm" 1786268751.28919 0
+["bibtex tfm"] 1786689878.57485 "tfm.aux" "tfm.bbl" "tfm" 1786689884.90219 0
   "./bibliografia.bib" 1786029066 49642 17ee41e54bdbd9a3fcc0fc24a07abe0b ""
   "c:/texlive/2026/texmf-dist/bibtex/bst/base/ieeetr.bst" 1774463995 18361 1a00e58565e7f19bf2b3e1bfb82254ae ""
-  "tfm.aux" 1786268749 83805 e958b9053b9f0b43a0f55d5041a8a0bd "pdflatex"
+  "tfm.aux" 1786689883 86491 36b9850f7983ec6d97f09f073299304a "pdflatex"
   (generated)
   "tfm.bbl"
   "tfm.blg"
   (rewritten before read)
-["pdflatex"] 1786268742.17805 "c:/Users/User/Desktop/TFM-Glucose-Prediction/memoria/tfm.tex" "tfm.pdf" "tfm" 1786268751.2902 0
+["pdflatex"] 1786689879.29693 "c:/Users/User/Desktop/TFM-Glucose-Prediction/memoria/tfm.tex" "tfm.pdf" "tfm" 1786689884.90318 0
   "agradecimientos.tex" 1774617311 102 9ecc95802b675b250060a5dd88a42a1d ""
   "anexos/gestion.tex" 1774617311 1943 416f11d7d153174b9357e8712bf18fa8 ""
   "anexos/innovacion.tex" 1774617311 1599 f44ec68ae8d12055c7c7f7671eaa24b0 ""
@@ -71,6 +71,7 @@
   "c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb" 1774463218 36299 5f9df58c2139e7edcf37c8fca4bd384d ""
   "c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb" 1774463218 36741 0ee9e374ec3e30da87cdfb0ea3575226 ""
   "c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb" 1774463218 37166 8ab3487cbe3ab49ebce74c29ea2418db ""
+  "c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb" 1774463218 36281 c355509802a035cadc5f15869451dcee ""
   "c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb" 1774463218 35469 dcf3a5f2fc1862f5952e3ee5eb1d98c4 ""
   "c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb" 1774463218 36912 b448ef9ad9d7228ec3c6e71005136d55 ""
   "c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1774463218 35752 024fb6c41858982481f6968b5fc26508 ""
@@ -184,9 +185,9 @@
   "c:/texlive/2026/texmf.cnf" 1774472573 713 e69b156964470283e0530f5060668171 ""
   "capitulos/01_Introduccion.tex" 1784809373 12986 655193dd41c8a5f96ccdbe7b4f52aa12 ""
   "capitulos/02_Fundamentacion_teorica.tex" 1785792153 70833 62fa28605946c89393f67f5c62409c71 ""
-  "capitulos/03_Desarrollo_del_TFM.tex" 1786130321 124243 1e3881c30a626c7873165e808074b054 ""
-  "capitulos/04_Resultados_y_Discusion.tex" 1786268740 84034 ca2c0510cd41e6e94041b1cfe6467451 ""
-  "capitulos/05_Conclusiones.tex" 1774617311 357 67803796021e91cc6bc6777bb418b03f ""
+  "capitulos/03_Desarrollo_del_TFM.tex" 1786689872 124712 92995c5513f2cd033946f6e8662e277e ""
+  "capitulos/04_Resultados_y_Discusion.tex" 1786688416 105083 05ed5256326251827ee1ba92dd407aa5 ""
+  "capitulos/05_Conclusiones.tex" 1786688962 14807 ef83182d255e7e09bd71c704b3be241d ""
   "datos.tex" 1785443887 1849 39fcafcd07a57d407f1efa911e2df24a ""
   "imagenes/CEG__RMSE_LSTM_H4_ALL.pdf" 1783771691 21820072 15c8a6cf6df297580bb236b0ef5f0e4e ""
   "imagenes/logo.png" 1785445464 13864 06d47b24f456dd9b1ecb62166c30578e ""
@@ -252,13 +253,13 @@
   "prefacios/prefacio.tex" 1784756261 2946 49fcda83c2421be4e739d519b3b679ff ""
   "resumen-en.tex" 1785443887 2170 cac1f9214e8719c41d617c0e4f67be64 ""
   "resumen.tex" 1785443784 2172 b14323ebc960a1f898e36310eb24fddd ""
-  "tfm.aux" 1786268749 83805 e958b9053b9f0b43a0f55d5041a8a0bd "pdflatex"
-  "tfm.bbl" 1786268392 18035 f022c36352ee12523d9fb60f768f4515 "bibtex tfm"
-  "tfm.lof" 1786268749 15347 95a7b994201ba038a9301782e39ec442 "pdflatex"
-  "tfm.lot" 1786268749 2659 794704d502ec7a6e1fc7491f9b572869 "pdflatex"
-  "tfm.out" 1786268749 29819 5758c5ade754594eaaab60eb68e0b9d1 "pdflatex"
+  "tfm.aux" 1786689883 86491 36b9850f7983ec6d97f09f073299304a "pdflatex"
+  "tfm.bbl" 1786689879 18035 f022c36352ee12523d9fb60f768f4515 "bibtex tfm"
+  "tfm.lof" 1786689883 15398 80ee7e4fd50b3c5334bfd0c0f4b9656e "pdflatex"
+  "tfm.lot" 1786689883 2708 d7c2123f7c1d80374568f594c3286b0d "pdflatex"
+  "tfm.out" 1786689883 30398 373c7e563e84fbc778a3f9705d441fb2 "pdflatex"
   "tfm.tex" 1786019731 5609 3e799c4cb1926693750d8caf6412031c ""
-  "tfm.toc" 1786268749 19005 7e2841a1bbe43a326d96a921b7786d37 "pdflatex"
+  "tfm.toc" 1786689883 20591 1a3812c9d2208caa0bbc6809a5d38796 "pdflatex"
   "use imagenes_plantilla/../../EDA/DIATREND/B3b_glucose_ranges_age.pdf" 1785882840 28886 b213bd1be61d2e53e9ad559707650f6f ""
   "use imagenes_plantilla/../../EDA/REPLACE-BG/B3b_glucose_ranges_age.pdf" 1785882843 28432 18884285b211e905d3bb09ee258a3489 ""
   "use imagenes_plantilla/../../EDA/T1DiabetesGranada/B3b_glucose_ranges_age.pdf" 1785882837 28888 40a62b25e6494c983e44de2e7a84a66e ""

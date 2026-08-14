@@ -472,27 +472,39 @@ datos para los grupos minoritarios.
 % ---------------------------------------------------------
 \subsection{Análisis de separabilidad demográfica}
 \label{subsec:eda_separabilidad}
-% ---------------------------------------------------------
+Para cuantificar si las diferencias glucémicas entre subgrupos demográficos
+son estadísticamente detectables, se analizó la separabilidad de las
+distribuciones glucémicas entre grupos de edad y sexo mediante la inspección
+de la glucemia media y el coeficiente de variación (CV) intra-grupo. El
+análisis visual se llevó a cabo sobre los tres repositorios, aunque la
+evidencia cuantitativa de separabilidad es más sólida en T1DiabetesGranada
+---el único \textit{dataset} con suficiente volumen y duración de seguimiento
+para sostener comparaciones robustas en todos los grupos demográficos.
 
-% FIGURAS SELECCIONADAS:
-%   - cross/B3a_mean_glucose_by_age   → media glucémica por grupo de edad (los 3 datasets)
-%   - cross/B5a_cv_by_age             → coeficiente de variación por edad
-%   - cross/B5b_cv_by_sex             → coeficiente de variación por sexo
-% JUSTIFICACIÓN: estas figuras complementan la tabla de Cohen's d mostrando
-%   la dirección de las diferencias. B5* añaden la variabilidad intra-grupo,
-%   relevante porque el solapamiento entre grupos (y por tanto la dificultad
-%   de separación) depende no solo de las medias sino también de las desviaciones.
-
-Para cuantificar si las diferencias glucémicas entre subgrupos demográficos son estadísticamente detectables, se calculó el tamaño del efecto de Cohen (\textit{d}) comparando las distribuciones glucémicas entre pares de grupos, en ventanas clínicas de 1, 14 y 90 días. El análisis se llevó a cabo sobre T1DiabetesGranada, el único \textit{dataset} con suficiente volumen y duración de seguimiento para sostener ventanas de 90 días con representación adecuada en todos los grupos demográficos.
-
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{../../EDA/cross/B3a_mean_glucose_by_age}
-    \caption{Glucemia media por grupo de edad y \textit{dataset}. Las barras de error representan la desviación típica inter-paciente dentro de cada grupo.}
+    \caption{Glucemia media por grupo de edad y \textit{dataset}. Las barras
+             de error representan la desviación típica inter-paciente dentro
+             de cada grupo.}
     \label{fig:mean_glucose_age}
 \end{figure}
 
-\begin{figure}[htbp]
+La figura~\ref{fig:mean_glucose_age} muestra que la glucemia media presenta
+un gradiente descendente con la edad consistente en los tres repositorios:
+el grupo $<$31 registra las medias más elevadas (T1DiabetesGranada:
+$\approx$168\,mg/dL; DiaTrend: $\approx$186\,mg/dL; REPLACE-BG:
+$\approx$161\,mg/dL), mientras que el grupo $\geq$66 presenta las medias
+más bajas ($\approx$161, 164 y 157\,mg/dL respectivamente). La
+diferencia entre extremos etarios es de $\approx$7--22\,mg/dL según el
+repositorio, siendo DiaTrend el que muestra el gradiente más pronunciado.
+En todos los casos las barras de error (desviación típica inter-paciente)
+son amplias y se solapan entre grupos, lo que indica que las diferencias
+de medias coexisten con una elevada variabilidad intra-grupo: la
+separabilidad demográfica es real pero moderada, y el solapamiento entre
+distribuciones es la norma.
+
+\begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.48\textwidth}
         \includegraphics[width=\textwidth]{../../EDA/cross/B5a_cv_by_age}
@@ -505,48 +517,51 @@ Para cuantificar si las diferencias glucémicas entre subgrupos demográficos so
         \caption{Coeficiente de variación por sexo.}
         \label{fig:cv_sex}
     \end{subfigure}
-    \caption{Variabilidad glucémica intra-grupo por dimensión demográfica y \textit{dataset}.}
+    \caption{Variabilidad glucémica intra-grupo por dimensión demográfica
+             y \textit{dataset}. La línea discontinua roja indica el umbral
+             de CV$=36\%$ recomendado como indicador de variabilidad glucémica
+             elevada.}
     \label{fig:cv_demographic}
 \end{figure}
 
-% TABLA DE COHEN'S D
-% TODO: rellenar con los valores reales del análisis de mayo 2026.
-% Estructura: filas = par de grupos comparados (e.g. <31 vs 31-45, H vs M);
-%             columnas = ventana clínica (1 día, 14 días, 90 días).
-% Interpretación estándar: |d|<0.2 trivial, 0.2-0.5 pequeño, 0.5-0.8 medio, >0.8 grande.
+\paragraph{Variabilidad glucémica intra-grupo.}
+La figura~\ref{fig:cv_age} revela que el CV glucémico —medida de la
+variabilidad relativa de la glucosa dentro de cada paciente— es elevado
+en todos los grupos y repositorios, con medianas que oscilan entre el
+$33\%$ y el $40\%$. En T1DiabetesGranada el grupo $<$31 presenta la mayor
+variabilidad (mediana $\approx$40\%, con cola superior que supera el 55\%)
+y el grupo $\geq$66 la menor ($\approx$35\%, por debajo del umbral de
+referencia), lo que es coherente con un mejor control glucémico en pacientes
+de mayor edad en este repositorio. En DiaTrend el grupo 46--65 destaca
+por su CV notablemente bajo ($\approx$32\%) y muy compacto, contrastando
+con el grupo $<$31 ($\approx$36\%) y el 31--45 ($\approx$39\%); esta
+diferencia debe interpretarse con cautela dado el pequeño tamaño de esos
+grupos ($n=8$ y $n=4$ respectivamente). REPLACE-BG presenta el patrón más
+homogéneo entre grupos, con medianas de CV entre $34\%$ y $38\%$ y escasa
+dispersión, coherente con la homogeneidad de los seguimientos ya documentada.
 
-\begin{table}[htbp]
-\centering
-\caption{Tamaño del efecto de Cohen (\textit{d}) para las diferencias glucémicas entre subgrupos demográficos en T1DiabetesGranada, calculado sobre ventanas clínicas de 1, 14 y 90 días.}
-\label{tab:cohens_d}
-\begin{tabular}{lccc}
-\hline
-\textbf{Comparación} & \textbf{Ventana 1 día} & \textbf{Ventana 14 días} & \textbf{Ventana 90 días} \\
-\hline
-\multicolumn{4}{l}{\textit{Dimensión edad}} \\
-$<$31 vs. 31--45     & TODO & TODO & TODO \\
-$<$31 vs. 46--65     & TODO & TODO & TODO \\
-$<$31 vs. $\geq$66   & TODO & TODO & TODO \\
-31--45 vs. 46--65    & TODO & TODO & TODO \\
-31--45 vs. $\geq$66  & TODO & TODO & TODO \\
-46--65 vs. $\geq$66  & TODO & TODO & TODO \\
-\hline
-\multicolumn{4}{l}{\textit{Dimensión sexo}} \\
-Hombre vs. Mujer     & TODO & TODO & TODO \\
-\hline
-\end{tabular}
-\end{table}
-
-\paragraph{Interpretación de los resultados.}
-% TODO: describir el patrón general: ¿las diferencias son pequeñas/moderadas/grandes?
-% ¿Crecen con la ventana clínica (más días = más estable = más separable)?
-% ¿Qué par de grupos es el más separable? ¿Y el menos?
-Los valores de Cohen \textit{d} obtenidos revelan que las diferencias glucémicas entre subgrupos demográficos son estadísticamente detectables pero de magnitud % TODO: pequeña/moderada.
-La separabilidad % TODO: aumenta/disminuye/se mantiene estable al ampliar la ventana clínica de 1 a 90 días, lo que sugiere que [interpretar].
-El par de grupos con mayor separabilidad es % TODO, mientras que % TODO son los más similares entre sí.
+La figura~\ref{fig:cv_sex} muestra que las diferencias de CV entre sexos
+son pequeñas en T1DiabetesGranada (mujeres: $\approx$37\%, hombres:
+$\approx$39\%) y REPLACE-BG (mujeres: $\approx$37\%, hombres: $\approx$36\%),
+sin sobrepasar los $2$--$3$ puntos porcentuales. En DiaTrend la diferencia
+es más pronunciada: los hombres presentan un CV medio de $\approx$34\%
+frente al $\approx$37\% de las mujeres, aunque la amplitud de los intervalos
+de error hace que esta diferencia sea difícil de generalizar.
 
 \paragraph{Implicaciones para el diseño experimental.}
-La existencia de diferencias glucémicas entre subgrupos demográficos, aunque de magnitud moderada, constituye una evidencia cuantitativa de que la composición demográfica del conjunto de entrenamiento puede influir en el rendimiento diferencial del modelo LSTM por subgrupo. Esto justifica el estudio sistemático de las técnicas de balanceo y, en particular, la evaluación por rango glucémico descrita en la sección~\ref{subsec:evaluacion_por_rango}: si el modelo aprende una distribución glucémica sesgada hacia los grupos mayoritarios, el error será mayor en los rangos donde los grupos minoritarios tienen una distribución distinta.
+La existencia de diferencias glucémicas entre subgrupos demográficos ---tanto
+en media como en variabilidad--- con solapamiento sustancial entre grupos
+tiene una implicación metodológica directa: el modelo LSTM, al entrenarse
+sobre una distribución demográficamente desequilibrada, aprenderá
+predominantemente el perfil glucémico de los grupos mayoritarios. Dado
+que esos grupos presentan medias y CV distintos de los grupos minoritarios,
+el modelo puede presentar un sesgo sistemático en el rendimiento por
+subgrupo. Esta evidencia cualitativa justifica el estudio sistemático
+de las técnicas de balanceo y, en particular, la evaluación por rango
+glucémico descrita en la sección~\ref{subsec:evaluacion_por_rango}: si
+el modelo aprende una distribución glucémica sesgada hacia los grupos
+mayoritarios, el error será mayor en los rangos donde los grupos
+minoritarios tienen un perfil distinto.
 
 
 % =========================================================

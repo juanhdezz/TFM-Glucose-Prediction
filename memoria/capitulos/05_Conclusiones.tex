@@ -1,4 +1,247 @@
-\chapter{Conclusiones}\label{chapter:conclusiones}
+% =========================================================
+\chapter{Conclusiones}
+\label{chapter:conclusiones}
+% =========================================================
 
-Debes describir las conclusiones generales del trabajo, pero también debes cubrir qué objetivos se han cubierto. Para ello revisa la sección de \nameref{section:objetivos} (Sección \ref{section:objetivos}).
-Por último cierra el trabajo, y si tienes planes de continuar, menciona los trabajos futuros.
+Este trabajo ha investigado si el balanceo demográfico de los conjuntos
+de entrenamiento ---aplicado sobre las dimensiones de edad y sexo---
+mejora el rendimiento predictivo de un modelo LSTM de predicción de
+glucosa entrenado sobre datos CGM. La pregunta de investigación no admite
+una respuesta binaria: los resultados demuestran que el efecto del
+balanceo es fuertemente dependiente del repositorio, del rango glucémico
+que se priorice y de la técnica específica empleada. Esta sección sintetiza
+las conclusiones principales, evalúa el grado de cumplimiento de cada
+objetivo específico y propone las líneas de trabajo futuro más prometedoras.
+
+% ---------------------------------------------------------
+\section{Conclusiones principales}
+\label{sec:conclusiones_principales}
+% ---------------------------------------------------------
+
+\paragraph{El balanceo demográfico no mejora el rendimiento global de
+forma generalizable.}
+En dos de los tres repositorios evaluados ---T1DiabetesGranada y
+REPLACE-BG--- el test de Friedman no rechaza la hipótesis nula de
+equivalencia entre las 21 condiciones experimentales en ningún rango
+glucémico ni métrica de error (RMSE ENTIRE: $p = 0{,}120$ y $p = 0{,}140$
+respectivamente). Las diferencias observadas son estadísticamente
+compatibles con variación aleatoria, y ninguna técnica de balanceo
+supera consistentemente al \textit{baseline} original. Solo en DiaTrend
+el balanceo produce efectos estadísticamente significativos ($p < 0{,}0001$
+en ENTIRE RMSE), pero incluso allí el efecto es ambivalente: las técnicas
+que mejoran el rendimiento global deterioran el rendimiento en hipoglucemia
+severa (TBR-2), y viceversa.
+
+\paragraph{Existe un trade-off estructural entre rendimiento global y
+sensibilidad a hipoglucemia severa.}
+Este es el hallazgo clínicamente más relevante del trabajo. En DiaTrend,
+el único repositorio con suficiente heterogeneidad demográfica y tamaño
+para generar efectos detectables, ninguna técnica evaluada consigue
+mejorar simultáneamente el RMSE en el rango completo (ENTIRE) y en
+TBR-2. Las técnicas de aumento (ROS, SMOTE, Jittering) mejoran el RMSE
+global al enriquecer la representación de perfiles glucémicos de grupos
+minoritarios con mejor control medio, pero a costa de reducir la
+exposición relativa a ventanas de hipoglucemia severa durante el
+entrenamiento. Las técnicas de submuestreo producen el efecto opuesto.
+Este trade-off es coherente con los cambios en la distribución glucémica
+del \textit{train} documentados en la sección~\ref{subsec:impacto_glucemico}
+y tiene implicaciones directas para el diseño de sistemas de predicción
+clínica: la elección de la técnica debe hacerse en función del rango
+glucémico que se desea priorizar, con plena conciencia del coste en los
+rangos restantes.
+
+\paragraph{El efecto del balanceo es dataset-dependiente y explicable
+por propiedades estructurales.}
+Los tres repositorios representan tres escenarios cualitativamente
+distintos. T1DiabetesGranada, con gran volumen y desequilibrio moderado,
+es insensible al balanceo: el modelo ya dispone de suficiente información
+con la partición original. REPLACE-BG, con seguimientos estandarizados
+que minimizan la heterogeneidad inter-paciente, elimina estructuralmente
+el problema que el balanceo intenta corregir. DiaTrend, con desequilibrio
+extremo (38:1 por edad) y seguimientos muy heterogéneos, es el único
+escenario donde el balanceo produce un efecto real, pero también el
+más frágil metodológicamente dado su pequeño tamaño muestral. Esta
+dependencia estructural implica que no es posible hacer una recomendación
+universal de técnica: la elección óptima debe evaluarse caso a caso en
+función de las propiedades del repositorio.
+
+\paragraph{El balanceo por edad supera al balanceo por sexo en magnitud
+de efecto.}
+La dimensión edad produce variaciones de rendimiento sistemáticamente
+más amplias que la dimensión sexo en todos los repositorios, coherente
+con su mayor ratio de desequilibrio (hasta 38:1 frente a 2{,}2:1 en
+sexo) y su mayor correlación con el perfil glucémico. En DiaTrend las
+técnicas de edad producen una dispersión de $\approx$3\,mg/dL en RMSE
+(desde $-3\%$ hasta $-7\%$ respecto al \textit{baseline}), mientras que
+las de sexo se concentran en $\pm$0{,}5\,mg/dL. En T1DiabetesGranada
+y REPLACE-BG ambas dimensiones son estadísticamente equivalentes, pero
+las técnicas de edad presentan mayor variabilidad inter-fold. Si los
+recursos computacionales son limitados, el balanceo por edad debe
+priorizarse.
+
+\paragraph{Tomek Links es la técnica con mejor relación
+beneficio/coste en el repositorio más complejo.}
+En DiaTrend, Tomek Links (dimensión edad) obtiene el menor RMSE global
+de todas las condiciones ($44{,}83$\,mg/dL, posición 1 en el CD diagram
+de ENTIRE) sin deteriorar el RMSE en TBR-2, siendo la única técnica que
+evita el trade-off estructural en ese repositorio. Su mecanismo ---eliminar
+exclusivamente puntos fronterizos ambiguos--- produce una reducción
+moderada del volumen de entrenamiento ($-1{,}8\%$ en el grupo $<$31)
+que mejora la calidad del aprendizaje sin los riesgos de redundancia del
+\textit{oversampling} ni la pérdida de información del \textit{undersampling}
+agresivo. En T1DiabetesGranada y REPLACE-BG no produce ni mejoras ni
+deterioros apreciables, lo que lo convierte en la opción de menor riesgo
+entre todos los escenarios evaluados.
+
+% ---------------------------------------------------------
+\section{Grado de cumplimiento de los objetivos}
+\label{sec:cumplimiento_objetivos}
+% ---------------------------------------------------------
+
+\textbf{Objetivo 1 — Diseño e implementación del \textit{pipeline} de
+balanceo.} Cumplido. Se diseñó e implementó un módulo de balanceo que
+opera exclusivamente sobre el subconjunto \texttt{'train'} de cada
+\textit{fold}, garantizando la invarianza bit a bit de los conjuntos de
+validación y test entre todas las condiciones experimentales. El módulo
+genera archivos \textit{parquet} intermedios verificables que permiten
+auditar el estado exacto del conjunto de entrenamiento sin necesidad de
+re-ejecutar el balanceo, y fue integrado en el \textit{pipeline} previo
+del proyecto RELIEF-T1D sin modificar su lógica de entrenamiento.
+
+\textbf{Objetivo 2 — Implementación y validación de la taxonomía de
+técnicas.} Cumplido. Se implementaron y validaron diez técnicas de
+balanceo organizadas en tres familias (aleatorias, guiadas e híbridas),
+aplicadas en dos variantes demográficas (edad y sexo) más una condición
+de control, resultando en 40 condiciones experimentales en
+T1DiabetesGranada y REPLACE-BG y 39 en DiaTrend (por ausencia de la
+condición \textit{balanced\_age\_oversampling} en ese repositorio). La
+validación de cada artefacto generado comprobó propiedades de
+exclusividad mutua, cobertura completa de pacientes, equilibrio de carga
+entre \textit{folds} y cumplimiento de las restricciones de tamaño por
+familia.
+
+\textbf{Objetivo 3 — Evaluación del efecto sobre el rendimiento del
+modelo LSTM.} Cumplido. Se evaluó el rendimiento del modelo LSTM mediante
+RMSE y MAE desagregados por rango glucémico (TBR-2, TBR-1, TIR, TAR-1,
+TAR-2 y ENTIRE) en los tres repositorios y las 40/39 condiciones
+experimentales. El análisis documentó tanto el nivel central de rendimiento
+como su variabilidad inter-\textit{fold} y la disociación entre métricas
+globales y clínicas.
+
+\textbf{Objetivo 4 — Comparación del impacto por edad frente a sexo.}
+Cumplido. El análisis del gráfico de pendientes
+(figura~\ref{fig:slope_rmse_dim}), los heatmaps de variación demográfica
+y los CD diagrams demostraron que el balanceo por edad produce efectos
+más amplios y más variables que el balanceo por sexo en todos los
+repositorios, con la brecha más pronunciada en DiaTrend. Se identificaron
+las razones estructurales de esta diferencia (mayor ratio de desequilibrio,
+mayor correlación entre grupo etario y perfil glucémico, mayor
+amplificación al pasar de nivel de paciente a nivel de ventana).
+
+\textbf{Objetivo 5 — Caracterización de la robustez entre datasets.}
+Cumplido. Los resultados son marcadamente heterogéneos entre repositorios:
+el test de Friedman rechaza la hipótesis nula solo en DiaTrend, y los
+patrones de mejora/deterioro difieren cualitativamente entre los tres
+conjuntos. Se vincularon estas diferencias con propiedades estructurales
+documentadas en el EDA: tamaño muestral, patrón MNAR, ratio de
+desequilibrio demográfico y homogeneidad de los seguimientos.
+
+\textbf{Objetivo 6 — Identificación de la técnica con mejor rendimiento
+agregado.} Cumplido. El ranking Borda y los CD diagrams
+de Nemenyi identifican a Tomek Links (dimensión edad) como la técnica
+con mejor rendimiento agregado en DiaTrend ---el único repositorio donde
+el balanceo produce efectos estadísticamente significativos--- y a
+Age·Jittering como la mejor en T1DiabetesGranada y REPLACE-BG según el
+Borda, aunque sin significación estadística. No existe ninguna técnica
+que domine en los tres repositorios simultáneamente, lo que impide
+formular una recomendación universal. El objetivo se considera cumplido
+en la medida en que se identificó la mejor técnica dentro de cada
+escenario y se justificó la ausencia de un ganador universal.
+
+\textbf{Objetivo 7 — Descripción de limitaciones y compromisos clínicos.}
+Cumplido. La sección~\ref{sec:discusion} documenta el trade-off entre
+rendimiento global y sensibilidad a hipoglucemia severa, cuantifica su
+magnitud en DiaTrend y describe las cuatro limitaciones metodológicas
+principales: potencia estadística limitada por el número de
+\textit{folds}, tamaño insuficiente de DiaTrend para generalizaciones
+robustas, restricción a un único modelo y horizonte de predicción, y
+ausencia de análisis de las propiedades temporales de las series generadas.
+
+% ---------------------------------------------------------
+\section{Trabajos futuros}
+\label{sec:trabajos_futuros}
+% ---------------------------------------------------------
+
+Los resultados de este trabajo abren varias líneas de investigación que
+no pudieron abordarse dentro de su alcance.
+
+\textbf{Ampliación del protocolo estadístico.} El principal factor
+limitante de este trabajo es la potencia del test de Friedman con solo
+5 \textit{folds}. Una extensión natural consiste en repetir los
+experimentos con múltiples semillas aleatorias para la asignación de
+pacientes a \textit{folds}, generando distribuciones de métricas más
+robustas y reduciendo la diferencia crítica de Nemenyi a valores que
+permitan detectar efectos de magnitud pequeña. Alternativamente, la
+adopción de un esquema de validación cruzada anidada permitiría separar
+la selección de técnica de la evaluación de su rendimiento.
+
+\textbf{Extensión a otros modelos y horizontes de predicción.} Los
+efectos del balanceo demográfico observados en este trabajo son específicos
+del modelo LSTM con horizonte PH$=4$. Sería relevante estudiar si los
+mismos patrones se reproducen con modelos basados en transformers o con
+enfoques de aprendizaje federado, especialmente dado que estos últimos
+son particularmente adecuados para el dominio clínico donde la privacidad
+de los datos es crítica. La extensión a horizontes más cortos (PH$=2$,
+30 min) o más largos (PH$=8$, 120 min) permitiría determinar si el
+trade-off entre RMSE global y TBR-2 varía con el horizonte temporal.
+
+\textbf{Balanceo simultáneo por edad y sexo.} Este trabajo evaluó las
+dos dimensiones demográficas de forma independiente. Una extensión
+relevante es el balanceo conjunto por la combinación edad$\times$sexo,
+que el análisis del heatmap (figura~\ref{fig:age_sex_heatmap}) mostró
+que presenta celdas con representación nula o muy baja en algunos
+repositorios. Esta extensión requiere técnicas de síntesis condicionada
+que respeten la estructura de correlación entre ambas dimensiones,
+un problema metodológico abierto en el campo del balanceo demográfico
+para series temporales.
+
+\textbf{Análisis del efecto sobre las propiedades temporales de las
+series.} Las técnicas de síntesis evaluadas (SMOTE, Jittering) generan
+ventanas nuevas modificando los valores glucémicos pero sin garantizar
+que las propiedades temporales de las series originales ---autocorrelación,
+estacionariedad local, distribución de transiciones glucémicas--- se
+preserven en los datos sintéticos. Un análisis de estas propiedades en
+los \textit{train sets} balanceados, y su correlación con el rendimiento
+del LSTM, permitiría entender mejor el mecanismo por el que el balanceo
+afecta al aprendizaje del modelo y diseñar técnicas de síntesis más
+adecuadas para datos CGM.
+
+\textbf{Modelos de fundación para series temporales como alternativa al
+balanceo.} Una línea emergente que podría cambiar el planteamiento de
+este problema es la aparición de modelos de fundación preentrenados
+sobre grandes colecciones de series temporales heterogéneas (como
+TimesFM, Moirai o Chronos). Estos modelos incorporan durante el
+preentrenamiento una diversidad demográfica y clínica mucho mayor que
+la disponible en cualquier cohorte individual, lo que plantea la pregunta
+de si el balanceo demográfico del conjunto de entrenamiento sigue siendo
+necesario cuando el modelo base ya ha aprendido representaciones generales
+de la dinámica glucémica a partir de millones de series. Estudiar si el
+ajuste fino (\textit{fine-tuning}) de estos modelos sobre cohortes
+locales mantiene o elimina los sesgos demográficos documentados en este
+trabajo constituye una dirección de investigación relevante y
+metodológicamente novedosa en el campo de la predicción CGM.
+
+\textbf{Aprendizaje federado con balanceo demográfico distribuido.}
+En entornos clínicos reales, los datos de distintos hospitales o regiones
+no pueden centralizarse por razones de privacidad. El aprendizaje
+federado permite entrenar modelos colaborativamente sin compartir datos
+individuales, pero introduce un nuevo nivel de desequilibrio demográfico:
+los clientes (hospitales) pueden tener distribuciones de edad o sexo
+muy distintas entre sí, análogas al problema estudiado en este trabajo
+pero a escala inter-institucional. Diseñar estrategias de balanceo
+demográfico compatibles con el aprendizaje federado ---donde el balanceo
+debe operar sobre los datos locales de cada cliente sin acceso a la
+distribución global--- es una extensión natural de los métodos
+desarrollados aquí y de alta relevancia para la implantación clínica
+real de sistemas de predicción glucémica.
+
