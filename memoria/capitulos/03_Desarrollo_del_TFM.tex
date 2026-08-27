@@ -30,7 +30,7 @@ La figura~\ref{fig:pipeline_global} ofrece una visión de conjunto del flujo de 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{imagenes/pipeline_global.png}
-    \caption{Visión general del flujo de trabajo del proyecto RELIEF-T1D.}
+    \caption{Visión general del flujo de trabajo del TFM.}
     \label{fig:pipeline_global}
 \end{figure}
 
@@ -65,7 +65,7 @@ La selección de los conjuntos de datos estuvo guiada por cuatro criterios compl
 % ---------------------------------------------------------
 El \textit{dataset} T1DiabetesGranada fue proporcionado directamente por el Hospital Universitario San Cecilio de Granada (Unidad Clínica de Endocrinología y Nutrición) en el marco del proyecto RELIEF-T1D. Se trata de uno de los repositorios de monitorización continua de glucosa más completos disponibles en diabetes de tipo 1, tanto por su volumen ---más de 30 millones de mediciones en los 643 pacientes seleccionados--- como por la duración del seguimiento ---desde enero de 2018 hasta marzo de 2022, con periodos individuales de hasta cuatro años por paciente.
 \paragraph{Estructura de los archivos.} El repositorio crudo se compone de dos componentes principales. El primero es el archivo de mediciones glucémicas (\texttt{Glucose\_measurements.csv}), con las columnas \texttt{Patient\_ID}, \texttt{Measurement\_date} (formato \texttt{YYYY-MM-DD}), \texttt{Measurement\_time} (\texttt{HH:MM:SS}) y \texttt{GlucoseValue}. El segundo es el archivo de información de paciente (\texttt{Patient\_info.csv}), que incluye variables demográficas (\texttt{Sex}, \texttt{Birth\_year}), fechas de inicio y fin de monitorización, y conteos de disponibilidad de datos (\texttt{Number\_of\_days\_with\_measures}, \texttt{Number\_of\_measurements}), entre otras variables clínicas adicionales. La edad de cada paciente se calculó dinámicamente como la diferencia entre el año de la primera medición disponible y el año de nacimiento, garantizando una alineación temporal precisa entre la variable demográfica y el periodo de monitorización~\cite{antoniotfg}.
-\paragraph{Cadencia nativa de 15 minutos.} A diferencia de los otros dos \textit{datasets}, T1DiabetesGranada emplea dispositivos CGM con cadencia nativa de 15 minutos. Esta particularidad impuso adaptaciones específicas en el algoritmo de remuestreo (véase sección~\ref{subsec:pipeline_preprocesado}): mientras que REPLACE-BG y DiaTrend se procesan con un paso $\Delta = 300$\,s y tolerancias estrechas ($\pm 2$\,s), Granada utiliza $\Delta = 900$\,s con tolerancias relajadas ($\pm 120$\,s) y una sonda de punto medio más amplia, preservando la fase nativa del dispositivo sin forzar una expansión a cuadrícula de 5 minutos que introduciría un sesgo de fase sistemático~\cite{antoniotfg}.
+\paragraph{Cadencia nativa de 15 minutos.} A diferencia de los otros dos \textit{datasets}, T1DiabetesGranada emplea dispositivos CGM con cadencia nativa de 15 minutos. Esta particularidad impuso adaptaciones específicas en el algoritmo de remuestreo: mientras que REPLACE-BG y DiaTrend se procesan con un paso $\Delta = 300$\,s y tolerancias estrechas ($\pm 2$\,s), Granada utiliza $\Delta = 900$\,s con tolerancias relajadas ($\pm 120$\,s) y una sonda de punto medio más amplia, preservando la fase nativa del dispositivo sin forzar una expansión a cuadrícula de 5 minutos que introduciría un sesgo de fase sistemático~\cite{antoniotfg}.
 \paragraph{Patrón de missingness y descarte de ventanas.} El análisis exploratorio identificó que los huecos en las series temporales no son aleatorios, sino que se deben a causas relacionadas con el estado del paciente ---problemas técnicos del sensor, falta de cumplimiento o desprendimiento del dispositivo---, todos ellos correlacionados con el estado clínico. Este hallazgo tuvo implicaciones directas sobre la estrategia de ventaneo: las ventanas que contenían huecos en cualquiera de sus ocho posiciones de entrada o en la posición objetivo fueron descartadas, en lugar de imputadas, para evitar introducir información artificial que distorsionara el análisis de balanceo posterior.
 \paragraph{Separabilidad demográfica.} La justificación para estudiar el sesgo demográfico se apoya en la literatura clínica previa y en la observación de que la variabilidad glucémica cambia con la edad y el sexo, lo que implica que las distribuciones de glucosa difieren entre subgrupos. Esta variabilidad diferencial entre grupos confirma que el balanceo demográfico tiene potencial de efecto real sobre el rendimiento del modelo predictivo, justificando la inclusión de este \textit{dataset} como caso de estudio principal.
 El conjunto resultante comprende \textbf{643 pacientes}, con un rango de sensor de [40,~500]\,mg/dL y más de 30 millones de mediciones brutas, que tras el remuestreo y la generación de ventanas válidas producen el mayor conjunto de instancias de los tres repositorios considerados.
@@ -98,7 +98,7 @@ DiaTrend es un repositorio de CGM longitudinal publicado por Prioleau \textit{et
 \label{subsec:estructura_datos_entrada}
 % ---------------------------------------------------------
 
-Los tres \textit{datasets} fueron transformados a un formato unificado mediante el \textit{pipeline} de preprocesado desarrollado por Alemán Granados~\cite{antoniotfg} y descrito en detalle en las secciones~\ref{subsec:pipeline_preprocesado} y~\ref{subsec:generacion_ventanas}. El resultado de dicho proceso es, para cada \textit{dataset} y horizonte de predicción, un único archivo \textit{parquet} con la siguiente estructura de columnas:
+Los tres \textit{datasets} fueron transformados a un formato unificado mediante el \textit{pipeline} de preprocesado desarrollado por Alemán Granados~\cite{antoniotfg}. El resultado de dicho proceso es, para cada \textit{dataset} y horizonte de predicción, un único archivo \textit{parquet} con la siguiente estructura de columnas:
 
 \begin{itemize}
     \item \textbf{Columnas de entrada:} \texttt{x0}, \texttt{x1}, \ldots, \texttt{x7} --- los ocho valores de glucosa consecutivos (en mg/dL) que constituyen la ventana de historia de 120 minutos.
@@ -150,7 +150,7 @@ La heterogeneidad entre los tres \textit{datasets} ---tanto en número de pacien
 \label{sec:eda}
 % =========================================================
 
-Antes de proceder a la construcción del \textit{pipeline} experimental, se realizó un análisis exploratorio de datos (EDA) con dos objetivos: comprender las propiedades estadísticas y estructurales de cada \textit{dataset}, y obtener evidencia cuantitativa de la presencia ---o ausencia--- de desequilibrio demográfico en la composición de los datos de partida. Este análisis es el que justifica y motiva las decisiones de diseño del \textit{pipeline} de balanceo descritas en la sección~\ref{sec:pipeline_balanceo}.
+Antes de proceder a la construcción del \textit{pipeline} experimental, se realizó un análisis exploratorio de datos (EDA) con dos objetivos: comprender las propiedades estadísticas y estructurales de cada \textit{dataset}, y obtener evidencia cuantitativa de la presencia ---o ausencia--- de desequilibrio demográfico en la composición de los datos de partida. Este análisis es el que justifica y motiva las decisiones de diseño del \textit{pipeline} de balanceo descritas en la sección~\ref{sec:investigacion_tecnicas}.
 
 % ---------------------------------------------------------
 \subsection{Distribución demográfica de los \textit{datasets}}
@@ -506,25 +506,14 @@ distribuciones es la norma.
 
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{../../EDA/cross/B5a_cv_by_age}
-        \caption{Coeficiente de variación por grupo de edad.}
-        \label{fig:cv_age}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{../../EDA/cross/B5b_cv_by_sex}
-        \caption{Coeficiente de variación por sexo.}
-        \label{fig:cv_sex}
-    \end{subfigure}
-    \caption{Variabilidad glucémica intra-grupo por dimensión demográfica
-             y \textit{dataset}. La línea discontinua roja indica el umbral
-             de CV$=36\%$ recomendado como indicador de variabilidad glucémica
-             elevada.}
-    \label{fig:cv_demographic}
+    \includegraphics[width=0.82\textwidth]{../../EDA/cross/B5a_cv_by_age}
+    \caption{Coeficiente de variación glucémico por grupo de edad y
+             \textit{dataset}. La línea discontinua roja indica el umbral
+             CV$=36\%$ recomendado como indicador de variabilidad elevada.}
+    \label{fig:cv_age}
 \end{figure}
 
-\paragraph{Variabilidad glucémica intra-grupo.}
+\paragraph{Variabilidad glucémica intra-grupo por edad.}
 La figura~\ref{fig:cv_age} revela que el CV glucémico —medida de la
 variabilidad relativa de la glucosa dentro de cada paciente— es elevado
 en todos los grupos y repositorios, con medianas que oscilan entre el
@@ -539,6 +528,17 @@ diferencia debe interpretarse con cautela dado el pequeño tamaño de esos
 grupos ($n=8$ y $n=4$ respectivamente). REPLACE-BG presenta el patrón más
 homogéneo entre grupos, con medianas de CV entre $34\%$ y $38\%$ y escasa
 dispersión, coherente con la homogeneidad de los seguimientos ya documentada.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.82\textwidth]{../../EDA/cross/B5b_cv_by_sex}
+    \caption{Coeficiente de variación glucémico por sexo y
+             \textit{dataset}. La línea discontinua roja indica el umbral
+             CV$=36\%$ recomendado como indicador de variabilidad elevada.}
+    \label{fig:cv_sex}
+\end{figure}
+
+\paragraph{Variabilidad glucémica intra-grupo por sexo.}
 
 La figura~\ref{fig:cv_sex} muestra que las diferencias de CV entre sexos
 son pequeñas en T1DiabetesGranada (mujeres: $\approx$37\%, hombres:
@@ -626,7 +626,7 @@ Finalmente, la figura~\ref{fig:class_dist_sex} muestra que el desequilibrio gluc
 En T1DiabetesGranada, la diferencia entre mujeres (4{,}6\,\% de hipoglucemia, 59{,}9\,\% normoglucemia) y hombres (4{,}9\,\% y 59{,}4\,\% respectivamente) es inferior a 0{,}5 puntos porcentuales en ambas clases. En REPLACE-BG la distribución es igualmente homogénea entre sexos, con una ligera mayor proporción de normoglucemia en hombres (65{,}4\,\%) que en mujeres (61{,}8\,\%). En DiaTrend, donde el desequilibrio glucémico es más pronunciado, tampoco se observan diferencias apreciables entre sexos (47{,}2\,\% vs.\ 47{,}6\,\% de hiperglucemia en mujeres y hombres respectivamente).
 
 \paragraph{Implicación para la elección de la unidad de balanceo.}
-Este análisis confirma que operar directamente sobre ventanas, en lugar de sobre pacientes, es la decisión correcta para este problema: el desequilibrio observable por el modelo durante el entrenamiento es el desequilibrio a nivel de ventana, no a nivel de paciente. En T1DiabetesGranada y DiaTrend, dicho desequilibrio demográfico se amplifica respecto al observado a nivel de paciente, mientras que en REPLACE-BG se mantiene prácticamente inalterado gracias a la homogeneidad de duración del seguimiento. En todos los casos, el desequilibrio glucémico entre clases (normoglucemia frente a hipoglucemia) es el dominante, con ratios de al menos 13:1, lo que justifica las técnicas de balanceo descritas en la sección~\ref{sec:pipeline_balanceo}.
+Este análisis confirma que operar directamente sobre ventanas, en lugar de sobre pacientes, es la decisión correcta para este problema: el desequilibrio observable por el modelo durante el entrenamiento es el desequilibrio a nivel de ventana, no a nivel de paciente. En T1DiabetesGranada y DiaTrend, dicho desequilibrio demográfico se amplifica respecto al observado a nivel de paciente, mientras que en REPLACE-BG se mantiene prácticamente inalterado gracias a la homogeneidad de duración del seguimiento. En todos los casos, el desequilibrio glucémico entre clases (normoglucemia frente a hipoglucemia) es el dominante, con ratios de al menos 13:1, lo que justifica las técnicas de balanceo descritas en la sección~\ref{sec:investigacion_tecnicas}.
 
 
 % ---------------------------------------------------------
@@ -901,22 +901,48 @@ ventanas y sus parámetros.
 \subsection{Parámetros de ventana}
 \label{subsec:parametros_ventana}
 
-Cada instancia del conjunto de datos se construye mediante una ventana deslizante de paso unitario (\emph{one-step sliding window}) aplicada sobre la serie temporal de glucosa de cada paciente de forma independiente. La ventana queda definida por dos parámetros fijos:
+Tras el proceso de homogeneización descrito en la sección anterior, los tres conjuntos
+de datos quedan alineados sobre una cuadrícula temporal común de 15 minutos por muestra.
+REPLACE-BG y DiaTrend, cuya cadencia nativa es de 5 minutos, se remuestrean a esta
+resolución;
+T1DiabetesGranada se mantiene en su cuadrícula nativa de 15 minutos.
+A partir de esta representación unificada se construyen las instancias de entrenamiento
+y evaluación mediante una ventana deslizante de paso unitario
+(\emph{one-step sliding window}) aplicada de forma independiente sobre la serie
+temporal de glucosa de cada paciente.
+
+La ventana queda definida por dos parámetros fijos:
 
 \begin{itemize}
-    \item \textbf{Historia (\emph{History Window}, HW):} 8 mediciones consecutivas, que constituyen las variables de entrada $x_0, x_1, \ldots, x_7$.
-    \item \textbf{Horizonte de predicción (\emph{Prediction Horizon}, PH):} evaluado en cuatro configuraciones, PH $\in \{2, 4, 6, 8\}$ mediciones, correspondientes a 30, 60, 90 y 120 minutos en DiaTrend (intervalo de 15 min/muestra) o a 10, 20, 30 y 40 minutos en datasets con frecuencia de 5 min/muestra. La variable objetivo $y$ es la medición situada exactamente PH pasos por delante del último punto del historial.
+    \item \textbf{Historia (\emph{History Window}, HW):} 8 mediciones consecutivas,
+    que constituyen las variables de entrada $x_0, x_1, \ldots, x_7$,
+    abarcando un total de $8 \times 15 = 120$ minutos de historial glucémico.
+
+    \item \textbf{Horizonte de predicción (\emph{Prediction Horizon}, PH):}
+    fijado en PH$= 4$ pasos, equivalentes a $4 \times 15 = 60$ minutos.
+    La variable objetivo $y$ es la medición situada exactamente PH pasos
+    por delante del último punto del historial.
 \end{itemize}
 
-Dado el intervalo de muestreo de 15 minutos de DiaTrend, el horizonte principal de análisis PH$=4$ (60 min) se corresponde con el margen terapéutico clínicamente aceptado para que el paciente o el sistema de lazo cerrado pueda reaccionar ante un episodio de hipoglucemia o hiperglucemia inminente. A partir de cada ventana se almacenan, además de los valores glucémicos, la fecha (\texttt{x\_date\_7}) y la hora (\texttt{x\_time\_7}) correspondientes a la última medición del historial, lo que permite trazar cada instancia a su contexto temporal original sin necesidad de conservar la serie completa.
+El horizonte de 60 minutos se corresponde con el margen terapéutico clínicamente
+aceptado para que el paciente, o el sistema de lazo cerrado, pueda anticipar y
+reaccionar ante un episodio inminente de hipoglucemia o hiperglucemia.
 
-Formalmente, dada la serie de glucosa de un paciente $\mathbf{g} = (g_1, g_2, \ldots, g_T)$, la $i$-ésima ventana se define como:
+Formalmente, dada la serie de glucosa de un paciente
+$\mathbf{g} = (g_1, g_2, \ldots, g_T)$, la $i$-ésima ventana se define como:
+
 \begin{equation}
-    \mathbf{x}^{(i)} = \bigl(g_i,\, g_{i+1},\, \ldots,\, g_{i+\text{HW}-1}\bigr), \qquad
+    \mathbf{x}^{(i)} = \bigl(g_i,\, g_{i+1},\, \ldots,\, g_{i+\text{HW}-1}\bigr),
+    \qquad
     y^{(i)} = g_{i + \text{HW} - 1 + \text{PH}}
     \label{eq:ventana}
 \end{equation}
+
 siendo válida únicamente si ninguno de los valores implicados es \texttt{NaN}.
+Junto a los valores glucémicos, cada instancia conserva la fecha
+(\texttt{x\_date\_7}) y la hora (\texttt{x\_time\_7}) correspondientes a la
+última medición del historial, lo que permite asociar cada muestra a su contexto
+temporal original sin necesidad de mantener la serie completa en memoria.
 
 \subsection{Restricciones de continuidad temporal}
 \label{subsec:restricciones_continuidad}
@@ -1077,7 +1103,7 @@ Los artefactos de cada experimento se organizan en una estructura de directorios
 
 El sufijo \texttt{-v\{N\}} garantiza que la ejecución de un mismo experimento nunca sobreescribe resultados anteriores, permitiendo el versionado incremental.
 
-El número total de entrenamientos ejecutados se obtiene del diseño experimental: 3 \textit{datasets} $\times$ (10 técnicas de balanceo $\times$ 2 dimensiones de balanceo + 1 condición original) $\times$ 5 \textit{folds} = $3 \times 21 \times 5 = 315$ entrenamientos. Sin embargo, la condición de balanceo por sobremuestreo según edad en el \textit{dataset} T1DGranada no está disponible, por lo que el número final de entrenamientos ejecutados asciende a \textbf{310}.
+El número total de entrenamientos ejecutados se obtiene del diseño experimental: 3 \textit{datasets} $\times$ (10 técnicas de balanceo $\times$ 2 dimensiones de balanceo + 1 condición original) $\times$ 5 \textit{folds} = $3 \times 21 \times 5 = 315$ entrenamientos.
 
 % =========================================================
 \section{\emph{Pipeline} de entrenamiento y evaluación}
@@ -1284,8 +1310,12 @@ El diseño del \textit{pipeline} incorpora un conjunto de medidas que garantizan
 
 \paragraph{Versionado de experimentos.} El directorio de salida de cada experimento recibe un sufijo \texttt{-v\{N\}} (v1, v2, \ldots) que se incrementa automáticamente, evitando la sobreescritura accidental de resultados previos.
 
-\paragraph{Metadatos completos por \textit{fold}.} Cada \textit{fold} genera un archivo JSON de resumen (\texttt{summary\_*.json}) que registra: parámetros del experimento, condición de balanceo, límites del sensor, rutas a todos los artefactos generados, tiempos de entrenamiento y predicción, versión de Python, versión de TensorFlow, \textit{commit} de Git, rama y URL del repositorio remoto, hostname del servidor y \textit{timestamp} de ejecución. Esta información es suficiente para reproducir cualquier experimento de forma independiente.
+\paragraph{Metadatos completos por \textit{fold}.} Cada \textit{fold} genera un archivo JSON (\texttt{summary\_*.json}) que registra: parámetros del experimento, condición de balanceo, límites del sensor, rutas a todos los artefactos generados, tiempos de entrenamiento y predicción, versión de Python, versión de TensorFlow, \textit{commit} de Git, rama y URL del repositorio remoto, hostname del servidor y \textit{timestamp} de ejecución. Esta información es suficiente para reproducir cualquier experimento de forma independiente.
 
 \paragraph{Invarianza de validación y test.} Los subconjuntos de validación y test son idénticos entre todas las condiciones experimentales de un mismo \textit{dataset}, ya que el balanceo solo modifica el conjunto de entrenamiento. Esta propiedad fue verificada mediante un \textit{notebook} de validación que comprueba la igualdad byte a byte de los identificadores de paciente y ventanas de val y test entre el modo original y cada condición balanceada.
 
-\paragraph{Estructura de directorios autoexplicativa.} La jerarquía \texttt{/data/output/\{DATASET\}/\{balancing\_condition\}/EXP-\ldots/} mapea biunívocamente cada directorio a una condición experimental completa (\textit{dataset}, técnica de balanceo, dimensión demográfica), eliminando la ambigüedad en la interpretación de los resultados.
+\paragraph{Estructura de directorios autoexplicativa.} La jerarquía utilizada para almacenar los resultados es \texttt{/data/output/\{DATASET\}/\{balancing\_condition\}/EXP-\ldots/} de tal manera que mapea biunívocamente cada directorio a una condición experimental completa (\textit{dataset}, técnica de balanceo, dimensión demográfica), eliminando la ambigüedad en la interpretación de los resultados.
+
+
+
+

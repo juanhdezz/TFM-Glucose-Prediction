@@ -28,6 +28,8 @@ from analysis.viz.dumbbell import plot_all_dumbbells
 from analysis.viz.distributions import plot_all_distributions
 from analysis.viz.rankings import plot_all_rankings
 from analysis.viz.profiles import plot_all_profiles
+from analysis.config import DATASET_LABELS 
+from analysis.config import DATASET_ORDER, TECHNIQUE_LABELS, DIMENSION_LABELS
 
 logging.basicConfig(
     level=logging.INFO,
@@ -103,6 +105,16 @@ def main():
         plot_all_dumbbells(master)
         plot_all_distributions(fold_long)
         # Los rankings usan borda_df global y los nuevos borda_size/mechanism
+        # En tu script principal, antes de plot_all_rankings
+        print("=== DIAGNÓSTICO ===")
+        print("1. DATASET_LABELS:", DATASET_LABELS)
+        print("2. Valores únicos en master['dataset']:", master['dataset'].unique())
+        print("3. Valores únicos en master['condition']:", master['condition'].unique())
+
+        # Si hay algún valor incorrecto, lo verás aquí
+        for ds in master['dataset'].unique():
+            if ds not in DATASET_LABELS:
+                print(f"⚠️ Dataset '{ds}' no está en DATASET_LABELS!")
         plot_all_rankings(master, fold_long, borda_df=borda_df)
         plot_all_profiles(master)
 

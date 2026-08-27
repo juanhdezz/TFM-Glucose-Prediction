@@ -426,14 +426,16 @@ def plot_radar_family(master, family_col="family_size", metric="RMSE"):
 def plot_range_profile_facet_family(master, family_col="family_size", metric="RMSE"):
     label_map = FAMILY_SIZE_LABELS if family_col == "family_size" else FAMILY_MECHANISM_LABELS
     for fam in master[family_col].dropna().unique():
-        sub = master[(master[family_col]==fam)&(master["metric"]==metric)&(master["range"].isin(RANGES_FOR_PROFILE))]
-        if sub.empty: continue
-        techniques = [t for t in TECHNIQUE_ORDER if t!="original" and t in sub["technique"].unique()]
+        sub_bal = master[(master[family_col]==fam)&(master["metric"]==metric)&(master["range"].isin(RANGES_FOR_PROFILE))]
+        if sub_bal.empty: continue
+        sub_orig = master[(master["is_original"])&(master["metric"]==metric)&(master["range"].isin(RANGES_FOR_PROFILE))]
+        techniques = [t for t in TECHNIQUE_ORDER if t!="original" and t in sub_bal["technique"].unique()]
         if not techniques: continue
         n_tech = len(techniques)
         n_ranges = len(RANGES_FOR_PROFILE)
-        datasets = [d for d in DATASET_ORDER if d in sub["dataset"].unique()]
+        datasets = [d for d in DATASET_ORDER if d in sub_bal["dataset"].unique()]
         ds_colors = [DATASET_PALETTE.get(d,"#888") for d in datasets]
+
         fig, axes = plt.subplots(n_tech, n_ranges, figsize=(n_ranges*2.8, n_tech*2.0+1.2), sharey="row", sharex=True)
         if n_tech==1: axes = [axes]
         if n_ranges==1: axes = [[ax] for ax in axes]
@@ -441,8 +443,8 @@ def plot_range_profile_facet_family(master, family_col="family_size", metric="RM
             for col_j, rng in enumerate(RANGES_FOR_PROFILE):
                 ax = axes[row_i][col_j]
                 for k, (ds, color) in enumerate(zip(datasets, ds_colors)):
-                    orig_val = sub[(sub["dataset"]==ds)&(sub["range"]==rng)&(sub["is_original"])]["mean"].values
-                    bal_val  = sub[(sub["dataset"]==ds)&(sub["range"]==rng)&(sub["technique"]==tech)]["mean"].values
+                    orig_val = sub_orig[(sub_orig["dataset"]==ds)&(sub_orig["range"]==rng)]["mean"].values
+                    bal_val  = sub_bal[(sub_bal["dataset"]==ds)&(sub_bal["range"]==rng)&(sub_bal["technique"]==tech)]["mean"].values
                     if len(orig_val)==0 or len(bal_val)==0: continue
                     ax.bar(k-0.125, orig_val[0], 0.25, color=color, alpha=0.3, hatch="//")
                     ax.bar(k+0.125, bal_val[0], 0.25, color=color, alpha=0.85, edgecolor="white")
@@ -450,8 +452,38 @@ def plot_range_profile_facet_family(master, family_col="family_size", metric="RM
                 ax.grid(axis="y", alpha=0.25)
                 if col_j==0: ax.set_ylabel(TECHNIQUE_LABELS.get(tech,tech), fontsize=8, rotation=0, ha="right", labelpad=60)
                 if row_i==0: ax.set_title(RANGE_LABELS.get(rng,rng), fontsize=9, fontweight="bold")
+        # DESPUÉS
+        ds_handles = [
+            mpatches.Patch(
+                facecolor=DATASET_PALETTE.get(d, "#888"),
+                label=DATASET_LABELS.get(d, d),
+                alpha=0.85
+            )
+            for d in datasets
+        ]
+        ds_handles += [
+            mpatches.Patch(
+                facecolor="0.7",
+                hatch="//",
+                edgecolor="0.5",
+                label="Baseline (original)"
+            ),
+            mpatches.Patch(
+                facecolor="0.4",
+                label="Balanced (técnica)"
+            ),
+        ]
+        fig.legend(
+            handles=ds_handles,
+            loc="lower center",
+            ncol=len(ds_handles),
+            bbox_to_anchor=(0.5, -0.02),
+            fontsize=8,
+            frameon=True
+        )
+
         fig.suptitle(f"Small multiples — {metric} | {label_map.get(fam,fam)}", fontsize=12, fontweight="bold")
-        plt.tight_layout(rect=[0,0.05,1,0.97])
+        plt.tight_layout(rect=[0, 0.08, 1, 0.97])
         save_fig(fig, f"range_profile_facet_{metric}_{fam}.pdf", subdir=f"profiles/{family_col}/{fam}")
         plt.close(fig)
 

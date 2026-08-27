@@ -10,16 +10,16 @@
 \providecommand\HyField@AuxAddToCoFields[2]{}
 \babel@aux{spanish}{}
 \citation{antoniotfg}
-\newlabel{chapter:introduccion}{{}{1}{\listtablename }{chapter*.8}{}}
 \@writefile{toc}{\contentsline {chapter}{\numberline {1}Introducción}{1}{chapter.1}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
+\newlabel{chapter:introduccion}{{1}{1}{Introducción}{chapter.1}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {1.1}Motivación}{2}{section.1.1}\protected@file@percent }
 \newlabel{section:motivacion}{{1.1}{2}{Motivación}{section.1.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {1.2}Objetivos}{2}{section.1.2}\protected@file@percent }
-\newlabel{section:objetivos}{{1.2}{2}{Objetivos}{section.1.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {1.3}Estructura del trabajo}{3}{section.1.3}\protected@file@percent }
-\newlabel{section:estructura}{{1.3}{3}{Estructura del trabajo}{section.1.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.2}Objetivos}{3}{section.1.2}\protected@file@percent }
+\newlabel{section:objetivos}{{1.2}{3}{Objetivos}{section.1.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.3}Estructura del trabajo}{4}{section.1.3}\protected@file@percent }
+\newlabel{section:estructura}{{1.3}{4}{Estructura del trabajo}{section.1.3}{}}
 \newlabel{chapter:fundamentos}{{1.3}{4}{Estructura del trabajo}{section.1.3}{}}
 \citation{atkinson2014type1}
 \citation{divers2020prevalence}
@@ -41,7 +41,7 @@
 \citation{clarke1987evaluating}
 \citation{rumelhart1986learning}
 \citation{bengio1994learning}
-\citation{hochreiter1997lstm}
+\citation{hochreiter1997long}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1.3}Métricas de error en predicción de glucosa}{7}{subsection.2.1.3}\protected@file@percent }
 \newlabel{subsec:metricas_error}{{2.1.3}{7}{Métricas de error en predicción de glucosa}{subsection.2.1.3}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {2.2}Aprendizaje profundo para series temporales: redes LSTM}{7}{section.2.2}\protected@file@percent }
@@ -196,7 +196,6 @@
 \citation{thomsen2025racial}
 \citation{sandig2020cgm}
 \citation{machado2023balancing}
-\citation{mayo2019glycemic}
 \citation{thomsen2025racial}
 \@writefile{toc}{\contentsline {section}{\numberline {3.6}Brechas en la literatura y motivación del trabajo}{23}{section.3.6}\protected@file@percent }
 \newlabel{sec:brechas_motivacion}{{3.6}{23}{Brechas en la literatura y motivación del trabajo}{section.3.6}{}}
@@ -204,8 +203,8 @@
 \@writefile{toc}{\contentsline {chapter}{\numberline {4}Desarrollo del trabajo}{25}{chapter.4}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Visión general del flujo de trabajo del proyecto RELIEF-T1D.}}{26}{figure.caption.17}\protected@file@percent }
-\newlabel{fig:pipeline_global}{{4.1}{26}{Visión general del flujo de trabajo del proyecto RELIEF-T1D}{figure.caption.17}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Visión general del flujo de trabajo del TFM.}}{26}{figure.caption.17}\protected@file@percent }
+\newlabel{fig:pipeline_global}{{4.1}{26}{Visión general del flujo de trabajo del TFM}{figure.caption.17}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {4.1}Recopilación y descripción de los datos}{27}{section.4.1}\protected@file@percent }
 \newlabel{sec:recopilacion_datos}{{4.1}{27}{Recopilación y descripción de los datos}{section.4.1}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1.1}Criterios de selección de los \textit  {datasets}}{27}{subsection.4.1.1}\protected@file@percent }
@@ -285,134 +284,133 @@
 \newlabel{subsec:eda_separabilidad}{{4.2.4}{37}{Análisis de separabilidad demográfica}{subsection.4.2.4}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4.9}{\ignorespaces Glucemia media por grupo de edad y \textit  {dataset}. Las barras de error representan la desviación típica inter-paciente dentro de cada grupo.}}{37}{figure.caption.49}\protected@file@percent }
 \newlabel{fig:mean_glucose_age}{{4.9}{37}{Glucemia media por grupo de edad y \textit {dataset}. Las barras de error representan la desviación típica inter-paciente dentro de cada grupo}{figure.caption.49}{}}
-\newlabel{fig:cv_age}{{4.10a}{38}{Coeficiente de variación por grupo de edad}{figure.caption.50}{}}
-\newlabel{sub@fig:cv_age}{{a}{38}{Coeficiente de variación por grupo de edad}{figure.caption.50}{}}
-\newlabel{fig:cv_sex}{{4.10b}{38}{Coeficiente de variación por sexo}{figure.caption.50}{}}
-\newlabel{sub@fig:cv_sex}{{b}{38}{Coeficiente de variación por sexo}{figure.caption.50}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.10}{\ignorespaces Variabilidad glucémica intra-grupo por dimensión demográfica y \textit  {dataset}. La línea discontinua roja indica el umbral de CV$=36\%$ recomendado como indicador de variabilidad glucémica elevada.}}{38}{figure.caption.50}\protected@file@percent }
-\newlabel{fig:cv_demographic}{{4.10}{38}{Variabilidad glucémica intra-grupo por dimensión demográfica y \textit {dataset}. La línea discontinua roja indica el umbral de CV$=36\%$ recomendado como indicador de variabilidad glucémica elevada}{figure.caption.50}{}}
-\@writefile{toc}{\contentsline {paragraph}{Variabilidad glucémica intra-grupo.}{38}{section*.51}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Implicaciones para el diseño experimental.}{38}{section*.52}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.3}Detección y cuantificación del desequilibrio demográfico}{38}{section.4.3}\protected@file@percent }
-\newlabel{sec:deteccion_imbalance}{{4.3}{38}{Detección y cuantificación del desequilibrio demográfico}{section.4.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.10}{\ignorespaces Coeficiente de variación glucémico por grupo de edad y \textit  {dataset}. La línea discontinua roja indica el umbral CV$=36\%$ recomendado como indicador de variabilidad elevada.}}{38}{figure.caption.50}\protected@file@percent }
+\newlabel{fig:cv_age}{{4.10}{38}{Coeficiente de variación glucémico por grupo de edad y \textit {dataset}. La línea discontinua roja indica el umbral CV$=36\%$ recomendado como indicador de variabilidad elevada}{figure.caption.50}{}}
+\@writefile{toc}{\contentsline {paragraph}{Variabilidad glucémica intra-grupo por edad.}{38}{section*.51}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.11}{\ignorespaces Coeficiente de variación glucémico por sexo y \textit  {dataset}. La línea discontinua roja indica el umbral CV$=36\%$ recomendado como indicador de variabilidad elevada.}}{38}{figure.caption.52}\protected@file@percent }
+\newlabel{fig:cv_sex}{{4.11}{38}{Coeficiente de variación glucémico por sexo y \textit {dataset}. La línea discontinua roja indica el umbral CV$=36\%$ recomendado como indicador de variabilidad elevada}{figure.caption.52}{}}
+\@writefile{toc}{\contentsline {paragraph}{Variabilidad glucémica intra-grupo por sexo.}{38}{section*.53}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Implicaciones para el diseño experimental.}{39}{section*.54}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.3}Detección y cuantificación del desequilibrio demográfico}{39}{section.4.3}\protected@file@percent }
+\newlabel{sec:deteccion_imbalance}{{4.3}{39}{Detección y cuantificación del desequilibrio demográfico}{section.4.3}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.3.1}Desequilibrio a nivel de paciente frente a nivel de ventana}{39}{subsection.4.3.1}\protected@file@percent }
 \newlabel{subsec:imbalance_paciente_vs_ventana}{{4.3.1}{39}{Desequilibrio a nivel de paciente frente a nivel de ventana}{subsection.4.3.1}{}}
-\@writefile{toc}{\contentsline {paragraph}{Amplificación del desequilibrio demográfico al pasar de paciente a ventana.}{39}{section*.53}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Desequilibrio glucémico de clases dentro de cada grupo.}{39}{section*.54}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.11}{\ignorespaces Distribución porcentual de ventanas de entrenamiento por clase glucémica (hipoglucemia $<$70\,mg/dL, normoglucemia 70--180\,mg/dL, hiperglucemia $>$180\,mg/dL) y grupo de edad en cada \textit  {dataset} (horizonte PH\,=\,4, fold de referencia). Los porcentajes permiten comparar el desequilibrio glucémico entre grupos de edad y con la figura~\ref {fig:age_group_dist}.}}{40}{figure.caption.55}\protected@file@percent }
-\newlabel{fig:class_dist_age}{{4.11}{40}{Distribución porcentual de ventanas de entrenamiento por clase glucémica (hipoglucemia $<$70\,mg/dL, normoglucemia 70--180\,mg/dL, hiperglucemia $>$180\,mg/dL) y grupo de edad en cada \textit {dataset} (horizonte PH\,=\,4, fold de referencia). Los porcentajes permiten comparar el desequilibrio glucémico entre grupos de edad y con la figura~\ref {fig:age_group_dist}}{figure.caption.55}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.12}{\ignorespaces Ratio de desequilibrio glucémico (ventanas normoglucémicas / ventanas hipoglucémicas) por grupo de edad y \textit  {dataset}, expresado como mediana $\pm $ IQR entre pacientes del fold de referencia. Un ratio de 1{,}0 indicaría distribución perfectamente equilibrada entre ambas clases.}}{41}{figure.caption.56}\protected@file@percent }
-\newlabel{fig:imbalance_ratio_age}{{4.12}{41}{Ratio de desequilibrio glucémico (ventanas normoglucémicas / ventanas hipoglucémicas) por grupo de edad y \textit {dataset}, expresado como mediana $\pm $ IQR entre pacientes del fold de referencia. Un ratio de 1{,}0 indicaría distribución perfectamente equilibrada entre ambas clases}{figure.caption.56}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.13}{\ignorespaces Distribución porcentual de ventanas de entrenamiento por clase glucémica y sexo en cada \textit  {dataset}. La similitud entre grupos sugiere que el sexo no introduce desequilibrio glucémico diferencial.}}{42}{figure.caption.57}\protected@file@percent }
-\newlabel{fig:class_dist_sex}{{4.13}{42}{Distribución porcentual de ventanas de entrenamiento por clase glucémica y sexo en cada \textit {dataset}. La similitud entre grupos sugiere que el sexo no introduce desequilibrio glucémico diferencial}{figure.caption.57}{}}
-\@writefile{toc}{\contentsline {paragraph}{Implicación para la elección de la unidad de balanceo.}{42}{section*.58}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.2}Desequilibrio por dimensión demográfica y \textit  {fold}}{42}{subsection.4.3.2}\protected@file@percent }
-\newlabel{subsec:imbalance_por_fold}{{4.3.2}{42}{Desequilibrio por dimensión demográfica y \textit {fold}}{subsection.4.3.2}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.3}{\ignorespaces Ratios de desequilibrio demográfico por dimensión y \textit  {dataset}. Para la dimensión edad se muestra el ratio a nivel de ventana (grupo mayoritario / grupo minoritario, proxy $N_\text  {pac} \times \text  {días mediana}$) y el rango inter-\textit  {fold} estimado con Group 5-Fold. Para la dimensión sexo se muestra el ratio a nivel de paciente. Un ratio de 1{,}0 indica distribución equilibrada.}}{43}{table.caption.59}\protected@file@percent }
-\newlabel{tab:imbalance_by_fold}{{4.3}{43}{Ratios de desequilibrio demográfico por dimensión y \textit {dataset}. Para la dimensión edad se muestra el ratio a nivel de ventana (grupo mayoritario / grupo minoritario, proxy $N_\text {pac} \times \text {días mediana}$) y el rango inter-\textit {fold} estimado con Group 5-Fold. Para la dimensión sexo se muestra el ratio a nivel de paciente. Un ratio de 1{,}0 indica distribución equilibrada}{table.caption.59}{}}
-\@writefile{toc}{\contentsline {paragraph}{Variabilidad inter-\textit  {fold} del desequilibrio.}{43}{section*.60}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Implicación para el protocolo de evaluación.}{43}{section*.61}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Amplificación del desequilibrio demográfico al pasar de paciente a ventana.}{39}{section*.55}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Desequilibrio glucémico de clases dentro de cada grupo.}{40}{section*.56}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.12}{\ignorespaces Distribución porcentual de ventanas de entrenamiento por clase glucémica (hipoglucemia $<$70\,mg/dL, normoglucemia 70--180\,mg/dL, hiperglucemia $>$180\,mg/dL) y grupo de edad en cada \textit  {dataset} (horizonte PH\,=\,4, fold de referencia). Los porcentajes permiten comparar el desequilibrio glucémico entre grupos de edad y con la figura~\ref {fig:age_group_dist}.}}{41}{figure.caption.57}\protected@file@percent }
+\newlabel{fig:class_dist_age}{{4.12}{41}{Distribución porcentual de ventanas de entrenamiento por clase glucémica (hipoglucemia $<$70\,mg/dL, normoglucemia 70--180\,mg/dL, hiperglucemia $>$180\,mg/dL) y grupo de edad en cada \textit {dataset} (horizonte PH\,=\,4, fold de referencia). Los porcentajes permiten comparar el desequilibrio glucémico entre grupos de edad y con la figura~\ref {fig:age_group_dist}}{figure.caption.57}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.13}{\ignorespaces Ratio de desequilibrio glucémico (ventanas normoglucémicas / ventanas hipoglucémicas) por grupo de edad y \textit  {dataset}, expresado como mediana $\pm $ IQR entre pacientes del fold de referencia. Un ratio de 1{,}0 indicaría distribución perfectamente equilibrada entre ambas clases.}}{42}{figure.caption.58}\protected@file@percent }
+\newlabel{fig:imbalance_ratio_age}{{4.13}{42}{Ratio de desequilibrio glucémico (ventanas normoglucémicas / ventanas hipoglucémicas) por grupo de edad y \textit {dataset}, expresado como mediana $\pm $ IQR entre pacientes del fold de referencia. Un ratio de 1{,}0 indicaría distribución perfectamente equilibrada entre ambas clases}{figure.caption.58}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.14}{\ignorespaces Distribución porcentual de ventanas de entrenamiento por clase glucémica y sexo en cada \textit  {dataset}. La similitud entre grupos sugiere que el sexo no introduce desequilibrio glucémico diferencial.}}{43}{figure.caption.59}\protected@file@percent }
+\newlabel{fig:class_dist_sex}{{4.14}{43}{Distribución porcentual de ventanas de entrenamiento por clase glucémica y sexo en cada \textit {dataset}. La similitud entre grupos sugiere que el sexo no introduce desequilibrio glucémico diferencial}{figure.caption.59}{}}
+\@writefile{toc}{\contentsline {paragraph}{Implicación para la elección de la unidad de balanceo.}{43}{section*.60}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.2}Desequilibrio por dimensión demográfica y \textit  {fold}}{43}{subsection.4.3.2}\protected@file@percent }
+\newlabel{subsec:imbalance_por_fold}{{4.3.2}{43}{Desequilibrio por dimensión demográfica y \textit {fold}}{subsection.4.3.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.3}{\ignorespaces Ratios de desequilibrio demográfico por dimensión y \textit  {dataset}. Para la dimensión edad se muestra el ratio a nivel de ventana (grupo mayoritario / grupo minoritario, proxy $N_\text  {pac} \times \text  {días mediana}$) y el rango inter-\textit  {fold} estimado con Group 5-Fold. Para la dimensión sexo se muestra el ratio a nivel de paciente. Un ratio de 1{,}0 indica distribución equilibrada.}}{44}{table.caption.61}\protected@file@percent }
+\newlabel{tab:imbalance_by_fold}{{4.3}{44}{Ratios de desequilibrio demográfico por dimensión y \textit {dataset}. Para la dimensión edad se muestra el ratio a nivel de ventana (grupo mayoritario / grupo minoritario, proxy $N_\text {pac} \times \text {días mediana}$) y el rango inter-\textit {fold} estimado con Group 5-Fold. Para la dimensión sexo se muestra el ratio a nivel de paciente. Un ratio de 1{,}0 indica distribución equilibrada}{table.caption.61}{}}
+\@writefile{toc}{\contentsline {paragraph}{Variabilidad inter-\textit  {fold} del desequilibrio.}{44}{section*.62}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Implicación para el protocolo de evaluación.}{44}{section*.63}\protected@file@percent }
 \citation{yoon2019timegan}
 \citation{fawaz2018data}
 \citation{he2008adasyn}
 \citation{aleppo2017replace}
 \citation{dubosson2018diatrend}
 \citation{lin2017focal}
-\@writefile{toc}{\contentsline {section}{\numberline {4.4}Investigación de técnicas de balanceo para series temporales}{44}{section.4.4}\protected@file@percent }
-\newlabel{sec:investigacion_tecnicas}{{4.4}{44}{Investigación de técnicas de balanceo para series temporales}{section.4.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.1}Criterios de selección de técnicas}{44}{subsection.4.4.1}\protected@file@percent }
-\newlabel{subsec:criterios_tecnicas}{{4.4.1}{44}{Criterios de selección de técnicas}{subsection.4.4.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.2}Taxonomía de técnicas implementadas}{44}{subsection.4.4.2}\protected@file@percent }
-\newlabel{subsec:taxonomia_tecnicas}{{4.4.2}{44}{Taxonomía de técnicas implementadas}{subsection.4.4.2}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.4}{\ignorespaces Taxonomía de las diez técnicas de balanceo implementadas.}}{45}{table.caption.62}\protected@file@percent }
-\newlabel{tab:taxonomia_tecnicas}{{4.4}{45}{Taxonomía de las diez técnicas de balanceo implementadas}{table.caption.62}{}}
-\@writefile{toc}{\contentsline {subsubsection}{Familia aleatoria}{45}{section*.63}\protected@file@percent }
-\newlabel{subsubsec:familia_aleatoria}{{4.4.2}{45}{Familia aleatoria}{section*.63}{}}
-\@writefile{toc}{\contentsline {paragraph}{Random Under-Sampling (RUS).}{45}{section*.64}\protected@file@percent }
-\newlabel{eq:rus_target}{{4.1}{45}{Random Under-Sampling (RUS)}{equation.4.1}{}}
-\newlabel{eq:rus_sample}{{4.2}{45}{Random Under-Sampling (RUS)}{equation.4.2}{}}
-\@writefile{toc}{\contentsline {paragraph}{Random Over-Sampling (ROS).}{45}{section*.65}\protected@file@percent }
-\newlabel{eq:ros_target}{{4.3}{45}{Random Over-Sampling (ROS)}{equation.4.3}{}}
-\newlabel{eq:ros_sample}{{4.4}{45}{Random Over-Sampling (ROS)}{equation.4.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.4}Investigación de técnicas de balanceo para series temporales}{45}{section.4.4}\protected@file@percent }
+\newlabel{sec:investigacion_tecnicas}{{4.4}{45}{Investigación de técnicas de balanceo para series temporales}{section.4.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.1}Criterios de selección de técnicas}{45}{subsection.4.4.1}\protected@file@percent }
+\newlabel{subsec:criterios_tecnicas}{{4.4.1}{45}{Criterios de selección de técnicas}{subsection.4.4.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.2}Taxonomía de técnicas implementadas}{45}{subsection.4.4.2}\protected@file@percent }
+\newlabel{subsec:taxonomia_tecnicas}{{4.4.2}{45}{Taxonomía de técnicas implementadas}{subsection.4.4.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.4}{\ignorespaces Taxonomía de las diez técnicas de balanceo implementadas.}}{46}{table.caption.64}\protected@file@percent }
+\newlabel{tab:taxonomia_tecnicas}{{4.4}{46}{Taxonomía de las diez técnicas de balanceo implementadas}{table.caption.64}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Familia aleatoria}{46}{section*.65}\protected@file@percent }
+\newlabel{subsubsec:familia_aleatoria}{{4.4.2}{46}{Familia aleatoria}{section*.65}{}}
+\@writefile{toc}{\contentsline {paragraph}{Random Under-Sampling (RUS).}{46}{section*.66}\protected@file@percent }
+\newlabel{eq:rus_target}{{4.1}{46}{Random Under-Sampling (RUS)}{equation.4.1}{}}
+\newlabel{eq:rus_sample}{{4.2}{46}{Random Under-Sampling (RUS)}{equation.4.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{Random Over-Sampling (ROS).}{46}{section*.67}\protected@file@percent }
+\newlabel{eq:ros_target}{{4.3}{46}{Random Over-Sampling (ROS)}{equation.4.3}{}}
+\newlabel{eq:ros_sample}{{4.4}{46}{Random Over-Sampling (ROS)}{equation.4.4}{}}
 \citation{chawla2002smote}
 \citation{tomek1976two}
-\@writefile{toc}{\contentsline {subsubsection}{Familia guiada}{46}{section*.66}\protected@file@percent }
-\newlabel{subsubsec:familia_guiada}{{4.4.2}{46}{Familia guiada}{section*.66}{}}
-\@writefile{toc}{\contentsline {paragraph}{SMOTE (\emph  {Synthetic Minority Oversampling TEchnique}).}{46}{section*.67}\protected@file@percent }
-\newlabel{eq:smote_zscore}{{4.5}{46}{SMOTE (\emph {Synthetic Minority Oversampling TEchnique})}{equation.4.5}{}}
-\newlabel{eq:smote_interp}{{4.6}{46}{SMOTE (\emph {Synthetic Minority Oversampling TEchnique})}{equation.4.6}{}}
-\@writefile{toc}{\contentsline {paragraph}{Tomek Links.}{46}{section*.68}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Familia guiada}{47}{section*.68}\protected@file@percent }
+\newlabel{subsubsec:familia_guiada}{{4.4.2}{47}{Familia guiada}{section*.68}{}}
+\@writefile{toc}{\contentsline {paragraph}{SMOTE (\emph  {Synthetic Minority Oversampling TEchnique}).}{47}{section*.69}\protected@file@percent }
+\newlabel{eq:smote_zscore}{{4.5}{47}{SMOTE (\emph {Synthetic Minority Oversampling TEchnique})}{equation.4.5}{}}
+\newlabel{eq:smote_interp}{{4.6}{47}{SMOTE (\emph {Synthetic Minority Oversampling TEchnique})}{equation.4.6}{}}
+\@writefile{toc}{\contentsline {paragraph}{Tomek Links.}{47}{section*.70}\protected@file@percent }
 \citation{um2017data}
-\newlabel{eq:tomek_rule}{{4.7}{47}{Tomek Links}{equation.4.7}{}}
-\@writefile{toc}{\contentsline {paragraph}{Jittering.}{47}{section*.69}\protected@file@percent }
-\newlabel{eq:jitter_noise}{{4.8}{47}{Jittering}{equation.4.8}{}}
-\@writefile{toc}{\contentsline {paragraph}{Patient-aware undersampling.}{47}{section*.70}\protected@file@percent }
-\newlabel{eq:patient_cap}{{4.9}{47}{Patient-aware undersampling}{equation.4.9}{}}
+\newlabel{eq:tomek_rule}{{4.7}{48}{Tomek Links}{equation.4.7}{}}
+\@writefile{toc}{\contentsline {paragraph}{Jittering.}{48}{section*.71}\protected@file@percent }
+\newlabel{eq:jitter_noise}{{4.8}{48}{Jittering}{equation.4.8}{}}
+\@writefile{toc}{\contentsline {paragraph}{Patient-aware undersampling.}{48}{section*.72}\protected@file@percent }
+\newlabel{eq:patient_cap}{{4.9}{48}{Patient-aware undersampling}{equation.4.9}{}}
 \citation{batista2004study}
-\@writefile{toc}{\contentsline {subsubsection}{Familia híbrida}{48}{section*.71}\protected@file@percent }
-\newlabel{subsubsec:familia_hibrida}{{4.4.2}{48}{Familia híbrida}{section*.71}{}}
-\@writefile{toc}{\contentsline {paragraph}{RUS + ROS.}{48}{section*.72}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{RUS + SMOTE.}{48}{section*.73}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{SMOTE + Tomek.}{48}{section*.74}\protected@file@percent }
-\newlabel{eq:smote_tomek_final}{{4.10}{48}{SMOTE + Tomek}{equation.4.10}{}}
-\@writefile{toc}{\contentsline {paragraph}{ROS + Tomek.}{48}{section*.75}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.3}Validación formal del \emph  {pipeline} de balanceo}{49}{subsection.4.4.3}\protected@file@percent }
-\newlabel{subsec:validacion_pipeline}{{4.4.3}{49}{Validación formal del \emph {pipeline} de balanceo}{subsection.4.4.3}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.5}Transformación de datos: generación de ventanas deslizantes}{49}{section.4.5}\protected@file@percent }
-\newlabel{sec:transformacion_ventanas}{{4.5}{49}{Transformación de datos: generación de ventanas deslizantes}{section.4.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.1}Parámetros de ventana}{50}{subsection.4.5.1}\protected@file@percent }
-\newlabel{subsec:parametros_ventana}{{4.5.1}{50}{Parámetros de ventana}{subsection.4.5.1}{}}
-\newlabel{eq:ventana}{{4.11}{50}{Parámetros de ventana}{equation.4.11}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.2}Restricciones de continuidad temporal}{50}{subsection.4.5.2}\protected@file@percent }
-\newlabel{subsec:restricciones_continuidad}{{4.5.2}{50}{Restricciones de continuidad temporal}{subsection.4.5.2}{}}
-\newlabel{eq:validez_ventana}{{4.12}{50}{Restricciones de continuidad temporal}{equation.4.12}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.3}Esquema de partición: \emph  {Group K-Fold} con $K=5$}{51}{subsection.4.5.3}\protected@file@percent }
-\newlabel{subsec:group_kfold_implementacion}{{4.5.3}{51}{Esquema de partición: \emph {Group K-Fold} con $K=5$}{subsection.4.5.3}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.6}Arquitectura del modelo LSTM}{52}{section.4.6}\protected@file@percent }
-\newlabel{sec:arquitectura_lstm}{{4.6}{52}{Arquitectura del modelo LSTM}{section.4.6}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.1}Especificación de la arquitectura}{52}{subsection.4.6.1}\protected@file@percent }
-\newlabel{subsec:arquitectura_especificacion}{{4.6.1}{52}{Especificación de la arquitectura}{subsection.4.6.1}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.5}{\ignorespaces Hiperparámetros del modelo LSTM.}}{52}{table.caption.76}\protected@file@percent }
-\newlabel{tab:hiperparametros_lstm}{{4.5}{52}{Hiperparámetros del modelo LSTM}{table.caption.76}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.14}{\ignorespaces Arquitectura del modelo LSTM.}}{53}{figure.caption.77}\protected@file@percent }
-\newlabel{fig:lstm_architecture}{{4.14}{53}{Arquitectura del modelo LSTM}{figure.caption.77}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Familia híbrida}{49}{section*.73}\protected@file@percent }
+\newlabel{subsubsec:familia_hibrida}{{4.4.2}{49}{Familia híbrida}{section*.73}{}}
+\@writefile{toc}{\contentsline {paragraph}{RUS + ROS.}{49}{section*.74}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{RUS + SMOTE.}{49}{section*.75}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{SMOTE + Tomek.}{49}{section*.76}\protected@file@percent }
+\newlabel{eq:smote_tomek_final}{{4.10}{49}{SMOTE + Tomek}{equation.4.10}{}}
+\@writefile{toc}{\contentsline {paragraph}{ROS + Tomek.}{49}{section*.77}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.3}Validación formal del \emph  {pipeline} de balanceo}{50}{subsection.4.4.3}\protected@file@percent }
+\newlabel{subsec:validacion_pipeline}{{4.4.3}{50}{Validación formal del \emph {pipeline} de balanceo}{subsection.4.4.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.5}Transformación de datos: generación de ventanas deslizantes}{50}{section.4.5}\protected@file@percent }
+\newlabel{sec:transformacion_ventanas}{{4.5}{50}{Transformación de datos: generación de ventanas deslizantes}{section.4.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.1}Parámetros de ventana}{51}{subsection.4.5.1}\protected@file@percent }
+\newlabel{subsec:parametros_ventana}{{4.5.1}{51}{Parámetros de ventana}{subsection.4.5.1}{}}
+\newlabel{eq:ventana}{{4.11}{51}{Parámetros de ventana}{equation.4.11}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.2}Restricciones de continuidad temporal}{51}{subsection.4.5.2}\protected@file@percent }
+\newlabel{subsec:restricciones_continuidad}{{4.5.2}{51}{Restricciones de continuidad temporal}{subsection.4.5.2}{}}
+\newlabel{eq:validez_ventana}{{4.12}{51}{Restricciones de continuidad temporal}{equation.4.12}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.3}Esquema de partición: \emph  {Group K-Fold} con $K=5$}{52}{subsection.4.5.3}\protected@file@percent }
+\newlabel{subsec:group_kfold_implementacion}{{4.5.3}{52}{Esquema de partición: \emph {Group K-Fold} con $K=5$}{subsection.4.5.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.6}Arquitectura del modelo LSTM}{53}{section.4.6}\protected@file@percent }
+\newlabel{sec:arquitectura_lstm}{{4.6}{53}{Arquitectura del modelo LSTM}{section.4.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.1}Especificación de la arquitectura}{53}{subsection.4.6.1}\protected@file@percent }
+\newlabel{subsec:arquitectura_especificacion}{{4.6.1}{53}{Especificación de la arquitectura}{subsection.4.6.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.5}{\ignorespaces Hiperparámetros del modelo LSTM.}}{53}{table.caption.78}\protected@file@percent }
+\newlabel{tab:hiperparametros_lstm}{{4.5}{53}{Hiperparámetros del modelo LSTM}{table.caption.78}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.15}{\ignorespaces Arquitectura del modelo LSTM.}}{54}{figure.caption.79}\protected@file@percent }
+\newlabel{fig:lstm_architecture}{{4.15}{54}{Arquitectura del modelo LSTM}{figure.caption.79}{}}
 \citation{delfavero2012}
 \citation{clarke1987}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.2}Función de pérdida y optimizador}{54}{subsection.4.6.2}\protected@file@percent }
-\newlabel{subsec:loss_optimizador}{{4.6.2}{54}{Función de pérdida y optimizador}{subsection.4.6.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.2}Función de pérdida y optimizador}{55}{subsection.4.6.2}\protected@file@percent }
+\newlabel{subsec:loss_optimizador}{{4.6.2}{55}{Función de pérdida y optimizador}{subsection.4.6.2}{}}
 \citation{clarke1987}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.15}{\ignorespaces Clark Error Grid de una ejecucion de LSTM para el dataset T1DiabetesGranada.}}{55}{figure.caption.79}\protected@file@percent }
-\newlabel{fig:clarke-zones}{{4.15}{55}{Clark Error Grid de una ejecucion de LSTM para el dataset T1DiabetesGranada}{figure.caption.79}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.3}Estrategia de entrenamiento}{56}{subsection.4.6.3}\protected@file@percent }
-\newlabel{subsec:estrategia_entrenamiento}{{4.6.3}{56}{Estrategia de entrenamiento}{subsection.4.6.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.4}Configuración del entorno de ejecución}{56}{subsection.4.6.4}\protected@file@percent }
-\newlabel{subsec:entorno_ejecucion}{{4.6.4}{56}{Configuración del entorno de ejecución}{subsection.4.6.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.7}\emph  {Pipeline} de entrenamiento y evaluación}{57}{section.4.7}\protected@file@percent }
-\newlabel{sec:pipeline_entrenamiento}{{4.7}{57}{\emph {Pipeline} de entrenamiento y evaluación}{section.4.7}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.7.1}Modo original y modo balanceado}{57}{subsection.4.7.1}\protected@file@percent }
-\newlabel{subsec:modos_pipeline}{{4.7.1}{57}{Modo original y modo balanceado}{subsection.4.7.1}{}}
-\@writefile{toc}{\contentsline {paragraph}{Modo original.}{57}{section*.80}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Modo balanceado.}{57}{section*.81}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.7.2}Flujo de datos por \emph  {fold}}{57}{subsection.4.7.2}\protected@file@percent }
-\newlabel{subsec:flujo_datos_fold}{{4.7.2}{57}{Flujo de datos por \emph {fold}}{subsection.4.7.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.16}{\ignorespaces Clark Error Grid de una ejecucion de LSTM para el dataset T1DiabetesGranada.}}{56}{figure.caption.81}\protected@file@percent }
+\newlabel{fig:clarke-zones}{{4.16}{56}{Clark Error Grid de una ejecucion de LSTM para el dataset T1DiabetesGranada}{figure.caption.81}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.3}Estrategia de entrenamiento}{57}{subsection.4.6.3}\protected@file@percent }
+\newlabel{subsec:estrategia_entrenamiento}{{4.6.3}{57}{Estrategia de entrenamiento}{subsection.4.6.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.4}Configuración del entorno de ejecución}{57}{subsection.4.6.4}\protected@file@percent }
+\newlabel{subsec:entorno_ejecucion}{{4.6.4}{57}{Configuración del entorno de ejecución}{subsection.4.6.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.7}\emph  {Pipeline} de entrenamiento y evaluación}{58}{section.4.7}\protected@file@percent }
+\newlabel{sec:pipeline_entrenamiento}{{4.7}{58}{\emph {Pipeline} de entrenamiento y evaluación}{section.4.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.7.1}Modo original y modo balanceado}{58}{subsection.4.7.1}\protected@file@percent }
+\newlabel{subsec:modos_pipeline}{{4.7.1}{58}{Modo original y modo balanceado}{subsection.4.7.1}{}}
+\@writefile{toc}{\contentsline {paragraph}{Modo original.}{58}{section*.82}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Modo balanceado.}{58}{section*.83}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.7.2}Flujo de datos por \emph  {fold}}{58}{subsection.4.7.2}\protected@file@percent }
+\newlabel{subsec:flujo_datos_fold}{{4.7.2}{58}{Flujo de datos por \emph {fold}}{subsection.4.7.2}{}}
 \citation{battelino2019clinical}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.7.3}Evaluación por rango glucémico}{58}{subsection.4.7.3}\protected@file@percent }
-\newlabel{subsec:evaluacion_por_rango}{{4.7.3}{58}{Evaluación por rango glucémico}{subsection.4.7.3}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.6}{\ignorespaces Rangos glucémicos para la evaluación desagregada del rendimiento.}}{59}{table.caption.82}\protected@file@percent }
-\newlabel{tab:rangos_glucemicos}{{4.6}{59}{Rangos glucémicos para la evaluación desagregada del rendimiento}{table.caption.82}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.7.4}Agregación de resultados y protocolo estadístico}{59}{subsection.4.7.4}\protected@file@percent }
-\newlabel{subsec:agregacion_resultados}{{4.7.4}{59}{Agregación de resultados y protocolo estadístico}{subsection.4.7.4}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.7}{\ignorespaces Ejemplo de archivo plano MTA para un único \textit  {fold} (LSTM, horizonte H4, condición sin balanceo). Las columnas A--E corresponden a las zonas de la Clarke Error Grid (\%), A+B es su suma acumulada (\%), y RMSE, MSE, MAE y MAPE son métricas de regresión.}}{60}{table.caption.83}\protected@file@percent }
-\newlabel{tab:ejemplo_mta_fold}{{4.7}{60}{Ejemplo de archivo plano MTA para un único \textit {fold} (LSTM, horizonte H4, condición sin balanceo). Las columnas A--E corresponden a las zonas de la Clarke Error Grid (\%), A+B es su suma acumulada (\%), y RMSE, MSE, MAE y MAPE son métricas de regresión}{table.caption.83}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.8}{\ignorespaces Ejemplo de archivo de reporte agregado MTA (LSTM, horizonte H4, condición sin balanceo). Cada celda expresa el valor medio con su desviación estándar inter-\textit  {fold} en la línea inferior, calculados sobre los cinco \textit  {folds}.}}{60}{table.caption.84}\protected@file@percent }
-\newlabel{tab:ejemplo_mta_report}{{4.8}{60}{Ejemplo de archivo de reporte agregado MTA (LSTM, horizonte H4, condición sin balanceo). Cada celda expresa el valor medio con su desviación estándar inter-\textit {fold} en la línea inferior, calculados sobre los cinco \textit {folds}}{table.caption.84}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.7.5}Trazabilidad y reproducibilidad}{60}{subsection.4.7.5}\protected@file@percent }
-\newlabel{subsec:trazabilidad}{{4.7.5}{60}{Trazabilidad y reproducibilidad}{subsection.4.7.5}{}}
-\@writefile{toc}{\contentsline {paragraph}{Semillas fijas.}{60}{section*.85}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Versionado de experimentos.}{61}{section*.86}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Metadatos completos por \textit  {fold}.}{61}{section*.87}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Invarianza de validación y test.}{61}{section*.88}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Estructura de directorios autoexplicativa.}{61}{section*.89}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.7.3}Evaluación por rango glucémico}{59}{subsection.4.7.3}\protected@file@percent }
+\newlabel{subsec:evaluacion_por_rango}{{4.7.3}{59}{Evaluación por rango glucémico}{subsection.4.7.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.6}{\ignorespaces Rangos glucémicos para la evaluación desagregada del rendimiento.}}{60}{table.caption.84}\protected@file@percent }
+\newlabel{tab:rangos_glucemicos}{{4.6}{60}{Rangos glucémicos para la evaluación desagregada del rendimiento}{table.caption.84}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.7.4}Agregación de resultados y protocolo estadístico}{60}{subsection.4.7.4}\protected@file@percent }
+\newlabel{subsec:agregacion_resultados}{{4.7.4}{60}{Agregación de resultados y protocolo estadístico}{subsection.4.7.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.7}{\ignorespaces Ejemplo de archivo plano MTA para un único \textit  {fold} (LSTM, horizonte H4, condición sin balanceo). Las columnas A--E corresponden a las zonas de la Clarke Error Grid (\%), A+B es su suma acumulada (\%), y RMSE, MSE, MAE y MAPE son métricas de regresión.}}{61}{table.caption.85}\protected@file@percent }
+\newlabel{tab:ejemplo_mta_fold}{{4.7}{61}{Ejemplo de archivo plano MTA para un único \textit {fold} (LSTM, horizonte H4, condición sin balanceo). Las columnas A--E corresponden a las zonas de la Clarke Error Grid (\%), A+B es su suma acumulada (\%), y RMSE, MSE, MAE y MAPE son métricas de regresión}{table.caption.85}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.8}{\ignorespaces Ejemplo de archivo de reporte agregado MTA (LSTM, horizonte H4, condición sin balanceo). Cada celda expresa el valor medio con su desviación estándar inter-\textit  {fold} en la línea inferior, calculados sobre los cinco \textit  {folds}.}}{61}{table.caption.86}\protected@file@percent }
+\newlabel{tab:ejemplo_mta_report}{{4.8}{61}{Ejemplo de archivo de reporte agregado MTA (LSTM, horizonte H4, condición sin balanceo). Cada celda expresa el valor medio con su desviación estándar inter-\textit {fold} en la línea inferior, calculados sobre los cinco \textit {folds}}{table.caption.86}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.7.5}Trazabilidad y reproducibilidad}{61}{subsection.4.7.5}\protected@file@percent }
+\newlabel{subsec:trazabilidad}{{4.7.5}{61}{Trazabilidad y reproducibilidad}{subsection.4.7.5}{}}
+\@writefile{toc}{\contentsline {paragraph}{Semillas fijas.}{61}{section*.87}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Versionado de experimentos.}{62}{section*.88}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Metadatos completos por \textit  {fold}.}{62}{section*.89}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Invarianza de validación y test.}{62}{section*.90}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Estructura de directorios autoexplicativa.}{62}{section*.91}\protected@file@percent }
 \@writefile{toc}{\contentsline {chapter}{\numberline {5}Resultados y discusión}{63}{chapter.5}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
@@ -421,138 +419,147 @@
 \newlabel{sec:efecto_balanceo_trainset}{{5.1}{63}{Efecto del balanceo sobre el conjunto de entrenamiento}{section.5.1}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.1.1}Impacto sobre el tamaño del conjunto de entrenamiento}{64}{subsection.5.1.1}\protected@file@percent }
 \newlabel{subsec:impacto_tamaño}{{5.1.1}{64}{Impacto sobre el tamaño del conjunto de entrenamiento}{subsection.5.1.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces Tamaño medio del conjunto de entrenamiento (número de ventanas, media $\pm $ SD sobre los 5 \textit  {folds}) por técnica de balanceo y \textit  {dataset}, para la dimensión demográfica \textbf  {edad}. La línea discontinua indica el tamaño medio del conjunto original sin balancear.}}{64}{figure.caption.90}\protected@file@percent }
-\newlabel{fig:trainsize_age}{{5.1}{64}{Tamaño medio del conjunto de entrenamiento (número de ventanas, media $\pm $ SD sobre los 5 \textit {folds}) por técnica de balanceo y \textit {dataset}, para la dimensión demográfica \textbf {edad}. La línea discontinua indica el tamaño medio del conjunto original sin balancear}{figure.caption.90}{}}
-\@writefile{toc}{\contentsline {paragraph}{Técnicas de reducción (RUS y PA-Undersampling).}{64}{section*.91}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Técnicas de aumento (ROS, SMOTE, Jittering).}{64}{section*.92}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Técnicas híbridas (RUS+ROS, RUS+SMOTE, SMOTE+Tomek, ROS+Tomek).}{65}{section*.93}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces Tamaño medio del conjunto de entrenamiento por técnica de balanceo y \textit  {dataset}, para la dimensión demográfica \textbf  {sexo}. Misma escala relativa y convenciones que la figura~\ref {fig:trainsize_age}.}}{65}{figure.caption.94}\protected@file@percent }
-\newlabel{fig:trainsize_sex}{{5.2}{65}{Tamaño medio del conjunto de entrenamiento por técnica de balanceo y \textit {dataset}, para la dimensión demográfica \textbf {sexo}. Misma escala relativa y convenciones que la figura~\ref {fig:trainsize_age}}{figure.caption.94}{}}
-\@writefile{toc}{\contentsline {paragraph}{Implicación metodológica.}{65}{section*.95}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces Tamaño medio del conjunto de entrenamiento (número de ventanas, media $\pm $ SD sobre los 5 \textit  {folds}) por técnica de balanceo y \textit  {dataset}, para la dimensión demográfica \textbf  {edad}. La línea discontinua indica el tamaño medio del conjunto original sin balancear.}}{64}{figure.caption.92}\protected@file@percent }
+\newlabel{fig:trainsize_age}{{5.1}{64}{Tamaño medio del conjunto de entrenamiento (número de ventanas, media $\pm $ SD sobre los 5 \textit {folds}) por técnica de balanceo y \textit {dataset}, para la dimensión demográfica \textbf {edad}. La línea discontinua indica el tamaño medio del conjunto original sin balancear}{figure.caption.92}{}}
+\@writefile{toc}{\contentsline {paragraph}{Técnicas de reducción (RUS y PA-Undersampling).}{64}{section*.93}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Técnicas de aumento (ROS, SMOTE, Jittering).}{64}{section*.94}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Técnicas híbridas (RUS+ROS, RUS+SMOTE, SMOTE+Tomek, ROS+Tomek).}{65}{section*.95}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces Tamaño medio del conjunto de entrenamiento por técnica de balanceo y \textit  {dataset}, para la dimensión demográfica \textbf  {sexo}. Misma escala relativa y convenciones que la figura~\ref {fig:trainsize_age}.}}{65}{figure.caption.96}\protected@file@percent }
+\newlabel{fig:trainsize_sex}{{5.2}{65}{Tamaño medio del conjunto de entrenamiento por técnica de balanceo y \textit {dataset}, para la dimensión demográfica \textbf {sexo}. Misma escala relativa y convenciones que la figura~\ref {fig:trainsize_age}}{figure.caption.96}{}}
+\@writefile{toc}{\contentsline {paragraph}{Implicación metodológica.}{65}{section*.97}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.1.2}Impacto sobre la distribución demográfica del entrenamiento}{65}{subsection.5.1.2}\protected@file@percent }
 \newlabel{subsec:impacto_demografico}{{5.1.2}{65}{Impacto sobre la distribución demográfica del entrenamiento}{subsection.5.1.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.3}{\ignorespaces Variación $\Delta n$ y $\Delta \%$ de ventanas por técnica de balanceo y grupo de edad en \textbf  {T1DiabetesGranada}. Escala de color unificada con las figuras~\ref {fig:heatmap_age_diatrend} y~\ref {fig:heatmap_age_replacbg}. Las filas corresponden a las diez técnicas evaluadas; las columnas, a los grupos de edad ($<$31, 31--45, 46--65, $\geq $66).}}{66}{figure.caption.96}\protected@file@percent }
-\newlabel{fig:heatmap_age_t1d}{{5.3}{66}{Variación $\Delta n$ y $\Delta \%$ de ventanas por técnica de balanceo y grupo de edad en \textbf {T1DiabetesGranada}. Escala de color unificada con las figuras~\ref {fig:heatmap_age_diatrend} y~\ref {fig:heatmap_age_replacbg}. Las filas corresponden a las diez técnicas evaluadas; las columnas, a los grupos de edad ($<$31, 31--45, 46--65, $\geq $66)}{figure.caption.96}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.4}{\ignorespaces Variación $\Delta n$ y $\Delta \%$ de ventanas por técnica de balanceo y grupo de edad en \textbf  {DiaTrend}. La escala de color es la misma que en la figura~\ref {fig:heatmap_age_t1d}; la saturación visiblemente superior en este \textit  {dataset} refleja el desequilibrio demográfico extremo documentado en la sección~\ref {subsec:eda_demografico}.}}{67}{figure.caption.97}\protected@file@percent }
-\newlabel{fig:heatmap_age_diatrend}{{5.4}{67}{Variación $\Delta n$ y $\Delta \%$ de ventanas por técnica de balanceo y grupo de edad en \textbf {DiaTrend}. La escala de color es la misma que en la figura~\ref {fig:heatmap_age_t1d}; la saturación visiblemente superior en este \textit {dataset} refleja el desequilibrio demográfico extremo documentado en la sección~\ref {subsec:eda_demografico}}{figure.caption.97}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.5}{\ignorespaces Variación $\Delta n$ y $\Delta \%$ de ventanas por técnica de balanceo y grupo de edad en \textbf  {REPLACE-BG}. La menor saturación respecto a DiaTrend (figura~\ref {fig:heatmap_age_diatrend}), con escala idéntica, confirma que el diseño controlado del estudio ---con seguimientos homogéneos de $\approx $182 días para todos los grupos--- limita la amplificación del desequilibrio demográfico al pasar de paciente a ventana.}}{68}{figure.caption.98}\protected@file@percent }
-\newlabel{fig:heatmap_age_replacbg}{{5.5}{68}{Variación $\Delta n$ y $\Delta \%$ de ventanas por técnica de balanceo y grupo de edad en \textbf {REPLACE-BG}. La menor saturación respecto a DiaTrend (figura~\ref {fig:heatmap_age_diatrend}), con escala idéntica, confirma que el diseño controlado del estudio ---con seguimientos homogéneos de $\approx $182 días para todos los grupos--- limita la amplificación del desequilibrio demográfico al pasar de paciente a ventana}{figure.caption.98}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.3}{\ignorespaces Variación $\Delta n$ y $\Delta \%$ de ventanas por técnica de balanceo y grupo de edad en \textbf  {T1DiabetesGranada}. Escala de color unificada con las figuras~\ref {fig:heatmap_age_diatrend} y~\ref {fig:heatmap_age_replacbg}. Las filas corresponden a las diez técnicas evaluadas; las columnas, a los grupos de edad ($<$31, 31--45, 46--65, $\geq $66).}}{66}{figure.caption.98}\protected@file@percent }
+\newlabel{fig:heatmap_age_t1d}{{5.3}{66}{Variación $\Delta n$ y $\Delta \%$ de ventanas por técnica de balanceo y grupo de edad en \textbf {T1DiabetesGranada}. Escala de color unificada con las figuras~\ref {fig:heatmap_age_diatrend} y~\ref {fig:heatmap_age_replacbg}. Las filas corresponden a las diez técnicas evaluadas; las columnas, a los grupos de edad ($<$31, 31--45, 46--65, $\geq $66)}{figure.caption.98}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.4}{\ignorespaces Variación $\Delta n$ y $\Delta \%$ de ventanas por técnica de balanceo y grupo de edad en \textbf  {DiaTrend}. La escala de color es la misma que en la figura~\ref {fig:heatmap_age_t1d}; la saturación visiblemente superior en este \textit  {dataset} refleja el desequilibrio demográfico extremo documentado en la sección~\ref {subsec:eda_demografico}.}}{67}{figure.caption.99}\protected@file@percent }
+\newlabel{fig:heatmap_age_diatrend}{{5.4}{67}{Variación $\Delta n$ y $\Delta \%$ de ventanas por técnica de balanceo y grupo de edad en \textbf {DiaTrend}. La escala de color es la misma que en la figura~\ref {fig:heatmap_age_t1d}; la saturación visiblemente superior en este \textit {dataset} refleja el desequilibrio demográfico extremo documentado en la sección~\ref {subsec:eda_demografico}}{figure.caption.99}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.5}{\ignorespaces Variación $\Delta n$ y $\Delta \%$ de ventanas por técnica de balanceo y grupo de edad en \textbf  {REPLACE-BG}. La menor saturación respecto a DiaTrend (figura~\ref {fig:heatmap_age_diatrend}), con escala idéntica, confirma que el diseño controlado del estudio ---con seguimientos homogéneos de $\approx $182 días para todos los grupos--- limita la amplificación del desequilibrio demográfico al pasar de paciente a ventana.}}{68}{figure.caption.100}\protected@file@percent }
+\newlabel{fig:heatmap_age_replacbg}{{5.5}{68}{Variación $\Delta n$ y $\Delta \%$ de ventanas por técnica de balanceo y grupo de edad en \textbf {REPLACE-BG}. La menor saturación respecto a DiaTrend (figura~\ref {fig:heatmap_age_diatrend}), con escala idéntica, confirma que el diseño controlado del estudio ---con seguimientos homogéneos de $\approx $182 días para todos los grupos--- limita la amplificación del desequilibrio demográfico al pasar de paciente a ventana}{figure.caption.100}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.1.3}Impacto sobre la distribución glucémica del entrenamiento}{69}{subsection.5.1.3}\protected@file@percent }
 \newlabel{subsec:impacto_glucemico}{{5.1.3}{69}{Impacto sobre la distribución glucémica del entrenamiento}{subsection.5.1.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.6}{\ignorespaces Distribución de ventanas por rango glucémico en el conjunto de entrenamiento de \textbf  {T1DiabetesGranada}, por técnica de balanceo y dimensión demográfica. Cada barra representa la media sobre los 5 \textit  {folds}. La barra con borde grueso es la condición original de referencia.}}{70}{figure.caption.100}\protected@file@percent }
-\newlabel{fig:stacked_t1d}{{5.6}{70}{Distribución de ventanas por rango glucémico en el conjunto de entrenamiento de \textbf {T1DiabetesGranada}, por técnica de balanceo y dimensión demográfica. Cada barra representa la media sobre los 5 \textit {folds}. La barra con borde grueso es la condición original de referencia}{figure.caption.100}{}}
-\@writefile{toc}{\contentsline {paragraph}{T1DiabetesGranada.}{70}{figure.caption.100}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.7}{\ignorespaces Variación $\Delta \%$ en la representación de cada rango glucémico para \textbf  {T1DiabetesGranada} tras aplicar cada técnica, respecto al conjunto original. Barras divergentes: positivo = mayor representación del rango; negativo = menor. Promediado sobre \textit  {folds} y clases demográficas.}}{71}{figure.caption.101}\protected@file@percent }
-\newlabel{fig:delta_glycemic_t1d}{{5.7}{71}{Variación $\Delta \%$ en la representación de cada rango glucémico para \textbf {T1DiabetesGranada} tras aplicar cada técnica, respecto al conjunto original. Barras divergentes: positivo = mayor representación del rango; negativo = menor. Promediado sobre \textit {folds} y clases demográficas}{figure.caption.101}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.8}{\ignorespaces Distribución glucémica del conjunto de entrenamiento de \textbf  {DiaTrend} por técnica y dimensión. Las barras de ROS, SMOTE y Jittering alcanzan valores absolutos muy superiores al resto como consecuencia del ratio de desequilibrio extremo de este \textit  {dataset}.}}{72}{figure.caption.103}\protected@file@percent }
-\newlabel{fig:stacked_diatrend}{{5.8}{72}{Distribución glucémica del conjunto de entrenamiento de \textbf {DiaTrend} por técnica y dimensión. Las barras de ROS, SMOTE y Jittering alcanzan valores absolutos muy superiores al resto como consecuencia del ratio de desequilibrio extremo de este \textit {dataset}}{figure.caption.103}{}}
-\@writefile{toc}{\contentsline {paragraph}{DiaTrend.}{72}{figure.caption.103}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.9}{\ignorespaces Variación $\Delta \%$ en la representación de rangos glucémicos para \textbf  {DiaTrend}. La escala del eje es comparable a la de T1DiabetesGranada y REPLACE-BG; la magnitud de los cambios es notablemente superior en este \textit  {dataset}.}}{73}{figure.caption.104}\protected@file@percent }
-\newlabel{fig:delta_glycemic_diatrend}{{5.9}{73}{Variación $\Delta \%$ en la representación de rangos glucémicos para \textbf {DiaTrend}. La escala del eje es comparable a la de T1DiabetesGranada y REPLACE-BG; la magnitud de los cambios es notablemente superior en este \textit {dataset}}{figure.caption.104}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.10}{\ignorespaces Distribución glucémica del conjunto de entrenamiento de \textbf  {REPLACE-BG} por técnica y dimensión. La homogeneidad de los seguimientos produce barras visualmente más uniformes entre técnicas que en los otros dos repositorios.}}{74}{figure.caption.106}\protected@file@percent }
-\newlabel{fig:stacked_replacbg}{{5.10}{74}{Distribución glucémica del conjunto de entrenamiento de \textbf {REPLACE-BG} por técnica y dimensión. La homogeneidad de los seguimientos produce barras visualmente más uniformes entre técnicas que en los otros dos repositorios}{figure.caption.106}{}}
-\@writefile{toc}{\contentsline {paragraph}{REPLACE-BG.}{74}{figure.caption.106}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.11}{\ignorespaces Variación $\Delta \%$ en la representación de rangos glucémicos para \textbf  {REPLACE-BG}. Los cambios son los más moderados de los tres \textit  {datasets}, confirmando que la homogeneidad de los seguimientos limita el impacto glucémico del balanceo demográfico.}}{75}{figure.caption.107}\protected@file@percent }
-\newlabel{fig:delta_glycemic_replacbg}{{5.11}{75}{Variación $\Delta \%$ en la representación de rangos glucémicos para \textbf {REPLACE-BG}. Los cambios son los más moderados de los tres \textit {datasets}, confirmando que la homogeneidad de los seguimientos limita el impacto glucémico del balanceo demográfico}{figure.caption.107}{}}
-\@writefile{toc}{\contentsline {paragraph}{Síntesis y conexión con los resultados de predicción.}{75}{section*.108}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.6}{\ignorespaces Distribución de ventanas por rango glucémico en el conjunto de entrenamiento de \textbf  {T1DiabetesGranada}, por técnica de balanceo y dimensión demográfica. Cada barra representa la media sobre los 5 \textit  {folds}. La barra con borde grueso es la condición original de referencia.}}{70}{figure.caption.102}\protected@file@percent }
+\newlabel{fig:stacked_t1d}{{5.6}{70}{Distribución de ventanas por rango glucémico en el conjunto de entrenamiento de \textbf {T1DiabetesGranada}, por técnica de balanceo y dimensión demográfica. Cada barra representa la media sobre los 5 \textit {folds}. La barra con borde grueso es la condición original de referencia}{figure.caption.102}{}}
+\@writefile{toc}{\contentsline {paragraph}{T1DiabetesGranada.}{70}{figure.caption.102}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.7}{\ignorespaces Variación $\Delta \%$ en la representación de cada rango glucémico para \textbf  {T1DiabetesGranada} tras aplicar cada técnica, respecto al conjunto original. Barras divergentes: positivo = mayor representación del rango; negativo = menor. Promediado sobre \textit  {folds} y clases demográficas.}}{71}{figure.caption.103}\protected@file@percent }
+\newlabel{fig:delta_glycemic_t1d}{{5.7}{71}{Variación $\Delta \%$ en la representación de cada rango glucémico para \textbf {T1DiabetesGranada} tras aplicar cada técnica, respecto al conjunto original. Barras divergentes: positivo = mayor representación del rango; negativo = menor. Promediado sobre \textit {folds} y clases demográficas}{figure.caption.103}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.8}{\ignorespaces Distribución glucémica del conjunto de entrenamiento de \textbf  {DiaTrend} por técnica y dimensión. Las barras de ROS, SMOTE y Jittering alcanzan valores absolutos muy superiores al resto como consecuencia del ratio de desequilibrio extremo de este \textit  {dataset}.}}{72}{figure.caption.105}\protected@file@percent }
+\newlabel{fig:stacked_diatrend}{{5.8}{72}{Distribución glucémica del conjunto de entrenamiento de \textbf {DiaTrend} por técnica y dimensión. Las barras de ROS, SMOTE y Jittering alcanzan valores absolutos muy superiores al resto como consecuencia del ratio de desequilibrio extremo de este \textit {dataset}}{figure.caption.105}{}}
+\@writefile{toc}{\contentsline {paragraph}{DiaTrend.}{72}{figure.caption.105}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.9}{\ignorespaces Variación $\Delta \%$ en la representación de rangos glucémicos para \textbf  {DiaTrend}. La escala del eje es comparable a la de T1DiabetesGranada y REPLACE-BG; la magnitud de los cambios es notablemente superior en este \textit  {dataset}.}}{73}{figure.caption.106}\protected@file@percent }
+\newlabel{fig:delta_glycemic_diatrend}{{5.9}{73}{Variación $\Delta \%$ en la representación de rangos glucémicos para \textbf {DiaTrend}. La escala del eje es comparable a la de T1DiabetesGranada y REPLACE-BG; la magnitud de los cambios es notablemente superior en este \textit {dataset}}{figure.caption.106}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.10}{\ignorespaces Distribución glucémica del conjunto de entrenamiento de \textbf  {REPLACE-BG} por técnica y dimensión. La homogeneidad de los seguimientos produce barras visualmente más uniformes entre técnicas que en los otros dos repositorios.}}{74}{figure.caption.108}\protected@file@percent }
+\newlabel{fig:stacked_replacbg}{{5.10}{74}{Distribución glucémica del conjunto de entrenamiento de \textbf {REPLACE-BG} por técnica y dimensión. La homogeneidad de los seguimientos produce barras visualmente más uniformes entre técnicas que en los otros dos repositorios}{figure.caption.108}{}}
+\@writefile{toc}{\contentsline {paragraph}{REPLACE-BG.}{74}{figure.caption.108}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.11}{\ignorespaces Variación $\Delta \%$ en la representación de rangos glucémicos para \textbf  {REPLACE-BG}. Los cambios son los más moderados de los tres \textit  {datasets}, confirmando que la homogeneidad de los seguimientos limita el impacto glucémico del balanceo demográfico.}}{75}{figure.caption.109}\protected@file@percent }
+\newlabel{fig:delta_glycemic_replacbg}{{5.11}{75}{Variación $\Delta \%$ en la representación de rangos glucémicos para \textbf {REPLACE-BG}. Los cambios son los más moderados de los tres \textit {datasets}, confirmando que la homogeneidad de los seguimientos limita el impacto glucémico del balanceo demográfico}{figure.caption.109}{}}
+\@writefile{toc}{\contentsline {paragraph}{Síntesis y conexión con los resultados de predicción.}{75}{section*.110}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.1.4}Trade-off clínico del balanceo: hipoglucemia, normoglucemia e hiperglucemia}{76}{subsection.5.1.4}\protected@file@percent }
 \newlabel{subsec:tradeoff_clinico}{{5.1.4}{76}{Trade-off clínico del balanceo: hipoglucemia, normoglucemia e hiperglucemia}{subsection.5.1.4}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.12}{\ignorespaces Trade-off clínico entre la variación de hipoglucemia severa ($\Delta \%$ TBR-2, eje $X$) y la variación de normoglucemia ($\Delta \%$ TIR, eje $Y$) tras aplicar cada técnica de balanceo, por \textit  {dataset}. Cada punto representa una técnica $\times $ dimensión demográfica ($\circ $\,=\,edad, $\square $\,=\,sexo). El cuadrante superior izquierdo (``ideal'') corresponde a técnicas que aumentan TIR sin incrementar la exposición a hipoglucemia severa.}}{76}{figure.caption.110}\protected@file@percent }
-\newlabel{fig:tradeoff_tbr2}{{5.12}{76}{Trade-off clínico entre la variación de hipoglucemia severa ($\Delta \%$ TBR-2, eje $X$) y la variación de normoglucemia ($\Delta \%$ TIR, eje $Y$) tras aplicar cada técnica de balanceo, por \textit {dataset}. Cada punto representa una técnica $\times $ dimensión demográfica ($\circ $\,=\,edad, $\square $\,=\,sexo). El cuadrante superior izquierdo (``ideal'') corresponde a técnicas que aumentan TIR sin incrementar la exposición a hipoglucemia severa}{figure.caption.110}{}}
-\@writefile{toc}{\contentsline {paragraph}{Trade-off TBR-2 (hipoglucemia severa, $<$54\,mg/dL) vs.\ TIR.}{76}{figure.caption.110}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.13}{\ignorespaces Trade-off clínico entre la variación de hipoglucemia leve ($\Delta \%$ TBR-1, eje $X$) y la variación de normoglucemia ($\Delta \%$ TIR, eje $Y$). Mismas convenciones que la figura~\ref {fig:tradeoff_tbr2}.}}{77}{figure.caption.112}\protected@file@percent }
-\newlabel{fig:tradeoff_tbr1}{{5.13}{77}{Trade-off clínico entre la variación de hipoglucemia leve ($\Delta \%$ TBR-1, eje $X$) y la variación de normoglucemia ($\Delta \%$ TIR, eje $Y$). Mismas convenciones que la figura~\ref {fig:tradeoff_tbr2}}{figure.caption.112}{}}
-\@writefile{toc}{\contentsline {paragraph}{Trade-off TBR-1 (hipoglucemia leve, 54--69\,mg/dL) vs.\ TIR.}{77}{figure.caption.112}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.14}{\ignorespaces Trade-off clínico entre la variación de hiperglucemia leve ($\Delta \%$ TAR-1, eje $X$) y la variación de normoglucemia ($\Delta \%$ TIR, eje $Y$). En este scatter el cuadrante ideal (superior izquierdo) corresponde a técnicas que aumentan TIR reduciendo simultáneamente la exposición a hiperglucemia leve.}}{78}{figure.caption.114}\protected@file@percent }
-\newlabel{fig:tradeoff_tar1}{{5.14}{78}{Trade-off clínico entre la variación de hiperglucemia leve ($\Delta \%$ TAR-1, eje $X$) y la variación de normoglucemia ($\Delta \%$ TIR, eje $Y$). En este scatter el cuadrante ideal (superior izquierdo) corresponde a técnicas que aumentan TIR reduciendo simultáneamente la exposición a hiperglucemia leve}{figure.caption.114}{}}
-\@writefile{toc}{\contentsline {paragraph}{Trade-off TAR-1 (hiperglucemia leve, 181--250\,mg/dL) vs.\ TIR.}{78}{figure.caption.114}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.15}{\ignorespaces Trade-off clínico entre la variación de hiperglucemia severa ($\Delta \%$ TAR-2, eje $X$) y la variación de normoglucemia ($\Delta \%$ TIR, eje $Y$). El cuadrante ideal (superior izquierdo) corresponde a técnicas que incrementan TIR reduciendo la exposición a hiperglucemia severa.}}{79}{figure.caption.116}\protected@file@percent }
-\newlabel{fig:tradeoff_tar2}{{5.15}{79}{Trade-off clínico entre la variación de hiperglucemia severa ($\Delta \%$ TAR-2, eje $X$) y la variación de normoglucemia ($\Delta \%$ TIR, eje $Y$). El cuadrante ideal (superior izquierdo) corresponde a técnicas que incrementan TIR reduciendo la exposición a hiperglucemia severa}{figure.caption.116}{}}
-\@writefile{toc}{\contentsline {paragraph}{Trade-off TAR-2 (hiperglucemia severa, $>$250\,mg/dL) vs.\ TIR.}{79}{figure.caption.116}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Síntesis del análisis de trade-off.}{79}{section*.117}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5.2}Impacto del balanceo sobre el rendimiento del modelo LSTM}{80}{section.5.2}\protected@file@percent }
-\newlabel{sec:analisis_mejora}{{5.2}{80}{Impacto del balanceo sobre el rendimiento del modelo LSTM}{section.5.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{Trade-off TBR-2 (hipoglucemia severa, $<$54\,mg/dL) vs.\ TIR.}{76}{section*.111}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.12}{\ignorespaces Trade-off clínico entre la variación de hipoglucemia severa ($\Delta \%$ TBR-2, eje $X$) y la variación de normoglucemia ($\Delta \%$ TIR, eje $Y$) tras aplicar cada técnica de balanceo, por \textit  {dataset}. Cada punto representa una técnica $\times $ dimensión demográfica ($\circ $\,=\,edad, $\square $\,=\,sexo). El cuadrante superior izquierdo (``ideal'') corresponde a técnicas que aumentan TIR sin incrementar la exposición a hipoglucemia severa.}}{76}{figure.caption.112}\protected@file@percent }
+\newlabel{fig:tradeoff_tbr2}{{5.12}{76}{Trade-off clínico entre la variación de hipoglucemia severa ($\Delta \%$ TBR-2, eje $X$) y la variación de normoglucemia ($\Delta \%$ TIR, eje $Y$) tras aplicar cada técnica de balanceo, por \textit {dataset}. Cada punto representa una técnica $\times $ dimensión demográfica ($\circ $\,=\,edad, $\square $\,=\,sexo). El cuadrante superior izquierdo (``ideal'') corresponde a técnicas que aumentan TIR sin incrementar la exposición a hipoglucemia severa}{figure.caption.112}{}}
+\@writefile{toc}{\contentsline {paragraph}{Trade-off TBR-1 (hipoglucemia leve, 54--69\,mg/dL) vs.\ TIR.}{77}{section*.113}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.13}{\ignorespaces Trade-off clínico entre la variación de hipoglucemia leve ($\Delta \%$ TBR-1, eje $X$) y la variación de normoglucemia ($\Delta \%$ TIR, eje $Y$). Mismas convenciones que la figura~\ref {fig:tradeoff_tbr2}.}}{77}{figure.caption.114}\protected@file@percent }
+\newlabel{fig:tradeoff_tbr1}{{5.13}{77}{Trade-off clínico entre la variación de hipoglucemia leve ($\Delta \%$ TBR-1, eje $X$) y la variación de normoglucemia ($\Delta \%$ TIR, eje $Y$). Mismas convenciones que la figura~\ref {fig:tradeoff_tbr2}}{figure.caption.114}{}}
+\@writefile{toc}{\contentsline {paragraph}{Trade-off TAR-1 (hiperglucemia leve, 181--250\,mg/dL) vs.\ TIR.}{78}{section*.115}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.14}{\ignorespaces Trade-off clínico entre la variación de hiperglucemia leve ($\Delta \%$ TAR-1, eje $X$) y la variación de normoglucemia ($\Delta \%$ TIR, eje $Y$). En este scatter el cuadrante ideal (superior izquierdo) corresponde a técnicas que aumentan TIR reduciendo simultáneamente la exposición a hiperglucemia leve.}}{78}{figure.caption.116}\protected@file@percent }
+\newlabel{fig:tradeoff_tar1}{{5.14}{78}{Trade-off clínico entre la variación de hiperglucemia leve ($\Delta \%$ TAR-1, eje $X$) y la variación de normoglucemia ($\Delta \%$ TIR, eje $Y$). En este scatter el cuadrante ideal (superior izquierdo) corresponde a técnicas que aumentan TIR reduciendo simultáneamente la exposición a hiperglucemia leve}{figure.caption.116}{}}
+\@writefile{toc}{\contentsline {paragraph}{Trade-off TAR-2 (hiperglucemia severa, $>$250\,mg/dL) vs.\ TIR.}{78}{section*.117}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.15}{\ignorespaces Trade-off clínico entre la variación de hiperglucemia severa ($\Delta \%$ TAR-2, eje $X$) y la variación de normoglucemia ($\Delta \%$ TIR, eje $Y$). El cuadrante ideal (superior izquierdo) corresponde a técnicas que incrementan TIR reduciendo la exposición a hiperglucemia severa.}}{79}{figure.caption.118}\protected@file@percent }
+\newlabel{fig:tradeoff_tar2}{{5.15}{79}{Trade-off clínico entre la variación de hiperglucemia severa ($\Delta \%$ TAR-2, eje $X$) y la variación de normoglucemia ($\Delta \%$ TIR, eje $Y$). El cuadrante ideal (superior izquierdo) corresponde a técnicas que incrementan TIR reduciendo la exposición a hiperglucemia severa}{figure.caption.118}{}}
+\@writefile{toc}{\contentsline {paragraph}{Síntesis del análisis de trade-off.}{79}{section*.119}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.2}Impacto del balanceo sobre el rendimiento del modelo LSTM}{79}{section.5.2}\protected@file@percent }
+\newlabel{sec:analisis_mejora}{{5.2}{79}{Impacto del balanceo sobre el rendimiento del modelo LSTM}{section.5.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.2.1}Distribución global de métricas por técnica}{80}{subsection.5.2.1}\protected@file@percent }
 \newlabel{subsec:distribucion_metricas}{{5.2.1}{80}{Distribución global de métricas por técnica}{subsection.5.2.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.16}{\ignorespaces Distribución del RMSE sobre el conjunto completo de ventanas (\textit  {ENTIRE}) por técnica de balanceo y \textit  {dataset}. Cada violín resume la distribución entre los 5 \textit  {folds}; la línea discontinua interior indica la mediana y las líneas externas el rango intercuartílico. La condición \textit  {original} (negro) aparece como referencia.}}{80}{figure.caption.118}\protected@file@percent }
-\newlabel{fig:dist_rmse_entire}{{5.16}{80}{Distribución del RMSE sobre el conjunto completo de ventanas (\textit {ENTIRE}) por técnica de balanceo y \textit {dataset}. Cada violín resume la distribución entre los 5 \textit {folds}; la línea discontinua interior indica la mediana y las líneas externas el rango intercuartílico. La condición \textit {original} (negro) aparece como referencia}{figure.caption.118}{}}
-\@writefile{toc}{\contentsline {paragraph}{RMSE global (ENTIRE).}{80}{section*.119}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.17}{\ignorespaces Distribución del RMSE evaluado exclusivamente sobre ventanas del rango TBR-2 (hipoglucemia severa, $<$54\,mg/dL) por técnica de balanceo y \textit  {dataset}. Este subconjunto es el más relevante clínicamente: un modelo con buen rendimiento global pero alto error en TBR-2 puede ser clínicamente inaceptable.}}{81}{figure.caption.120}\protected@file@percent }
-\newlabel{fig:dist_rmse_tbr2}{{5.17}{81}{Distribución del RMSE evaluado exclusivamente sobre ventanas del rango TBR-2 (hipoglucemia severa, $<$54\,mg/dL) por técnica de balanceo y \textit {dataset}. Este subconjunto es el más relevante clínicamente: un modelo con buen rendimiento global pero alto error en TBR-2 puede ser clínicamente inaceptable}{figure.caption.120}{}}
-\@writefile{toc}{\contentsline {paragraph}{RMSE en TBR-2 (hipoglucemia severa).}{81}{section*.121}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.18}{\ignorespaces Consistencia del ranking de técnicas entre \textit  {folds}, medida mediante la correlación de Spearman entre los rankings de RMSE (ENTIRE) de cada par de folds, por \textit  {dataset}. Valores próximos a 1 indican que el mismo ranking de técnicas se reproduce en todos los folds; valores próximos a 0 o negativos indican inestabilidad: la técnica que es mejor en un fold puede ser peor en otro.}}{82}{figure.caption.122}\protected@file@percent }
-\newlabel{fig:consistency_folds}{{5.18}{82}{Consistencia del ranking de técnicas entre \textit {folds}, medida mediante la correlación de Spearman entre los rankings de RMSE (ENTIRE) de cada par de folds, por \textit {dataset}. Valores próximos a 1 indican que el mismo ranking de técnicas se reproduce en todos los folds; valores próximos a 0 o negativos indican inestabilidad: la técnica que es mejor en un fold puede ser peor en otro}{figure.caption.122}{}}
-\@writefile{toc}{\contentsline {paragraph}{Consistencia inter-fold del ranking de técnicas.}{82}{section*.123}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.16}{\ignorespaces Distribución del RMSE sobre el conjunto completo de ventanas (\textit  {ENTIRE}) por técnica de balanceo y \textit  {dataset}. Cada violín resume la distribución entre los 5 \textit  {folds}; la línea discontinua interior indica la mediana y las líneas externas el rango intercuartílico. La condición \textit  {original} (negro) aparece como referencia.}}{80}{figure.caption.120}\protected@file@percent }
+\newlabel{fig:dist_rmse_entire}{{5.16}{80}{Distribución del RMSE sobre el conjunto completo de ventanas (\textit {ENTIRE}) por técnica de balanceo y \textit {dataset}. Cada violín resume la distribución entre los 5 \textit {folds}; la línea discontinua interior indica la mediana y las líneas externas el rango intercuartílico. La condición \textit {original} (negro) aparece como referencia}{figure.caption.120}{}}
+\@writefile{toc}{\contentsline {paragraph}{RMSE global (ENTIRE).}{80}{section*.121}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.17}{\ignorespaces Distribución del RMSE evaluado exclusivamente sobre ventanas del rango TBR-2 (hipoglucemia severa, $<$54\,mg/dL) por técnica de balanceo y \textit  {dataset}. Este subconjunto es el más relevante clínicamente: un modelo con buen rendimiento global pero alto error en TBR-2 puede ser clínicamente inaceptable.}}{81}{figure.caption.122}\protected@file@percent }
+\newlabel{fig:dist_rmse_tbr2}{{5.17}{81}{Distribución del RMSE evaluado exclusivamente sobre ventanas del rango TBR-2 (hipoglucemia severa, $<$54\,mg/dL) por técnica de balanceo y \textit {dataset}. Este subconjunto es el más relevante clínicamente: un modelo con buen rendimiento global pero alto error en TBR-2 puede ser clínicamente inaceptable}{figure.caption.122}{}}
+\@writefile{toc}{\contentsline {paragraph}{RMSE en TBR-2 (hipoglucemia severa).}{81}{section*.123}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.18}{\ignorespaces Consistencia del ranking de técnicas entre \textit  {folds}, medida mediante la correlación de Spearman entre los rankings de RMSE (ENTIRE) de cada par de folds, por \textit  {dataset}. Valores próximos a 1 indican que el mismo ranking de técnicas se reproduce en todos los folds; valores próximos a 0 o negativos indican inestabilidad: la técnica que es mejor en un fold puede ser peor en otro.}}{82}{figure.caption.124}\protected@file@percent }
+\newlabel{fig:consistency_folds}{{5.18}{82}{Consistencia del ranking de técnicas entre \textit {folds}, medida mediante la correlación de Spearman entre los rankings de RMSE (ENTIRE) de cada par de folds, por \textit {dataset}. Valores próximos a 1 indican que el mismo ranking de técnicas se reproduce en todos los folds; valores próximos a 0 o negativos indican inestabilidad: la técnica que es mejor en un fold puede ser peor en otro}{figure.caption.124}{}}
+\@writefile{toc}{\contentsline {paragraph}{Consistencia inter-fold del ranking de técnicas.}{82}{section*.125}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.2.2}Análisis de mejora y deterioro respecto al modelo original}{83}{subsection.5.2.2}\protected@file@percent }
 \newlabel{subsec:mejora_deterioro}{{5.2.2}{83}{Análisis de mejora y deterioro respecto al modelo original}{subsection.5.2.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.19}{\ignorespaces Variación relativa del RMSE (\textit  {ENTIRE}) respecto al modelo original para cada técnica y \textit  {dataset}. Valores positivos (azul) indican mejora; valores negativos (naranja) indican deterioro. Escala de color centrada en cero.}}{84}{figure.caption.124}\protected@file@percent }
-\newlabel{fig:heatmap_delta_rmse_entire}{{5.19}{84}{Variación relativa del RMSE (\textit {ENTIRE}) respecto al modelo original para cada técnica y \textit {dataset}. Valores positivos (azul) indican mejora; valores negativos (naranja) indican deterioro. Escala de color centrada en cero}{figure.caption.124}{}}
-\@writefile{toc}{\contentsline {paragraph}{Panorama global (ENTIRE).}{85}{section*.125}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.20}{\ignorespaces Variación relativa del RMSE evaluado sobre ventanas TBR-2 (hipoglucemia severa) respecto al modelo original. Compárese con la figura~\ref {fig:heatmap_delta_rmse_entire}: una técnica con celda azul en la figura anterior pero naranja en esta produce una mejora global a costa de mayor imprecisión en el rango más crítico clínicamente.}}{86}{figure.caption.126}\protected@file@percent }
-\newlabel{fig:heatmap_delta_rmse_tbr2}{{5.20}{86}{Variación relativa del RMSE evaluado sobre ventanas TBR-2 (hipoglucemia severa) respecto al modelo original. Compárese con la figura~\ref {fig:heatmap_delta_rmse_entire}: una técnica con celda azul en la figura anterior pero naranja en esta produce una mejora global a costa de mayor imprecisión en el rango más crítico clínicamente}{figure.caption.126}{}}
-\@writefile{toc}{\contentsline {paragraph}{Perspectiva clínica: disociación ENTIRE vs.\ TBR-2.}{87}{section*.127}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.21}{\ignorespaces Posición en el ranking de cada técnica por RMSE, para cada combinación \textit  {dataset} $\times $ rango glucémico (ranking 1 = menor RMSE = mejor). Las celdas verdes indican posiciones altas del ranking; las naranjas, posiciones bajas.}}{88}{figure.caption.128}\protected@file@percent }
-\newlabel{fig:heatmap_ranking_rmse}{{5.21}{88}{Posición en el ranking de cada técnica por RMSE, para cada combinación \textit {dataset} $\times $ rango glucémico (ranking 1 = menor RMSE = mejor). Las celdas verdes indican posiciones altas del ranking; las naranjas, posiciones bajas}{figure.caption.128}{}}
-\@writefile{toc}{\contentsline {paragraph}{Ranking por técnica y rango glucémico.}{88}{section*.129}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.22}{\ignorespaces \textit  {Dumbbell chart} comparando el RMSE (\textit  {ENTIRE}) del modelo original (rombo negro) frente a cada técnica balanceada (círculo de color), ordenadas de mejor a peor por \textit  {dataset}. Las barras de error indican la SD inter-fold.}}{89}{figure.caption.130}\protected@file@percent }
-\newlabel{fig:dumbbell_rmse}{{5.22}{89}{\textit {Dumbbell chart} comparando el RMSE (\textit {ENTIRE}) del modelo original (rombo negro) frente a cada técnica balanceada (círculo de color), ordenadas de mejor a peor por \textit {dataset}. Las barras de error indican la SD inter-fold}{figure.caption.130}{}}
-\@writefile{toc}{\contentsline {paragraph}{Magnitud máxima de mejora alcanzable.}{89}{section*.131}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.23}{\ignorespaces Gráfico de pendiente del RMSE (\textit  {ENTIRE}) comparando el modelo original con cada técnica, separado por dimensión demográfica (edad vs.\ sexo). Una pendiente negativa indica mejora. Los tres repositorios aparecen superpuestos en cada panel; los grupos de líneas bien separados por nivel corresponden a los tres \textit  {datasets}.}}{90}{figure.caption.132}\protected@file@percent }
-\newlabel{fig:slope_rmse_dim}{{5.23}{90}{Gráfico de pendiente del RMSE (\textit {ENTIRE}) comparando el modelo original con cada técnica, separado por dimensión demográfica (edad vs.\ sexo). Una pendiente negativa indica mejora. Los tres repositorios aparecen superpuestos en cada panel; los grupos de líneas bien separados por nivel corresponden a los tres \textit {datasets}}{figure.caption.132}{}}
-\@writefile{toc}{\contentsline {paragraph}{Efecto diferencial de la dimensión demográfica.}{90}{section*.133}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.3}Análisis por familia de tamaño: desacoplando balanceo y volumen}{91}{subsection.5.2.3}\protected@file@percent }
-\newlabel{subsec:analisis_family_size}{{5.2.3}{91}{Análisis por familia de tamaño: desacoplando balanceo y volumen}{subsection.5.2.3}{}}
-\newlabel{fig:dist_rmse_oversampling}{{5.24a}{91}{Oversampling}{figure.caption.134}{}}
-\newlabel{sub@fig:dist_rmse_oversampling}{{a}{91}{Oversampling}{figure.caption.134}{}}
-\newlabel{fig:dist_rmse_samesize}{{5.24b}{91}{Same size}{figure.caption.134}{}}
-\newlabel{sub@fig:dist_rmse_samesize}{{b}{91}{Same size}{figure.caption.134}{}}
-\newlabel{fig:dist_rmse_undersampling}{{5.24c}{91}{Undersampling}{figure.caption.134}{}}
-\newlabel{sub@fig:dist_rmse_undersampling}{{c}{91}{Undersampling}{figure.caption.134}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.24}{\ignorespaces Distribución del RMSE (\textit  {ENTIRE}) por familia de tamaño: técnicas que incrementan el conjunto de entrenamiento (\textit  {oversampling}), que lo mantienen constante (\textit  {same size}) y que lo reducen (\textit  {undersampling}). La comparación entre los tres paneles permite separar el efecto del volumen de datos del efecto del reequilibrio demográfico.}}{91}{figure.caption.134}\protected@file@percent }
-\newlabel{fig:dist_rmse_family_size}{{5.24}{91}{Distribución del RMSE (\textit {ENTIRE}) por familia de tamaño: técnicas que incrementan el conjunto de entrenamiento (\textit {oversampling}), que lo mantienen constante (\textit {same size}) y que lo reducen (\textit {undersampling}). La comparación entre los tres paneles permite separar el efecto del volumen de datos del efecto del reequilibrio demográfico}{figure.caption.134}{}}
-\@writefile{toc}{\contentsline {paragraph}{Comparación entre familias: el papel del volumen.}{91}{section*.135}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.25}{\ignorespaces Perfil de RMSE por rango glucémico y familia de tamaño. Cada panel muestra el RMSE medio sobre los \textit  {folds} para cada rango glucémico (TBR-2, TBR-1, TIR, TAR-1, TAR-2) y \textit  {dataset}. El perfil revela si el efecto del balanceo es uniforme entre rangos o si hay rangos que se benefician o perjudican selectivamente. }}{92}{figure.caption.136}\protected@file@percent }
-\newlabel{fig:profile_family_size}{{5.25}{92}{Perfil de RMSE por rango glucémico y familia de tamaño. Cada panel muestra el RMSE medio sobre los \textit {folds} para cada rango glucémico (TBR-2, TBR-1, TIR, TAR-1, TAR-2) y \textit {dataset}. El perfil revela si el efecto del balanceo es uniforme entre rangos o si hay rangos que se benefician o perjudican selectivamente}{figure.caption.136}{}}
-\@writefile{toc}{\contentsline {paragraph}{Perfil por rango glucémico entre familias.}{92}{section*.137}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Síntesis: ¿volumen o reequilibrio?}{93}{section*.138}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.4}Análisis estadístico: prueba de Friedman y corrección de Nemenyi}{93}{subsection.5.2.4}\protected@file@percent }
-\newlabel{subsec:analisis_estadistico}{{5.2.4}{93}{Análisis estadístico: prueba de Friedman y corrección de Nemenyi}{subsection.5.2.4}{}}
-\@writefile{toc}{\contentsline {paragraph}{Resultado global del test de Friedman.}{93}{section*.139}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {5.1}{\ignorespaces Resumen del test de Friedman por \textit  {dataset} y rango glucémico (métrica RMSE). Se indica el estadístico $\chi ^2_F$, el $p$-valor y si el test es significativo ($\alpha = 0{,}05$). Un asterisco (*) señala significación.}}{94}{table.caption.140}\protected@file@percent }
-\newlabel{tab:friedman_resumen}{{5.1}{94}{Resumen del test de Friedman por \textit {dataset} y rango glucémico (métrica RMSE). Se indica el estadístico $\chi ^2_F$, el $p$-valor y si el test es significativo ($\alpha = 0{,}05$). Un asterisco (*) señala significación}{table.caption.140}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.26}{\ignorespaces Diagramas de diferencia crítica (Nemenyi post-hoc) para el RMSE sobre el conjunto completo (\textit  {ENTIRE}). Las técnicas se ordenan por rango medio (menor a la izquierda = mejor). Técnicas conectadas por una barra horizontal no difieren significativamente ($\alpha = 0{,}05$, $\text  {CD} = 13{,}25$). El test de Friedman previo solo es significativo en DiaTrend ($p < 0{,}0001$).}}{94}{figure.caption.141}\protected@file@percent }
-\newlabel{fig:cd_rmse_entire}{{5.26}{94}{Diagramas de diferencia crítica (Nemenyi post-hoc) para el RMSE sobre el conjunto completo (\textit {ENTIRE}). Las técnicas se ordenan por rango medio (menor a la izquierda = mejor). Técnicas conectadas por una barra horizontal no difieren significativamente ($\alpha = 0{,}05$, $\text {CD} = 13{,}25$). El test de Friedman previo solo es significativo en DiaTrend ($p < 0{,}0001$)}{figure.caption.141}{}}
-\@writefile{toc}{\contentsline {paragraph}{CD diagrams ENTIRE: significación global.}{94}{section*.142}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.27}{\ignorespaces Diagramas de diferencia crítica (Nemenyi) para el RMSE evaluado exclusivamente en el rango TBR-2 (hipoglucemia severa, $<$54\,mg/dL). El test de Friedman es significativo únicamente en DiaTrend ($p = 0{,}00013$); en T1DiabetesGranada ($p = 0{,}437$) y REPLACE-BG ($p = 0{,}779$) no lo es.}}{95}{figure.caption.143}\protected@file@percent }
-\newlabel{fig:cd_rmse_tbr2}{{5.27}{95}{Diagramas de diferencia crítica (Nemenyi) para el RMSE evaluado exclusivamente en el rango TBR-2 (hipoglucemia severa, $<$54\,mg/dL). El test de Friedman es significativo únicamente en DiaTrend ($p = 0{,}00013$); en T1DiabetesGranada ($p = 0{,}437$) y REPLACE-BG ($p = 0{,}779$) no lo es}{figure.caption.143}{}}
-\@writefile{toc}{\contentsline {paragraph}{CD diagrams TBR-2: significación en hipoglucemia severa.}{95}{section*.144}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.28}{\ignorespaces Ranking global de técnicas mediante el método Borda (suma de posiciones de ranking a través de \textit  {datasets}, métricas y rangos glucémicos). Una puntuación Borda más baja indica mejor posicionamiento global. La línea discontinua vertical indica la puntuación del \textit  {baseline} original en cada \textit  {dataset}.}}{96}{figure.caption.145}\protected@file@percent }
-\newlabel{fig:borda_lollipop}{{5.28}{96}{Ranking global de técnicas mediante el método Borda (suma de posiciones de ranking a través de \textit {datasets}, métricas y rangos glucémicos). Una puntuación Borda más baja indica mejor posicionamiento global. La línea discontinua vertical indica la puntuación del \textit {baseline} original en cada \textit {dataset}}{figure.caption.145}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.29}{\ignorespaces \textit  {Bump chart} mostrando la estabilidad del ranking de cada técnica entre RMSE y MAE para el conjunto completo (\textit  {ENTIRE}), por \textit  {dataset}. Líneas horizontales indican estabilidad del ranking entre métricas; líneas muy inclinadas indican que la técnica se comporta de forma diferente según la métrica utilizada.}}{97}{figure.caption.146}\protected@file@percent }
-\newlabel{fig:bump_chart_entire}{{5.29}{97}{\textit {Bump chart} mostrando la estabilidad del ranking de cada técnica entre RMSE y MAE para el conjunto completo (\textit {ENTIRE}), por \textit {dataset}. Líneas horizontales indican estabilidad del ranking entre métricas; líneas muy inclinadas indican que la técnica se comporta de forma diferente según la métrica utilizada}{figure.caption.146}{}}
-\@writefile{toc}{\contentsline {paragraph}{Ranking Borda y estabilidad entre métricas.}{97}{section*.147}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Panorama global (ENTIRE).}{83}{section*.126}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.19}{\ignorespaces Variación relativa del RMSE (\textit  {ENTIRE}) respecto al modelo original para cada técnica y \textit  {dataset}. Valores positivos (azul) indican mejora; valores negativos (naranja) indican deterioro. Escala de color centrada en cero.}}{84}{figure.caption.127}\protected@file@percent }
+\newlabel{fig:heatmap_delta_rmse_entire}{{5.19}{84}{Variación relativa del RMSE (\textit {ENTIRE}) respecto al modelo original para cada técnica y \textit {dataset}. Valores positivos (azul) indican mejora; valores negativos (naranja) indican deterioro. Escala de color centrada en cero}{figure.caption.127}{}}
+\@writefile{toc}{\contentsline {paragraph}{Perspectiva clínica: disociación ENTIRE vs.\ TBR-2.}{85}{section*.128}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Ranking por rango glucémico.}{85}{section*.130}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Ranking por técnica y rango glucémico.}{85}{section*.132}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.20}{\ignorespaces Variación relativa del RMSE evaluado sobre ventanas TBR-2 (hipoglucemia severa) respecto al modelo original. Compárese con la figura~\ref {fig:heatmap_delta_rmse_entire}: una técnica con celda azul en la figura anterior pero naranja en esta produce una mejora global a costa de mayor imprecisión en el rango más crítico clínicamente.}}{86}{figure.caption.129}\protected@file@percent }
+\newlabel{fig:heatmap_delta_rmse_tbr2}{{5.20}{86}{Variación relativa del RMSE evaluado sobre ventanas TBR-2 (hipoglucemia severa) respecto al modelo original. Compárese con la figura~\ref {fig:heatmap_delta_rmse_entire}: una técnica con celda azul en la figura anterior pero naranja en esta produce una mejora global a costa de mayor imprecisión en el rango más crítico clínicamente}{figure.caption.129}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.21}{\ignorespaces Posición en el ranking de cada técnica por RMSE, para cada combinación \textit  {dataset} $\times $ rango glucémico (ranking 1 = menor RMSE = mejor). Las celdas verdes indican posiciones altas del ranking; las naranjas, posiciones bajas.}}{87}{figure.caption.131}\protected@file@percent }
+\newlabel{fig:heatmap_ranking_rmse}{{5.21}{87}{Posición en el ranking de cada técnica por RMSE, para cada combinación \textit {dataset} $\times $ rango glucémico (ranking 1 = menor RMSE = mejor). Las celdas verdes indican posiciones altas del ranking; las naranjas, posiciones bajas}{figure.caption.131}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.22}{\ignorespaces \textit  {Dumbbell chart} comparando el RMSE (\textit  {ENTIRE}) del modelo original (rombo negro) frente a cada técnica balanceada (círculo de color), ordenadas de mejor a peor por \textit  {dataset}. Las barras de error indican la SD inter-fold.}}{88}{figure.caption.133}\protected@file@percent }
+\newlabel{fig:dumbbell_rmse}{{5.22}{88}{\textit {Dumbbell chart} comparando el RMSE (\textit {ENTIRE}) del modelo original (rombo negro) frente a cada técnica balanceada (círculo de color), ordenadas de mejor a peor por \textit {dataset}. Las barras de error indican la SD inter-fold}{figure.caption.133}{}}
+\@writefile{toc}{\contentsline {paragraph}{Magnitud máxima de mejora alcanzable.}{88}{section*.134}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.23}{\ignorespaces Gráfico de pendiente del RMSE (\textit  {ENTIRE}) comparando el modelo original con cada técnica, separado por dimensión demográfica (edad vs.\ sexo). Una pendiente negativa indica mejora. Los tres repositorios aparecen superpuestos en cada panel; los grupos de líneas bien separados por nivel corresponden a los tres \textit  {datasets}.}}{89}{figure.caption.135}\protected@file@percent }
+\newlabel{fig:slope_rmse_dim}{{5.23}{89}{Gráfico de pendiente del RMSE (\textit {ENTIRE}) comparando el modelo original con cada técnica, separado por dimensión demográfica (edad vs.\ sexo). Una pendiente negativa indica mejora. Los tres repositorios aparecen superpuestos en cada panel; los grupos de líneas bien separados por nivel corresponden a los tres \textit {datasets}}{figure.caption.135}{}}
+\@writefile{toc}{\contentsline {paragraph}{Efecto diferencial de la dimensión demográfica.}{89}{section*.136}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.3}Análisis por familia de tamaño: desacoplando balanceo y volumen}{90}{subsection.5.2.3}\protected@file@percent }
+\newlabel{subsec:analisis_family_size}{{5.2.3}{90}{Análisis por familia de tamaño: desacoplando balanceo y volumen}{subsection.5.2.3}{}}
+\@writefile{toc}{\contentsline {paragraph}{Comparación entre familias: el papel del volumen.}{90}{section*.137}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.24}{\ignorespaces Distribución del RMSE (\textit  {ENTIRE}) para la familia \textit  {oversampling} (Jittering, ROS, SMOTE, ROS+Tomek). Las técnicas de esta familia incrementan el volumen del conjunto de entrenamiento respecto a la partición original.}}{90}{figure.caption.138}\protected@file@percent }
+\newlabel{fig:dist_rmse_oversampling}{{5.24}{90}{Distribución del RMSE (\textit {ENTIRE}) para la familia \textit {oversampling} (Jittering, ROS, SMOTE, ROS+Tomek). Las técnicas de esta familia incrementan el volumen del conjunto de entrenamiento respecto a la partición original}{figure.caption.138}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.25}{\ignorespaces Distribución del RMSE (\textit  {ENTIRE}) para la familia \textit  {same size} (RUS+ROS, RUS+SMOTE, SMOTE+Tomek). Estas técnicas híbridas mantienen el volumen de entrenamiento constante, actuando como grupo de control natural.}}{91}{figure.caption.139}\protected@file@percent }
+\newlabel{fig:dist_rmse_samesize}{{5.25}{91}{Distribución del RMSE (\textit {ENTIRE}) para la familia \textit {same size} (RUS+ROS, RUS+SMOTE, SMOTE+Tomek). Estas técnicas híbridas mantienen el volumen de entrenamiento constante, actuando como grupo de control natural}{figure.caption.139}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.26}{\ignorespaces Distribución del RMSE (\textit  {ENTIRE}) para la familia \textit  {undersampling} (RUS, PA-Undersampling, Tomek Links). Las técnicas de esta familia reducen el volumen del conjunto de entrenamiento eliminando ventanas del grupo mayoritario.}}{91}{figure.caption.140}\protected@file@percent }
+\newlabel{fig:dist_rmse_undersampling}{{5.26}{91}{Distribución del RMSE (\textit {ENTIRE}) para la familia \textit {undersampling} (RUS, PA-Undersampling, Tomek Links). Las técnicas de esta familia reducen el volumen del conjunto de entrenamiento eliminando ventanas del grupo mayoritario}{figure.caption.140}{}}
+\@writefile{toc}{\contentsline {paragraph}{Perfil por rango glucémico entre familias.}{92}{section*.141}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.27}{\ignorespaces Perfil de RMSE por rango glucémico para la familia \textit  {oversampling}. Cada celda muestra el RMSE medio sobre los \textit  {folds} para una combinación técnica $\times $ rango $\times $ \textit  {dataset}.}}{92}{figure.caption.142}\protected@file@percent }
+\newlabel{fig:profile_oversampling}{{5.27}{92}{Perfil de RMSE por rango glucémico para la familia \textit {oversampling}. Cada celda muestra el RMSE medio sobre los \textit {folds} para una combinación técnica $\times $ rango $\times $ \textit {dataset}}{figure.caption.142}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.28}{\ignorespaces Perfil de RMSE por rango glucémico para la familia \textit  {same size}. El perfil intermedio de estas técnicas híbridas permite cuantificar en qué medida la fase de submuestreo cancela los beneficios de la fase de sobremuestreo.}}{93}{figure.caption.143}\protected@file@percent }
+\newlabel{fig:profile_samesize}{{5.28}{93}{Perfil de RMSE por rango glucémico para la familia \textit {same size}. El perfil intermedio de estas técnicas híbridas permite cuantificar en qué medida la fase de submuestreo cancela los beneficios de la fase de sobremuestreo}{figure.caption.143}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.29}{\ignorespaces Perfil de RMSE por rango glucémico para la familia \textit  {undersampling}. Nótese la degradación en TIR y TAR frente a la mejora selectiva en TBR-2, especialmente marcada en DiaTrend.}}{93}{figure.caption.144}\protected@file@percent }
+\newlabel{fig:profile_undersampling}{{5.29}{93}{Perfil de RMSE por rango glucémico para la familia \textit {undersampling}. Nótese la degradación en TIR y TAR frente a la mejora selectiva en TBR-2, especialmente marcada en DiaTrend}{figure.caption.144}{}}
+\@writefile{toc}{\contentsline {paragraph}{Síntesis: ¿volumen o reequilibrio?}{94}{section*.145}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.4}Análisis estadístico: prueba de Friedman y corrección de Nemenyi}{94}{subsection.5.2.4}\protected@file@percent }
+\newlabel{subsec:analisis_estadistico}{{5.2.4}{94}{Análisis estadístico: prueba de Friedman y corrección de Nemenyi}{subsection.5.2.4}{}}
+\@writefile{toc}{\contentsline {paragraph}{Resultado global del test de Friedman.}{94}{section*.146}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5.1}{\ignorespaces Resumen del test de Friedman por \textit  {dataset} y rango glucémico (métrica RMSE). Se indica el estadístico $\chi ^2_F$, el $p$-valor y si el test es significativo ($\alpha = 0{,}05$). Un asterisco (*) señala significación.}}{95}{table.caption.147}\protected@file@percent }
+\newlabel{tab:friedman_resumen}{{5.1}{95}{Resumen del test de Friedman por \textit {dataset} y rango glucémico (métrica RMSE). Se indica el estadístico $\chi ^2_F$, el $p$-valor y si el test es significativo ($\alpha = 0{,}05$). Un asterisco (*) señala significación}{table.caption.147}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.30}{\ignorespaces Diagramas de diferencia crítica (Nemenyi post-hoc) para el RMSE sobre el conjunto completo (\textit  {ENTIRE}). Las técnicas se ordenan por rango medio (menor a la izquierda = mejor). Técnicas conectadas por una barra horizontal no difieren significativamente ($\alpha = 0{,}05$, $\text  {CD} = 13{,}25$). El test de Friedman previo solo es significativo en DiaTrend ($p < 0{,}0001$).}}{95}{figure.caption.148}\protected@file@percent }
+\newlabel{fig:cd_rmse_entire}{{5.30}{95}{Diagramas de diferencia crítica (Nemenyi post-hoc) para el RMSE sobre el conjunto completo (\textit {ENTIRE}). Las técnicas se ordenan por rango medio (menor a la izquierda = mejor). Técnicas conectadas por una barra horizontal no difieren significativamente ($\alpha = 0{,}05$, $\text {CD} = 13{,}25$). El test de Friedman previo solo es significativo en DiaTrend ($p < 0{,}0001$)}{figure.caption.148}{}}
+\@writefile{toc}{\contentsline {paragraph}{CD diagrams ENTIRE: significación global.}{95}{section*.149}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.31}{\ignorespaces Diagramas de diferencia crítica (Nemenyi) para el RMSE evaluado exclusivamente en el rango TBR-2 (hipoglucemia severa, $<$54\,mg/dL). El test de Friedman es significativo únicamente en DiaTrend ($p = 0{,}00013$); en T1DiabetesGranada ($p = 0{,}437$) y REPLACE-BG ($p = 0{,}779$) no lo es.}}{96}{figure.caption.150}\protected@file@percent }
+\newlabel{fig:cd_rmse_tbr2}{{5.31}{96}{Diagramas de diferencia crítica (Nemenyi) para el RMSE evaluado exclusivamente en el rango TBR-2 (hipoglucemia severa, $<$54\,mg/dL). El test de Friedman es significativo únicamente en DiaTrend ($p = 0{,}00013$); en T1DiabetesGranada ($p = 0{,}437$) y REPLACE-BG ($p = 0{,}779$) no lo es}{figure.caption.150}{}}
+\@writefile{toc}{\contentsline {paragraph}{CD diagrams TBR-2: significación en hipoglucemia severa.}{96}{section*.151}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Ranking global mediante el método Borda.}{97}{section*.152}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.32}{\ignorespaces Ranking global de técnicas mediante el método Borda (suma de posiciones de ranking a través de \textit  {datasets}, métricas y rangos glucémicos). Una puntuación Borda más baja indica mejor posicionamiento global. La línea discontinua vertical indica la puntuación del \textit  {baseline} original en cada \textit  {dataset}.}}{97}{figure.caption.153}\protected@file@percent }
+\newlabel{fig:borda_lollipop}{{5.32}{97}{Ranking global de técnicas mediante el método Borda (suma de posiciones de ranking a través de \textit {datasets}, métricas y rangos glucémicos). Una puntuación Borda más baja indica mejor posicionamiento global. La línea discontinua vertical indica la puntuación del \textit {baseline} original en cada \textit {dataset}}{figure.caption.153}{}}
+\@writefile{toc}{\contentsline {paragraph}{Estabilidad del ranking entre métricas.}{97}{section*.154}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Ranking Borda y estabilidad entre métricas.}{97}{section*.156}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.33}{\ignorespaces \textit  {Bump chart} mostrando la estabilidad del ranking de cada técnica entre RMSE y MAE para el conjunto completo (\textit  {ENTIRE}), por \textit  {dataset}. Líneas horizontales indican estabilidad del ranking entre métricas; líneas muy inclinadas indican que la técnica se comporta de forma diferente según la métrica utilizada.}}{98}{figure.caption.155}\protected@file@percent }
+\newlabel{fig:bump_chart_entire}{{5.33}{98}{\textit {Bump chart} mostrando la estabilidad del ranking de cada técnica entre RMSE y MAE para el conjunto completo (\textit {ENTIRE}), por \textit {dataset}. Líneas horizontales indican estabilidad del ranking entre métricas; líneas muy inclinadas indican que la técnica se comporta de forma diferente según la métrica utilizada}{figure.caption.155}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {5.3}Discusión integradora}{98}{section.5.3}\protected@file@percent }
 \newlabel{sec:discusion}{{5.3}{98}{Discusión integradora}{section.5.3}{}}
-\@writefile{toc}{\contentsline {paragraph}{¿Mejora el balanceo demográfico el rendimiento del modelo LSTM?}{98}{section*.148}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{¿Qué familia de técnicas ofrece mejor relación beneficio/coste?}{98}{section*.149}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{¿Es el efecto del balanceo \textit  {dataset}-dependiente?}{99}{section*.150}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{¿Qué dimensión demográfica ---edad o sexo--- es más relevante?}{99}{section*.151}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Limitaciones del análisis.}{100}{section*.152}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {6}Conclusiones}{101}{chapter.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{¿Mejora el balanceo demográfico el rendimiento del modelo LSTM?}{99}{section*.157}\protected@file@percent }
+\newlabel{subsec:discusion_granada}{{5.3}{99}{¿Por qué T1DiabetesGranada es insensible al balanceo?}{section*.158}{}}
+\@writefile{toc}{\contentsline {paragraph}{¿Por qué T1DiabetesGranada es insensible al balanceo?}{99}{section*.158}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{¿Por qué REPLACE-BG es insensible al balanceo?}{99}{section*.159}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Tres regímenes de eficacia del balanceo}{100}{section*.160}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{¿Qué familia de técnicas ofrece mejor relación beneficio/coste?}{100}{section*.161}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{¿Es el efecto del balanceo \textit  {dataset}-dependiente?}{100}{section*.162}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{¿Qué dimensión demográfica ---edad o sexo--- es más relevante?}{101}{section*.163}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Limitaciones del análisis.}{101}{section*.164}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {6}Conclusiones}{103}{chapter.6}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{chapter:conclusiones}{{6}{101}{Conclusiones}{chapter.6}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {6.1}Conclusiones principales}{101}{section.6.1}\protected@file@percent }
-\newlabel{sec:conclusiones_principales}{{6.1}{101}{Conclusiones principales}{section.6.1}{}}
-\@writefile{toc}{\contentsline {paragraph}{El balanceo demográfico no mejora el rendimiento global de forma generalizable.}{101}{section*.153}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Existe un trade-off estructural entre rendimiento global y sensibilidad a hipoglucemia severa.}{101}{section*.154}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{El efecto del balanceo es dataset-dependiente y explicable por propiedades estructurales.}{101}{section*.155}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{El balanceo por edad supera al balanceo por sexo en magnitud de efecto.}{102}{section*.156}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Tomek Links es la técnica con mejor relación beneficio/coste en el repositorio más complejo.}{102}{section*.157}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6.2}Grado de cumplimiento de los objetivos}{102}{section.6.2}\protected@file@percent }
-\newlabel{sec:cumplimiento_objetivos}{{6.2}{102}{Grado de cumplimiento de los objetivos}{section.6.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {6.3}Trabajos futuros}{103}{section.6.3}\protected@file@percent }
-\newlabel{sec:trabajos_futuros}{{6.3}{103}{Trabajos futuros}{section.6.3}{}}
+\newlabel{chapter:conclusiones}{{6}{103}{Conclusiones}{chapter.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.1}Conclusiones principales}{103}{section.6.1}\protected@file@percent }
+\newlabel{sec:conclusiones_principales}{{6.1}{103}{Conclusiones principales}{section.6.1}{}}
+\@writefile{toc}{\contentsline {paragraph}{El balanceo demográfico no mejora el rendimiento global de forma generalizable.}{103}{section*.165}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Existe un trade-off estructural entre rendimiento global y sensibilidad a hipoglucemia severa.}{103}{section*.166}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{El efecto del balanceo es dataset-dependiente y explicable por propiedades estructurales.}{103}{section*.167}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{El balanceo por edad supera al balanceo por sexo en magnitud de efecto.}{104}{section*.168}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Tomek Links es la técnica con mejor relación beneficio/coste en el repositorio más complejo.}{104}{section*.169}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6.2}Grado de cumplimiento de los objetivos}{104}{section.6.2}\protected@file@percent }
+\newlabel{sec:cumplimiento_objetivos}{{6.2}{104}{Grado de cumplimiento de los objetivos}{section.6.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.3}Trabajos futuros}{105}{section.6.3}\protected@file@percent }
+\newlabel{sec:trabajos_futuros}{{6.3}{105}{Trabajos futuros}{section.6.3}{}}
 \bibstyle{ieeetr}
 \bibdata{bibliografia}
 \bibcite{antoniotfg}{1}
@@ -620,44 +627,16 @@
 \bibcite{thomsen2025racial}{63}
 \bibcite{tashiro2021csdi}{64}
 \bibcite{bing2022healthgen}{65}
-\bibcite{aleppo2017}{66}
-\bibcite{sun2023}{67}
-\bibcite{fawaz2018data}{68}
-\bibcite{he2008adasyn}{69}
-\bibcite{dubosson2018diatrend}{70}
-\bibcite{lin2017focal}{71}
-\bibcite{um2017data}{72}
-\bibcite{delfavero2012}{73}
-\bibcite{clarke1987}{74}
-\@writefile{toc}{\contentsline {chapter}{Bibliografía}{110}{chapter*.158}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {A}Ejemplo de anexo: Planificación y gestión del proyecto (opcional)}{111}{appendix.Alph1}\protected@file@percent }
-\@writefile{lof}{\addvspace {10\p@ }}
-\@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {A.1}Metodología/Ciclo de vida}{112}{section.Alph1.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {A.2}Herramientas y plataformas utilizadas para el desarrollo del proyecto}{112}{section.Alph1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {A.3}Costes del proyecto}{112}{section.Alph1.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {A.4}Gestión del proyecto. Planificación temporal. Diagrama de Gantt}{112}{section.Alph1.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {A.5}Texto añadido}{112}{section.Alph1.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {B}Ejemplo de anexo: Innovación (opcional)}{115}{appendix.Alph2}\protected@file@percent }
-\@writefile{lof}{\addvspace {10\p@ }}
-\@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {B.1}Estudio del Mercado}{115}{section.Alph2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {B.1.1}Segmentos de Clientes}{115}{subsection.Alph2.1.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {B.1.2}Competidores}{115}{subsection.Alph2.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.2}Propuesta de Valor}{115}{section.Alph2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.3}Recursos Clave}{115}{section.Alph2.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.4}Actividades Clave}{115}{section.Alph2.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.5}Socios y Alianzas Clave}{115}{section.Alph2.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.6}Estructura de Costes Prevista}{116}{section.Alph2.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.7}Vías de Ingresos}{116}{section.Alph2.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.8}Canales de Distribución}{116}{section.Alph2.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.9}Relación con los Clientes}{116}{section.Alph2.9}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.10}Descripción del Producto Mínimo Viable}{116}{section.Alph2.10}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.11}Roadmap de Desarrollo}{116}{section.Alph2.11}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.12}Aspectos Legales}{116}{section.Alph2.12}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B.13}Texto añadido}{116}{section.Alph2.13}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {C}Ejemplo de anexo: Manual de usuario (opcional)}{119}{appendix.Alph3}\protected@file@percent }
-\@writefile{lof}{\addvspace {10\p@ }}
-\@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {C.1}Texto añadido}{119}{section.Alph3.1}\protected@file@percent }
-\gdef \@abspage@last{148}
+\bibcite{mayo2019glycemic}{66}
+\bibcite{sandig2020cgm}{67}
+\bibcite{aleppo2017}{68}
+\bibcite{sun2023}{69}
+\bibcite{fawaz2018data}{70}
+\bibcite{he2008adasyn}{71}
+\bibcite{dubosson2018diatrend}{72}
+\bibcite{lin2017focal}{73}
+\bibcite{um2017data}{74}
+\bibcite{delfavero2012}{75}
+\bibcite{clarke1987}{76}
+\@writefile{toc}{\contentsline {chapter}{Bibliografía}{112}{chapter*.170}\protected@file@percent }
+\gdef \@abspage@last{138}

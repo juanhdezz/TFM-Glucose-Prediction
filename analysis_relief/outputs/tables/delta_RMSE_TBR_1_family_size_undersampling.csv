@@ -1,4 +1,4 @@
-Condition,T1DGranada,DiaTrend,ReplaceBG
+Condition,T1DiabetesGranada,DiaTrend,ReplaceBG
 Age · PAUndersampling,-1.4%,-4.4%,-0.8%
 Age · Undersampling,-0.2%,-3.7%,-0.3%
 Age · Tomek Links,+0.5%,+1.2%,+0.8%

@@ -3,8 +3,9 @@
 %  RELIEF-T1D: Impacto del balanceo demográfico (sexo, edad)
 %  en la predicción de glucosa mediante LSTM sobre datos CGM
 % =========================================================
-\label{chapter:introduccion}
 \chapter{Introducción}
+\label{chapter:introduccion}
+
 
 La diabetes mellitus tipo 1 (DM1) es una enfermedad crónica de carácter autoinmune que afecta a millones de personas en todo el mundo y que se caracteriza por la destrucción de las células beta del páncreas, impidiendo la producción endógena de insulina. A diferencia de otras enfermedades crónicas con una dinámica relativamente estable, la DM1 somete al paciente a una gestión terapéutica diaria de alta complejidad: la concentración de glucosa en sangre fluctúa de forma continua en respuesta a la insulina exógena, la ingesta, el ejercicio físico, el estrés y otros factores fisiológicos. El desafío clínico central es anticipar estas fluctuaciones con suficiente antelación para que el paciente pueda actuar antes de que se produzcan episodios de hipoglucemia o hiperglucemia, que pueden tener consecuencias agudas graves a corto plazo y complicaciones crónicas severas a largo plazo.
 
@@ -19,16 +20,69 @@ La cuestión de si esta composición demográfica del conjunto de entrenamiento 
 \label{section:motivacion}
 % =========================================================
 
-La motivación de este trabajo surge de la intersección de dos líneas de inquietud: una de carácter personal, derivada del interés por aplicar técnicas de ciencia de datos a problemas con impacto clínico real; y otra de carácter técnico, derivada de una limitación metodológica concreta identificada en la literatura existente.
+La motivación de este trabajo surge de la intersección de dos líneas de inquietud:
+una de carácter personal, derivada del interés por aplicar técnicas de ciencia de
+datos a problemas con impacto clínico real; y otra de carácter técnico, derivada de
+una limitación metodológica concreta identificada en la literatura existente.
 
-Desde el punto de vista personal, la predicción de glucosa en DM1 representa un problema de modelado especialmente rico: combina series temporales de alta frecuencia con contexto clínico complejo, heterogeneidad interindividual pronunciada y consecuencias potencialmente graves de los errores de predicción. Es, además, un dominio en el que la brecha entre el rendimiento agregado de un modelo y su rendimiento en subgrupos específicos puede traducirse en diferencias reales en la calidad del cuidado que reciben los pacientes. Trabajar en este dominio con las herramientas propias de la ingeniería de datos y el aprendizaje automático, y hacerlo con rigor estadístico, constituye una motivación genuina que subyace a todas las decisiones de diseño de este trabajo.
+Desde el punto de vista personal, la predicción de glucosa en DM1 representa un
+problema de modelado especialmente rico: combina series temporales de alta frecuencia
+con contexto clínico complejo, heterogeneidad interindividual pronunciada y
+consecuencias potencialmente graves de los errores de predicción. Es, además, un
+dominio en el que la brecha entre el rendimiento agregado de un modelo y su
+rendimiento en subgrupos específicos puede traducirse en diferencias reales en la
+calidad del cuidado que reciben los pacientes. Trabajar en este dominio con las
+herramientas propias de la ingeniería de datos y el aprendizaje automático, y
+hacerlo con rigor estadístico, constituye una motivación genuina que subyace a
+todas las decisiones de diseño de este trabajo.
 
-Desde el punto de vista técnico, la motivación surge de una observación concreta: la equidad algorítmica en salud —el estudio sistemático de si los modelos de aprendizaje automático producen rendimientos dispares en función de características demográficas de los pacientes— ha recibido creciente atención en la literatura, pero ha operado mayoritariamente sobre datos tabulares en los que cada observación corresponde a un paciente o a un episodio clínico discreto. El problema de la predicción de series temporales mediante ventana deslizante introduce una complicación estructural que no ha sido tratada explícitamente en la literatura revisada: la unidad de balanceo no es el paciente sino la ventana. Un mismo paciente con una serie temporal larga puede generar órdenes de magnitud más ventanas de entrenamiento que otro paciente con una serie corta, incluso cuando ambos pertenecen nominalmente al mismo grupo demográfico. Esta distinción entre balanceo a nivel de paciente y balanceo a nivel de ventana es metodológicamente relevante y constituye una de las contribuciones de diseño de este trabajo.
+Desde el punto de vista técnico, la motivación surge de una observación concreta:
+la equidad algorítmica en salud ---el estudio sistemático de si los modelos de
+aprendizaje automático producen rendimientos dispares en función de características
+demográficas de los pacientes--- ha recibido creciente atención en la literatura,
+pero ha operado mayoritariamente sobre datos tabulares en los que cada observación
+corresponde a un paciente o a un episodio clínico discreto. El problema de la
+predicción de series temporales mediante ventana deslizante introduce una complicación
+estructural que no ha sido tratada explícitamente en la literatura revisada: la unidad
+de balanceo no es el paciente sino la ventana. Un mismo paciente con una serie temporal
+larga puede generar órdenes de magnitud más ventanas de entrenamiento que otro paciente
+con una serie corta, incluso cuando ambos pertenecen nominalmente al mismo grupo
+demográfico. Esta distinción entre balanceo a nivel de paciente y balanceo a nivel de
+ventana es metodológicamente relevante y constituye una de las contribuciones de diseño
+de este trabajo.
 
-Adicionalmente, la elección de las dimensiones demográficas de estudio —sexo y edad— está motivada por evidencia fisiológica consolidada: tanto el sexo como la edad están asociados a patrones de dinámica glucémica distinguibles. Las diferencias hormonales entre hombres y mujeres, así como la evolución de la respuesta insulínica a lo largo de la vida, producen perfiles CGM sistémicamente distintos entre subgrupos, lo que hace esperable —y justifica estudiar empíricamente— que un modelo LSTM entrenado sobre una composición demográficamente sesgada aprenda de forma subóptima para los subgrupos infrarrepresentados.
+La elección de las dimensiones demográficas de estudio ---sexo y edad--- está motivada
+por evidencia fisiológica consolidada: tanto el sexo como la edad están asociados a
+patrones de dinámica glucémica distinguibles. Las diferencias hormonales entre hombres
+y mujeres, así como la evolución de la respuesta insulínica a lo largo de la vida,
+producen perfiles CGM sistémicamente distintos entre subgrupos, lo que hace
+esperable ---y justifica estudiar empíricamente--- que un modelo LSTM entrenado sobre
+una composición demográficamente sesgada aprenda de forma subóptima para los subgrupos
+infrarrepresentados.
 
-Por último, existe una motivación de relevancia práctica e inmediata: el \emph{dataset} T1DiabetesGranada, generado en el Hospital Universitario Virgen de las Nieves de Granada con más de 643 pacientes y más de 30 millones de mediciones registradas entre 2018 y 2022, es uno de los tres conjuntos de datos sobre los que se trabaja en este TFM. Incorporar un recurso de investigación local de esta envergadura, y contribuir a entender sus propiedades estadísticas y sus implicaciones para el entrenamiento de modelos predictivos, añade una dimensión de relevancia territorial y clínica directa a la investigación.
+Existe, adicionalmente, una motivación de relevancia práctica e inmediata: el
+\emph{dataset} T1DiabetesGranada, generado en el Hospital Universitario Virgen de las
+Nieves de Granada con más de 643 pacientes y más de 30 millones de mediciones
+registradas entre 2018 y 2022, es uno de los tres conjuntos de datos sobre los que se
+trabaja en este TFM. Incorporar un recurso de investigación local de esta envergadura,
+y contribuir a entender sus propiedades estadísticas y sus implicaciones para el
+entrenamiento de modelos predictivos, añade una dimensión de relevancia territorial y
+clínica directa a la investigación.
 
+En este sentido, uno de los hallazgos más relevantes de este trabajo tiene un carácter
+en principio contraintuitivo: las técnicas de balanceo demográfico no producen mejoras
+significativas en el rendimiento del modelo cuando se entrena sobre T1DiabetesGranada.
+Lejos de constituir un resultado negativo, esta insensibilidad es en sí misma un
+descubrimiento de interés metodológico. Cuando una red LSTM se entrena sobre una
+cohorte de la envergadura de T1DiabetesGranada, la densidad y diversidad de las
+trayectorias temporales de glucosa es suficiente para mitigar de forma natural
+asimetrías demográficas moderadas ---como el ratio de 3{,}4:1 entre sexos observado en
+dicha cohorte--- sin necesidad de intervención explícita en el preprocesamiento. Este
+resultado apunta a la existencia de un umbral de volumen de datos a partir del cual
+el balanceo demográfico explícito deviene superfluo, con implicaciones directas para
+el diseño de sistemas de páncreas artificial o lazo cerrado que operen en tiempo real,
+donde la carga computacional del preprocesamiento es un factor crítico. El análisis
+detallado de este fenómeno se aborda en la Sección~\ref{subsec:discusion_granada}.
 % =========================================================
 \section{Objetivos}
 \label{section:objetivos}
@@ -61,12 +115,4 @@ De este objetivo general se derivan los siguientes objetivos específicos:
 \label{section:estructura}
 % =========================================================
 
-El presente trabajo se organiza en seis capítulos, cuya estructura refleja la progresión lógica desde la fundamentación teórica hasta las conclusiones empíricas.
-
-El capítulo~\ref{chapter:estado-arte} (\nameref{chapter:estado-arte}) establece el marco teórico y bibliográfico del trabajo. Se introduce el contexto clínico de la DM1 y de los sistemas CGM, se revisa la evidencia fisiológica de que el sexo y la edad modulan la dinámica glucémica, se examina la literatura sobre desequilibrio demográfico en \emph{datasets} clínicos y su impacto documentado en el rendimiento de modelos de aprendizaje automático, y se revisan las técnicas del estado del arte para la mitigación de este desequilibrio. El capítulo concluye identificando las tres brechas concretas que este trabajo aborda.
-
-El capítulo de metodología describe el diseño experimental completo: la arquitectura del modelo LSTM utilizado, el esquema de validación cruzada por grupos, el proceso de generación de ventanas deslizantes a partir de las señales CGM, la implementación de las diez técnicas de balanceo demográfico y el proceso de validación formal del \emph{pipeline} mediante un \emph{notebook} de verificación de restricciones. Se describen igualmente las métricas de evaluación empleadas y el protocolo estadístico utilizado para el análisis comparativo.
-
-El capítulo de resultados y discusión presenta los resultados experimentales siguiendo una estructura analítica en embudo: se parte de una visión global del efecto del balanceo agregado sobre todos los \emph{datasets} y rangos glucémicos, y se desciende progresivamente hacia el análisis por \emph{dataset}, por dimensión demográfica, por rango glucémico y por técnica individual. Los resultados de los tests de Friedman, los \emph{rankings} de Nemenyi y la agregación de Borda se presentan en este capítulo, junto con la discusión de los compromisos clínicos identificados y la caracterización de la robustez entre \emph{datasets}.
-
-Finalmente, el capítulo~\ref{chapter:conclusiones} (\nameref{chapter:conclusiones}) recoge las conclusiones del trabajo, contrastando los resultados obtenidos con los objetivos específicos enumerados en la sección~\ref{section:objetivos}, e identifica las líneas de trabajo futuro más directamente motivadas por los resultados y las limitaciones encontradas.
+El presente trabajo se organiza en seis capítulos, cuya estructura refleja la progresión lógica desde la fundamentación teórica hasta las conclusiones empíricas. El \textbf{Capítulo 2 (Fundamentación teórica)} establece las bases conceptuales de la DM1, los sistemas de monitorización continua de glucosa (CGM), las redes LSTM y los principios del aprendizaje desbalanceado aplicado a variables demográficas. El \textbf{Capítulo 3 (Estado del arte)} contextualiza este trabajo dentro de la literatura científica, identificando las tres brechas principales de investigación. Por su parte, el \textbf{Capítulo 4 (Desarrollo del trabajo)} describe en profundidad el pipeline metodológico implementado: la preparación de los tres datasets, la caracterización exploratoria del desequilibrio, la formulación de la taxonomía de diez técnicas de balanceo y la arquitectura del modelo LSTM. El \textbf{Capítulo 5 (Resultados y discusión)} expone el análisis en embudo del impacto del balanceo sobre los conjuntos de entrenamiento y la evaluación predictiva. Finalmente, el \textbf{Capítulo 6 (Conclusiones)} contrasta los hallazgos con los objetivos planteados y propone líneas de investigación futuras.

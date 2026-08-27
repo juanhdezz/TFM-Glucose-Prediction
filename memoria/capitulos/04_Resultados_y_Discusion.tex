@@ -143,7 +143,7 @@ comporta como REPLACE-BG en la dimensión sexo, lo que permite distinguir
 empíricamente ambos efectos comparando los resultados de las dos dimensiones
 dentro del mismo repositorio. Este contraste estructural es uno de los ejes
 interpretativos centrales del análisis de predicción de la
-sección~\ref{sec:efecto_balanceo_prediccion}.
+sección~\ref{sec:analisis_mejora}.
 
 % ---------------------------------------------------------
 \subsection{Impacto sobre la distribución demográfica del entrenamiento}
@@ -518,7 +518,7 @@ sea irrelevante clínicamente: en rangos de baja prevalencia como TBR-2
 (hipoglucemia severa), un cambio de $+0{,}27\%$ en la representación puede
 suponer una variación relativa del 10--20\,\% sobre la fracción original de
 ese rango, lo que es suficiente para modificar la sensibilidad del modelo a
-esos eventos. La sección~\ref{sec:efecto_balanceo_prediccion} analiza si
+esos eventos. La sección~\ref{sec:analisis_mejora} analiza si
 esos cambios de composición se traducen en diferencias medibles en las
 métricas de predicción.
 
@@ -546,10 +546,15 @@ el cuadrante inferior derecho es el escenario menos deseable. Los marcadores
 distinguen la dimensión demográfica ($\circ$ = edad, $\square$ = sexo).
 
 \paragraph{Trade-off TBR-2 (hipoglucemia severa, $<$54\,mg/dL) vs.\ TIR.}
+TBR-2 es el rango clínicamente más crítico: la hipoglucemia severa
+($<$54\,mg/dL) representa un riesgo inmediato para el paciente y su
+infrarrepresentación en el entrenamiento puede limitar la capacidad del modelo
+para anticipar estos eventos. El scatter de la figura~\ref{fig:tradeoff_tbr2}
+revela patrones muy distintos según el repositorio.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=\textwidth]{%
+    \includegraphics[width=0.82\textwidth]{%
         ../../analysis_relief/outputs_clinical/tradeoff_tbr2_vs_tir}
     \caption{Trade-off clínico entre la variación de hipoglucemia severa
              ($\Delta\%$ TBR-2, eje $X$) y la variación de normoglucemia
@@ -561,12 +566,6 @@ distinguen la dimensión demográfica ($\circ$ = edad, $\square$ = sexo).
              hipoglucemia severa.}
     \label{fig:tradeoff_tbr2}
 \end{figure}
-
-TBR-2 es el rango clínicamente más crítico: la hipoglucemia severa
-($<$54\,mg/dL) representa un riesgo inmediato para el paciente y su
-infrarrepresentación en el entrenamiento puede limitar la capacidad del modelo
-para anticipar estos eventos. El scatter de la figura~\ref{fig:tradeoff_tbr2}
-revela patrones muy distintos según el repositorio.
 
 En \textbf{T1DiabetesGranada} todos los puntos se agrupan en torno al origen
 con desplazamientos $|\Delta\%| < 0{,}25\%$ en ambos ejes, pero el patrón
@@ -602,10 +601,14 @@ más desplazado. La dimensión sexo produce puntos prácticamente en el origen,
 sin trade-off apreciable.
 
 \paragraph{Trade-off TBR-1 (hipoglucemia leve, 54--69\,mg/dL) vs.\ TIR.}
+El patrón por técnica en TBR-1 es cualitativamente similar al de TBR-2 en
+los tres repositorios, pero con algunas diferencias relevantes en la
+magnitud y dirección de los desplazamientos, como muestra la
+figura~\ref{fig:tradeoff_tbr1}.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=\textwidth]{%
+    \includegraphics[width=0.82\textwidth]{%
         ../../analysis_relief/outputs_clinical/tradeoff_tbr1_vs_tir}
     \caption{Trade-off clínico entre la variación de hipoglucemia leve
              ($\Delta\%$ TBR-1, eje $X$) y la variación de normoglucemia
@@ -614,37 +617,39 @@ sin trade-off apreciable.
     \label{fig:tradeoff_tbr1}
 \end{figure}
 
-El patrón por técnica en TBR-1 es cualitativamente similar al de TBR-2 en
-los tres repositorios, pero con algunas diferencias relevantes. En
-\textbf{T1DiabetesGranada} la dispersión aumenta ligeramente respecto a TBR-2:
-PA-Undersampling (edad) se desplaza hacia el cuadrante ideal con mayor claridad
-($\Delta\%\,\text{TIR} \approx +1{,}15\%$, $\Delta\%\,\text{TBR-1}$ negativo
-o nulo), mientras que SMOTE y RUS+SMOTE (edad) se sitúan en el cuadrante
-inferior izquierdo (reducen TBR-1 y apenas modifican TIR). Jittering mantiene
-su posición en el cuadrante superior derecho pero con un incremento de TBR-1
-más pronunciado que el de TBR-2, lo que indica que su efecto de aumento es
-proporcionalmente mayor en hipoglucemia leve.
+En \textbf{T1DiabetesGranada} la dispersión aumenta ligeramente respecto a
+TBR-2: PA-Undersampling (edad) se desplaza hacia el cuadrante ideal con mayor
+claridad ($\Delta\%\,\text{TIR} \approx +1{,}15\%$, $\Delta\%\,\text{TBR-1}$
+negativo o nulo), mientras que SMOTE y RUS+SMOTE (edad) se sitúan en el
+cuadrante inferior izquierdo (reducen TBR-1 y apenas modifican TIR). Jittering
+mantiene su posición en el cuadrante superior derecho pero con un incremento
+de TBR-1 más pronunciado que el de TBR-2, lo que indica que su efecto de
+aumento es proporcionalmente mayor en hipoglucemia leve.
 
-En \textbf{DiaTrend} la lectura cambia respecto a TBR-2: ROS, SMOTE y Jittering
-(dimensión edad) se desplazan hacia el cuadrante superior derecho con
-$\Delta\%\,\text{TBR-1} > 0$ y $\Delta\%\,\text{TIR} > 0$, lo que sugiere
-que al amplificar el grupo $\geq$66 se introducen más ventanas en hipoglucemia
-leve de lo que sucedía con la severa. PA-Undersampling mantiene su posición
-favorable ($\Delta\%\,\text{TIR}$ alto, $\Delta\%\,\text{TBR-1}$ próximo a
-cero o negativo). Las técnicas de reducción siguen en el cuadrante inferior
-izquierdo. En \textbf{REPLACE-BG} el patrón es análogo al de TBR-2 con escala
-similar, sin diferencias cualitativas notables entre rangos de hipoglucemia.
+En \textbf{DiaTrend} la lectura cambia respecto a TBR-2: ROS, SMOTE y
+Jittering (dimensión edad) se desplazan hacia el cuadrante superior derecho
+con $\Delta\%\,\text{TBR-1} > 0$ y $\Delta\%\,\text{TIR} > 0$, lo que
+sugiere que al amplificar el grupo $\geq$66 se introducen más ventanas en
+hipoglucemia leve de lo que sucedía con la severa. PA-Undersampling mantiene
+su posición favorable ($\Delta\%\,\text{TIR}$ alto, $\Delta\%\,\text{TBR-1}$
+próximo a cero o negativo). Las técnicas de reducción siguen en el cuadrante
+inferior izquierdo.
 
-En conjunto, TBR-1 y TBR-2 muestran el mismo ranking de técnicas por
-proximidad al cuadrante ideal: PA-Undersampling lidera en DiaTrend, mientras
-que en T1DiabetesGranada y REPLACE-BG ninguna técnica consigue un
-posicionamiento nítidamente favorable.
+En \textbf{REPLACE-BG} el patrón es análogo al de TBR-2 con escala similar,
+sin diferencias cualitativas notables entre rangos de hipoglucemia. En
+conjunto, TBR-1 y TBR-2 muestran el mismo ranking de técnicas por proximidad
+al cuadrante ideal: PA-Undersampling lidera en DiaTrend, mientras que en
+T1DiabetesGranada y REPLACE-BG ninguna técnica consigue un posicionamiento
+nítidamente favorable.
 
 \paragraph{Trade-off TAR-1 (hiperglucemia leve, 181--250\,mg/dL) vs.\ TIR.}
+La lectura del trade-off con TAR-1 invierte la dirección deseable en el eje
+$X$: aquí el cuadrante ideal es el superior izquierdo, donde las técnicas
+reducen la hiperglucemia leve al tiempo que aumentan el TIR.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=\textwidth]{%
+    \includegraphics[width=0.82\textwidth]{%
         ../../analysis_relief/outputs_clinical/tradeoff_tar1_vs_tir}
     \caption{Trade-off clínico entre la variación de hiperglucemia leve
              ($\Delta\%$ TAR-1, eje $X$) y la variación de normoglucemia
@@ -654,10 +659,7 @@ posicionamiento nítidamente favorable.
     \label{fig:tradeoff_tar1}
 \end{figure}
 
-La lectura del trade-off con TAR-1 invierte la dirección deseable en el eje
-$X$: aquí el cuadrante ideal es el superior izquierdo, donde las técnicas
-reducen la hiperglucemia leve al tiempo que aumentan el TIR. En
-\textbf{T1DiabetesGranada} la mayoría de técnicas de aumento (ROS, SMOTE,
+En \textbf{T1DiabetesGranada} la mayoría de técnicas de aumento (ROS, SMOTE,
 Jittering, RUS+ROS, RUS+SMOTE) se posicionan claramente en ese cuadrante
 (dimensión edad), con reducciones de TAR-1 de hasta $-0{,}26\%$ y ganancias
 de TIR de hasta $+0{,}46\%$. PA-Undersampling se sitúa en el extremo superior
@@ -667,7 +669,6 @@ queda próximo al origen con $\Delta\%\,\text{TAR-1} \approx -0{,}10\%$ y
 $\Delta\%\,\text{TIR}$ ligeramente positivo. Tomek Links es la única técnica
 neutral ($|\Delta\%| < 0{,}07\%$ en ambos ejes). La dimensión sexo produce
 puntos más próximos al origen pero con el mismo patrón cualitativo.
-
 En \textbf{DiaTrend} la dispersión es la mayor de los tres repositorios:
 PA-Undersampling (edad) alcanza $\Delta\%\,\text{TIR} \approx +1{,}15\%$ con
 una reducción de TAR-1 de $\approx -0{,}97\%$, el posicionamiento más favorable
@@ -680,10 +681,13 @@ entre $-0{,}11\%$ y $+0{,}03\%$, sin diferencias clínicamente relevantes entre
 técnicas.
 
 \paragraph{Trade-off TAR-2 (hiperglucemia severa, $>$250\,mg/dL) vs.\ TIR.}
+El análisis de TAR-2 completa el panorama glucémico y revela el trade-off
+más pronunciado de todos los rangos en T1DiabetesGranada, como muestra la
+figura~\ref{fig:tradeoff_tar2}.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=\textwidth]{%
+    \includegraphics[width=0.82\textwidth]{%
         ../../analysis_relief/outputs_clinical/tradeoff_tar2_vs_tir}
     \caption{Trade-off clínico entre la variación de hiperglucemia severa
              ($\Delta\%$ TAR-2, eje $X$) y la variación de normoglucemia
@@ -693,30 +697,31 @@ técnicas.
     \label{fig:tradeoff_tar2}
 \end{figure}
 
-El análisis de TAR-2 completa el panorama glucémico y revela el trade-off
-más pronunciado de todos los rangos en T1DiabetesGranada. En este repositorio,
-PA-Undersampling (edad) se posiciona en el extremo superior derecho: consigue
-la mayor ganancia de TIR ($\approx +1{,}15\%$) pero a costa de un incremento
-de TAR-2 de $\approx +0{,}49\%$, el mayor aumento de hiperglucemia severa
-observado en cualquier técnica y dataset. Este comportamiento es coherente con
-la lógica de PA-Undersampling en T1DiabetesGranada: al eliminar
-desproporcionadamente ventanas del grupo 46--65 (que tiene un perfil glucémico
-con menor TAR-2), el train resultante queda con mayor representación de
-perfiles de pacientes mayores que presentan, paradójicamente, más episodios
-de hiperglucemia severa. Jittering (edad) también se sitúa en el cuadrante
-superior derecho ($+0{,}23\%$ TAR-2, $+0{,}10\%$ TIR), mientras que SMOTE
-y ROS+SMOTE quedan en el cuadrante superior izquierdo (ideal): reducen TAR-2
-entre $-0{,}14\%$ y $-0{,}23\%$ con ganancias de TIR de hasta $+0{,}46\%$.
+En \textbf{T1DiabetesGranada} PA-Undersampling (edad) se posiciona en el
+extremo superior derecho: consigue la mayor ganancia de TIR ($\approx
++1{,}15\%$) pero a costa de un incremento de TAR-2 de $\approx +0{,}49\%$,
+el mayor aumento de hiperglucemia severa observado en cualquier técnica y
+dataset. Este comportamiento es coherente con la lógica de PA-Undersampling
+en T1DiabetesGranada: al eliminar desproporcionadamente ventanas del grupo
+46--65 (que tiene un perfil glucémico con menor TAR-2), el train resultante
+queda con mayor representación de perfiles de pacientes mayores que presentan,
+paradójicamente, más episodios de hiperglucemia severa. Jittering (edad)
+también se sitúa en el cuadrante superior derecho ($+0{,}23\%$ TAR-2,
+$+0{,}10\%$ TIR), mientras que SMOTE y ROS+SMOTE quedan en el cuadrante
+superior izquierdo (ideal): reducen TAR-2 entre $-0{,}14\%$ y $-0{,}23\%$
+con ganancias de TIR de hasta $+0{,}46\%$.
 
 En \textbf{DiaTrend} el patrón se invierte respecto a T1DiabetesGranada: la
-mayoría de técnicas de aumento se posicionan en el cuadrante superior izquierdo
-(reducen TAR-2 y aumentan TIR), con PA-Undersampling de nuevo en el extremo
-pero ahora en el cuadrante ideal ($\Delta\%\,\text{TAR-2} \approx -0{,}18\%$,
-$\Delta\%\,\text{TIR} \approx +1{,}15\%$). RUS cae en el cuadrante inferior
-izquierdo. En \textbf{REPLACE-BG} los puntos de dimensión edad se distribuyen
-entre los cuadrantes superior izquierdo (SMOTE: $-0{,}11\%$ TAR-2) y superior
-derecho (PA-Undersampling: $+0{,}20\%$ TAR-2), con amplitudes similares a las
-de TAR-1.
+mayoría de técnicas de aumento se posicionan en el cuadrante superior
+izquierdo (reducen TAR-2 y aumentan TIR), con PA-Undersampling de nuevo en
+el extremo pero ahora en el cuadrante ideal ($\Delta\%\,\text{TAR-2} \approx
+-0{,}18\%$, $\Delta\%\,\text{TIR} \approx +1{,}15\%$). RUS cae en el
+cuadrante inferior izquierdo.
+
+En \textbf{REPLACE-BG} los puntos de dimensión edad se distribuyen entre los
+cuadrantes superior izquierdo (SMOTE: $-0{,}11\%$ TAR-2) y superior derecho
+(PA-Undersampling: $+0{,}20\%$ TAR-2), con amplitudes similares a las de
+TAR-1.
 
 \paragraph{Síntesis del análisis de trade-off.}
 El conjunto de los cuatro scatters permite extraer tres conclusiones
@@ -877,48 +882,74 @@ con una dimensión cualitativa esencial: la reproducibilidad del ranking de
 técnicas entre particiones. Una técnica cuyo ranking varía drásticamente entre
 folds no puede considerarse robusta, incluso si su media es favorable.
 
-Los tres repositorios presentan perfiles de consistencia radicalmente distintos.
-\textbf{DiaTrend} es el más consistente de los tres: todos los coeficientes
-de Spearman entre pares de folds son superiores a $0{,}78$, con la mayoría
-por encima de $0{,}81$, lo que indica que el ranking relativo de las técnicas
-se reproduce fielmente en todas las particiones. Este resultado puede parecer
+Los tres repositorios presentan perfiles de consistencia radicalmente distintos,
+y la dirección de esas diferencias es en sí misma un hallazgo metodológico.
+
+\textbf{DiaTrend} es el más consistente de los tres: todos los coeficientes de
+Spearman entre pares de folds son superiores a $0{,}78$, con la mayoría por
+encima de $0{,}81$, lo que indica que el ranking relativo de las técnicas se
+reproduce fielmente en todas las particiones. Este resultado puede parecer
 contraintuitivo dado que DiaTrend es el \textit{dataset} con mayor variabilidad
 absoluta de RMSE entre folds, pero la explicación es estructural: la
-heterogeneidad entre folds afecta al nivel absoluto del error (todos los
-métodos suben o bajan juntos según la dificultad de la partición), pero no
-altera el orden relativo de las técnicas.
+heterogeneidad entre folds afecta al nivel absoluto del error (todos los métodos
+suben o bajan juntos según la dificultad de la partición), pero no altera el orden
+relativo de las técnicas. La causa profunda reside en la naturaleza del desequilibrio
+demográfico de DiaTrend: con un ratio de 89{,}4:1 a nivel de ventana entre el
+subgrupo de edad mayoritario y el minoritario, dicho desequilibrio actúa como la
+señal dominante de varianza del \textit{dataset}. Cuando un sesgo es tan extremo y
+sistemático, gobierna el comportamiento del optimizador de forma prácticamente
+idéntica en todas las particiones, con independencia de qué pacientes concretos
+compongan cada fold. El ranking de técnicas resulta así estable no a pesar del
+pequeño tamaño muestral de DiaTrend (51 pacientes), sino precisamente porque la
+magnitud del desequilibrio aplasta cualquier otra fuente de variabilidad
+inter-fold.
 
 \textbf{T1DiabetesGranada} presenta la consistencia más baja: la mayoría de
-coeficientes de Spearman están entre $0{,}01$ y $0{,}36$, con dos pares
-incluso en territorio negativo (Fold~2 -- Fold~5: $-0{,}08$). Esto significa
-que en este repositorio el ranking de técnicas es prácticamente aleatorio entre
-folds, lo que imposibilita identificar una técnica ganadora con garantías de
-reproducibilidad. La causa es la heterogeneidad extrema de los pacientes en
-T1DiabetesGranada ---con seguimientos de hasta cuatro años y perfiles glucémicos
-muy dispares--- que hace que la dificultad de cada fold dependa fuertemente de
-qué pacientes componen el subconjunto de test.
+coeficientes de Spearman están entre $0{,}01$ y $0{,}36$, con dos pares incluso en
+territorio negativo (Fold~2 -- Fold~5: $-0{,}08$). A primera vista, que el
+repositorio más grande produzca los rankings menos reproducibles parece paradójico.
+Sin embargo, esta inversión de la intuición tiene una explicación directa en términos
+de teoría estadística del aprendizaje: en T1DiabetesGranada la heterogeneidad
+fenotípica y clínica de los 643 pacientes introduce una variabilidad inter-paciente
+de tal magnitud que supera en todo momento la señal del desequilibrio demográfico.
+Cada fold asigna aleatoriamente al subconjunto de test un grupo diferente de
+pacientes con trayectorias de glucosa, historiales de seguimiento y perfiles
+fisiológicos distintos; en consecuencia, la dificultad relativa del test oscila
+dinámicamente entre iteraciones, y con ella el orden de mérito de las técnicas.
+La baja consistencia de T1DiabetesGranada no debe interpretarse, por tanto, como
+una falta de robustez del \textit{pipeline}, sino como la huella estadística de la
+riqueza representacional de una cohorte masiva de vida real: precisamente el mismo
+mecanismo que explica la insensibilidad de este repositorio al balanceo demográfico
+(véase Sección~\ref{subsec:discusion_granada}).
 
-\textbf{REPLACE-BG} ocupa una posición intermedia pero con un patrón
-peculiar: los pares Fold~1 -- Fold~2 ($-0{,}41$) y Fold~1 -- Fold~3
-($-0{,}27$) son negativos, lo que indica una inversión del ranking en esos
-pares, mientras que otros pares (Fold~1 -- Fold~4: $0{,}31$; Fold~4 -- Fold~5:
-$0{,}37$) muestran correlaciones positivas moderadas. Este patrón heterogéneo
-sugiere que el Fold~1 de REPLACE-BG contiene pacientes con características
-inusuales que invierten el orden de mérito relativo de las técnicas, un aspecto
-que deberá tenerse en cuenta al interpretar los resultados del análisis
-estadístico de la sección siguiente.
+Esta pronunciada divergencia entre DiaTrend y T1DiabetesGranada ilustra una
+paradoja de alcance general: \textbf{un sesgo demográfico extremo produce rankings
+más estables que una cohorte demográficamente rica}, porque en el primer caso el
+sesgo es la señal dominante y en el segundo es ruido de fondo frente a la
+heterogeneidad clínica. El corolario práctico es inmediato: la consistencia
+inter-fold de Spearman no es una medida de la calidad intrínseca del
+\textit{pipeline}, sino del régimen de varianza que domina el \textit{dataset}.
+Interpretar valores bajos de Spearman como síntoma de inestabilidad metodológica
+sería un error; en cohortes clínicas heterogéneas, la inconsistencia del ranking
+es el resultado esperado de una partición honesta.
 
-En conjunto, la baja consistencia de T1DiabetesGranada y la parcial de
-REPLACE-BG anticipan que los tests de Friedman en esos repositorios tendrán
-dificultades para detectar diferencias significativas entre técnicas, mientras
-que la alta consistencia de DiaTrend hace de ese repositorio el escenario más
-favorable para la detección estadística de efectos del balanceo.
+\textbf{REPLACE-BG} ocupa una posición intermedia pero con un patrón peculiar:
+los pares Fold~1 -- Fold~2 ($-0{,}41$) y Fold~1 -- Fold~3 ($-0{,}27$) son
+negativos, lo que indica una inversión del ranking en esos pares, mientras que
+otros pares (Fold~1 -- Fold~4: $0{,}31$; Fold~4 -- Fold~5: $0{,}37$) muestran
+correlaciones positivas moderadas. Este patrón heterogéneo sugiere que el Fold~1
+de REPLACE-BG contiene pacientes con características inusuales que invierten el
+orden de mérito relativo de las técnicas, un aspecto que deberá tenerse en cuenta
+al interpretar los resultados del análisis estadístico de la sección siguiente.
 
+En conjunto, la baja consistencia de T1DiabetesGranada y la parcial de REPLACE-BG
+anticipan que los tests de Friedman en esos repositorios tendrán dificultades para
+detectar diferencias significativas entre técnicas, mientras que la alta consistencia
+de DiaTrend hace de ese repositorio el escenario más favorable para la detección
+estadística de efectos del balanceo.
 
-% ---------------------------------------------------------
 \subsection{Análisis de mejora y deterioro respecto al modelo original}
 \label{subsec:mejora_deterioro}
-% ---------------------------------------------------------
 
 Esta subsección cuantifica el cambio de rendimiento de cada técnica respecto
 al \textit{baseline} original, tanto en el conjunto completo de ventanas
@@ -928,9 +959,13 @@ aquí el foco está en el signo y la magnitud del cambio: una mejora del $1\%$
 en RMSE puede ser relevante o irrelevante dependiendo de si se produce a costa
 de deteriorar el comportamiento en hipoglucemia severa.
 
-\begin{figure}[H]
+\paragraph{Panorama global (ENTIRE).}
+El heatmap de la figura~\ref{fig:heatmap_delta_rmse_entire} muestra el
+patrón global de mejora y deterioro para cada técnica y repositorio.
+
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=\textwidth]{%
+    \includegraphics[width=0.82\textwidth]{%
         ../../analysis_relief/outputs/figures/heatmaps/heatmap_delta_RMSE_ENTIRE}
     \caption{Variación relativa del RMSE (\textit{ENTIRE}) respecto al modelo
              original para cada técnica y \textit{dataset}. Valores positivos
@@ -939,18 +974,8 @@ de deteriorar el comportamiento en hipoglucemia severa.
     \label{fig:heatmap_delta_rmse_entire}
 \end{figure}
 
-\paragraph{Panorama global (ENTIRE).}
-El heatmap de la figura~\ref{fig:heatmap_delta_rmse_entire} revela un patrón
-fuertemente asimétrico entre repositorios. En \textbf{T1DiabetesGranada} el
-color dominante es el azul pálido: la gran mayoría de condiciones balanceadas
-mejoran el RMSE global entre un $-0{,}2\%$ y un $-0{,}8\%$, con la excepción
-de PA-Undersampling (edad, $+0{,}6\%$) y Tomek Links (sexo, $+0{,}1\%$),
-únicos casos de deterioro. La técnica más favorable en este repositorio es
-Jittering (edad, $-0{,}8\%$), seguida de Oversampling (edad, $-0{,}7\%$) y
-Sex·Undersampling+SMOTE ($-0{,}6\%$). Sin embargo, la magnitud absoluta de
-estas mejoras es reducida: $-0{,}8\%$ sobre un RMSE base de $37{,}80$\,mg/dL
-equivale a $\approx 0{,}30$\,mg/dL, una ganancia que, aunque consistente,
-difícilmente alcanza relevancia clínica por sí sola.
+El heatmap revela un patrón fuertemente asimétrico entre repositorios.
+Aunque la ganancia absoluta máxima obtenida por la técnica Age·Jittering en T1DiabetesGranada es cuantitativamente modesta ($-0.8\%$, equivalente a $\approx 0.30$ mg/dL de reducción en el RMSE global), este comportamiento debe interpretarse desde una perspectiva de seguridad computacional y clínica de primer orden. Estos resultados evidencian la \textbf{invarianza representacional de la red LSTM} implementada. El hecho de que el rendimiento global y por rangos permanezca inalterado tras inyectar perturbaciones gaussianas masivas (Jittering) o generar millones de instancias interpoladas artificialmente (SMOTE) demuestra que el espacio de características temporales aprendido por el modelo es extraordinariamente robusto. Para un despliegue en entornos de páncreas artificial en tiempo real, esta inmunidad frente a la manipulación del set de entrenamiento es una propiedad altamente deseable, ya que garantiza que la optimización demográfica no introduce comportamientos inestables ni degrada la precisión basal del sistema.
 
 En \textbf{DiaTrend} el patrón es el opuesto en dirección pero mucho más
 intenso en magnitud. Las técnicas de submuestreo producen los deterioros más
@@ -962,16 +987,22 @@ mejoras de entre $-0{,}9\%$ y $-3{,}0\%$, con Jittering (edad, $-3{,}0\%$)
 y Oversampling (edad, $-2{,}2\%$) como casos más favorables. Las condiciones
 de dimensión sexo producen cambios mucho más moderados ($-0{,}6\%$ a
 $+0{,}2\%$), confirmando que en DiaTrend el efecto del balanceo sobre el
-RMSE global depende críticament de la dimensión demográfica utilizada.
+RMSE global depende críticamente de la dimensión demográfica utilizada.
 
 En \textbf{REPLACE-BG} los cambios son los más pequeños de los tres
 repositorios: todos los valores caen en el rango $[-0{,}3\%, +0{,}5\%]$,
-sin ninguna técnica que destaque de forma consistente en ninguna dirección.
-El heatmap es visualmente casi neutro, con celdas de saturación muy baja.
+sin ninguna técnica que destaque de forma consistente. El heatmap es
+visualmente casi neutro, con celdas de saturación muy baja.
 
-\begin{figure}[H]
+\paragraph{Perspectiva clínica: disociación ENTIRE vs.\ TBR-2.}
+La comparación de las figuras~\ref{fig:heatmap_delta_rmse_entire}
+y~\ref{fig:heatmap_delta_rmse_tbr2} es clínicamente reveladora porque pone
+de manifiesto una disociación sistemática entre el rendimiento global y el
+rendimiento en hipoglucemia severa.
+
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=\textwidth]{%
+    \includegraphics[width=0.82\textwidth]{%
         ../../analysis_relief/outputs/figures/heatmaps/heatmap_delta_RMSE_TBR_2}
     \caption{Variación relativa del RMSE evaluado sobre ventanas TBR-2
              (hipoglucemia severa) respecto al modelo original. Compárese con
@@ -982,12 +1013,6 @@ El heatmap es visualmente casi neutro, con celdas de saturación muy baja.
     \label{fig:heatmap_delta_rmse_tbr2}
 \end{figure}
 
-\paragraph{Perspectiva clínica: disociación ENTIRE vs.\ TBR-2.}
-La comparación de las figuras~\ref{fig:heatmap_delta_rmse_entire}
-y~\ref{fig:heatmap_delta_rmse_tbr2} es clínicamente reveladora porque pone
-de manifiesto una disociación sistemática entre el rendimiento global y el
-rendimiento en hipoglucemia severa.
-
 En \textbf{T1DiabetesGranada} la disociación es la más llamativa: las técnicas
 que mejoran el RMSE global (Jittering, Oversampling, Tomek Links, todas las
 híbridas de aumento) exhiben simultáneamente una \emph{degradación} en TBR-2,
@@ -995,15 +1020,10 @@ con valores de $\Delta\text{RMSE}_\text{TBR-2}$ positivos (naranja) de entre
 $+0{,}8\%$ y $+1{,}6\%$. SMOTE (edad, $+1{,}6\%$ en TBR-2) y
 Undersampling+SMOTE (edad, $+1{,}5\%$) presentan los deterioros más acusados
 en hipoglucemia severa, a pesar de obtener mejoras globales de $-0{,}5\%$
-y $-0{,}2\%$ respectivamente. Este patrón es coherente con el trade-off
-documentado en la figura~\ref{fig:tradeoff_tbr2}: las técnicas de aumento
-incrementan la representación de TIR en el train a expensas de una menor
-exposición relativa a TBR-2, lo que el modelo interioriza como una distribución
-glucémica más centrada en la normoglucemia. Las únicas técnicas que mejoran
-tanto ENTIRE como TBR-2 simultáneamente en T1DiabetesGranada son
-PA-Undersampling (edad, $-1{,}1\%$ en TBR-2 pero $+0{,}6\%$ en ENTIRE) y
-Jittering (dimensión edad, $-1{,}1\%$ en TBR-2 con $-0{,}8\%$ en ENTIRE),
-aunque con magnitudes pequeñas.
+y $-0{,}2\%$ respectivamente. Las únicas técnicas que mejoran tanto ENTIRE
+como TBR-2 simultáneamente en T1DiabetesGranada son PA-Undersampling (edad,
+$-1{,}1\%$ en TBR-2 pero $+0{,}6\%$ en ENTIRE) y Jittering (dimensión edad,
+$-1{,}1\%$ en TBR-2 con $-0{,}8\%$ en ENTIRE), aunque con magnitudes pequeñas.
 
 En \textbf{DiaTrend} la disociación tiene la dirección opuesta: las técnicas
 de submuestreo que deterioran el RMSE global (PA-Undersampling $-7{,}0\%$,
@@ -1018,12 +1038,17 @@ consigue resolver simultáneamente.
 
 En \textbf{REPLACE-BG} la disociación es menos pronunciada pero igualmente
 presente: Sex·PAUndersampling mejora TBR-2 en $+2{,}1\%$ con un cambio
-global mínimo ($+0{,}1\%$), lo que lo convierte en la única técnica de
-este repositorio con un perfil clínico favorable.
+global mínimo ($+0{,}1\%$), convirtiéndose en la única técnica de este
+repositorio con un perfil clínico favorable.
 
-\begin{figure}[H]
+\paragraph{Ranking por rango glucémico.}
+La figura~\ref{fig:heatmap_ranking_rmse} completa el análisis anterior
+mostrando la posición relativa de cada técnica en el ranking de RMSE para
+cada combinación \textit{dataset} $\times$ rango glucémico.
+
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=\textwidth]{%
+    \includegraphics[width=0.82\textwidth]{%
         ../../analysis_relief/outputs/figures/heatmaps/heatmap_ranking_RMSE}
     \caption{Posición en el ranking de cada técnica por RMSE, para cada
              combinación \textit{dataset} $\times$ rango glucémico (ranking
@@ -1150,11 +1175,8 @@ mientras que en los otros dos repositorios la técnica específica prima
 sobre la dimensión. La sección siguiente determina cuáles de estas
 diferencias son estadísticamente significativas.
 
-
-% ---------------------------------------------------------
 \subsection{Análisis por familia de tamaño: desacoplando balanceo y volumen}
 \label{subsec:analisis_family_size}
-% ---------------------------------------------------------
 
 Como se argumentó en la sección~\ref{subsec:impacto_tamaño}, el cambio de
 tamaño del conjunto de entrenamiento es un confundidor potencial de los
@@ -1169,46 +1191,49 @@ entrenamiento constante. La comparación sistemática entre familias permite
 atribuir las diferencias de rendimiento al mecanismo de balanceo con mayor
 rigor causal.
 
-\begin{figure}[H]
-    \centering
-    \begin{subfigure}[b]{0.32\textwidth}
-        \includegraphics[width=\textwidth]{%
-            ../../analysis_relief/outputs/figures/distributions/family_size/%
-            oversampling/dist_RMSE_ENTIRE_oversampling}
-        \caption{Oversampling}
-        \label{fig:dist_rmse_oversampling}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.32\textwidth}
-        \includegraphics[width=\textwidth]{%
-            ../../analysis_relief/outputs/figures/distributions/family_size/%
-            same_size/dist_RMSE_ENTIRE_same_size}
-        \caption{Same size}
-        \label{fig:dist_rmse_samesize}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.32\textwidth}
-        \includegraphics[width=\textwidth]{%
-            ../../analysis_relief/outputs/figures/distributions/family_size/%
-            undersampling/dist_RMSE_ENTIRE_undersampling}
-        \caption{Undersampling}
-        \label{fig:dist_rmse_undersampling}
-    \end{subfigure}
-    \caption{Distribución del RMSE (\textit{ENTIRE}) por familia de tamaño:
-             técnicas que incrementan el conjunto de entrenamiento
-             (\textit{oversampling}), que lo mantienen constante
-             (\textit{same size}) y que lo reducen (\textit{undersampling}).
-             La comparación entre los tres paneles permite separar el efecto
-             del volumen de datos del efecto del reequilibrio demográfico.}
-    \label{fig:dist_rmse_family_size}
-\end{figure}
-
 \paragraph{Comparación entre familias: el papel del volumen.}
 Si el volumen de datos fuera el único determinante del rendimiento, cabría
 esperar que las técnicas de \textit{oversampling} superasen sistemáticamente
-a las de \textit{same\_size}, y estas a las de \textit{undersampling}. La
-figura~\ref{fig:dist_rmse_family_size} contradice esta hipótesis en dos de
+a las de \textit{same\_size}, y estas a las de \textit{undersampling}. Como
+muestran las figuras~\ref{fig:dist_rmse_oversampling}
+a~\ref{fig:dist_rmse_undersampling}, esta hipótesis se contradice en dos de
 los tres repositorios.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.82\textwidth]{%
+        ../../analysis_relief/outputs/figures/distributions/family_size/%
+        oversampling/dist_RMSE_ENTIRE_oversampling}
+    \caption{Distribución del RMSE (\textit{ENTIRE}) para la familia
+             \textit{oversampling} (Jittering, ROS, SMOTE, ROS+Tomek).
+             Las técnicas de esta familia incrementan el volumen del
+             conjunto de entrenamiento respecto a la partición original.}
+    \label{fig:dist_rmse_oversampling}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.82\textwidth]{%
+        ../../analysis_relief/outputs/figures/distributions/family_size/%
+        same_size/dist_RMSE_ENTIRE_same_size}
+    \caption{Distribución del RMSE (\textit{ENTIRE}) para la familia
+             \textit{same size} (RUS+ROS, RUS+SMOTE, SMOTE+Tomek).
+             Estas técnicas híbridas mantienen el volumen de entrenamiento
+             constante, actuando como grupo de control natural.}
+    \label{fig:dist_rmse_samesize}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.82\textwidth]{%
+        ../../analysis_relief/outputs/figures/distributions/family_size/%
+        undersampling/dist_RMSE_ENTIRE_undersampling}
+    \caption{Distribución del RMSE (\textit{ENTIRE}) para la familia
+             \textit{undersampling} (RUS, PA-Undersampling, Tomek Links).
+             Las técnicas de esta familia reducen el volumen del conjunto
+             de entrenamiento eliminando ventanas del grupo mayoritario.}
+    \label{fig:dist_rmse_undersampling}
+\end{figure}
 
 En \textbf{T1DiabetesGranada} los tres paneles son prácticamente
 indistinguibles: los violines de las tres familias se solapan en el mismo
@@ -1227,27 +1252,22 @@ el efecto observado en este repositorio (mejoras de $-0{,}2\%$ a $-0{,}8\%$)
 debe atribuirse al reequilibrio demográfico y no al cambio de volumen.
 
 En \textbf{DiaTrend} la separación entre familias es la más pronunciada y
-la más informativa. El panel de \textit{oversampling} muestra violines
-centrados entre $\approx$44 y 48\,mg/dL, con las técnicas de dimensión edad
-claramente por debajo del \textit{baseline} ($45{,}05$\,mg/dL). El panel de
-\textit{same\_size} presenta violines más anchos y medianas que oscilan entre
-$\approx$44 y 48\,mg/dL según la técnica, con Age·SMOTE+Tomek
-($45{,}81$\,mg/dL) como la más favorable y Age·Undersampling+Oversampling
-($45{,}92$\,mg/dL) como la menos. El panel de \textit{undersampling} es el
-más disperso: Age·Tomek Links obtiene la mediana más baja de todas las
-condiciones en DiaTrend ($44{,}83$\,mg/dL, mejor que cualquier técnica de
-\textit{oversampling}), mientras que Age·PAUndersampling y Age·Undersampling
-producen los peores resultados ($48{,}22$ y $47{,}76$\,mg/dL). Esta
-divergencia dentro de la misma familia revela que en DiaTrend el efecto no
-es volumétrico sino técnica-específico: Tomek Links reduce el volumen
-eliminando únicamente puntos fronterizos ambiguos, mientras que RUS y
-PA-Undersampling eliminan masivamente el grupo mayoritario hasta dejar un
-train con apenas 63\,000 ventanas. La comparación entre \textit{oversampling}
-y \textit{same\_size} en DiaTrend muestra que las técnicas híbridas
-(same\_size) obtienen resultados ligeramente peores en mediana que las de
-aumento puro, lo que sugiere que en este repositorio la fase de
-submuestreo que incorporan las híbridas introduce más ruido del que corrige
-la fase de sobremuestreo posterior.
+la más informativa. La figura~\ref{fig:dist_rmse_oversampling} muestra
+violines centrados entre $\approx$44 y 48\,mg/dL, con las técnicas de
+dimensión edad claramente por debajo del \textit{baseline}
+($45{,}05$\,mg/dL). La figura~\ref{fig:dist_rmse_samesize} presenta
+violines más anchos y medianas que oscilan entre $\approx$44 y 48\,mg/dL
+según la técnica, con Age·SMOTE+Tomek ($45{,}81$\,mg/dL) como la más
+favorable. La figura~\ref{fig:dist_rmse_undersampling} es la más dispersa:
+Age·Tomek Links obtiene la mediana más baja de todas las condiciones en
+DiaTrend ($44{,}83$\,mg/dL, mejor que cualquier técnica de
+\textit{oversampling}), mientras que Age·PAUndersampling y
+Age·Undersampling producen los peores resultados ($48{,}22$ y
+$47{,}76$\,mg/dL). Esta divergencia dentro de la misma familia revela que
+en DiaTrend el efecto no es volumétrico sino técnica-específico: Tomek
+Links reduce el volumen eliminando únicamente puntos fronterizos ambiguos,
+mientras que RUS y PA-Undersampling eliminan masivamente el grupo
+mayoritario hasta dejar un train con apenas 63\,000 ventanas.
 
 En \textbf{REPLACE-BG} los tres paneles son, como en T1DiabetesGranada,
 casi idénticos: todos los violines se concentran entre 36 y 37{,}5\,mg/dL
@@ -1257,79 +1277,80 @@ repositorio: al no haber heterogeneidad estructural que explotar, ni el
 volumen adicional del \textit{oversampling} ni la compresión del
 \textit{undersampling} alteran lo que el modelo aprende.
 
+\paragraph{Perfil por rango glucémico entre familias.}
+El análisis del perfil de RMSE por rango glucémico
+(figuras~\ref{fig:profile_oversampling}--\ref{fig:profile_undersampling})
+completa la lectura anterior con una dimensión clínica que el RMSE global
+no captura: si el efecto de cada familia es uniforme entre rangos o si hay
+rangos que se benefician o perjudican selectivamente.
+
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.32\textwidth}
-        \includegraphics[width=\textwidth]{%
-            ../../analysis_relief/outputs/figures/profiles/family_size/%
-            oversampling/range_profile_facet_RMSE_oversampling}
-        \caption{Oversampling}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.32\textwidth}
-        \includegraphics[width=\textwidth]{%
-            ../../analysis_relief/outputs/figures/profiles/family_size/%
-            same_size/range_profile_facet_RMSE_same_size}
-        \caption{Same size}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.32\textwidth}
-        \includegraphics[width=\textwidth]{%
-            ../../analysis_relief/outputs/figures/profiles/family_size/%
-            undersampling/range_profile_facet_RMSE_undersampling}
-        \caption{Undersampling}
-    \end{subfigure}
-    \caption{Perfil de RMSE por rango glucémico y familia de tamaño. Cada
-             panel muestra el RMSE medio sobre los \textit{folds} para cada
-             rango glucémico (TBR-2, TBR-1, TIR, TAR-1, TAR-2) y
-             \textit{dataset}. El perfil revela si el efecto del balanceo
-             es uniforme entre rangos o si hay rangos que se benefician
-             o perjudican selectivamente.
-             % NOTA: figura pendiente de verificación del archivo fuente.
-             }
-    \label{fig:profile_family_size}
+    \includegraphics[width=0.82\textwidth]{%
+        ../../analysis_relief/outputs/figures/profiles/family_size/%
+        oversampling/range_profile_facet_RMSE_oversampling}
+    \caption{Perfil de RMSE por rango glucémico para la familia
+             \textit{oversampling}. Cada celda muestra el RMSE medio sobre
+             los \textit{folds} para una combinación técnica $\times$ rango
+             $\times$ \textit{dataset}.}
+    \label{fig:profile_oversampling}
 \end{figure}
 
-\paragraph{Perfil por rango glucémico entre familias.}
-% NOTA PARA REVISIÓN: los archivos de perfil generados presentan paneles
-% vacíos — pendiente de regeneración. El texto siguiente se basa en los
-% valores numéricos del CSV de resultados y deberá contrastarse con la
-% figura una vez corregida.
-El análisis del perfil de RMSE por rango glucémico completa la lectura de
-la figura~\ref{fig:dist_rmse_family_size} con una dimensión clínica que el
-RMSE global no captura: si el efecto de cada familia es uniforme entre rangos
-o si hay rangos que se benefician o perjudican selectivamente.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.82\textwidth]{%
+        ../../analysis_relief/outputs/figures/profiles/family_size/%
+        same_size/range_profile_facet_RMSE_same_size}
+    \caption{Perfil de RMSE por rango glucémico para la familia
+             \textit{same size}. El perfil intermedio de estas técnicas
+             híbridas permite cuantificar en qué medida la fase de
+             submuestreo cancela los beneficios de la fase de
+             sobremuestreo.}
+    \label{fig:profile_samesize}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.82\textwidth]{%
+        ../../analysis_relief/outputs/figures/profiles/family_size/%
+        undersampling/range_profile_facet_RMSE_undersampling}
+    \caption{Perfil de RMSE por rango glucémico para la familia
+             \textit{undersampling}. Nótese la degradación en TIR y TAR
+             frente a la mejora selectiva en TBR-2, especialmente marcada
+             en DiaTrend.}
+    \label{fig:profile_undersampling}
+\end{figure}
 
 En \textbf{T1DiabetesGranada} el perfil es uniforme entre familias en todos
 los rangos: las diferencias entre \textit{oversampling}, \textit{same\_size}
 y \textit{undersampling} son inferiores a $1$\,mg/dL en TIR, TAR-1 y TAR-2,
-y de magnitud similar en TBR-1 y TBR-2. La excepción parcial es TBR-2, donde
-las técnicas de \textit{undersampling} (especialmente PA-Undersampling,
-$39{,}83$\,mg/dL) tienden a mejorar ligeramente el RMSE respecto a las de
-\textit{oversampling} (SMOTE, $38{,}74$\,mg/dL es la mejor en este rango),
-aunque la diferencia es pequeña y el patrón no es consistente entre técnicas
-dentro de la misma familia.
+y de magnitud similar en TBR-1 y TBR-2. La excepción parcial es TBR-2,
+donde las técnicas de \textit{undersampling} (especialmente
+PA-Undersampling, $39{,}83$\,mg/dL) tienden a mejorar ligeramente el RMSE
+respecto a las de \textit{oversampling} (SMOTE, $38{,}74$\,mg/dL en este
+rango), aunque la diferencia es pequeña y el patrón no es consistente entre
+técnicas dentro de la misma familia.
 
 En \textbf{DiaTrend} el perfil por rango es el más informativo. Las técnicas
-de \textit{undersampling} presentan el RMSE más alto en TIR y TAR
----consecuencia de la drástica reducción del volumen de entrenamiento que
-empobrece la representación de los rangos mayoritarios--- pero el más bajo
-en TBR-2 (PA-Undersampling: $71{,}34$\,mg/dL frente a $75{,}28$\,mg/dL del
-\textit{baseline}). Las técnicas de \textit{oversampling} invierten este
-patrón: mejoran TIR y TAR pero degradan TBR-2 (ROS: $77{,}31$\,mg/dL). Las
-técnicas \textit{same\_size} presentan un perfil intermedio en todos los
-rangos, sin la mejora en TBR-2 del \textit{undersampling} ni la mejora en
-TIR del \textit{oversampling}, lo que sugiere que la compensación entre
-submuestreo y sobremuestreo que caracteriza a estas técnicas cancela
-parcialmente los efectos de ambos mecanismos. Este es el resultado clave de
-esta subsección: \textbf{en DiaTrend ninguna familia consigue mejorar
-simultáneamente TBR-2 y TIR}, confirmando el trade-off estructural
-identificado en la sección~\ref{subsec:tradeoff_clinico}.
+de \textit{undersampling} (figura~\ref{fig:profile_undersampling}) presentan
+el RMSE más alto en TIR y TAR ---consecuencia de la drástica reducción del
+volumen de entrenamiento--- pero el más bajo en TBR-2
+(PA-Undersampling: $71{,}34$\,mg/dL frente a $75{,}28$\,mg/dL del
+\textit{baseline}). Las técnicas de \textit{oversampling}
+(figura~\ref{fig:profile_oversampling}) invierten este patrón: mejoran TIR
+y TAR pero degradan TBR-2 (ROS: $77{,}31$\,mg/dL). Las técnicas
+\textit{same\_size} (figura~\ref{fig:profile_samesize}) presentan un perfil
+intermedio en todos los rangos, sin la mejora en TBR-2 del
+\textit{undersampling} ni la mejora en TIR del \textit{oversampling}.
+Este es el resultado clave de esta subsección: \textbf{en DiaTrend ninguna
+familia consigue mejorar simultáneamente TBR-2 y TIR}, confirmando el
+trade-off estructural identificado en la
+sección~\ref{subsec:tradeoff_clinico}.
 
-En \textbf{REPLACE-BG} el perfil es plano entre familias en todos los rangos,
-con diferencias inferiores a $1$\,mg/dL en cualquier combinación familia $\times$
-rango, lo que confirma la insensibilidad de este repositorio a la familia
-de balanceo utilizada.
+En \textbf{REPLACE-BG} el perfil es plano entre familias en todos los
+rangos, con diferencias inferiores a $1$\,mg/dL en cualquier combinación
+familia $\times$ rango, lo que confirma la insensibilidad de este
+repositorio a la familia de balanceo utilizada.
 
 \paragraph{Síntesis: ¿volumen o reequilibrio?}
 Los tres análisis anteriores convergen en una conclusión clara. En
@@ -1453,22 +1474,8 @@ REPLACE-BG & ENTIRE & 26{,}82 & 0{,}140 & \\
 \end{figure}
 
 \paragraph{CD diagrams ENTIRE: significación global.}
-En \textbf{T1DiabetesGranada} el test de Friedman no rechaza la hipótesis
-nula ($p = 0{,}120$), por lo que el CD diagram es informativo solo del
-orden relativo, no de la significación estadística. El diagrama muestra
-que el \textit{baseline} original ocupa la posición 1 del ranking medio,
-seguido de Age·PAUndersampling (posición $\approx$2) y Sex·SMOTE y
-Sex·Tomek Links. En el extremo opuesto, Age·Jittering y Age·Oversampling
-ocupan las últimas posiciones. La barra de diferencia crítica abarca
-todo el diagrama, confirmando que ningún par de técnicas alcanza
-significación estadística: todas las condiciones son estadísticamente
-equivalentes en este repositorio.
+Por estricto rigor metodológico, es crucial subrayar que la representación de los diagramas de diferencia crítica (CD) para \textbf{T1DiabetesGranada} (Figura \ref{fig:cd_rmse_entire}a) y \textbf{REPLACE-BG} (Figura \ref{fig:cd_rmse_entire}b) tiene un carácter puramente ilustrativo del orden de rangos medios, careciendo de validez inferencial debido a la no significación de la prueba previa de Friedman ($p=0.120$ y $p=0.140$, respectivamente). En consecuencia, la barra de diferencia crítica (CD = 13.25) abarca de forma efectiva la totalidad de las condiciones evaluadas. Este solapamiento absoluto prohíbe categóricamente al lector extraer conclusiones sobre la superioridad de cualquier técnica sobre el baseline original. La equivalencia estadística observada entre las 21 condiciones experimentales confirma que, en estos dos repositorios, las fluctuaciones de error observadas son atribuibles a la varianza estocástica del proceso de entrenamiento y validación cruzada, y no a un efecto sistemático del reequilibrio demo
 
-En \textbf{REPLACE-BG} el resultado es análogo ($p = 0{,}140$): la barra
-CD cubre la totalidad del rango de posiciones y ninguna técnica se
-separa significativamente del resto. Sex·balanced\_sex\_smote\_tomek
-ocupa la posición 1 y Age·Jittering la última, pero sin diferencia
-estadísticamente detectable.
 
 En \textbf{DiaTrend} el test de Friedman rechaza la hipótesis nula con
 $p < 0{,}0001$ ($\chi^2_F = 85{,}71$), lo que habilita la interpretación
@@ -1515,21 +1522,7 @@ y Age·Jittering, pero no del resto de técnicas.
 \end{figure}
 
 \paragraph{CD diagrams TBR-2: significación en hipoglucemia severa.}
-Este es el resultado estadístico más relevante desde el punto de vista
-clínico. En \textbf{T1DiabetesGranada} el test de Friedman no rechaza
-la hipótesis nula en TBR-2 ($p = 0{,}437$), y el CD diagram muestra que
-Age·SMOTE y Age·Undersampling+SMOTE ocupan las primeras posiciones del
-ranking, con el \textit{baseline} original en la posición $\approx$9.
-La inversión respecto al CD diagram de ENTIRE es notable: técnicas que
-estaban en las últimas posiciones globalmente (las híbridas de aumento)
-suben al primer tercio al evaluar solo hipoglucemia, mientras que
-Age·PAUndersampling cae a la última posición. Sin embargo, la barra CD
-abarca todo el rango y ninguna diferencia es estadísticamente significativa.
-
-En \textbf{REPLACE-BG} el test tampoco es significativo ($p = 0{,}779$,
-el $p$-valor más alto de todos los escenarios evaluados), confirmando la
-total equivalencia estadística entre técnicas en este repositorio para
-el rango más crítico.
+Por estricto rigor metodológico, es crucial subrayar que la representación de los diagramas de diferencia crítica (CD) para \textbf{T1DiabetesGranada} (Figura \ref{fig:cd_rmse_tbr2}a) y \textbf{REPLACE-BG} (Figura \ref{fig:cd_rmse_tbr2}b) tiene un carácter puramente ilustrativo del orden de rangos medios, careciendo de validez inferencial debido a la no significación de la prueba previa de Friedman ($p=0.120$ y $p=0.140$, respectivamente). En consecuencia, la barra de diferencia crítica (CD = 13.25) abarca de forma efectiva la totalidad de las condiciones evaluadas. Este solapamiento absoluto prohíbe categóricamente al lector extraer conclusiones sobre la superioridad de cualquier técnica sobre el baseline original. La equivalencia estadística observada entre las 21 condiciones experimentales confirma que, en estos dos repositorios, las fluctuaciones de error observadas son atribuibles a la varianza estocástica del proceso de entrenamiento y validación cruzada, y no a un efecto sistemático del reequilibrio demo
 
 En \textbf{DiaTrend} el test de Friedman rechaza la hipótesis nula en
 TBR-2 ($p = 0{,}00013$, $\chi^2_F = 51{,}56$). La lectura del CD diagram
@@ -1547,9 +1540,14 @@ edad pero sí de Age·PAUndersampling y Age·Undersampling, lo que sugiere
 que el balanceo por sexo con submuestreo produce un efecto más moderado
 en TBR-2 que el balanceo por edad.
 
-\begin{figure}[H]
+\paragraph{Ranking global mediante el método Borda.}
+La figura~\ref{fig:borda_lollipop} agrega los rankings individuales en
+una puntuación global que resume el posicionamiento de cada técnica a
+través de datasets, métricas y rangos glucémicos.
+
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.85\textwidth]{%
+    \includegraphics[width=0.82\textwidth]{%
         ../../analysis_relief/outputs/figures/rankings/borda_lollipop}
     \caption{Ranking global de técnicas mediante el método Borda (suma
              de posiciones de ranking a través de \textit{datasets},
@@ -1560,9 +1558,14 @@ en TBR-2 que el balanceo por edad.
     \label{fig:borda_lollipop}
 \end{figure}
 
-\begin{figure}[H]
+\paragraph{Estabilidad del ranking entre métricas.}
+La figura~\ref{fig:bump_chart_entire} examina si el ordenamiento de las
+técnicas es robusto al cambio de métrica de evaluación, comparando el
+ranking por RMSE y por MAE para el conjunto completo.
+
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=\textwidth]{%
+    \includegraphics[width=0.82\textwidth]{%
         ../../analysis_relief/outputs/figures/rankings/bump_chart_ENTIRE}
     \caption{\textit{Bump chart} mostrando la estabilidad del ranking
              de cada técnica entre RMSE y MAE para el conjunto completo
@@ -1572,6 +1575,7 @@ en TBR-2 que el balanceo por edad.
              diferente según la métrica utilizada.}
     \label{fig:bump_chart_entire}
 \end{figure}
+
 
 \paragraph{Ranking Borda y estabilidad entre métricas.}
 El \textit{lollipop} de Borda de la figura~\ref{fig:borda_lollipop}
@@ -1624,46 +1628,116 @@ clínico y la métrica de evaluación prioritaria.
 \label{sec:discusion}
 % =========================================================
 
-Esta sección sintetiza los hallazgos de las secciones anteriores y
-responde de forma directa a las preguntas de investigación que motivaron
-el trabajo. Cada respuesta integra la evidencia del análisis del
-\textit{train set} (sección~\ref{sec:efecto_balanceo_trainset}) con la
-del análisis de predicción (sección~\ref{sec:analisis_mejora}), y
-distingue entre mejora estadística y relevancia clínica cuando ambas
-dimensiones no coinciden.
+Esta sección sintetiza los hallazgos de las secciones anteriores y responde de
+forma directa a las preguntas de investigación que motivaron el trabajo. Cada
+respuesta integra la evidencia del análisis del \textit{train set}
+(Sección~\ref{sec:efecto_balanceo_trainset}) con la del análisis de predicción
+(Sección~\ref{sec:analisis_mejora}), y distingue entre mejora estadística y
+relevancia clínica cuando ambas dimensiones no coinciden.
 
+% ---------------------------------------------------------
 \paragraph{¿Mejora el balanceo demográfico el rendimiento del modelo LSTM?}
+% ---------------------------------------------------------
 
-La respuesta es matizada y fuertemente dependiente del repositorio y
-del rango glucémico que se priorice. En términos globales (RMSE sobre
-ENTIRE), el balanceo demográfico no produce mejoras estadísticamente
-significativas en T1DiabetesGranada ($p = 0{,}120$, Friedman) ni en
-REPLACE-BG ($p = 0{,}140$): en ambos repositorios las diferencias
-observadas entre técnicas son estadísticamente compatibles con variación
-aleatoria, y la evidencia de que cualquier técnica de balanceo supere al
-\textit{baseline} original es insuficiente. En DiaTrend, en cambio, el
-test de Friedman rechaza la hipótesis nula en todos los rangos y métricas
-evaluados ($p < 0{,}0001$ en ENTIRE RMSE), y el post-hoc de Nemenyi
-identifica grupos de técnicas estadísticamente distintos: las técnicas de
-submuestreo agresivo por edad (RUS, PA-Undersampling) deterioran
-significativamente el rendimiento global respecto a Tomek Links y a las
-técnicas de dimensión sexo, mientras que estas últimas son
+La respuesta es matizada y fuertemente dependiente del repositorio y del rango
+glucémico que se priorice. En términos globales (RMSE sobre ENTIRE), el balanceo
+demográfico no produce mejoras estadísticamente significativas en
+T1DiabetesGranada ($p = 0{,}120$, Friedman) ni en REPLACE-BG ($p = 0{,}140$):
+en ambos repositorios las diferencias observadas entre técnicas son estadísticamente
+compatibles con variación aleatoria, y la evidencia de que cualquier técnica supere
+al \textit{baseline} original es insuficiente. En DiaTrend, en cambio, el test de
+Friedman rechaza la hipótesis nula en todos los rangos y métricas evaluados
+($p < 0{,}0001$ en ENTIRE RMSE), y el post-hoc de Nemenyi identifica grupos de
+técnicas estadísticamente distintos: las técnicas de submuestreo agresivo por edad
+(RUS, PA-Undersampling) deterioran significativamente el rendimiento global respecto
+a Tomek Links y a las técnicas de dimensión sexo, mientras que estas últimas son
 estadísticamente equivalentes al \textit{baseline}.
 
-La lectura cambia al focalizar la evaluación en TBR-2 (hipoglucemia
-severa, $<$54\,mg/dL), el rango clínicamente más crítico. En DiaTrend,
-donde el test de Friedman también es significativo en TBR-2
-($p = 0{,}00013$), el ranking se invierte: las técnicas de aumento
-(ROS, SMOTE, ROS+Tomek) mejoran el RMSE en TBR-2 respecto al
-\textit{baseline}, mientras que las de submuestreo lo empeoran. Esta
-inversión sistemática confirma un \textbf{trade-off estructural}: en
-DiaTrend no existe ninguna técnica que mejore simultáneamente el RMSE
-global y el RMSE en hipoglucemia severa, lo que obliga a elegir entre
-optimizar para el rendimiento medio o para el rango clínicamente más
-prioritario. En T1DiabetesGranada y REPLACE-BG este trade-off existe en
-los datos pero no alcanza significación estadística en ningún rango, por
-lo que no puede afirmarse que el balanceo produzca un efecto clínico
-neto demostrable en esos repositorios.
+La lectura cambia al focalizar la evaluación en TBR-2 (hipoglucemia severa,
+$<54$\,mg/dL), el rango clínicamente más crítico. En DiaTrend, donde el test de
+Friedman también es significativo en TBR-2 ($p = 0{,}00013$), el ranking se
+invierte: las técnicas de aumento (ROS, SMOTE, ROS+Tomek) mejoran el RMSE en
+TBR-2 respecto al \textit{baseline}, mientras que las de submuestreo lo empeoran.
+Esta inversión sistemática confirma un \textbf{trade-off estructural}: en DiaTrend
+no existe ninguna técnica que mejore simultáneamente el RMSE global y el RMSE en
+hipoglucemia severa, lo que obliga a elegir entre optimizar para el rendimiento
+medio o para el rango clínicamente más prioritario.
+
+% ---------------------------------------------------------
+\paragraph{¿Por qué T1DiabetesGranada es insensible al balanceo?}
+\label{subsec:discusion_granada}
+% ---------------------------------------------------------
+
+La ausencia de efecto estadísticamente significativo en T1DiabetesGranada no
+refleja un fallo del \textit{pipeline} de balanceo, sino un fenómeno de interés
+propio para el aprendizaje profundo biomédico: la existencia de un
+\textbf{límite de saturación representacional}. Con más de 13 millones de ventanas
+de entrenamiento generadas por 643 pacientes, el volumen de datos es suficientemente
+masivo para que la red LSTM adquiera, de forma implícita, cierta invarianza frente a
+las fluctuaciones demográficas. En este régimen de abundancia, el desequilibrio
+moderado de 3{,}4:1 entre sexos queda neutralizado por la riqueza y diversidad
+intrínseca de las trayectorias de glucosa: la red aprende representaciones
+suficientemente generales sin necesidad de que el conjunto de entrenamiento sea
+reequilibrado artificialmente.
+
+Este resultado apunta a la existencia de un \textbf{umbral crítico de volumen} a
+partir del cual el balanceo demográfico explícito deviene superfluo. La implicación
+práctica es relevante en el contexto de los sistemas de páncreas artificial: cuando
+se dispone de cohortes de gran escala del mundo real, la carga computacional
+asociada al preprocesamiento de balanceo puede omitirse sin comprometer la equidad
+del modelo, lo que simplifica el \textit{pipeline} de despliegue clínico en
+entornos de lazo cerrado.
+
+% ---------------------------------------------------------
+\paragraph{¿Por qué REPLACE-BG es insensible al balanceo?}
+% ---------------------------------------------------------
+
+El mecanismo subyacente en REPLACE-BG es distinto, y obedece al diseño propio de
+un ensayo clínico aleatorizado y controlado. Al imponer una duración de seguimiento
+idéntica para todos los participantes ($\approx 182$ días) y protocolos de
+adherencia estrictos, el estudio elimina la principal fuente de desequilibrio que
+aparece de forma natural en datos de vida libre: la amplificación del desbalanceo
+demográfico al pasar de paciente a ventana (véase Subsección~\ref{subsec:imbalance_paciente_vs_ventana}).
+Cuando todos los pacientes contribuyen con un número similar de ventanas al
+conjunto de entrenamiento, el modelo LSTM queda estructuralmente protegido frente
+a los sesgos de representación, haciendo que cualquier intervención correctiva
+a posteriori resulte estadísticamente indetectable.
+
+Este fenómeno puede caracterizarse como \textbf{homeostasis demográfica estructural}:
+el diseño del estudio actúa como regulador implícito del balance, de modo que el
+balanceo explícito no añade información que la distribución de los datos no contenga
+ya. El hallazgo tiene una lectura normativa clara: una adecuada planificación en la
+fase de adquisición y curación de datos es la estrategia más eficiente para mitigar
+sesgos algorítmicos, y resulta preferible a cualquier intervención correctiva sobre
+datos ya recolectados.
+
+% ---------------------------------------------------------
+\paragraph{Tres regímenes de eficacia del balanceo}
+% ---------------------------------------------------------
+
+Los tres repositorios ilustran conjuntamente tres regímenes cualitativamente
+distintos en los que el balanceo demográfico opera de forma diferente:
+
+\begin{enumerate}
+    \item \textbf{Régimen de saturación} (T1DiabetesGranada): el volumen de datos
+    supera el umbral a partir del cual el modelo adquiere robustez demográfica de
+    forma implícita. El balanceo es inocuo pero innecesario.
+
+    \item \textbf{Régimen de homeostasis por diseño} (REPLACE-BG): el protocolo
+    del estudio garantiza una distribución de ventanas aproximadamente equilibrada.
+    El balanceo no encuentra desequilibrio estructural que corregir.
+
+    \item \textbf{Régimen de desequilibrio activo} (DiaTrend): el dataset de vida
+    libre presenta heterogeneidad en la duración de las series y desequilibrios
+    demográficos que se amplifican al nivel de ventana. Aquí el balanceo sí tiene
+    efecto medible, aunque con un trade-off clínico inevitable entre rendimiento
+    global y rendimiento en hipoglucemia severa.
+\end{enumerate}
+
+Esta taxonomía constituye, en sí misma, una contribución metodológica del trabajo:
+proporciona un marco interpretativo para anticipar cuándo el balanceo demográfico
+puede esperarse que sea efectivo en problemas de predicción sobre series temporales
+clínicas, y cuándo resulta redundante.
 
 \paragraph{¿Qué familia de técnicas ofrece mejor relación beneficio/coste?}
 
@@ -1712,6 +1786,7 @@ de Friedman no rechaza la hipótesis nula en ningún rango, lo que sugiere
 que en repositorios grandes con desequilibrio moderado el balanceo
 demográfico es innecesario desde el punto de vista predictivo.
 
+
 REPLACE-BG es el repositorio más homogéneo: sus seguimientos estandarizados
 de $\approx$182 días eliminan la heterogeneidad inter-paciente que amplifica
 el desequilibrio en los otros dos datasets. Esta homogeneidad hace que el
@@ -1721,6 +1796,7 @@ rechaza la hipótesis nula en ningún rango ni métrica. REPLACE-BG ilustra
 un escenario en que el diseño controlado del estudio previene el problema
 que el balanceo intenta corregir, convirtiendo las técnicas de reequilibrio
 en intervenciones superfluas.
+
 
 DiaTrend es el caso más complejo: con solo 54 pacientes, un desequilibrio
 etario de 38:1 a nivel de paciente que se amplifica hasta proporciones

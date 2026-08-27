@@ -1,4 +1,4 @@
-Condition,T1DGranada,DiaTrend,ReplaceBG
+Condition,T1DiabetesGranada,DiaTrend,ReplaceBG
 Original,#8  (39.38±1.38),#18  (75.28±7.33),#16  (57.29±1.54)
 Age · Jittering,#18  (39.81±1.30),#5  (73.55±7.47),#21  (57.84±0.50)
 Age · Oversampling,#9  (39.44±1.39),#3  (73.23±7.00),#10  (57.04±1.12)

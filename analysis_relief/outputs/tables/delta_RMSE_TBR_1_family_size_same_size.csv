@@ -1,4 +1,4 @@
-Condition,T1DGranada,DiaTrend,ReplaceBG
+Condition,T1DiabetesGranada,DiaTrend,ReplaceBG
 Age · Undersampling + Oversampling,-0.6%,+2.1%,+0.5%
 Age · Undersampling + SMOTE,+0.9%,+3.6%,+1.6%
 Age · balanced_age_smote_tomek,+0.8%,+4.0%,+0.6%

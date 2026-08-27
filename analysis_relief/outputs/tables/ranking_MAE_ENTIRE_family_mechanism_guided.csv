@@ -1,4 +1,4 @@
-Condition,T1DGranada,DiaTrend,ReplaceBG
+Condition,T1DiabetesGranada,DiaTrend,ReplaceBG
 Age · Jittering,#10  (27.71±0.56),#9  (34.28±1.61),#10  (27.35±0.65)
 Age · PAUndersampling,#1  (27.30±0.30),#10  (35.76±2.18),#8  (27.21±0.74)
 Age · SMOTE,#9  (27.67±0.53),#7  (33.83±1.60),#5  (27.16±0.76)

@@ -1,4 +1,4 @@
-Condition,T1DGranada,DiaTrend,ReplaceBG
+Condition,T1DiabetesGranada,DiaTrend,ReplaceBG
 Age · PAUndersampling,#5  (35.60±1.55),#6  (76.39±5.88),#6  (55.06±1.95)
 Age · Undersampling,#3  (35.34±1.51),#5  (75.43±5.57),#5  (54.77±1.83)
 Age · Tomek Links,#2  (35.24±1.12),#1  (69.55±6.76),#2  (54.17±1.89)

@@ -144,6 +144,8 @@ def plot_slope_by_dimension(master, metric="RMSE", rng="ENTIRE"):
         techniques = [t for t in TECHNIQUE_ORDER if t != "original" and
                       t in bal["technique"].unique()]
 
+        # DESPUÉS
+        annotated_orig = set()   # para no repetir etiqueta si varios techs comparten baseline
         for tech in techniques:
             tech_data = bal[bal["technique"] == tech]
             for ds in DATASET_ORDER:
@@ -157,12 +159,23 @@ def plot_slope_by_dimension(master, metric="RMSE", rng="ENTIRE"):
                 ax.scatter([x_orig, x_bal], [ds_orig, ds_bal[0]],
                            color=color, s=50, zorder=3, edgecolors="white", lw=0.7)
 
+                # Etiqueta dataset junto al punto baseline (solo una vez por dataset)
+                if ds not in annotated_orig:
+                    ax.text(
+                        x_orig - 0.04, ds_orig,
+                        DATASET_LABELS.get(ds, ds),
+                        fontsize=7, color="0.35",
+                        ha="right", va="center",
+                        fontstyle="italic",
+                    )
+                    annotated_orig.add(ds)
+
         ax.set_xticks([x_orig, x_bal])
         ax.set_xticklabels(["Original", "Balanced"], fontsize=11, fontweight="bold")
         ax.set_ylabel(f"{metric} (mg/dL)", fontsize=10) if dim == "age" else None
         ax.set_title(f"Dimension: {DIMENSION_LABELS.get(dim, dim)}",
                      fontsize=12, fontweight="bold")
-        ax.set_xlim(-0.3, 1.3)
+        ax.set_xlim(-0.55, 1.3)
         ax.grid(axis="y", alpha=0.3)
 
         # Annotate direction

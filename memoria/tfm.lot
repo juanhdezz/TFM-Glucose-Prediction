@@ -7,15 +7,12 @@
 \addvspace {10\p@ }
 \contentsline {table}{\numberline {4.1}{\ignorespaces Características de los \textit {datasets} en su estado original.}}{30}{table.caption.31}%
 \contentsline {table}{\numberline {4.2}{\ignorespaces Características de los \textit {datasets} tras el preprocesado aplicado en~\cite {antoniotfg}.}}{31}{table.caption.32}%
-\contentsline {table}{\numberline {4.3}{\ignorespaces Ratios de desequilibrio demográfico por dimensión y \textit {dataset}. Para la dimensión edad se muestra el ratio a nivel de ventana (grupo mayoritario / grupo minoritario, proxy $N_\text {pac} \times \text {días mediana}$) y el rango inter-\textit {fold} estimado con Group 5-Fold. Para la dimensión sexo se muestra el ratio a nivel de paciente. Un ratio de 1{,}0 indica distribución equilibrada.}}{43}{table.caption.59}%
-\contentsline {table}{\numberline {4.4}{\ignorespaces Taxonomía de las diez técnicas de balanceo implementadas.}}{45}{table.caption.62}%
-\contentsline {table}{\numberline {4.5}{\ignorespaces Hiperparámetros del modelo LSTM.}}{52}{table.caption.76}%
-\contentsline {table}{\numberline {4.6}{\ignorespaces Rangos glucémicos para la evaluación desagregada del rendimiento.}}{59}{table.caption.82}%
-\contentsline {table}{\numberline {4.7}{\ignorespaces Ejemplo de archivo plano MTA para un único \textit {fold} (LSTM, horizonte H4, condición sin balanceo). Las columnas A--E corresponden a las zonas de la Clarke Error Grid (\%), A+B es su suma acumulada (\%), y RMSE, MSE, MAE y MAPE son métricas de regresión.}}{60}{table.caption.83}%
-\contentsline {table}{\numberline {4.8}{\ignorespaces Ejemplo de archivo de reporte agregado MTA (LSTM, horizonte H4, condición sin balanceo). Cada celda expresa el valor medio con su desviación estándar inter-\textit {fold} en la línea inferior, calculados sobre los cinco \textit {folds}.}}{60}{table.caption.84}%
+\contentsline {table}{\numberline {4.3}{\ignorespaces Ratios de desequilibrio demográfico por dimensión y \textit {dataset}. Para la dimensión edad se muestra el ratio a nivel de ventana (grupo mayoritario / grupo minoritario, proxy $N_\text {pac} \times \text {días mediana}$) y el rango inter-\textit {fold} estimado con Group 5-Fold. Para la dimensión sexo se muestra el ratio a nivel de paciente. Un ratio de 1{,}0 indica distribución equilibrada.}}{44}{table.caption.61}%
+\contentsline {table}{\numberline {4.4}{\ignorespaces Taxonomía de las diez técnicas de balanceo implementadas.}}{46}{table.caption.64}%
+\contentsline {table}{\numberline {4.5}{\ignorespaces Hiperparámetros del modelo LSTM.}}{53}{table.caption.78}%
+\contentsline {table}{\numberline {4.6}{\ignorespaces Rangos glucémicos para la evaluación desagregada del rendimiento.}}{60}{table.caption.84}%
+\contentsline {table}{\numberline {4.7}{\ignorespaces Ejemplo de archivo plano MTA para un único \textit {fold} (LSTM, horizonte H4, condición sin balanceo). Las columnas A--E corresponden a las zonas de la Clarke Error Grid (\%), A+B es su suma acumulada (\%), y RMSE, MSE, MAE y MAPE son métricas de regresión.}}{61}{table.caption.85}%
+\contentsline {table}{\numberline {4.8}{\ignorespaces Ejemplo de archivo de reporte agregado MTA (LSTM, horizonte H4, condición sin balanceo). Cada celda expresa el valor medio con su desviación estándar inter-\textit {fold} en la línea inferior, calculados sobre los cinco \textit {folds}.}}{61}{table.caption.86}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {5.1}{\ignorespaces Resumen del test de Friedman por \textit {dataset} y rango glucémico (métrica RMSE). Se indica el estadístico $\chi ^2_F$, el $p$-valor y si el test es significativo ($\alpha = 0{,}05$). Un asterisco (*) señala significación.}}{94}{table.caption.140}%
-\addvspace {10\p@ }
-\addvspace {10\p@ }
-\addvspace {10\p@ }
+\contentsline {table}{\numberline {5.1}{\ignorespaces Resumen del test de Friedman por \textit {dataset} y rango glucémico (métrica RMSE). Se indica el estadístico $\chi ^2_F$, el $p$-valor y si el test es significativo ($\alpha = 0{,}05$). Un asterisco (*) señala significación.}}{95}{table.caption.147}%
 \addvspace {10\p@ }

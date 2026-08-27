@@ -210,6 +210,12 @@ Y.~Tashiro, J.~Song, Y.~Song, and S.~Ermon, ``{CSDI}: Conditional score-based di
 \bibitem{bing2022healthgen}
 A.~Bing {\em et~al.}, ``Healthgen: Equitable synthetic ehr generation,'' {\em PMC}, 2022.
 
+\bibitem{mayo2019glycemic}
+M.~Mayo, L.~Chepulis, and R.~G. Paul, ``Glycemic-aware metrics and oversampling techniques for predicting blood glucose levels using machine learning,'' {\em PLOS ONE}, vol.~14, p.~e0225613, Dec. 2019.
+
+\bibitem{sandig2020cgm}
+D.~Sandig, J.~Grimsmann, C.~Reinauer, A.~Melmer, S.~Zimny, M.~M{\"u}ller-Korbsch, N.~Forestier, A.~Zeyfang, P.~Bramlage, T.~Danne, T.~Meissner, and R.~W. Holl, ``Continuous glucose monitoring in adults with type 1 diabetes: Real-world data from the {German/Austrian} prospective diabetes follow-up registry,'' {\em Diabetes Technology \& Therapeutics}, vol.~22, pp.~602--612, Aug. 2020.
+
 \bibitem{aleppo2017}
 G.~Aleppo, K.~J. Ruedy, T.~D. Riddlesworth, D.~F. Kruger, A.~L. Peters, I.~Hirsch, R.~M. Bergenstal, A.~Bhargava, R.~Rich-Haigh, R.~Pop-Busui, W.~H. Polonsky, L.~Y. Yeoh, and R.~W. Beck, ``{REPLACE-BG}: A randomized trial comparing continuous glucose monitoring with and without routine blood glucose monitoring in adults with well-controlled type 1 diabetes,'' {\em Diabetes Care}, vol.~40, no.~4, pp.~538--545, 2017.
 

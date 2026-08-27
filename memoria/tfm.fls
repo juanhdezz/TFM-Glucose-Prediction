@@ -119,6 +119,8 @@ INPUT c:/texlive/2026/texmf-dist/tex/latex/geometry/geometry.sty
 INPUT c:/texlive/2026/texmf-dist/tex/latex/geometry/geometry.sty
 INPUT c:/texlive/2026/texmf-dist/tex/generic/iftex/ifvtex.sty
 INPUT c:/texlive/2026/texmf-dist/tex/generic/iftex/ifvtex.sty
+INPUT c:/texlive/2026/texmf-dist/tex/latex/placeins/placeins.sty
+INPUT c:/texlive/2026/texmf-dist/tex/latex/placeins/placeins.sty
 INPUT c:/texlive/2026/texmf-dist/tex/latex/lipsum/lipsum.sty
 INPUT c:/texlive/2026/texmf-dist/tex/latex/lipsum/lipsum.sty
 INPUT c:/texlive/2026/texmf-dist/tex/latex/l3packages/l3keys2e/l3keys2e.sty
@@ -590,15 +592,6 @@ INPUT capitulos/05_Conclusiones.tex
 INPUT ./tfm.bbl
 INPUT ./tfm.bbl
 INPUT tfm.bbl
-INPUT ./anexos/gestion.tex
-INPUT ./anexos/gestion.tex
-INPUT anexos/gestion.tex
-INPUT ./anexos/innovacion.tex
-INPUT ./anexos/innovacion.tex
-INPUT anexos/innovacion.tex
-INPUT ./anexos/manual_usuario.tex
-INPUT ./anexos/manual_usuario.tex
-INPUT anexos/manual_usuario.tex
 INPUT tfm.aux
 INPUT ./tfm.out
 INPUT ./tfm.out

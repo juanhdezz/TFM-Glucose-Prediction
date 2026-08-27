@@ -1,4 +1,4 @@
-Condition,T1DGranada Zone A,T1DGranada Zone A + B,DiaTrend Zone A,DiaTrend Zone A + B,ReplaceBG Zone A,ReplaceBG Zone A + B
+Condition,T1DiabetesGranada Zone A,T1DiabetesGranada Zone A + B,DiaTrend Zone A,DiaTrend Zone A + B,ReplaceBG Zone A,ReplaceBG Zone A + B
 Age · Jittering,67.4 ± 0.6,94.4 ± 0.3,63.6 ± 2.4,95.2 ± 0.8,67.0 ± 0.6,94.9 ± 0.2
 Age · PAUndersampling,67.6 ± 0.7,94.4 ± 0.4,61.4 ± 3.0,95.3 ± 0.8,67.2 ± 0.5,95.0 ± 0.2
 Age · SMOTE,67.5 ± 0.8,94.6 ± 0.4,64.3 ± 2.2,95.3 ± 0.9,67.4 ± 0.8,95.0 ± 0.2

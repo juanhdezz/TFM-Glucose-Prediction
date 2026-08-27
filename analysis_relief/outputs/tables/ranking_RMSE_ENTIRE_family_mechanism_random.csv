@@ -1,4 +1,4 @@
-Condition,T1DGranada,DiaTrend,ReplaceBG
+Condition,T1DiabetesGranada,DiaTrend,ReplaceBG
 Age · Oversampling,#6  (38.05±0.84),#5  (46.03±2.17),#4  (36.97±0.76)
 Age · Undersampling,#1  (37.90±0.75),#6  (47.76±2.86),#6  (37.12±1.08)
 Age · Undersampling + Oversampling,#5  (38.00±0.79),#4  (45.92±2.15),#2  (36.86±0.72)

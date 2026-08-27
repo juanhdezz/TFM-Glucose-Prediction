@@ -1,4 +1,4 @@
-Condition,T1DGranada,DiaTrend,ReplaceBG
+Condition,T1DiabetesGranada,DiaTrend,ReplaceBG
 Age · Jittering,-0.8%,-3.0%,-0.7%
 Age · Oversampling,-0.7%,-2.2%,+0.1%
 Age · PAUndersampling,+0.6%,-7.0%,-0.2%

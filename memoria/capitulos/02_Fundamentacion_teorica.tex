@@ -80,7 +80,7 @@ Formalmente, la actualización del estado oculto en una RNN estándar en el inst
 \end{equation}
 donde $\mathbf{x}_t$ es el vector de entrada en el instante $t$, $\mathbf{W}_h$ y $\mathbf{W}_x$ son matrices de pesos entrenables, $\mathbf{b}$ es un vector de sesgo y $f$ es una función de activación no lineal (habitualmente $\tanh$). La predicción se obtiene aplicando una transformación lineal al estado oculto: $\hat{y}_t = \mathbf{W}_y \mathbf{h}_t + \mathbf{b}_y$.
 
-La limitación fundamental de las RNN estándar reside en el entrenamiento mediante retropropagación a través del tiempo (\emph{Backpropagation Through Time}, BPTT): el gradiente involucra productos reiterados de la matriz jacobiana de la función de transición. Cuando la secuencia es larga, este producto puede converger exponencialmente a cero (\emph{vanishing gradient}) o crecer exponencialmente (\emph{exploding gradient}), impidiendo en la práctica que la red aprenda dependencias temporales de largo alcance~\cite{bengio1994learning,hochreiter1997lstm}.
+La limitación fundamental de las RNN estándar reside en el entrenamiento mediante retropropagación a través del tiempo (\emph{Backpropagation Through Time}, BPTT): el gradiente involucra productos reiterados de la matriz jacobiana de la función de transición. Cuando la secuencia es larga, este producto puede converger exponencialmente a cero (\emph{vanishing gradient}) o crecer exponencialmente (\emph{exploding gradient}), impidiendo en la práctica que la red aprenda dependencias temporales de largo alcance~\cite{bengio1994learning,hochreiter1997long}.
 
 \subsection{Redes LSTM: arquitectura y mecanismo de puertas}
 \label{subsec:lstm_arquitectura}
@@ -538,9 +538,8 @@ mediante balanceo.
 
 \textbf{Segunda brecha: las técnicas de remuestreo aplicadas a predicción de
 glucosa corrigen el desequilibrio de clase glucémica, no la composición
-demográfica del conjunto de entrenamiento.} Los trabajos de Machado et
-al.~\cite{machado2023balancing} y Mayo et al.~\cite{mayo2019glycemic}
-demuestran que el balanceo del conjunto de entrenamiento mejora el rendimiento de
+demográfica del conjunto de entrenamiento.} El trabajo de Machado et
+al.~\cite{machado2023balancing} demuestra que el balanceo del conjunto de entrenamiento mejora el rendimiento de
 los modelos de predicción glucémica, especialmente en los rangos de hipoglucemia.
 No obstante, en ambos casos la variable remuestreada es la clase glucémica de la
 variable objetivo (hipoglucemia, normoglucemia, hiperglucemia): se trata de
