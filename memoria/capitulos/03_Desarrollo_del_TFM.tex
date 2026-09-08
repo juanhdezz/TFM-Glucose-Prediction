@@ -27,7 +27,7 @@ La figura~\ref{fig:pipeline_global} ofrece una visión de conjunto del flujo de 
 %   \label{fig:pipeline_global}
 % \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{imagenes/pipeline_global.png}
     \caption{Visión general del flujo de trabajo del TFM.}
@@ -180,7 +180,7 @@ figuras~\ref{fig:age_group_dist}, \ref{fig:sex_dist} y~\ref{fig:age_sex_heatmap}
 muestran, de forma agregada para los tres conjuntos, la distribución de pacientes
 por grupo de edad, por sexo y la interacción entre ambas dimensiones.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{../../EDA/cross/B1a_age_group_distribution}
     \caption{Distribución de pacientes por grupo de edad
@@ -204,14 +204,14 @@ grupo $\geq$66 (2\,\%), lo que produce un ratio de 38:1 que hace prácticamente
 inviable el balanceo por edad en este repositorio sin recurrir a técnicas de
 síntesis agresiva.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.75\textwidth]{../../EDA/cross/B1b_sex_distribution}
     \caption{Distribución por sexo en cada \textit{dataset}.}
     \label{fig:sex_dist}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.75\textwidth]{../../EDA/cross/B1c_age_sex_heatmap}
     \caption{\textit{Heatmap} de la distribución conjunta edad~$\times$~sexo
@@ -271,7 +271,7 @@ La distribución de los valores de glucosa presenta diferencias tanto entre
 La figura~\ref{fig:glucose_violin} muestra, mediante diagramas de violín, la
 distribución de la glucemia por grupo de edad en los tres repositorios.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{../../EDA/cross/B3d_glucose_violin_age}
     \caption{Distribución de los valores de glucosa (mg/dL) por grupo de edad en
@@ -313,7 +313,7 @@ confirmando visualmente el efecto del techo instrumental.
 La figura~\ref{fig:tir_tbr_tar_sex} desagrega el tiempo en rango por sexo en los
 tres repositorios.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{../../EDA/cross/B3c_tir_tbr_tar_by_sex}
     \caption{Porcentaje de mediciones en cada rango glucémico (TBR, TIR, TAR)
@@ -324,7 +324,7 @@ tres repositorios.
 La figura~\ref{fig:glucose_ranges_age} desglosa la distribución por rangos
 glucémicos y grupo de edad de forma independiente para cada repositorio.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \begin{subfigure}[b]{0.32\textwidth}
         \includegraphics[width=\textwidth]{../../EDA/T1DiabetesGranada/B3b_glucose_ranges_age}
@@ -483,7 +483,7 @@ evidencia cuantitativa de separabilidad es más sólida en T1DiabetesGranada
 ---el único \textit{dataset} con suficiente volumen y duración de seguimiento
 para sostener comparaciones robustas en todos los grupos demográficos.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{../../EDA/cross/B3a_mean_glucose_by_age}
     \caption{Glucemia media por grupo de edad y \textit{dataset}. Las barras
@@ -506,7 +506,7 @@ de medias coexisten con una elevada variabilidad intra-grupo: la
 separabilidad demográfica es real pero moderada, y el solapamiento entre
 distribuciones es la norma.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.82\textwidth]{../../EDA/cross/B5a_cv_by_age}
     \caption{Coeficiente de variación glucémico por grupo de edad y
@@ -531,7 +531,7 @@ grupos ($n=8$ y $n=4$ respectivamente). REPLACE-BG presenta el patrón más
 homogéneo entre grupos, con medianas de CV entre $34\%$ y $38\%$ y escasa
 dispersión, coherente con la homogeneidad de los seguimientos ya documentada.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.82\textwidth]{../../EDA/cross/B5b_cv_by_sex}
     \caption{Coeficiente de variación glucémico por sexo y
@@ -596,7 +596,7 @@ En \textbf{REPLACE-BG}, en cambio, el desequilibrio demográfico apenas se ampli
 \paragraph{Desequilibrio glucémico de clases dentro de cada grupo.}
 Más allá del desequilibrio demográfico entre grupos, existe un desequilibrio pronunciado entre las clases glucémicas (hipoglucemia, normoglucemia, hiperglucemia) que el modelo debe aprender a predecir. La figura~\ref{fig:class_dist_age} muestra la distribución porcentual de ventanas por clase glucémica y grupo de edad en cada \textit{dataset}.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{../../EDA/cross/B4a_class_distribution_age}
     \caption{Distribución porcentual de ventanas de entrenamiento por clase glucémica (hipoglucemia $<$70\,mg/dL, normoglucemia 70--180\,mg/dL, hiperglucemia $>$180\,mg/dL) y grupo de edad en cada \textit{dataset} (horizonte PH\,=\,4, fold de referencia). Los porcentajes permiten comparar el desequilibrio glucémico entre grupos de edad y con la figura~\ref{fig:age_group_dist}.}
@@ -607,7 +607,7 @@ En los tres \textit{datasets}, la normoglucemia domina la distribución (entre e
 
 La figura~\ref{fig:imbalance_ratio_age} cuantifica este desequilibrio mediante el ratio normoglucemia/hipoglucemia calculado a nivel de paciente individual (mediana e IQR entre folds).
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.85\textwidth]{../../EDA/cross/B4b_imbalance_ratio_age}
     \caption{Ratio de desequilibrio glucémico (ventanas normoglucémicas / ventanas hipoglucémicas) por grupo de edad y \textit{dataset}, expresado como mediana $\pm$ IQR entre pacientes del fold de referencia. Un ratio de 1{,}0 indicaría distribución perfectamente equilibrada entre ambas clases.}
@@ -618,7 +618,7 @@ Los ratios son sustanciales en todos los \textit{datasets}. En \textbf{T1Diabete
 
 Finalmente, la figura~\ref{fig:class_dist_sex} muestra que el desequilibrio glucémico es prácticamente idéntico entre sexos en los tres \textit{datasets}.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{../../EDA/cross/B4c_class_distribution_sex}
     \caption{Distribución porcentual de ventanas de entrenamiento por clase glucémica y sexo en cada \textit{dataset}. La similitud entre grupos sugiere que el sexo no introduce desequilibrio glucémico diferencial.}
@@ -1080,7 +1080,7 @@ Framework                           & TensorFlow/Keras \\
 La Figura~\ref{fig:lstm_architecture} resume la arquitectura del modelo LSTM empleada en este trabajo para la predicción de glucosa con un horizonte de 60 minutos (PH4). En ella se representan de forma esquemática las distintas etapas del flujo de datos, desde la secuencia de entrada hasta la capa de salida, así como la estructura interna de la celda LSTM y las principales características de la configuración utilizada.
 
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{imagenes/lstm_architecture_vertical.png}
     \caption{Arquitectura del modelo LSTM.}
@@ -1110,7 +1110,7 @@ Como \textbf{métrica estadística} se emplea el RMSE, que cuantifica la magnitu
 
 Sin embargo, la precisión estadística no captura completamente la relevancia clínica de los errores. Un error de 20\,mg/dL en zona normoglucémica (80--140\,mg/dL) no tiene el mismo riesgo que el mismo error absoluto en zona hipoglucémica ($<$70\,mg/dL), donde puede conducir a una actuación terapéutica equivocada. Por ello, la \textbf{métrica clínica} central de este trabajo es el \textbf{Clarke Error Grid} (CEG)~\cite{clarke1987}, que clasifica cada par predicción--valor real $(y_i, \hat{y}_i)$ en una de cinco zonas según su riesgo clínico asociado (figura~\ref{fig:clarke-zones}):
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{imagenes/CEG__RMSE_LSTM_H4_ALL}
     \caption{Clark Error Grid de una ejecucion de LSTM para el dataset T1DiabetesGranada.}

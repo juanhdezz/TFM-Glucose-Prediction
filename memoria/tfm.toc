@@ -48,25 +48,25 @@
 \contentsline {subsection}{\numberline {3.5.3}Generación sintética de series temporales fisiológicas}{22}{subsection.3.5.3}%
 \contentsline {section}{\numberline {3.6}Brechas en la literatura y motivación del trabajo}{23}{section.3.6}%
 \contentsline {chapter}{\numberline {4}Metodología de trabajo}{25}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Recopilación y descripción de los datos}{27}{section.4.1}%
+\contentsline {section}{\numberline {4.1}Recopilación y descripción de los datos}{25}{section.4.1}%
 \contentsline {subsection}{\numberline {4.1.1}Criterios de selección de los \textit {datasets}}{27}{subsection.4.1.1}%
 \contentsline {paragraph}{Disponibilidad pública y accesibilidad.}{27}{section*.18}%
 \contentsline {paragraph}{Presencia de variables demográficas a nivel de paciente.}{27}{section*.19}%
 \contentsline {paragraph}{Frecuencia de muestreo CGM suficiente.}{27}{section*.20}%
 \contentsline {paragraph}{Diversidad estructural entre repositorios.}{27}{section*.21}%
 \contentsline {paragraph}{Continuidad con investigación previa en curso.}{27}{section*.22}%
-\contentsline {subsection}{\numberline {4.1.2}T1DiabetesGranada}{28}{subsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.1.2}T1DiabetesGranada}{27}{subsection.4.1.2}%
 \contentsline {paragraph}{Estructura de los archivos.}{28}{section*.23}%
 \contentsline {paragraph}{Cadencia nativa de 15 minutos.}{28}{section*.24}%
 \contentsline {paragraph}{Patrón de missingness y descarte de ventanas.}{28}{section*.25}%
 \contentsline {paragraph}{Separabilidad demográfica.}{28}{section*.26}%
 \contentsline {subsection}{\numberline {4.1.3}REPLACE-BG}{28}{subsection.4.1.3}%
-\contentsline {paragraph}{Acceso y estructura.}{29}{section*.27}%
+\contentsline {paragraph}{Acceso y estructura.}{28}{section*.27}%
 \contentsline {paragraph}{Homogeneidad demográfica por diseño.}{29}{section*.28}%
 \contentsline {subsection}{\numberline {4.1.4}DiaTrend}{29}{subsection.4.1.4}%
 \contentsline {paragraph}{Estructura y preprocesado.}{29}{section*.29}%
 \contentsline {paragraph}{Limitaciones del repositorio.}{29}{section*.30}%
-\contentsline {subsection}{\numberline {4.1.5}Estructura unificada de datos de entrada}{30}{subsection.4.1.5}%
+\contentsline {subsection}{\numberline {4.1.5}Estructura unificada de datos de entrada}{29}{subsection.4.1.5}%
 \contentsline {section}{\numberline {4.2}Análisis exploratorio de datos}{31}{section.4.2}%
 \contentsline {subsection}{\numberline {4.2.1}Distribución demográfica de los \textit {datasets}}{31}{subsection.4.2.1}%
 \contentsline {paragraph}{Distribución por grupo de edad.}{31}{section*.34}%
@@ -88,62 +88,62 @@
 \contentsline {subsection}{\numberline {4.3.1}Desequilibrio a nivel de paciente frente a nivel de ventana}{39}{subsection.4.3.1}%
 \contentsline {paragraph}{Amplificación del desequilibrio demográfico al pasar de paciente a ventana.}{39}{section*.56}%
 \contentsline {paragraph}{Desequilibrio glucémico de clases dentro de cada grupo.}{40}{section*.57}%
-\contentsline {paragraph}{Implicación para la elección de la unidad de balanceo.}{43}{section*.61}%
-\contentsline {subsection}{\numberline {4.3.2}Desequilibrio por dimensión demográfica y \textit {fold}}{44}{subsection.4.3.2}%
-\contentsline {paragraph}{Variabilidad inter-\textit {fold} del desequilibrio.}{45}{section*.63}%
+\contentsline {paragraph}{Implicación para la elección de la unidad de balanceo.}{40}{section*.61}%
+\contentsline {subsection}{\numberline {4.3.2}Desequilibrio por dimensión demográfica y \textit {fold}}{43}{subsection.4.3.2}%
+\contentsline {paragraph}{Variabilidad inter-\textit {fold} del desequilibrio.}{44}{section*.63}%
 \contentsline {paragraph}{Implicación para el protocolo de evaluación.}{45}{section*.64}%
-\contentsline {section}{\numberline {4.4}Investigación de técnicas de balanceo para series temporales}{46}{section.4.4}%
-\contentsline {subsection}{\numberline {4.4.1}Criterios de selección de técnicas}{46}{subsection.4.4.1}%
+\contentsline {section}{\numberline {4.4}Investigación de técnicas de balanceo para series temporales}{45}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Criterios de selección de técnicas}{45}{subsection.4.4.1}%
 \contentsline {subsection}{\numberline {4.4.2}Taxonomía de técnicas implementadas}{46}{subsection.4.4.2}%
-\contentsline {subsubsection}{Familia aleatoria}{47}{section*.66}%
-\contentsline {paragraph}{Random Under-Sampling (RUS).}{47}{section*.67}%
+\contentsline {subsubsection}{Familia aleatoria}{46}{section*.66}%
+\contentsline {paragraph}{Random Under-Sampling (RUS).}{46}{section*.67}%
 \contentsline {paragraph}{Random Over-Sampling (ROS).}{47}{section*.68}%
-\contentsline {subsubsection}{Familia guiada}{48}{section*.69}%
-\contentsline {paragraph}{SMOTE (\emph {Synthetic Minority Oversampling TEchnique}).}{48}{section*.70}%
+\contentsline {subsubsection}{Familia guiada}{47}{section*.69}%
+\contentsline {paragraph}{SMOTE (\emph {Synthetic Minority Oversampling TEchnique}).}{47}{section*.70}%
 \contentsline {paragraph}{Tomek Links.}{48}{section*.71}%
-\contentsline {paragraph}{Jittering.}{49}{section*.72}%
+\contentsline {paragraph}{Jittering.}{48}{section*.72}%
 \contentsline {paragraph}{Patient-aware undersampling.}{49}{section*.73}%
-\contentsline {subsubsection}{Familia híbrida}{50}{section*.74}%
-\contentsline {paragraph}{RUS + ROS.}{50}{section*.75}%
-\contentsline {paragraph}{RUS + SMOTE.}{50}{section*.76}%
-\contentsline {paragraph}{SMOTE + Tomek.}{50}{section*.77}%
+\contentsline {subsubsection}{Familia híbrida}{49}{section*.74}%
+\contentsline {paragraph}{RUS + ROS.}{49}{section*.75}%
+\contentsline {paragraph}{RUS + SMOTE.}{49}{section*.76}%
+\contentsline {paragraph}{SMOTE + Tomek.}{49}{section*.77}%
 \contentsline {paragraph}{ROS + Tomek.}{50}{section*.78}%
-\contentsline {subsection}{\numberline {4.4.3}Validación formal del \emph {pipeline} de balanceo}{51}{subsection.4.4.3}%
+\contentsline {subsection}{\numberline {4.4.3}Validación formal del \emph {pipeline} de balanceo}{50}{subsection.4.4.3}%
 \contentsline {section}{\numberline {4.5}Transformación de datos: generación de ventanas deslizantes}{51}{section.4.5}%
-\contentsline {subsection}{\numberline {4.5.1}Parámetros de ventana}{52}{subsection.4.5.1}%
-\contentsline {subsection}{\numberline {4.5.2}Restricciones de continuidad temporal}{52}{subsection.4.5.2}%
-\contentsline {subsection}{\numberline {4.5.3}Esquema de partición: \emph {Group K-Fold} con $K=5$}{53}{subsection.4.5.3}%
-\contentsline {section}{\numberline {4.6}Arquitectura del modelo LSTM}{54}{section.4.6}%
-\contentsline {subsection}{\numberline {4.6.1}Especificación de la arquitectura}{54}{subsection.4.6.1}%
-\contentsline {subsection}{\numberline {4.6.2}Función de pérdida y optimizador}{56}{subsection.4.6.2}%
-\contentsline {subsection}{\numberline {4.6.3}Estrategia de entrenamiento}{58}{subsection.4.6.3}%
-\contentsline {subsection}{\numberline {4.6.4}Configuración del entorno de ejecución}{58}{subsection.4.6.4}%
-\contentsline {section}{\numberline {4.7}\emph {Pipeline} de entrenamiento y evaluación}{59}{section.4.7}%
-\contentsline {subsection}{\numberline {4.7.1}Modo original y modo balanceado}{59}{subsection.4.7.1}%
-\contentsline {paragraph}{Modo original.}{59}{section*.83}%
-\contentsline {paragraph}{Modo balanceado.}{59}{section*.84}%
+\contentsline {subsection}{\numberline {4.5.1}Parámetros de ventana}{51}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Restricciones de continuidad temporal}{51}{subsection.4.5.2}%
+\contentsline {subsection}{\numberline {4.5.3}Esquema de partición: \emph {Group K-Fold} con $K=5$}{52}{subsection.4.5.3}%
+\contentsline {section}{\numberline {4.6}Arquitectura del modelo LSTM}{53}{section.4.6}%
+\contentsline {subsection}{\numberline {4.6.1}Especificación de la arquitectura}{53}{subsection.4.6.1}%
+\contentsline {subsection}{\numberline {4.6.2}Función de pérdida y optimizador}{55}{subsection.4.6.2}%
+\contentsline {subsection}{\numberline {4.6.3}Estrategia de entrenamiento}{57}{subsection.4.6.3}%
+\contentsline {subsection}{\numberline {4.6.4}Configuración del entorno de ejecución}{57}{subsection.4.6.4}%
+\contentsline {section}{\numberline {4.7}\emph {Pipeline} de entrenamiento y evaluación}{58}{section.4.7}%
+\contentsline {subsection}{\numberline {4.7.1}Modo original y modo balanceado}{58}{subsection.4.7.1}%
+\contentsline {paragraph}{Modo original.}{58}{section*.83}%
+\contentsline {paragraph}{Modo balanceado.}{58}{section*.84}%
 \contentsline {subsection}{\numberline {4.7.2}Flujo de datos por \emph {fold}}{59}{subsection.4.7.2}%
 \contentsline {subsection}{\numberline {4.7.3}Evaluación por rango glucémico}{60}{subsection.4.7.3}%
-\contentsline {subsection}{\numberline {4.7.4}Agregación de resultados y protocolo estadístico}{61}{subsection.4.7.4}%
-\contentsline {subsection}{\numberline {4.7.5}Trazabilidad y reproducibilidad}{62}{subsection.4.7.5}%
-\contentsline {paragraph}{Semillas fijas.}{62}{section*.88}%
-\contentsline {paragraph}{Versionado de experimentos.}{63}{section*.89}%
-\contentsline {paragraph}{Metadatos completos por \textit {fold}.}{63}{section*.90}%
-\contentsline {paragraph}{Invarianza de validación y test.}{63}{section*.91}%
-\contentsline {paragraph}{Estructura de directorios autoexplicativa.}{63}{section*.92}%
-\contentsline {chapter}{\numberline {5}Resultados y discusión}{65}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Efecto del balanceo sobre el conjunto de entrenamiento}{65}{section.5.1}%
-\contentsline {subsection}{\numberline {5.1.1}Impacto sobre el tamaño del conjunto de entrenamiento}{66}{subsection.5.1.1}%
-\contentsline {paragraph}{Técnicas de reducción (RUS y PA-Undersampling).}{66}{section*.94}%
-\contentsline {paragraph}{Técnicas de aumento (ROS, SMOTE, Jittering).}{66}{section*.95}%
-\contentsline {paragraph}{Técnicas híbridas (RUS+ROS, RUS+SMOTE, SMOTE+Tomek, ROS+Tomek).}{67}{section*.96}%
-\contentsline {paragraph}{Implicación metodológica.}{67}{section*.98}%
-\contentsline {subsection}{\numberline {5.1.2}Impacto sobre la distribución demográfica del entrenamiento}{67}{subsection.5.1.2}%
-\contentsline {subsection}{\numberline {5.1.3}Impacto sobre la distribución glucémica del entrenamiento}{71}{subsection.5.1.3}%
-\contentsline {paragraph}{T1DiabetesGranada.}{72}{figure.caption.103}%
-\contentsline {paragraph}{DiaTrend.}{74}{figure.caption.106}%
-\contentsline {paragraph}{REPLACE-BG.}{76}{figure.caption.109}%
-\contentsline {paragraph}{Síntesis y conexión con los resultados de predicción.}{77}{section*.111}%
+\contentsline {subsection}{\numberline {4.7.4}Agregación de resultados y protocolo estadístico}{60}{subsection.4.7.4}%
+\contentsline {subsection}{\numberline {4.7.5}Trazabilidad y reproducibilidad}{61}{subsection.4.7.5}%
+\contentsline {paragraph}{Semillas fijas.}{61}{section*.88}%
+\contentsline {paragraph}{Versionado de experimentos.}{62}{section*.89}%
+\contentsline {paragraph}{Metadatos completos por \textit {fold}.}{62}{section*.90}%
+\contentsline {paragraph}{Invarianza de validación y test.}{62}{section*.91}%
+\contentsline {paragraph}{Estructura de directorios autoexplicativa.}{62}{section*.92}%
+\contentsline {chapter}{\numberline {5}Resultados y discusión}{63}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Efecto del balanceo sobre el conjunto de entrenamiento}{63}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Impacto sobre el tamaño del conjunto de entrenamiento}{64}{subsection.5.1.1}%
+\contentsline {paragraph}{Técnicas de reducción (RUS y PA-Undersampling).}{64}{section*.94}%
+\contentsline {paragraph}{Técnicas de aumento (ROS, SMOTE, Jittering).}{64}{section*.95}%
+\contentsline {paragraph}{Técnicas híbridas (RUS+ROS, RUS+SMOTE, SMOTE+Tomek, ROS+Tomek).}{65}{section*.96}%
+\contentsline {paragraph}{Implicación metodológica.}{65}{section*.98}%
+\contentsline {subsection}{\numberline {5.1.2}Impacto sobre la distribución demográfica del entrenamiento}{65}{subsection.5.1.2}%
+\contentsline {subsection}{\numberline {5.1.3}Impacto sobre la distribución glucémica del entrenamiento}{70}{subsection.5.1.3}%
+\contentsline {paragraph}{T1DiabetesGranada.}{70}{figure.caption.103}%
+\contentsline {paragraph}{DiaTrend.}{73}{figure.caption.106}%
+\contentsline {paragraph}{REPLACE-BG.}{73}{figure.caption.109}%
+\contentsline {paragraph}{Síntesis y conexión con los resultados de predicción.}{73}{section*.111}%
 \contentsline {subsection}{\numberline {5.1.4}Trade-off clínico del balanceo: hipoglucemia, normoglucemia e hiperglucemia}{78}{subsection.5.1.4}%
 \contentsline {paragraph}{Trade-off TBR-2 (hipoglucemia severa, $<$54\,mg/dL) vs.\ TIR.}{78}{section*.112}%
 \contentsline {paragraph}{Trade-off TBR-1 (hipoglucemia leve, 54--69\,mg/dL) vs.\ TIR.}{79}{section*.114}%
@@ -154,34 +154,34 @@
 \contentsline {subsection}{\numberline {5.2.1}Distribución global de métricas por técnica}{82}{subsection.5.2.1}%
 \contentsline {paragraph}{RMSE global (ENTIRE).}{82}{section*.122}%
 \contentsline {paragraph}{RMSE en TBR-2 (hipoglucemia severa).}{83}{section*.124}%
-\contentsline {paragraph}{Consistencia inter-fold del ranking de técnicas.}{84}{section*.126}%
+\contentsline {paragraph}{Consistencia inter-fold del ranking de técnicas.}{83}{section*.126}%
 \contentsline {subsection}{\numberline {5.2.2}Análisis de mejora y deterioro respecto al modelo original}{85}{subsection.5.2.2}%
 \contentsline {paragraph}{Panorama global (ENTIRE).}{85}{section*.127}%
 \contentsline {paragraph}{Perspectiva clínica: disociación ENTIRE vs.\ TBR-2.}{87}{section*.129}%
 \contentsline {paragraph}{Ranking por rango glucémico.}{87}{section*.131}%
 \contentsline {paragraph}{Ranking por técnica y rango glucémico.}{87}{section*.133}%
-\contentsline {paragraph}{Magnitud máxima de mejora alcanzable.}{90}{section*.135}%
+\contentsline {paragraph}{Magnitud máxima de mejora alcanzable.}{89}{section*.135}%
 \contentsline {paragraph}{Efecto diferencial de la dimensión demográfica.}{91}{section*.137}%
-\contentsline {subsection}{\numberline {5.2.3}Análisis por familia de tamaño: desacoplando balanceo y volumen}{92}{subsection.5.2.3}%
-\contentsline {paragraph}{Comparación entre familias: el papel del volumen.}{92}{section*.138}%
-\contentsline {paragraph}{Perfil por rango glucémico entre familias.}{94}{section*.142}%
-\contentsline {paragraph}{Síntesis: ¿volumen o reequilibrio?}{96}{section*.146}%
-\contentsline {subsection}{\numberline {5.2.4}Análisis estadístico: prueba de Friedman y corrección de Nemenyi}{96}{subsection.5.2.4}%
-\contentsline {paragraph}{Resultado global del test de Friedman.}{96}{section*.147}%
+\contentsline {subsection}{\numberline {5.2.3}Análisis por familia de tamaño: desacoplando balanceo y volumen}{91}{subsection.5.2.3}%
+\contentsline {paragraph}{Comparación entre familias: el papel del volumen.}{91}{section*.138}%
+\contentsline {paragraph}{Perfil por rango glucémico entre familias.}{93}{section*.142}%
+\contentsline {paragraph}{Síntesis: ¿volumen o reequilibrio?}{95}{section*.146}%
+\contentsline {subsection}{\numberline {5.2.4}Análisis estadístico: prueba de Friedman y corrección de Nemenyi}{95}{subsection.5.2.4}%
+\contentsline {paragraph}{Resultado global del test de Friedman.}{95}{section*.147}%
 \contentsline {paragraph}{CD diagrams ENTIRE: significación global.}{97}{section*.150}%
-\contentsline {paragraph}{CD diagrams TBR-2: significación en hipoglucemia severa.}{98}{section*.152}%
-\contentsline {paragraph}{Ranking global mediante el método Borda.}{99}{section*.153}%
-\contentsline {paragraph}{Estabilidad del ranking entre métricas.}{99}{section*.155}%
-\contentsline {paragraph}{Ranking Borda y estabilidad entre métricas.}{99}{section*.157}%
+\contentsline {paragraph}{CD diagrams TBR-2: significación en hipoglucemia severa.}{97}{section*.152}%
+\contentsline {paragraph}{Ranking global mediante el método Borda.}{98}{section*.153}%
+\contentsline {paragraph}{Estabilidad del ranking entre métricas.}{98}{section*.155}%
+\contentsline {paragraph}{Ranking Borda y estabilidad entre métricas.}{98}{section*.157}%
 \contentsline {section}{\numberline {5.3}Discusión integradora}{100}{section.5.3}%
-\contentsline {paragraph}{¿Mejora el balanceo demográfico el rendimiento del modelo LSTM?}{101}{section*.158}%
-\contentsline {paragraph}{¿Por qué T1DiabetesGranada es insensible al balanceo?}{101}{section*.159}%
-\contentsline {paragraph}{¿Por qué REPLACE-BG es insensible al balanceo?}{101}{section*.160}%
-\contentsline {paragraph}{Tres regímenes de eficacia del balanceo}{102}{section*.161}%
-\contentsline {paragraph}{¿Qué familia de técnicas ofrece mejor relación beneficio/coste?}{102}{section*.162}%
+\contentsline {paragraph}{¿Mejora el balanceo demográfico el rendimiento del modelo LSTM?}{100}{section*.158}%
+\contentsline {paragraph}{¿Por qué T1DiabetesGranada es insensible al balanceo?}{100}{section*.159}%
+\contentsline {paragraph}{¿Por qué REPLACE-BG es insensible al balanceo?}{100}{section*.160}%
+\contentsline {paragraph}{Tres regímenes de eficacia del balanceo}{101}{section*.161}%
+\contentsline {paragraph}{¿Qué familia de técnicas ofrece mejor relación beneficio/coste?}{101}{section*.162}%
 \contentsline {paragraph}{¿Es el efecto del balanceo \textit {dataset}-dependiente?}{102}{section*.163}%
-\contentsline {paragraph}{¿Qué dimensión demográfica ---edad o sexo--- es más relevante?}{103}{section*.164}%
-\contentsline {paragraph}{Limitaciones del análisis.}{103}{section*.165}%
+\contentsline {paragraph}{¿Qué dimensión demográfica ---edad o sexo--- es más relevante?}{102}{section*.164}%
+\contentsline {paragraph}{Limitaciones del análisis.}{102}{section*.165}%
 \contentsline {chapter}{\numberline {6}Conclusiones}{105}{chapter.6}%
 \contentsline {section}{\numberline {6.1}Conclusiones principales}{105}{section.6.1}%
 \contentsline {paragraph}{El balanceo demográfico no mejora el rendimiento global de forma generalizable.}{105}{section*.166}%

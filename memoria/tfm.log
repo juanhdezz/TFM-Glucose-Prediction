@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.25)  8 SEP 2026 13:15
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.25)  8 SEP 2026 16:17
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1007,23 +1007,23 @@ File: imagenes/pipeline_global.png Graphic file (type png)
 Package pdftex.def Info: imagenes/pipeline_global.png  used on input line 32.
 (pdftex.def)             Requested size: 455.24411pt x 682.86984pt.
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+LaTeX Warning: Float too large for page by 32.13951pt on input line 35.
 
- [25
+[25
 
 
 ]
-Overfull \vbox (32.13951pt too high) has occurred while \output is active []
-
+LaTeX Info: Redefining \. on input line 45.
+LaTeX Info: Redefining \% on input line 45.
  [26 <./imagenes/pipeline_global.png (PNG copy)>]
-LaTeX Info: Redefining \. on input line 67.
-LaTeX Info: Redefining \% on input line 67.
+LaTeX Info: Redefining \. on input line 68.
+LaTeX Info: Redefining \% on input line 68.
  [27]
-LaTeX Info: Redefining \. on input line 79.
-LaTeX Info: Redefining \% on input line 79.
+LaTeX Info: Redefining \. on input line 81.
+LaTeX Info: Redefining \% on input line 81.
  [28]
-LaTeX Info: Redefining \. on input line 102.
-LaTeX Info: Redefining \% on input line 102.
+LaTeX Info: Redefining \. on input line 105.
+LaTeX Info: Redefining \% on input line 105.
  [29]
 Overfull \hbox (1.62828pt too wide) in paragraph at lines 108--109
 []\OT1/cmr/bx/sc/10.95 Columnas de par-ti-ci^^Son: \OT1/cmtt/m/n/10.95 fold[]0\OT1/cmr/m/n/10.95 , \OT1/cmtt/m/n/10.95 fold[]1\OT1/cmr/m/n/10.95 , ..., \OT1/cmtt/m/n/10.95 fold[]4 \OT1/cmr/m/n/10.95 --- co-di-fi-ca-ci^^Son ca-teg^^Sori-ca (\OT1/cmtt/m/n/10.95 'train'\OT1/cmr/m/n/10.95 ,
@@ -1129,9 +1129,12 @@ File: imagenes_plantilla/../../EDA/cross/B5a_cv_by_age.pdf Graphic file (type pd
 <use imagenes_plantilla/../../EDA/cross/B5a_cv_by_age.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../EDA/cross/B5a_cv_by_age.pdf  used on input line 511.
 (pdftex.def)             Requested size: 373.3035pt x 141.3185pt.
-LaTeX Info: Redefining \. on input line 517.
-LaTeX Info: Redefining \% on input line 517.
-[37 <./imagenes_plantilla/../../EDA/cross/B3a_mean_glucose_by_age.pdf>]
+
+Underfull \vbox (badness 1237) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 533.
+LaTeX Info: Redefining \% on input line 533.
+ [37 <./imagenes_plantilla/../../EDA/cross/B3a_mean_glucose_by_age.pdf>]
 <imagenes_plantilla/../../EDA/cross/B5b_cv_by_sex.pdf, id=2172, 575.29327pt x 323.3951pt>
 File: imagenes_plantilla/../../EDA/cross/B5b_cv_by_sex.pdf Graphic file (type pdf)
 <use imagenes_plantilla/../../EDA/cross/B5b_cv_by_sex.pdf>
@@ -1140,8 +1143,8 @@ Package pdftex.def Info: imagenes_plantilla/../../EDA/cross/B5b_cv_by_sex.pdf  u
 LaTeX Info: Redefining \. on input line 552.
 LaTeX Info: Redefining \% on input line 552.
  [38 <./imagenes_plantilla/../../EDA/cross/B5a_cv_by_age.pdf> <./imagenes_plantilla/../../EDA/cross/B5b_cv_by_sex.pdf>]
-LaTeX Info: Redefining \. on input line 595.
-LaTeX Info: Redefining \% on input line 595.
+LaTeX Info: Redefining \. on input line 594.
+LaTeX Info: Redefining \% on input line 594.
  [39]
 <imagenes_plantilla/../../EDA/cross/B4a_class_distribution_age.pdf, id=2321, 647.0698pt x 901.81767pt>
 File: imagenes_plantilla/../../EDA/cross/B4a_class_distribution_age.pdf Graphic file (type pdf)
@@ -1149,64 +1152,53 @@ File: imagenes_plantilla/../../EDA/cross/B4a_class_distribution_age.pdf Graphic 
 Package pdftex.def Info: imagenes_plantilla/../../EDA/cross/B4a_class_distribution_age.pdf  used on input line 601.
 (pdftex.def)             Requested size: 455.24411pt x 634.47429pt.
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
 
-LaTeX Info: Redefining \. on input line 605.
-LaTeX Info: Redefining \% on input line 605.
- [40]
-Overfull \vbox (24.54398pt too high) has occurred while \output is active []
+LaTeX Warning: Float too large for page by 24.54398pt on input line 604.
 
-LaTeX Info: Redefining \. on input line 605.
-LaTeX Info: Redefining \% on input line 605.
- [41 <./imagenes_plantilla/../../EDA/cross/B4a_class_distribution_age.pdf>]
-<imagenes_plantilla/../../EDA/cross/B4b_imbalance_ratio_age.pdf, id=2419, 645.96404pt x 322.9942pt>
+<imagenes_plantilla/../../EDA/cross/B4b_imbalance_ratio_age.pdf, id=2325, 645.96404pt x 322.9942pt>
 File: imagenes_plantilla/../../EDA/cross/B4b_imbalance_ratio_age.pdf Graphic file (type pdf)
 <use imagenes_plantilla/../../EDA/cross/B4b_imbalance_ratio_age.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../EDA/cross/B4b_imbalance_ratio_age.pdf  used on input line 612.
 (pdftex.def)             Requested size: 386.96027pt x 193.49245pt.
-<imagenes_plantilla/../../EDA/cross/B4c_class_distribution_sex.pdf, id=2421, 973.07411pt x 377.93596pt>
+<imagenes_plantilla/../../EDA/cross/B4c_class_distribution_sex.pdf, id=2327, 973.07411pt x 377.93596pt>
 File: imagenes_plantilla/../../EDA/cross/B4c_class_distribution_sex.pdf Graphic file (type pdf)
 <use imagenes_plantilla/../../EDA/cross/B4c_class_distribution_sex.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../EDA/cross/B4c_class_distribution_sex.pdf  used on input line 623.
 (pdftex.def)             Requested size: 455.24411pt x 176.81102pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-LaTeX Info: Redefining \. on input line 627.
-LaTeX Info: Redefining \% on input line 627.
- [42 <./imagenes_plantilla/../../EDA/cross/B4b_imbalance_ratio_age.pdf>]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-LaTeX Info: Redefining \. on input line 650.
-LaTeX Info: Redefining \% on input line 650.
- [43 <./imagenes_plantilla/../../EDA/cross/B4c_class_distribution_sex.pdf>]
-LaTeX Info: Redefining \. on input line 722.
-LaTeX Info: Redefining \% on input line 722.
- [44]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-LaTeX Info: Redefining \. on input line 738.
-LaTeX Info: Redefining \% on input line 738.
- [45{c:/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
+LaTeX Info: Redefining \. on input line 632.
+LaTeX Info: Redefining \% on input line 632.
+[40]
+LaTeX Info: Redefining \. on input line 632.
+LaTeX Info: Redefining \% on input line 632.
+ [41 <./imagenes_plantilla/../../EDA/cross/B4a_class_distribution_age.pdf>]
+LaTeX Info: Redefining \. on input line 632.
+LaTeX Info: Redefining \% on input line 632.
+ [42 <./imagenes_plantilla/../../EDA/cross/B4b_imbalance_ratio_age.pdf> <./imagenes_plantilla/../../EDA/cross/B4c_class_distribution_sex.pdf>]
+LaTeX Info: Redefining \. on input line 692.
+LaTeX Info: Redefining \% on input line 692.
+ [43]
+LaTeX Info: Redefining \. on input line 732.
+LaTeX Info: Redefining \% on input line 732.
+ [44{c:/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
+LaTeX Info: Redefining \. on input line 750.
+LaTeX Info: Redefining \% on input line 750.
+ [45]
 Overfull \hbox (8.81274pt too wide) in paragraph at lines 765--783
  [][] 
  []
 
-LaTeX Info: Redefining \. on input line 788.
-LaTeX Info: Redefining \% on input line 788.
+LaTeX Info: Redefining \. on input line 807.
+LaTeX Info: Redefining \% on input line 807.
 [46]
-LaTeX Info: Redefining \. on input line 819.
-LaTeX Info: Redefining \% on input line 819.
+LaTeX Info: Redefining \. on input line 847.
+LaTeX Info: Redefining \% on input line 847.
  [47]
-LaTeX Info: Redefining \. on input line 859.
-LaTeX Info: Redefining \% on input line 859.
+LaTeX Info: Redefining \. on input line 883.
+LaTeX Info: Redefining \% on input line 883.
  [48]
-LaTeX Info: Redefining \. on input line 898.
-LaTeX Info: Redefining \% on input line 898.
+LaTeX Info: Redefining \. on input line 916.
+LaTeX Info: Redefining \% on input line 916.
  [49]
-LaTeX Info: Redefining \. on input line 923.
-LaTeX Info: Redefining \% on input line 923.
- [50]
 LaTeX Font Info:    Trying to load font information for OMS+cmtt on input line 930.
 LaTeX Font Info:    No file OMScmtt.fd. on input line 930.
 
@@ -1215,88 +1207,86 @@ LaTeX Font Warning: Font shape `OMS/cmtt/m/n' undefined
 (Font)              using `OMS/cmsy/m/n' instead
 (Font)              for symbol `textbraceleft' on input line 930.
 
-LaTeX Info: Redefining \. on input line 961.
-LaTeX Info: Redefining \% on input line 961.
-[51]
+LaTeX Info: Redefining \. on input line 954.
+LaTeX Info: Redefining \% on input line 954.
+[50]
 Overfull \hbox (49.34225pt too wide) in paragraph at lines 964--973
 \OT1/cmr/m/n/10.95 BG y Dia-Trend, cu-ya ca-den-cia na-ti-va es de 5 mi-nu-tos, se re-mues-trean a es-ta re-so-lu-ci^^Son; T1DiabetesGranada
  []
 
-LaTeX Info: Redefining \. on input line 1022.
-LaTeX Info: Redefining \% on input line 1022.
+LaTeX Info: Redefining \. on input line 1011.
+LaTeX Info: Redefining \% on input line 1011.
+[51]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 1023.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 1023.
+
+LaTeX Info: Redefining \. on input line 1039.
+LaTeX Info: Redefining \% on input line 1039.
 [52]
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 1023.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 1023.
-
-LaTeX Info: Redefining \. on input line 1050.
-LaTeX Info: Redefining \% on input line 1050.
-[53]
-<imagenes/lstm_architecture_vertical.png, id=2710, 1027.84pt x 1541.76pt>
+<imagenes/lstm_architecture_vertical.png, id=2705, 1027.84pt x 1541.76pt>
 File: imagenes/lstm_architecture_vertical.png Graphic file (type png)
 <use imagenes/lstm_architecture_vertical.png>
 Package pdftex.def Info: imagenes/lstm_architecture_vertical.png  used on input line 1085.
 (pdftex.def)             Requested size: 455.24411pt x 682.86984pt.
-LaTeX Info: Redefining \. on input line 1089.
-LaTeX Info: Redefining \% on input line 1089.
- [54]
-Overfull \vbox (32.13951pt too high) has occurred while \output is active []
 
-LaTeX Info: Redefining \. on input line 1089.
-LaTeX Info: Redefining \% on input line 1089.
- [55 <./imagenes/lstm_architecture_vertical.png (PNG copy)>]
-<imagenes/CEG__RMSE_LSTM_H4_ALL.pdf, id=2724, 374.92606pt x 315.83257pt>
+
+LaTeX Warning: Float too large for page by 32.13951pt on input line 1088.
+
+LaTeX Info: Redefining \. on input line 1098.
+LaTeX Info: Redefining \% on input line 1098.
+[53]
+LaTeX Info: Redefining \. on input line 1098.
+LaTeX Info: Redefining \% on input line 1098.
+ [54 <./imagenes/lstm_architecture_vertical.png (PNG copy)>]
+<imagenes/CEG__RMSE_LSTM_H4_ALL.pdf, id=2720, 374.92606pt x 315.83257pt>
 File: imagenes/CEG__RMSE_LSTM_H4_ALL.pdf Graphic file (type pdf)
 <use imagenes/CEG__RMSE_LSTM_H4_ALL.pdf>
 Package pdftex.def Info: imagenes/CEG__RMSE_LSTM_H4_ALL.pdf  used on input line 1115.
 (pdftex.def)             Requested size: 455.24411pt x 383.50795pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-LaTeX Info: Redefining \. on input line 1119.
-LaTeX Info: Redefining \% on input line 1119.
- [56]
-LaTeX Info: Redefining \. on input line 1136.
-LaTeX Info: Redefining \% on input line 1136.
- [57 <./imagenes/CEG__RMSE_LSTM_H4_ALL.pdf>]
-LaTeX Info: Redefining \. on input line 1173.
-LaTeX Info: Redefining \% on input line 1173.
+LaTeX Info: Redefining \. on input line 1123.
+LaTeX Info: Redefining \% on input line 1123.
+ [55]
+LaTeX Info: Redefining \. on input line 1123.
+LaTeX Info: Redefining \% on input line 1123.
+ [56 <./imagenes/CEG__RMSE_LSTM_H4_ALL.pdf>]
+LaTeX Info: Redefining \. on input line 1162.
+LaTeX Info: Redefining \% on input line 1162.
+ [57]
+LaTeX Info: Redefining \. on input line 1187.
+LaTeX Info: Redefining \% on input line 1187.
  [58]
-LaTeX Info: Redefining \. on input line 1199.
-LaTeX Info: Redefining \% on input line 1199.
- [59]
 Overfull \hbox (9.89044pt too wide) in paragraph at lines 1208--1209
 \OT1/cmr/m/n/10.95 hist^^Sori-co de en-tre-na-mien-to por ^^Sepo-ca ([]\OT1/cmtt/m/n/10.95 history.csv\OT1/cmr/m/n/10.95 ), las pre-dic-cio-nes so-bre test (\OT1/cmtt/m/n/10.95 .parquet\OT1/cmr/m/n/10.95 ),
  []
 
-LaTeX Info: Redefining \. on input line 1241.
-LaTeX Info: Redefining \% on input line 1241.
-[60]
+LaTeX Info: Redefining \. on input line 1212.
+LaTeX Info: Redefining \% on input line 1212.
+[59]
+LaTeX Info: Redefining \. on input line 1249.
+LaTeX Info: Redefining \% on input line 1249.
+ [60]
 Overfull \hbox (4.58421pt too wide) in paragraph at lines 1253--1254
 []\OT1/cmr/bx/sc/10.95 Archivo plano por \OT1/cmr/bx/it/10.95 fold \OT1/cmr/bx/sc/10.95 (ATM/MTA in-di-vi-dual). \OT1/cmr/m/n/10.95 Con-tie-ne una fi-la por ran-go gluc^^Semi-
  []
 
-LaTeX Info: Redefining \. on input line 1258.
-LaTeX Info: Redefining \% on input line 1258.
-[61]
+
 Overfull \hbox (0.9878pt too wide) in paragraph at lines 1369--1370
 \OT1/cmtt/m/n/10.95 tf.random.set[]seed(50)\OT1/cmr/m/n/10.95 , \OT1/cmtt/m/n/10.95 random.seed(50)\OT1/cmr/m/n/10.95 ). La va-ria-ble de en-torno \OT1/cmtt/m/n/10.95 TF[]DETERMINISTIC[]OPS=1
  []
 
-LaTeX Info: Redefining \. on input line 1372.
-LaTeX Info: Redefining \% on input line 1372.
-[62]) (./capitulos/04_Resultados_y_Discusion.tex
+LaTeX Info: Redefining \. on input line 1371.
+LaTeX Info: Redefining \% on input line 1371.
+[61]) (./capitulos/04_Resultados_y_Discusion.tex
 LaTeX Info: Redefining \. on input line 2.
 LaTeX Info: Redefining \% on input line 2.
- [63] [64
-
-]
+ [62]
 Cap\'{\i }tulo 5.
-<imagenes_plantilla/../../analysis_relief/outputs_clinical/trainsize_bars_age.pdf, id=2832, 1106.42326pt x 449.55417pt>
+<imagenes_plantilla/../../analysis_relief/outputs_clinical/trainsize_bars_age.pdf, id=2824, 1106.42326pt x 449.55417pt>
 File: imagenes_plantilla/../../analysis_relief/outputs_clinical/trainsize_bars_age.pdf Graphic file (type pdf)
 <use imagenes_plantilla/../../analysis_relief/outputs_clinical/trainsize_bars_age.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs_clinical/trainsize_bars_age.pdf  used on input line 65.
@@ -1304,56 +1294,60 @@ Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs_clinic
 
 Underfull \vbox (badness 1946) has occurred while \output is active []
 
- [65
+ [63
+
 
 ]
 LaTeX Info: Redefining \. on input line 120.
 LaTeX Info: Redefining \% on input line 120.
- [66 <./imagenes_plantilla/../../analysis_relief/outputs_clinical/trainsize_bars_age.pdf>]
-<imagenes_plantilla/../../analysis_relief/outputs_clinical/trainsize_bars_sex.pdf, id=2954, 1106.42326pt x 449.55417pt>
+ [64 <./imagenes_plantilla/../../analysis_relief/outputs_clinical/trainsize_bars_age.pdf>]
+<imagenes_plantilla/../../analysis_relief/outputs_clinical/trainsize_bars_sex.pdf, id=2945, 1106.42326pt x 449.55417pt>
 File: imagenes_plantilla/../../analysis_relief/outputs_clinical/trainsize_bars_sex.pdf Graphic file (type pdf)
 <use imagenes_plantilla/../../analysis_relief/outputs_clinical/trainsize_bars_sex.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs_clinical/trainsize_bars_sex.pdf  used on input line 123.
 (pdftex.def)             Requested size: 455.24411pt x 184.97006pt.
-<imagenes_plantilla/../../analysis_relief/outputs_clinical/heatmap_balancing_T1DiabetesGranada_age.pdf, id=2961, 868.09898pt x 654.22537pt>
+<imagenes_plantilla/../../analysis_relief/outputs_clinical/heatmap_balancing_T1DiabetesGranada_age.pdf, id=2952, 868.09898pt x 654.22537pt>
 File: imagenes_plantilla/../../analysis_relief/outputs_clinical/heatmap_balancing_T1DiabetesGranada_age.pdf Graphic file (type pdf)
 <use imagenes_plantilla/../../analysis_relief/outputs_clinical/heatmap_balancing_T1DiabetesGranada_age.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs_clinical/heatmap_balancing_T1DiabetesGranada_age.pdf  used on input line 166.
 (pdftex.def)             Requested size: 455.24411pt x 343.08414pt.
-LaTeX Info: Redefining \. on input line 176.
-LaTeX Info: Redefining \% on input line 176.
- [67 <./imagenes_plantilla/../../analysis_relief/outputs_clinical/trainsize_bars_sex.pdf>]
-LaTeX Info: Redefining \. on input line 209.
-LaTeX Info: Redefining \% on input line 209.
- [68 <./imagenes_plantilla/../../analysis_relief/outputs_clinical/heatmap_balancing_T1DiabetesGranada_age.pdf>]
-<imagenes_plantilla/../../analysis_relief/outputs_clinical/heatmap_balancing_DIATREND_age.pdf, id=3210, 868.09898pt x 654.22537pt>
+LaTeX Info: Redefining \. on input line 191.
+LaTeX Info: Redefining \% on input line 191.
+ [65 <./imagenes_plantilla/../../analysis_relief/outputs_clinical/trainsize_bars_sex.pdf>]
+LaTeX Info: Redefining \. on input line 191.
+LaTeX Info: Redefining \% on input line 191.
+ [66 <./imagenes_plantilla/../../analysis_relief/outputs_clinical/heatmap_balancing_T1DiabetesGranada_age.pdf>]
+<imagenes_plantilla/../../analysis_relief/outputs_clinical/heatmap_balancing_DIATREND_age.pdf, id=3202, 868.09898pt x 654.22537pt>
 File: imagenes_plantilla/../../analysis_relief/outputs_clinical/heatmap_balancing_DIATREND_age.pdf Graphic file (type pdf)
 <use imagenes_plantilla/../../analysis_relief/outputs_clinical/heatmap_balancing_DIATREND_age.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs_clinical/heatmap_balancing_DIATREND_age.pdf  used on input line 213.
 (pdftex.def)             Requested size: 455.24411pt x 343.08414pt.
-LaTeX Info: Redefining \. on input line 249.
-LaTeX Info: Redefining \% on input line 249.
- [69 <./imagenes_plantilla/../../analysis_relief/outputs_clinical/heatmap_balancing_DIATREND_age.pdf>]
-<imagenes_plantilla/../../analysis_relief/outputs_clinical/heatmap_balancing_REPLACE-BG_age.pdf, id=3344, 868.09898pt x 654.22537pt>
+<imagenes_plantilla/../../analysis_relief/outputs_clinical/heatmap_balancing_REPLACE-BG_age.pdf, id=3207, 868.09898pt x 654.22537pt>
 File: imagenes_plantilla/../../analysis_relief/outputs_clinical/heatmap_balancing_REPLACE-BG_age.pdf Graphic file (type pdf)
 <use imagenes_plantilla/../../analysis_relief/outputs_clinical/heatmap_balancing_REPLACE-BG_age.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs_clinical/heatmap_balancing_REPLACE-BG_age.pdf  used on input line 262.
 (pdftex.def)             Requested size: 455.24411pt x 343.08414pt.
-LaTeX Info: Redefining \. on input line 287.
-LaTeX Info: Redefining \% on input line 287.
- [70 <./imagenes_plantilla/../../analysis_relief/outputs_clinical/heatmap_balancing_REPLACE-BG_age.pdf>]
-<imagenes_plantilla/../../analysis_relief/outputs_clinical/stacked_bars_T1DiabetesGranada.pdf, id=3477, 1417.99574pt x 1524.21446pt>
+LaTeX Info: Redefining \. on input line 278.
+LaTeX Info: Redefining \% on input line 278.
+ [67]
+LaTeX Info: Redefining \. on input line 278.
+LaTeX Info: Redefining \% on input line 278.
+ [68 <./imagenes_plantilla/../../analysis_relief/outputs_clinical/heatmap_balancing_DIATREND_age.pdf>]
+LaTeX Info: Redefining \. on input line 278.
+LaTeX Info: Redefining \% on input line 278.
+ [69 <./imagenes_plantilla/../../analysis_relief/outputs_clinical/heatmap_balancing_REPLACE-BG_age.pdf>]
+<imagenes_plantilla/../../analysis_relief/outputs_clinical/stacked_bars_T1DiabetesGranada.pdf, id=3473, 1417.99574pt x 1524.21446pt>
 File: imagenes_plantilla/../../analysis_relief/outputs_clinical/stacked_bars_T1DiabetesGranada.pdf Graphic file (type pdf)
 <use imagenes_plantilla/../../analysis_relief/outputs_clinical/stacked_bars_T1DiabetesGranada.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs_clinical/stacked_bars_T1DiabetesGranada.pdf  used on input line 345.
 (pdftex.def)             Requested size: 455.24411pt x 489.34012pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-LaTeX Info: Redefining \. on input line 353.
-LaTeX Info: Redefining \% on input line 353.
- [71]
-<imagenes_plantilla/../../analysis_relief/outputs_clinical/delta_glycemic_T1DiabetesGranada.pdf, id=3485, 1002.74748pt x 685.54115pt>
+LaTeX Info: Redefining \. on input line 367.
+LaTeX Info: Redefining \% on input line 367.
+ [70]
+LaTeX Info: Redefining \. on input line 367.
+LaTeX Info: Redefining \% on input line 367.
+ [71 <./imagenes_plantilla/../../analysis_relief/outputs_clinical/stacked_bars_T1DiabetesGranada.pdf>]
+<imagenes_plantilla/../../analysis_relief/outputs_clinical/delta_glycemic_T1DiabetesGranada.pdf, id=3593, 1002.74748pt x 685.54115pt>
 File: imagenes_plantilla/../../analysis_relief/outputs_clinical/delta_glycemic_T1DiabetesGranada.pdf Graphic file (type pdf)
 <use imagenes_plantilla/../../analysis_relief/outputs_clinical/delta_glycemic_T1DiabetesGranada.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs_clinical/delta_glycemic_T1DiabetesGranada.pdf  used on input line 371.
@@ -1363,55 +1357,43 @@ Underfull \hbox (badness 7722) in paragraph at lines 376--376
 []\OT1/cmr/m/n/10.95 Figura 5.7: |Va-ria-ci^^Son $^^A %[]$ en la re-pre-sen-ta-ci^^Son de ca-da ran-go gluc^^Semi-co pa-ra
  []
 
-LaTeX Info: Redefining \. on input line 378.
-LaTeX Info: Redefining \% on input line 378.
-[72 <./imagenes_plantilla/../../analysis_relief/outputs_clinical/stacked_bars_T1DiabetesGranada.pdf>]
-<imagenes_plantilla/../../analysis_relief/outputs_clinical/stacked_bars_DIATREND.pdf, id=3599, 1417.99574pt x 1524.21446pt>
+<imagenes_plantilla/../../analysis_relief/outputs_clinical/stacked_bars_DIATREND.pdf, id=3595, 1417.99574pt x 1524.21446pt>
 File: imagenes_plantilla/../../analysis_relief/outputs_clinical/stacked_bars_DIATREND.pdf Graphic file (type pdf)
 <use imagenes_plantilla/../../analysis_relief/outputs_clinical/stacked_bars_DIATREND.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs_clinical/stacked_bars_DIATREND.pdf  used on input line 406.
 (pdftex.def)             Requested size: 455.24411pt x 489.34012pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-LaTeX Info: Redefining \. on input line 414.
-LaTeX Info: Redefining \% on input line 414.
- [73 <./imagenes_plantilla/../../analysis_relief/outputs_clinical/delta_glycemic_T1DiabetesGranada.pdf>]
-<imagenes_plantilla/../../analysis_relief/outputs_clinical/delta_glycemic_DIATREND.pdf, id=3701, 1012.16296pt x 685.54115pt>
+LaTeX Info: Redefining \. on input line 413.
+LaTeX Info: Redefining \% on input line 413.
+[72 <./imagenes_plantilla/../../analysis_relief/outputs_clinical/delta_glycemic_T1DiabetesGranada.pdf>]
+<imagenes_plantilla/../../analysis_relief/outputs_clinical/delta_glycemic_DIATREND.pdf, id=3697, 1012.16296pt x 685.54115pt>
 File: imagenes_plantilla/../../analysis_relief/outputs_clinical/delta_glycemic_DIATREND.pdf Graphic file (type pdf)
 <use imagenes_plantilla/../../analysis_relief/outputs_clinical/delta_glycemic_DIATREND.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs_clinical/delta_glycemic_DIATREND.pdf  used on input line 430.
 (pdftex.def)             Requested size: 455.24411pt x 308.33376pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-LaTeX Info: Redefining \. on input line 437.
-LaTeX Info: Redefining \% on input line 437.
- [74 <./imagenes_plantilla/../../analysis_relief/outputs_clinical/stacked_bars_DIATREND.pdf>]
-<imagenes_plantilla/../../analysis_relief/outputs_clinical/stacked_bars_REPLACE-BG.pdf, id=3815, 1417.99574pt x 1524.21446pt>
+<imagenes_plantilla/../../analysis_relief/outputs_clinical/stacked_bars_REPLACE-BG.pdf, id=3699, 1417.99574pt x 1524.21446pt>
 File: imagenes_plantilla/../../analysis_relief/outputs_clinical/stacked_bars_REPLACE-BG.pdf Graphic file (type pdf)
 <use imagenes_plantilla/../../analysis_relief/outputs_clinical/stacked_bars_REPLACE-BG.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs_clinical/stacked_bars_REPLACE-BG.pdf  used on input line 464.
 (pdftex.def)             Requested size: 455.24411pt x 489.34012pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-LaTeX Info: Redefining \. on input line 471.
-LaTeX Info: Redefining \% on input line 471.
- [75 <./imagenes_plantilla/../../analysis_relief/outputs_clinical/delta_glycemic_DIATREND.pdf>]
-<imagenes_plantilla/../../analysis_relief/outputs_clinical/delta_glycemic_REPLACE-BG.pdf, id=3914, 1002.74748pt x 685.54115pt>
+<imagenes_plantilla/../../analysis_relief/outputs_clinical/delta_glycemic_REPLACE-BG.pdf, id=3700, 1002.74748pt x 685.54115pt>
 File: imagenes_plantilla/../../analysis_relief/outputs_clinical/delta_glycemic_REPLACE-BG.pdf Graphic file (type pdf)
 <use imagenes_plantilla/../../analysis_relief/outputs_clinical/delta_glycemic_REPLACE-BG.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs_clinical/delta_glycemic_REPLACE-BG.pdf  used on input line 486.
 (pdftex.def)             Requested size: 455.24411pt x 311.23131pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-LaTeX Info: Redefining \. on input line 494.
-LaTeX Info: Redefining \% on input line 494.
+LaTeX Info: Redefining \. on input line 524.
+LaTeX Info: Redefining \% on input line 524.
+ [73]
+LaTeX Info: Redefining \. on input line 524.
+LaTeX Info: Redefining \% on input line 524.
+ [74 <./imagenes_plantilla/../../analysis_relief/outputs_clinical/stacked_bars_DIATREND.pdf>]
+LaTeX Info: Redefining \. on input line 524.
+LaTeX Info: Redefining \% on input line 524.
+ [75 <./imagenes_plantilla/../../analysis_relief/outputs_clinical/delta_glycemic_DIATREND.pdf>]
+LaTeX Info: Redefining \. on input line 524.
+LaTeX Info: Redefining \% on input line 524.
  [76 <./imagenes_plantilla/../../analysis_relief/outputs_clinical/stacked_bars_REPLACE-BG.pdf>]
-LaTeX Info: Redefining \. on input line 540.
-LaTeX Info: Redefining \% on input line 540.
+LaTeX Info: Redefining \. on input line 524.
+LaTeX Info: Redefining \% on input line 524.
  [77 <./imagenes_plantilla/../../analysis_relief/outputs_clinical/delta_glycemic_REPLACE-BG.pdf>]
 <imagenes_plantilla/../../analysis_relief/outputs_clinical/tradeoff_tbr2_vs_tir.pdf, id=4128, 1405.93187pt x 498.73326pt>
 File: imagenes_plantilla/../../analysis_relief/outputs_clinical/tradeoff_tbr2_vs_tir.pdf Graphic file (type pdf)
@@ -1431,12 +1413,9 @@ Overfull \hbox (14.56892pt too wide) in paragraph at lines 620--628
 []\OT1/cmr/m/n/10.95 En \OT1/cmr/bx/sc/10.95 T1DiabetesGranada \OT1/cmr/m/n/10.95 la dis-per-si^^Son au-men-ta li-ge-ra-men-te res-pec-to a TBR-2: PA-Undersampling
  []
 
-
-Underfull \vbox (badness 1715) has occurred while \output is active []
-
-LaTeX Info: Redefining \. on input line 649.
-LaTeX Info: Redefining \% on input line 649.
- [79 <./imagenes_plantilla/../../analysis_relief/outputs_clinical/tradeoff_tbr1_vs_tir.pdf>]
+LaTeX Info: Redefining \. on input line 644.
+LaTeX Info: Redefining \% on input line 644.
+[79 <./imagenes_plantilla/../../analysis_relief/outputs_clinical/tradeoff_tbr1_vs_tir.pdf>]
 <imagenes_plantilla/../../analysis_relief/outputs_clinical/tradeoff_tar1_vs_tir.pdf, id=4351, 1403.8647pt x 498.73326pt>
 File: imagenes_plantilla/../../analysis_relief/outputs_clinical/tradeoff_tar1_vs_tir.pdf Graphic file (type pdf)
 <use imagenes_plantilla/../../analysis_relief/outputs_clinical/tradeoff_tar1_vs_tir.pdf>
@@ -1452,15 +1431,15 @@ File: imagenes_plantilla/../../analysis_relief/outputs_clinical/tradeoff_tar2_vs
 <use imagenes_plantilla/../../analysis_relief/outputs_clinical/tradeoff_tar2_vs_tir.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs_clinical/tradeoff_tar2_vs_tir.pdf  used on input line 691.
 (pdftex.def)             Requested size: 373.3035pt x 132.4757pt.
-LaTeX Info: Redefining \. on input line 720.
-LaTeX Info: Redefining \% on input line 720.
+LaTeX Info: Redefining \. on input line 713.
+LaTeX Info: Redefining \% on input line 713.
 [80 <./imagenes_plantilla/../../analysis_relief/outputs_clinical/tradeoff_tar1_vs_tir.pdf>]
 Overfull \hbox (6.33704pt too wide) in paragraph at lines 745--745
 []\OT1/cmr/bx/n/14.4 Impacto del ba-lan-ceo so-bre el ren-di-mien-to del mo-de-lo LSTM 
  []
 
-LaTeX Info: Redefining \. on input line 775.
-LaTeX Info: Redefining \% on input line 775.
+LaTeX Info: Redefining \. on input line 763.
+LaTeX Info: Redefining \% on input line 763.
 [81 <./imagenes_plantilla/../../analysis_relief/outputs_clinical/tradeoff_tar2_vs_tir.pdf>]
 <imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/dist_RMSE_ENTIRE.pdf, id=4571, 1298.2967pt x 451.83192pt>
 File: imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/dist_RMSE_ENTIRE.pdf Graphic file (type pdf)
@@ -1477,12 +1456,9 @@ File: imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/dis
 <use imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/dist_RMSE_TBR_2.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/dist_RMSE_TBR_2.pdf  used on input line 821.
 (pdftex.def)             Requested size: 455.24411pt x 158.44pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-LaTeX Info: Redefining \. on input line 829.
-LaTeX Info: Redefining \% on input line 829.
- [82 <./imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/dist_RMSE_ENTIRE.pdf>]
+LaTeX Info: Redefining \. on input line 841.
+LaTeX Info: Redefining \% on input line 841.
+[82 <./imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/dist_RMSE_ENTIRE.pdf>]
 Overfull \hbox (23.69588pt too wide) in paragraph at lines 860--864
 []\OT1/cmr/m/n/10.95 En \OT1/cmr/bx/sc/10.95 REPLACE-BG \OT1/cmr/m/n/10.95 to-dos los vio-li-nes en TBR-2 son ex-tre-ma-da-men-te com-pac-tos ($56[]11$--$57[]84$mg/dL
  []
@@ -1492,25 +1468,24 @@ File: imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/con
 <use imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/consistency_folds_RMSE_ENTIRE.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/consistency_folds_RMSE_ENTIRE.pdf  used on input line 868.
 (pdftex.def)             Requested size: 455.24411pt x 185.2877pt.
+LaTeX Info: Redefining \. on input line 906.
+LaTeX Info: Redefining \% on input line 906.
+[83 <./imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/dist_RMSE_TBR_2.pdf>]
+Underfull \vbox (badness 3302) has occurred while \output is active []
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-LaTeX Info: Redefining \. on input line 878.
-LaTeX Info: Redefining \% on input line 878.
- [83 <./imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/dist_RMSE_TBR_2.pdf>]
-LaTeX Info: Redefining \. on input line 924.
-LaTeX Info: Redefining \% on input line 924.
+LaTeX Info: Redefining \. on input line 935.
+LaTeX Info: Redefining \% on input line 935.
  [84 <./imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/consistency_folds_RMSE_ENTIRE.pdf>]
-<imagenes_plantilla/../../analysis_relief/outputs/figures/heatmaps/heatmap_delta_RMSE_ENTIRE.pdf, id=4844, 646.16467pt x 890.75595pt>
+<imagenes_plantilla/../../analysis_relief/outputs/figures/heatmaps/heatmap_delta_RMSE_ENTIRE.pdf, id=4845, 646.16467pt x 890.75595pt>
 File: imagenes_plantilla/../../analysis_relief/outputs/figures/heatmaps/heatmap_delta_RMSE_ENTIRE.pdf Graphic file (type pdf)
 <use imagenes_plantilla/../../analysis_relief/outputs/figures/heatmaps/heatmap_delta_RMSE_ENTIRE.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs/figures/heatmaps/heatmap_delta_RMSE_ENTIRE.pdf  used on input line 969.
 (pdftex.def)             Requested size: 373.3035pt x 514.61363pt.
-LaTeX Info: Redefining \. on input line 991.
-LaTeX Info: Redefining \% on input line 991.
+LaTeX Info: Redefining \. on input line 992.
+LaTeX Info: Redefining \% on input line 992.
  [85]
-LaTeX Info: Redefining \. on input line 991.
-LaTeX Info: Redefining \% on input line 991.
+LaTeX Info: Redefining \. on input line 992.
+LaTeX Info: Redefining \% on input line 992.
  [86 <./imagenes_plantilla/../../analysis_relief/outputs/figures/heatmaps/heatmap_delta_RMSE_ENTIRE.pdf>]
 <imagenes_plantilla/../../analysis_relief/outputs/figures/heatmaps/heatmap_delta_RMSE_TBR_2.pdf, id=4962, 636.582pt x 890.75595pt>
 File: imagenes_plantilla/../../analysis_relief/outputs/figures/heatmaps/heatmap_delta_RMSE_TBR_2.pdf Graphic file (type pdf)
@@ -1527,101 +1502,87 @@ File: imagenes_plantilla/../../analysis_relief/outputs/figures/heatmaps/heatmap_
 <use imagenes_plantilla/../../analysis_relief/outputs/figures/heatmaps/heatmap_ranking_RMSE.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs/figures/heatmaps/heatmap_ranking_RMSE.pdf  used on input line 1052.
 (pdftex.def)             Requested size: 373.3035pt x 272.47662pt.
-LaTeX Info: Redefining \. on input line 1080.
-LaTeX Info: Redefining \% on input line 1080.
+LaTeX Info: Redefining \. on input line 1088.
+LaTeX Info: Redefining \% on input line 1088.
 [87]
-LaTeX Info: Redefining \. on input line 1080.
-LaTeX Info: Redefining \% on input line 1080.
+LaTeX Info: Redefining \. on input line 1088.
+LaTeX Info: Redefining \% on input line 1088.
  [88 <./imagenes_plantilla/../../analysis_relief/outputs/figures/heatmaps/heatmap_delta_RMSE_TBR_2.pdf>]
 <imagenes_plantilla/../../analysis_relief/outputs/figures/dumbbell/dumbbell_RMSE_ENTIRE.pdf, id=5084, 1104.91237pt x 548.34862pt>
 File: imagenes_plantilla/../../analysis_relief/outputs/figures/dumbbell/dumbbell_RMSE_ENTIRE.pdf Graphic file (type pdf)
 <use imagenes_plantilla/../../analysis_relief/outputs/figures/dumbbell/dumbbell_RMSE_ENTIRE.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs/figures/dumbbell/dumbbell_RMSE_ENTIRE.pdf  used on input line 1092.
 (pdftex.def)             Requested size: 455.24411pt x 225.92885pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-LaTeX Info: Redefining \. on input line 1099.
-LaTeX Info: Redefining \% on input line 1099.
- [89 <./imagenes_plantilla/../../analysis_relief/outputs/figures/heatmaps/heatmap_ranking_RMSE.pdf>]
-<imagenes_plantilla/../../analysis_relief/outputs/figures/dumbbell/slope_RMSE_ENTIRE_by_dim.pdf, id=5184, 671.29861pt x 476.80132pt>
+<imagenes_plantilla/../../analysis_relief/outputs/figures/dumbbell/slope_RMSE_ENTIRE_by_dim.pdf, id=5086, 671.29861pt x 476.80132pt>
 File: imagenes_plantilla/../../analysis_relief/outputs/figures/dumbbell/slope_RMSE_ENTIRE_by_dim.pdf Graphic file (type pdf)
 <use imagenes_plantilla/../../analysis_relief/outputs/figures/dumbbell/slope_RMSE_ENTIRE_by_dim.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs/figures/dumbbell/slope_RMSE_ENTIRE_by_dim.pdf  used on input line 1132.
 (pdftex.def)             Requested size: 455.24411pt x 323.34755pt.
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 2846) has occurred while \output is active []
 
-LaTeX Info: Redefining \. on input line 1141.
-LaTeX Info: Redefining \% on input line 1141.
- [90 <./imagenes_plantilla/../../analysis_relief/outputs/figures/dumbbell/dumbbell_RMSE_ENTIRE.pdf>]
-LaTeX Info: Redefining \. on input line 1177.
-LaTeX Info: Redefining \% on input line 1177.
- [91 <./imagenes_plantilla/../../analysis_relief/outputs/figures/dumbbell/slope_RMSE_ENTIRE_by_dim.pdf>]
-<imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/family_size/oversampling/dist_RMSE_ENTIRE_oversampling.pdf, id=5445, 1298.22957pt x 451.68555pt>
+LaTeX Info: Redefining \. on input line 1146.
+LaTeX Info: Redefining \% on input line 1146.
+ [89 <./imagenes_plantilla/../../analysis_relief/outputs/figures/heatmaps/heatmap_ranking_RMSE.pdf>]
+LaTeX Info: Redefining \. on input line 1146.
+LaTeX Info: Redefining \% on input line 1146.
+ [90 <./imagenes_plantilla/../../analysis_relief/outputs/figures/dumbbell/dumbbell_RMSE_ENTIRE.pdf> <./imagenes_plantilla/../../analysis_relief/outputs/figures/dumbbell/slope_RMSE_ENTIRE_by_dim.pdf>]
+<imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/family_size/oversampling/dist_RMSE_ENTIRE_oversampling.pdf, id=5439, 1298.22957pt x 451.68555pt>
 File: imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/family_size/oversampling/dist_RMSE_ENTIRE_oversampling.pdf Graphic file (type pdf)
 <use imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/family_size/oversampling/dist_RMSE_ENTIRE_oversampling.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/family_size/oversampling/dist_RMSE_ENTIRE_oversampling.pdf  used on input line 1206.
 (pdftex.def)             Requested size: 373.3035pt x 129.87581pt.
-<imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/family_size/same_size/dist_RMSE_ENTIRE_same_size.pdf, id=5446, 1295.75192pt x 451.83192pt>
+<imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/family_size/same_size/dist_RMSE_ENTIRE_same_size.pdf, id=5440, 1295.75192pt x 451.83192pt>
 File: imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/family_size/same_size/dist_RMSE_ENTIRE_same_size.pdf Graphic file (type pdf)
 <use imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/family_size/same_size/dist_RMSE_ENTIRE_same_size.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/family_size/same_size/dist_RMSE_ENTIRE_same_size.pdf  used on input line 1218.
 (pdftex.def)             Requested size: 373.3035pt x 130.17299pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-LaTeX Info: Redefining \. on input line 1225.
-LaTeX Info: Redefining \% on input line 1225.
- [92 <./imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/family_size/oversampling/dist_RMSE_ENTIRE_oversampling.pdf>]
-<imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/family_size/undersampling/dist_RMSE_ENTIRE_undersampling.pdf, id=5526, 1295.03477pt x 451.60703pt>
+<imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/family_size/undersampling/dist_RMSE_ENTIRE_undersampling.pdf, id=5441, 1295.03477pt x 451.60703pt>
 File: imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/family_size/undersampling/dist_RMSE_ENTIRE_undersampling.pdf Graphic file (type pdf)
 <use imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/family_size/undersampling/dist_RMSE_ENTIRE_undersampling.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/family_size/undersampling/dist_RMSE_ENTIRE_undersampling.pdf  used on input line 1230.
 (pdftex.def)             Requested size: 373.3035pt x 130.17711pt.
-LaTeX Info: Redefining \. on input line 1271.
-LaTeX Info: Redefining \% on input line 1271.
- [93 <./imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/family_size/same_size/dist_RMSE_ENTIRE_same_size.pdf> <./imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/family_size/undersampling/dist_RMSE_ENTIRE_undersampling.pdf>]
-<imagenes_plantilla/../../analysis_relief/outputs/figures/profiles/family_size/oversampling/range_profile_facet_RMSE_oversampling.pdf, id=5683, 1009.80013pt x 682.55pt>
+LaTeX Info: Redefining \. on input line 1253.
+LaTeX Info: Redefining \% on input line 1253.
+ [91]
+LaTeX Info: Redefining \. on input line 1253.
+LaTeX Info: Redefining \% on input line 1253.
+ [92 <./imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/family_size/oversampling/dist_RMSE_ENTIRE_oversampling.pdf> <./imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/family_size/same_size/dist_RMSE_ENTIRE_same_size.pdf> <./imagenes_plantilla/../../analysis_relief/outputs/figures/distributions/family_size/undersampling/dist_RMSE_ENTIRE_undersampling.pdf>]
+<imagenes_plantilla/../../analysis_relief/outputs/figures/profiles/family_size/oversampling/range_profile_facet_RMSE_oversampling.pdf, id=5679, 1009.80013pt x 682.55pt>
 File: imagenes_plantilla/../../analysis_relief/outputs/figures/profiles/family_size/oversampling/range_profile_facet_RMSE_oversampling.pdf Graphic file (type pdf)
 <use imagenes_plantilla/../../analysis_relief/outputs/figures/profiles/family_size/oversampling/range_profile_facet_RMSE_oversampling.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs/figures/profiles/family_size/oversampling/range_profile_facet_RMSE_oversampling.pdf  used on input line 1291.
 (pdftex.def)             Requested size: 373.3035pt x 252.32083pt.
-<imagenes_plantilla/../../analysis_relief/outputs/figures/profiles/family_size/same_size/range_profile_facet_RMSE_same_size.pdf, id=5684, 1010.00714pt x 538.01pt>
+<imagenes_plantilla/../../analysis_relief/outputs/figures/profiles/family_size/same_size/range_profile_facet_RMSE_same_size.pdf, id=5680, 1010.00714pt x 538.01pt>
 File: imagenes_plantilla/../../analysis_relief/outputs/figures/profiles/family_size/same_size/range_profile_facet_RMSE_same_size.pdf Graphic file (type pdf)
 <use imagenes_plantilla/../../analysis_relief/outputs/figures/profiles/family_size/same_size/range_profile_facet_RMSE_same_size.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs/figures/profiles/family_size/same_size/range_profile_facet_RMSE_same_size.pdf  used on input line 1303.
 (pdftex.def)             Requested size: 373.3035pt x 198.84714pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-LaTeX Info: Redefining \. on input line 1311.
-LaTeX Info: Redefining \% on input line 1311.
- [94 <./imagenes_plantilla/../../analysis_relief/outputs/figures/profiles/family_size/oversampling/range_profile_facet_RMSE_oversampling.pdf>]
-<imagenes_plantilla/../../analysis_relief/outputs/figures/profiles/family_size/undersampling/range_profile_facet_RMSE_undersampling.pdf, id=5770, 1009.68906pt x 538.01pt>
+<imagenes_plantilla/../../analysis_relief/outputs/figures/profiles/family_size/undersampling/range_profile_facet_RMSE_undersampling.pdf, id=5681, 1009.68906pt x 538.01pt>
 File: imagenes_plantilla/../../analysis_relief/outputs/figures/profiles/family_size/undersampling/range_profile_facet_RMSE_undersampling.pdf Graphic file (type pdf)
 <use imagenes_plantilla/../../analysis_relief/outputs/figures/profiles/family_size/undersampling/range_profile_facet_RMSE_undersampling.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs/figures/profiles/family_size/undersampling/range_profile_facet_RMSE_undersampling.pdf  used on input line 1316.
 (pdftex.def)             Requested size: 373.3035pt x 198.91281pt.
-LaTeX Info: Redefining \. on input line 1349.
-LaTeX Info: Redefining \% on input line 1349.
- [95 <./imagenes_plantilla/../../analysis_relief/outputs/figures/profiles/family_size/same_size/range_profile_facet_RMSE_same_size.pdf> <./imagenes_plantilla/../../analysis_relief/outputs/figures/profiles/family_size/undersampling/range_profile_facet_RMSE_undersampling.pdf>]
-Underfull \vbox (badness 6188) has occurred while \output is active []
-
-LaTeX Info: Redefining \. on input line 1443.
-LaTeX Info: Redefining \% on input line 1443.
- [96]
-<imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_ENTIRE_T1DiabetesGranada.pdf, id=5942, 752.95439pt x 904.97343pt>
+LaTeX Info: Redefining \. on input line 1333.
+LaTeX Info: Redefining \% on input line 1333.
+ [93 <./imagenes_plantilla/../../analysis_relief/outputs/figures/profiles/family_size/oversampling/range_profile_facet_RMSE_oversampling.pdf>]
+LaTeX Info: Redefining \. on input line 1333.
+LaTeX Info: Redefining \% on input line 1333.
+ [94 <./imagenes_plantilla/../../analysis_relief/outputs/figures/profiles/family_size/same_size/range_profile_facet_RMSE_same_size.pdf> <./imagenes_plantilla/../../analysis_relief/outputs/figures/profiles/family_size/undersampling/range_profile_facet_RMSE_undersampling.pdf>]
+LaTeX Info: Redefining \. on input line 1407.
+LaTeX Info: Redefining \% on input line 1407.
+ [95]
+<imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_ENTIRE_T1DiabetesGranada.pdf, id=5938, 752.95439pt x 904.97343pt>
 File: imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_ENTIRE_T1DiabetesGranada.pdf Graphic file (type pdf)
 <use imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_ENTIRE_T1DiabetesGranada.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_ENTIRE_T1DiabetesGranada.pdf  used on input line 1449.
 (pdftex.def)             Requested size: 145.68144pt x 175.09514pt.
-<imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_ENTIRE_REPLACE-BG.pdf, id=5943, 764.90529pt x 904.97343pt>
+<imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_ENTIRE_REPLACE-BG.pdf, id=5939, 764.90529pt x 904.97343pt>
 File: imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_ENTIRE_REPLACE-BG.pdf Graphic file (type pdf)
 <use imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_ENTIRE_REPLACE-BG.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_ENTIRE_REPLACE-BG.pdf  used on input line 1456.
 (pdftex.def)             Requested size: 145.68144pt x 172.361pt.
-<imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_ENTIRE_DIATREND.pdf, id=5944, 764.90529pt x 904.97343pt>
+<imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_ENTIRE_DIATREND.pdf, id=5940, 764.90529pt x 904.97343pt>
 File: imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_ENTIRE_DIATREND.pdf Graphic file (type pdf)
 <use imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_ENTIRE_DIATREND.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_ENTIRE_DIATREND.pdf  used on input line 1463.
@@ -1633,31 +1594,31 @@ Overfull \hbox (24.87535pt too wide) in paragraph at lines 1477--1478
 
 LaTeX Info: Redefining \. on input line 1478.
 LaTeX Info: Redefining \% on input line 1478.
-[97 <./imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_ENTIRE_T1DiabetesGranada.pdf> <./imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_ENTIRE_REPLACE-BG.pdf> <./imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_ENTIRE_DIATREND.pdf>]
-<imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_TBR_2_T1DiabetesGranada.pdf, id=6246, 753.81699pt x 905.08322pt>
+[96 <./imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_ENTIRE_T1DiabetesGranada.pdf> <./imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_ENTIRE_REPLACE-BG.pdf> <./imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_ENTIRE_DIATREND.pdf>]
+<imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_TBR_2_T1DiabetesGranada.pdf, id=6241, 753.81699pt x 905.08322pt>
 File: imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_TBR_2_T1DiabetesGranada.pdf Graphic file (type pdf)
 <use imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_TBR_2_T1DiabetesGranada.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_TBR_2_T1DiabetesGranada.pdf  used on input line 1499.
 (pdftex.def)             Requested size: 145.68144pt x 174.90921pt.
-<imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_TBR_2_REPLACE-BG.pdf, id=6247, 753.81699pt x 904.97343pt>
+<imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_TBR_2_REPLACE-BG.pdf, id=6242, 753.81699pt x 904.97343pt>
 File: imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_TBR_2_REPLACE-BG.pdf Graphic file (type pdf)
 <use imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_TBR_2_REPLACE-BG.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_TBR_2_REPLACE-BG.pdf  used on input line 1506.
 (pdftex.def)             Requested size: 145.68144pt x 174.888pt.
-<imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_TBR_2_DIATREND.pdf, id=6248, 752.95439pt x 904.97343pt>
+<imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_TBR_2_DIATREND.pdf, id=6243, 752.95439pt x 904.97343pt>
 File: imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_TBR_2_DIATREND.pdf Graphic file (type pdf)
 <use imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_TBR_2_DIATREND.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_TBR_2_DIATREND.pdf  used on input line 1513.
 (pdftex.def)             Requested size: 145.68144pt x 175.09514pt.
-LaTeX Info: Redefining \. on input line 1542.
-LaTeX Info: Redefining \% on input line 1542.
- [98 <./imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_TBR_2_T1DiabetesGranada.pdf> <./imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_TBR_2_REPLACE-BG.pdf> <./imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_TBR_2_DIATREND.pdf>]
-<imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/borda_lollipop.pdf, id=6556, 929.58817pt x 472.46513pt>
+LaTeX Info: Redefining \. on input line 1526.
+LaTeX Info: Redefining \% on input line 1526.
+ [97 <./imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_TBR_2_T1DiabetesGranada.pdf> <./imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_TBR_2_REPLACE-BG.pdf> <./imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/cd_diagram_RMSE_TBR_2_DIATREND.pdf>]
+<imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/borda_lollipop.pdf, id=6552, 929.58817pt x 472.46513pt>
 File: imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/borda_lollipop.pdf Graphic file (type pdf)
 <use imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/borda_lollipop.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/borda_lollipop.pdf  used on input line 1551.
 (pdftex.def)             Requested size: 373.3035pt x 189.73245pt.
-<imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/bump_chart_ENTIRE.pdf, id=6558, 902.80647pt x 553.40755pt>
+<imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/bump_chart_ENTIRE.pdf, id=6554, 902.80647pt x 553.40755pt>
 File: imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/bump_chart_ENTIRE.pdf Graphic file (type pdf)
 <use imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/bump_chart_ENTIRE.pdf>
 Package pdftex.def Info: imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/bump_chart_ENTIRE.pdf  used on input line 1569.
@@ -1677,28 +1638,32 @@ Overfull \hbox (37.5839pt too wide) in paragraph at lines 1581--1595
 \OT1/cmr/m/n/10.95 li-de-rar el Bor-da, se-gui-da de Age\TS1/cmr/m/n/10.95 ·\OT1/cmr/m/n/10.95 PAUndersampling y Age\TS1/cmr/m/n/10.95 ·\OT1/cmr/m/n/10.95 Undersampling, con Sex\TS1/cmr/m/n/10.95 ·\OT1/cmr/m/n/10.95 Oversampling+Tomek
  []
 
-LaTeX Info: Redefining \. on input line 1611.
-LaTeX Info: Redefining \% on input line 1611.
-[99 <./imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/borda_lollipop.pdf>]
-LaTeX Info: Redefining \. on input line 1655.
-LaTeX Info: Redefining \% on input line 1655.
- [100 <./imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/bump_chart_ENTIRE.pdf>]
+LaTeX Info: Redefining \. on input line 1595.
+LaTeX Info: Redefining \% on input line 1595.
+[98 <./imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/borda_lollipop.pdf>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 1637.
+LaTeX Info: Redefining \% on input line 1637.
+ [99 <./imagenes_plantilla/../../analysis_relief/outputs/figures/rankings/bump_chart_ENTIRE.pdf>]
 Overfull \hbox (19.79733pt too wide) in paragraph at lines 1695--1705
  []\OT1/cmr/bx/sc/10.95 ?`Por qu^^Se REPLACE-BG es in-sen-si-ble al ba-lan-ceo?[] \OT1/cmr/m/n/10.95 El me-ca-nis-mo sub-ya-cen-te en REPLACE-
  []
 
-LaTeX Info: Redefining \. on input line 1713.
-LaTeX Info: Redefining \% on input line 1713.
-[101]
-LaTeX Info: Redefining \. on input line 1788.
-LaTeX Info: Redefining \% on input line 1788.
- [102]
-LaTeX Info: Redefining \. on input line 1855.
-LaTeX Info: Redefining \% on input line 1855.
- [103]) (./capitulos/05_Conclusiones.tex
+LaTeX Info: Redefining \. on input line 1705.
+LaTeX Info: Redefining \% on input line 1705.
+[100]
+LaTeX Info: Redefining \. on input line 1776.
+LaTeX Info: Redefining \% on input line 1776.
+ [101]
+LaTeX Info: Redefining \. on input line 1854.
+LaTeX Info: Redefining \% on input line 1854.
+ [102]) (./capitulos/05_Conclusiones.tex
 LaTeX Info: Redefining \. on input line 2.
 LaTeX Info: Redefining \% on input line 2.
- [104]
+ [103] [104
+
+]
 Cap\'{\i }tulo 6.
 
 Overfull \hbox (36.51894pt too wide) in paragraph at lines 55--67
@@ -1706,7 +1671,6 @@ Overfull \hbox (36.51894pt too wide) in paragraph at lines 55--67
  []
 
 [105
-
 
 ]
 LaTeX Info: Redefining \. on input line 130.
@@ -1791,15 +1755,15 @@ Package rerunfilecheck Info: File `tfm.out' has not changed.
 (rerunfilecheck)             Checksum: 846E2A557E1A386156E68202CE7412EB;31343.
  ) 
 Here is how much of TeX's memory you used:
- 18802 strings out of 467525
- 343037 string characters out of 5423209
- 863667 words of memory out of 5000000
- 46844 multiletter control sequences out of 15000+600000
+ 18800 strings out of 467525
+ 342950 string characters out of 5423209
+ 860094 words of memory out of 5000000
+ 46842 multiletter control sequences out of 15000+600000
  648465 words of font info for 116 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  73i,16n,91p,2018b,889s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfrm0600.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
-Output written on tfm.pdf (146 pages, 27732248 bytes).
+Output written on tfm.pdf (146 pages, 27731371 bytes).
 PDF statistics:
  7178 PDF objects out of 7423 (max. 8388607)
  2561 compressed objects within 26 object streams

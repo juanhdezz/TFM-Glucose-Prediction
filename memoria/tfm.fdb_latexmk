@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex tfm"] 1788866109.64733 "tfm.aux" "tfm.bbl" "tfm" 1788866115.48406 0
+["bibtex tfm"] 1788876547.29718 "tfm.aux" "tfm.bbl" "tfm" 1788877047.40481 0
   "./bibliografia.bib" 1787868523 51092 c8c1d40c7fa1e388463547bbed1362e0 ""
   "c:/texlive/2026/texmf-dist/bibtex/bst/base/ieeetr.bst" 1774463995 18361 1a00e58565e7f19bf2b3e1bfb82254ae ""
-  "tfm.aux" 1788866113 91290 d8aa915ce211175a08bae96583b01209 "pdflatex"
+  "tfm.aux" 1788877045 91288 52de3ad122eed29555909694b2dedd47 "pdflatex"
   (generated)
   "tfm.bbl"
   "tfm.blg"
   (rewritten before read)
-["pdflatex"] 1788866110.33054 "c:/Users/User/Desktop/TFM-Glucose-Prediction/memoria/tfm.tex" "tfm.pdf" "tfm" 1788866115.48501 0
+["pdflatex"] 1788877041.91346 "c:/Users/User/Desktop/TFM-Glucose-Prediction/memoria/tfm.tex" "tfm.pdf" "tfm" 1788877047.40573 0
   "agradecimientos.tex" 1787651953 1624 2c504d7a9f4a39f47a31d55645966b22 ""
   "anexos/repo_codigo.tex" 1788866103 15277 203b40b49aabd7b9be8b64aa5a30b2d7 ""
   "c:/Users/User/Desktop/TFM-Glucose-Prediction/memoria/tfm.tex" 1788865957 5640 d9f368b4fe1dbbd5d2a581cdc04b1339 ""
@@ -184,11 +184,11 @@
   "c:/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1774472605 5619402 045890036aad9b52b154ef5568e59d3a ""
   "c:/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt" 1774472895 3636419 4cd8542d85888f55926f6186f07dae63 ""
   "c:/texlive/2026/texmf.cnf" 1774472573 713 e69b156964470283e0530f5060668171 ""
-  "capitulos/01_Introduccion.tex" 1788781723 11832 8fd183c683230ae200f2b9f9b771f1d2 ""
-  "capitulos/02_Fundamentacion_teorica.tex" 1787868523 70792 a78d0e1c6d3a4efee2d716541c1510a2 ""
-  "capitulos/03_Desarrollo_del_TFM.tex" 1788860873 129073 c6191f8639a77176600727cb2539e8f6 ""
-  "capitulos/04_Resultados_y_Discusion.tex" 1787869088 112349 6d19d63fbf98065db7354754bf4bc02d ""
-  "capitulos/05_Conclusiones.tex" 1786688962 14807 ef83182d255e7e09bd71c704b3be241d ""
+  "capitulos/01_Introduccion.tex" 1788876499 11832 8fd183c683230ae200f2b9f9b771f1d2 ""
+  "capitulos/02_Fundamentacion_teorica.tex" 1788876499 70792 a78d0e1c6d3a4efee2d716541c1510a2 ""
+  "capitulos/03_Desarrollo_del_TFM.tex" 1788876541 129118 9ab34aa8bd0b2cebecc5d606d28ca6da ""
+  "capitulos/04_Resultados_y_Discusion.tex" 1788877040 112422 ac4ca06b24f786a8cb68f47334677258 ""
+  "capitulos/05_Conclusiones.tex" 1788876499 14807 ef83182d255e7e09bd71c704b3be241d ""
   "datos.tex" 1788779637 1793 3c71b8bc46b1dac17682953649743aaf ""
   "imagenes/CEG__RMSE_LSTM_H4_ALL.pdf" 1783771691 21820072 15c8a6cf6df297580bb236b0ef5f0e4e ""
   "imagenes/logo.png" 1785445464 13864 06d47b24f456dd9b1ecb62166c30578e ""
@@ -254,13 +254,13 @@
   "prefacios/prefacio.tex" 1784756261 2946 49fcda83c2421be4e739d519b3b679ff ""
   "resumen-en.tex" 1788780010 2143 b6bc93c2228d7bb7b89e05f124400202 ""
   "resumen.tex" 1788780010 2145 607559a1455ef994b3e5a6f5cd26d9dc ""
-  "tfm.aux" 1788866113 91290 d8aa915ce211175a08bae96583b01209 "pdflatex"
-  "tfm.bbl" 1788866110 18677 037434777a5257b499517b472f7cbf28 "bibtex tfm"
-  "tfm.lof" 1788866113 16666 9871f67dcfbb758b6e8bfd3327f35666 "pdflatex"
-  "tfm.lot" 1788866113 2668 21965944fb0efa99e7f539ea8a96c5df "pdflatex"
-  "tfm.out" 1788866113 31343 846e2a557e1a386156e68202ce7412eb "pdflatex"
+  "tfm.aux" 1788877045 91288 52de3ad122eed29555909694b2dedd47 "pdflatex"
+  "tfm.bbl" 1788876547 18677 037434777a5257b499517b472f7cbf28 "bibtex tfm"
+  "tfm.lof" 1788877045 16665 b44d23d1714b84c93a3b1e9e631aeba0 "pdflatex"
+  "tfm.lot" 1788877045 2668 af1d51349c2a6ef033cb4a2a09f02f97 "pdflatex"
+  "tfm.out" 1788877045 31343 846e2a557e1a386156e68202ce7412eb "pdflatex"
   "tfm.tex" 1788865957 5640 d9f368b4fe1dbbd5d2a581cdc04b1339 ""
-  "tfm.toc" 1788866113 21465 4d9eb536c9a4de08a5133a95a93e7fd3 "pdflatex"
+  "tfm.toc" 1788877045 21465 4a22f1eea46b83bb50c8145f9e223d04 "pdflatex"
   "use imagenes_plantilla/../../EDA/DIATREND/B3b_glucose_ranges_age.pdf" 1785882840 28886 b213bd1be61d2e53e9ad559707650f6f ""
   "use imagenes_plantilla/../../EDA/REPLACE-BG/B3b_glucose_ranges_age.pdf" 1785882843 28432 18884285b211e905d3bb09ee258a3489 ""
   "use imagenes_plantilla/../../EDA/T1DiabetesGranada/B3b_glucose_ranges_age.pdf" 1785882837 28888 40a62b25e6494c983e44de2e7a84a66e ""

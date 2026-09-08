@@ -60,7 +60,7 @@ el reequilibrio demográfico puede influir en el aprendizaje del modelo.
 %
 % PRINCIPIO: figura → texto que la comenta.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{../../analysis_relief/outputs_clinical/trainsize_bars_age}
     \caption{Tamaño medio del conjunto de entrenamiento (número de ventanas,
@@ -118,7 +118,7 @@ original en todos los repositorios: 14\,013\,314 en T1DiabetesGranada ($+$3\,\%)
 2\,677\,835 en DiaTrend ($+$67\,\%) y 2\,441\,826 en REPLACE-BG ($+$6\,\%) para
 la dimensión edad; en sexo los incrementos son más moderados.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{../../analysis_relief/outputs_clinical/trainsize_bars_sex}
     \caption{Tamaño medio del conjunto de entrenamiento por técnica de balanceo
@@ -160,7 +160,7 @@ tres \textit{datasets} para permitir comparación directa. Valores positivos
 relativo, de modo que la saturación visual es directamente comparable entre
 repositorios.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{%
         ../../analysis_relief/outputs_clinical/heatmap_balancing_T1DiabetesGranada_age}
@@ -207,10 +207,10 @@ equilibrada de todas las familias sin modificar el tamaño total del train.
 ROS+Tomek produce un perfil similar pero con reducciones algo más contenidas
 gracias a que el Tomek posterior modera el sobreajuste del ROS previo.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{%
-        ../../analysis_relief/outputs_clinical/heatmap_balancing_DIATREND_age}
+        ../../analysis_relief/outputs_clinical/heatmap_balancing_DIATREND_age.pdf}
     \caption{Variación $\Delta n$ y $\Delta\%$ de ventanas por técnica de
              balanceo y grupo de edad en \textbf{DiaTrend}. La escala de
              color es la misma que en la figura~\ref{fig:heatmap_age_t1d};
@@ -256,7 +256,7 @@ los mismos incrementos sobre los grupos minoritarios que las híbridas
 completas, ocupando así una posición intermedia entre aumento puro e
 híbrida compensada.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{%
         ../../analysis_relief/outputs_clinical/heatmap_balancing_REPLACE-BG_age}
@@ -339,7 +339,7 @@ su sensibilidad a esos eventos.
 
 \paragraph{T1DiabetesGranada.}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{%
         ../../analysis_relief/outputs_clinical/stacked_bars_T1DiabetesGranada}
@@ -365,7 +365,7 @@ proporción de TIR y menor de TAR (véase sección~\ref{subsec:eda_cgm}), su
 amplificación se traduce en un ligero desplazamiento de la distribución
 hacia la normoglucemia.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{%
         ../../analysis_relief/outputs_clinical/delta_glycemic_T1DiabetesGranada}
@@ -400,7 +400,7 @@ reorientación sustancial de la distribución glucémica de aprendizaje.
 
 \paragraph{DiaTrend.}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{%
         ../../analysis_relief/outputs_clinical/stacked_bars_DIATREND}
@@ -424,7 +424,7 @@ veces, el grueso de las ventanas añadidas son ventanas en normoglucemia,
 porque el único paciente de ese grupo tiene un perfil predominantemente
 en TIR.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{%
         ../../analysis_relief/outputs_clinical/delta_glycemic_DIATREND}
@@ -458,7 +458,7 @@ reorientación glucémica tan pronunciada como el desequilibrio etario.
 
 \paragraph{REPLACE-BG.}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{%
         ../../analysis_relief/outputs_clinical/stacked_bars_REPLACE-BG}
@@ -480,7 +480,7 @@ producen barras más compactas pero con proporciones relativas similares al
 original, reflejo de que el diseño controlado del ensayo REPLACE-BG minimiza
 las diferencias glucémicas entre grupos demográficos.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{%
         ../../analysis_relief/outputs_clinical/delta_glycemic_REPLACE-BG}
@@ -773,7 +773,7 @@ obtener una mediana de RMSE comparable al \textit{baseline} pero con una
 dispersión mucho mayor entre folds, lo que la haría clínicamente menos fiable
 en un escenario de despliegue real.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{%
         ../../analysis_relief/outputs/figures/distributions/dist_RMSE_ENTIRE}
@@ -815,7 +815,7 @@ $37{,}25$\,mg/dL, con violines compactos comparables a T1DiabetesGranada.
 La homogeneidad de los seguimientos de este repositorio produce un comportamiento
 muy estable independientemente de la técnica aplicada.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{%
         ../../analysis_relief/outputs/figures/distributions/dist_RMSE_TBR_2}
@@ -862,7 +862,7 @@ compactos ($56{,}11$--$57{,}84$\,mg/dL frente a un \textit{baseline} de
 $57{,}29 \pm 1{,}54$), confirmando que este repositorio no presenta
 variabilidad clínicamente relevante entre técnicas en hipoglucemia severa.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{%
         ../../analysis_relief/outputs/figures/distributions/consistency_folds_RMSE_ENTIRE}
@@ -1086,7 +1086,7 @@ con las condiciones balanceadas, mientras que en hipoglucemia queda en
 posiciones más bajas ---especialmente en DiaTrend, donde ocupa la posición
 21 (última) en In Range.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{%
         ../../analysis_relief/outputs/figures/dumbbell/dumbbell_RMSE_ENTIRE}
@@ -1126,7 +1126,7 @@ En \textbf{REPLACE-BG} el rango total es $\approx 0{,}44$\,mg/dL (de
 $36{,}81$ a $37{,}25$\,mg/dL), comparable al de T1DGranada. Las barras
 de error se solapan ampliamente entre técnicas y con el \textit{baseline}.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{%
         ../../analysis_relief/outputs/figures/dumbbell/slope_RMSE_ENTIRE_by_dim}
@@ -1211,7 +1211,7 @@ los tres repositorios.
     \label{fig:dist_rmse_oversampling}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.82\textwidth]{%
         ../../analysis_relief/outputs/figures/distributions/family_size/%
@@ -1223,7 +1223,7 @@ los tres repositorios.
     \label{fig:dist_rmse_samesize}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.82\textwidth]{%
         ../../analysis_relief/outputs/figures/distributions/family_size/%
@@ -1284,7 +1284,7 @@ completa la lectura anterior con una dimensión clínica que el RMSE global
 no captura: si el efecto de cada familia es uniforme entre rangos o si hay
 rangos que se benefician o perjudican selectivamente.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.82\textwidth]{%
         ../../analysis_relief/outputs/figures/profiles/family_size/%
@@ -1296,7 +1296,7 @@ rangos que se benefician o perjudican selectivamente.
     \label{fig:profile_oversampling}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.82\textwidth]{%
         ../../analysis_relief/outputs/figures/profiles/family_size/%
@@ -1309,7 +1309,7 @@ rangos que se benefician o perjudican selectivamente.
     \label{fig:profile_samesize}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.82\textwidth]{%
         ../../analysis_relief/outputs/figures/profiles/family_size/%
@@ -1441,7 +1441,7 @@ REPLACE-BG & ENTIRE & 26{,}82 & 0{,}140 & \\
 \end{tabular}
 \end{table}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \begin{subfigure}[b]{0.32\textwidth}
         \includegraphics[width=\textwidth]{%
@@ -1491,7 +1491,7 @@ y del \textit{baseline}. Age·Tomek Links ocupa la posición 1 del ranking
 y se separa significativamente de Age·PAUndersampling, Age·Undersampling
 y Age·Jittering, pero no del resto de técnicas.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \begin{subfigure}[b]{0.32\textwidth}
         \includegraphics[width=\textwidth]{%
