@@ -192,3 +192,23 @@
 \contentsline {section}{\numberline {6.2}Grado de cumplimiento de los objetivos}{106}{section.6.2}%
 \contentsline {section}{\numberline {6.3}Trabajos futuros}{107}{section.6.3}%
 \contentsline {chapter}{Bibliografía}{114}{chapter*.171}%
+\contentsline {chapter}{\numberline {A}Repositorio de código: guía de navegación}{115}{appendix.Alph1}%
+\contentsline {section}{\numberline {A.1}Estructura general del repositorio}{115}{section.Alph1.1}%
+\contentsline {section}{\numberline {A.2}Configuración del entorno de desarrollo}{116}{section.Alph1.2}%
+\contentsline {subsection}{\numberline {A.2.1}Organización del directorio de datos}{116}{subsection.Alph1.2.1}%
+\contentsline {subsection}{\numberline {A.2.2}Ejecución local frente a clúster HPC}{116}{subsection.Alph1.2.2}%
+\contentsline {section}{\numberline {A.3}Pipeline experimental (\texttt {src/})}{117}{section.Alph1.3}%
+\contentsline {subsection}{\numberline {A.3.1}Paso 1: Generación de ventanas deslizantes (\texttt {1-generate\_windows.py})}{117}{subsection.Alph1.3.1}%
+\contentsline {subsection}{\numberline {A.3.2}Paso 2a: Partición Group K-Fold (\texttt {2-folds\_creation.py})}{117}{subsection.Alph1.3.2}%
+\contentsline {subsection}{\numberline {A.3.3}Paso 2b: Balanceo demográfico (\texttt {2-server\_balancing.py})}{117}{subsection.Alph1.3.3}%
+\contentsline {subsection}{\numberline {A.3.4}Paso 3: Entrenamiento LSTM (\texttt {3-train.py})}{117}{subsection.Alph1.3.4}%
+\contentsline {subsection}{\numberline {A.3.5}Paso 4: Evaluación e inferencia (\texttt {4-test\_predictions.py})}{118}{subsection.Alph1.3.5}%
+\contentsline {section}{\numberline {A.4}Análisis exploratorio de datos (\texttt {EDA/})}{118}{section.Alph1.4}%
+\contentsline {subsection}{\numberline {A.4.1}Inspección por \textit {dataset} (\texttt {notebooks/01\_EDA/})}{118}{subsection.Alph1.4.1}%
+\contentsline {subsection}{\numberline {A.4.2}Análisis cruzado entre \textit {datasets} (\texttt {EDA/cross/})}{118}{subsection.Alph1.4.2}%
+\contentsline {section}{\numberline {A.5}Marco de análisis de resultados (\texttt {analysis\_relief/})}{118}{section.Alph1.5}%
+\contentsline {subsection}{\numberline {A.5.1}Configuración y carga de datos (\texttt {analysis/config.py}, \texttt {loader.py})}{119}{subsection.Alph1.5.1}%
+\contentsline {subsection}{\numberline {A.5.2}Validación estadística (\texttt {stats.py})}{119}{subsection.Alph1.5.2}%
+\contentsline {subsection}{\numberline {A.5.3}Módulos de visualización (\texttt {viz/})}{119}{subsection.Alph1.5.3}%
+\contentsline {subsection}{\numberline {A.5.4}Salidas clínicas (\texttt {outputs\_clinical/})}{119}{subsection.Alph1.5.4}%
+\contentsline {section}{\numberline {A.6}Documento de la memoria (\texttt {memoria/})}{119}{section.Alph1.6}%

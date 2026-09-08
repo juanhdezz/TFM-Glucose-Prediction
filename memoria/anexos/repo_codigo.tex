@@ -1,0 +1,372 @@
+% =========================================================
+\chapter{Repositorio de código: guía de navegación}
+\label{chap:anexo_codigo}
+% =========================================================
+
+El código fuente completo de este Trabajo Fin de Máster se encuentra
+disponible de forma pública en el siguiente repositorio de GitHub:
+
+\begin{center}
+    \url{https://github.com/juanhdezz/TFM-Glucose-Prediction}
+\end{center}
+
+Una wiki interactiva generada automáticamente a partir del código, que
+documenta en profundidad cada módulo y subsistema, está disponible en:
+
+\begin{center}
+    \url{https://deepwiki.com/juanhdezz/TFM-Glucose-Prediction}
+\end{center}
+
+Este apéndice actúa como guía de navegación del repositorio: describe la
+organización de directorios, el propósito de cada subsistema y el orden
+lógico en que deben consultarse los scripts para reproducir los
+experimentos o extender el trabajo.
+
+% ---------------------------------------------------------
+\section{Estructura general del repositorio}
+\label{sec:anexo_estructura}
+% ---------------------------------------------------------
+
+El repositorio se organiza en seis subsistemas principales, cada uno con
+responsabilidades bien delimitadas:
+
+\begin{description}
+    \item[\texttt{src/}] Pipeline experimental principal. Contiene los
+    scripts numerados que ejecutan, en orden, la generación de ventanas,
+    la partición por paciente, el balanceo demográfico, el entrenamiento
+    de los modelos LSTM y la evaluación de predicciones.
+
+    \item[\texttt{EDA/}] Análisis Exploratorio de Datos. Agrupa los
+    scripts Python y \textit{notebooks} Jupyter que generan las figuras
+    descriptivas de los tres \textit{datasets}, los \textit{heatmaps}
+    cruzados y los informes de desequilibrio por \textit{fold}.
+
+    \item[\texttt{analysis\_relief/}] Marco de análisis de resultados
+    \textit{post-hoc}. Implementa la carga de resultados, las pruebas
+    estadísticas no paramétricas (Friedman, Nemenyi), las
+    visualizaciones de publicación y la generación automática de tablas
+    \LaTeX.
+
+    \item[\texttt{folds\_analysis/}] Informes de desequilibrio por
+    \textit{fold} y \textit{dataset}, en formato texto, generados como
+    \textit{proxy} del ratio de desbalanceo dinámico inter-\textit{fold}.
+
+    \item[\texttt{batch\_scripts/}] Ficheros de cola SLURM para la
+    ejecución en el clúster HPC. Automatizan el envío de trabajos de
+    balanceo y entrenamiento a gran escala.
+
+    \item[\texttt{memoria/}] Documento \LaTeX\ del TFM. Contiene los
+    capítulos fuente (\texttt{.tex}), las figuras referenciadas y el
+    PDF compilado.
+\end{description}
+
+Los datos clínicos en formato Parquet (\texttt{data/}) y los artefactos
+de resultados (\texttt{results/}, \texttt{cache/}) están excluidos del
+control de versiones mediante \texttt{.gitignore}, dado su tamaño y
+carácter sensible.
+
+% ---------------------------------------------------------
+\section{Configuración del entorno de desarrollo}
+\label{sec:anexo_entorno}
+% ---------------------------------------------------------
+
+El proyecto requiere Python~3.10 o superior. Todas las dependencias
+están fijadas en \texttt{requirements.txt} para garantizar la
+reproducibilidad exacta de los experimentos. Los grupos de librerías
+principales son:
+
+\begin{itemize}
+    \item \textbf{Manipulación y almacenamiento de datos}:
+    \texttt{pandas==2.2.3}, \texttt{numpy==2.2.3}, \texttt{pyarrow}
+    (lectura/escritura de ficheros Parquet).
+
+    \item \textbf{Aprendizaje automático y corrección de desequilibrio}:
+    \texttt{scikit-learn==1.8.0}, \texttt{imbalanced-learn==0.14.1},
+    \texttt{scipy==1.17.1}.
+
+    \item \textbf{Visualización y \textit{notebooks}}:
+    \texttt{matplotlib==3.10.8}, \texttt{seaborn==0.13.2},
+    \texttt{ipykernel}.
+\end{itemize}
+
+Para inicializar el entorno local se recomienda crear un entorno virtual
+e instalar las dependencias:
+
+\begin{verbatim}
+python -m venv .venv
+source .venv/bin/activate          # Linux/macOS
+pip install -r requirements.txt
+\end{verbatim}
+
+\subsection{Organización del directorio de datos}
+\label{subsec:anexo_datos}
+
+Los tres \textit{datasets} clínicos deben ubicarse bajo \texttt{data/}
+siguiendo la estructura esperada por los scripts de carga:
+
+\begin{verbatim}
+data/
++-- T1DiabetesGranada/
+|   +-- Patient_info.csv
+|   +-- Glucose_measurements.parquet
++-- REPLACE-BG/
+|   +-- Glucose_measurements_REPLACE-BG_FILTERED.parquet
++-- DIATREND/
+    +-- Glucose_measurements_DiaTrend_FILTERED.parquet
+\end{verbatim}
+
+La resolución de rutas se gestiona programáticamente en cada script
+mediante utilidades de búsqueda del directorio raíz del workspace, lo
+que hace el código portable independientemente de la ruta absoluta de
+instalación.
+
+\subsection{Ejecución local frente a clúster HPC}
+\label{subsec:anexo_hpc}
+
+El pipeline soporta dos modalidades de ejecución:
+
+\begin{enumerate}
+    \item \textbf{Ejecución local}: adecuada para el análisis exploratorio
+    (\texttt{EDA/}), el \textit{testing} ligero de scripts y la
+    compilación del documento \LaTeX. Se ejecutan las sesiones Jupyter
+    interactivas o los scripts directamente desde la línea de comandos.
+
+    \item \textbf{Ejecución en clúster HPC}: obligatoria para las tareas
+    computacionalmente intensivas: generación de ventanas deslizantes
+    (\texttt{src/1-generate\_windows.py}), balanceo demográfico con las
+    diez técnicas (\texttt{src/2-server\_balancing.py}) y entrenamiento
+    de los modelos LSTM (\texttt{src/3-train.py}). Los trabajos se
+    gestionan mediante ficheros SLURM ubicados en \texttt{batch\_scripts/},
+    que dirigen los artefactos de salida hacia \texttt{data/output/}.
+\end{enumerate}
+
+% ---------------------------------------------------------
+\section{Pipeline experimental (\texttt{src/})}
+\label{sec:anexo_pipeline}
+% ---------------------------------------------------------
+
+El directorio \texttt{src/} implementa el flujo experimental
+\textit{end-to-end}: desde los datos clínicos en bruto hasta los
+modelos evaluados. Los scripts están numerados para reflejar el orden de
+ejecución obligatorio.
+
+\subsection{Paso 1: Generación de ventanas deslizantes
+            (\texttt{1-generate\_windows.py})}
+\label{subsec:anexo_ventanas}
+
+Transforma las series temporales CGM en instancias de aprendizaje
+supervisado mediante ventanas deslizantes. El parámetro de longitud de
+historia se fija en $H=8$ muestras (equivalente a 40~minutos con
+frecuencia de muestreo de 5~min) y el horizonte de predicción en
+$PH=4$ (20~minutos), bajo restricciones estrictas de continuidad
+temporal: ninguna ventana puede cruzar lagunas de datos superiores al
+umbral definido. Cada ventana hereda los metadatos demográficos del
+paciente al que pertenece (\texttt{patient\_id}, \texttt{age\_group},
+\texttt{sex}).
+
+\subsection{Paso 2a: Partición Group K-Fold
+            (\texttt{2-folds\_creation.py})}
+\label{subsec:anexo_folds}
+
+Divide el conjunto de ventanas en 5~\textit{folds} usando
+\texttt{GroupKFold} de \textit{scikit-learn}, con el paciente como
+unidad indivisible de agrupación. El script añade columnas
+\texttt{fold\_*} al Parquet de ventanas para que cada fila quede
+asignada a exactamente un \textit{fold} de test. Esta estrategia
+garantiza la separación completa entre pacientes en entrenamiento y
+evaluación, eliminando la fuga de información inherente a los esquemas
+de validación cruzada aleatorios sobre señales fisiológicas continuas.
+
+\subsection{Paso 2b: Balanceo demográfico
+            (\texttt{2-server\_balancing.py})}
+\label{subsec:anexo_balanceo}
+
+Aplica las diez técnicas de corrección de desequilibrio demográfico
+descritas en la Sección~\ref{sec:pipeline_entrenamiento} del cuerpo
+principal de la memoria. El balanceo se ejecuta \textbf{exclusivamente}
+sobre la partición de entrenamiento de cada \textit{fold}, dejando
+intactas las particiones de validación y test para reflejar la
+distribución demográfica real. Los \textit{datasets} balanceados se
+serializan en Parquet con una nomenclatura que codifica el
+\textit{dataset}, la dimensión demográfica (\texttt{age} o \texttt{sex})
+y la técnica aplicada, por ejemplo:
+
+\begin{verbatim}
+T1DiabetesGranada_age_smote_fold0.parquet
+REPLACE-BG_sex_undersampling_fold3.parquet
+\end{verbatim}
+
+El módulo auxiliar \texttt{src/balancing\_viz.py} genera figuras de
+diagnóstico que muestran la distribución demográfica antes y después de
+cada técnica.
+
+\subsection{Paso 3: Entrenamiento LSTM (\texttt{3-train.py})}
+\label{subsec:anexo_entrenamiento}
+
+Descubre automáticamente los ficheros Parquet balanceados generados en
+el paso anterior y entrena una red neuronal recurrente LSTM para cada
+combinación de (\textit{dataset}, dimensión, técnica, \textit{fold}).
+Las funciones de pérdida están definidas en \texttt{0-loss\_functions.py}
+e incluyen RMSE estándar y pérdidas clínicas penalizadas que castigan de
+forma asimétrica los errores en zonas de hipoglucemia severa (TBR-2) e
+hiperglucemia severa (TAR-2). La reproducibilidad se garantiza mediante
+semillas aleatorias fijas en todos los experimentos.
+
+\subsection{Paso 4: Evaluación e inferencia
+            (\texttt{4-test\_predictions.py})}
+\label{subsec:anexo_evaluacion}
+
+Ejecuta la inferencia sobre las particiones de test y calcula métricas
+desagregadas por rango glucémico (TBR-2, TBR-1, TIR, TAR-1, TAR-2):
+RMSE, MAE, MAPE y distribución de zonas en la Clarke Error Grid. Los
+resultados se compilan en ficheros de informe plano (formato MTA) y se
+agregan entre \textit{folds} para su análisis estadístico posterior.
+
+% ---------------------------------------------------------
+\section{Análisis exploratorio de datos (\texttt{EDA/})}
+\label{sec:anexo_eda}
+% ---------------------------------------------------------
+
+El directorio \texttt{EDA/} contiene \textit{notebooks} Jupyter y
+scripts Python organizados en dos niveles:
+
+\subsection{Inspección por \textit{dataset}
+            (\texttt{notebooks/01\_EDA/})}
+\label{subsec:anexo_eda_individual}
+
+Cada \textit{dataset} dispone de su propio \textit{notebook} de
+inspección inicial:
+
+\begin{itemize}
+    \item \texttt{01\_Inspection\_T1DiabetesGranada.ipynb} /
+          \texttt{\_v2.ipynb}
+    \item \texttt{01\_Inspection\_ReplaceBG.ipynb}
+    \item \texttt{01\_Inspection\_DIATREND.ipynb}
+\end{itemize}
+
+Estos \textit{notebooks} verifican la cadencia de muestreo, detectan
+patrones MNAR (\textit{Missing Not At Random}), caracterizan la
+distribución demográfica y calculan métricas clínicas de referencia
+(TIR/TBR/TAR) sin balanceo.
+
+\subsection{Análisis cruzado entre \textit{datasets}
+            (\texttt{EDA/cross/})}
+\label{subsec:anexo_eda_cross}
+
+Los scripts de análisis cruzado generan las figuras comparativas que
+aparecen en el cuerpo del TFM: distribuciones de sexo y edad por
+\textit{dataset}, \textit{heatmaps} edad$\times$sexo, y diagramas de
+desequilibrio por \textit{fold}. Los artefactos se nombran con el
+prefijo \texttt{B1*} y se referencian directamente desde el documento
+\LaTeX.
+
+El subdirectorio \texttt{folds\_analysis/} contiene informes en formato
+texto con los ratios de desequilibrio calculados para cada técnica de
+balanceo, \textit{dataset} y \textit{fold}, organizados por
+\textit{dataset}:
+
+\begin{verbatim}
+folds_analysis/
++-- DIATREND/
+|   +-- diatrend_age_jittering.txt
+|   +-- diatrend_age_smote.txt
+|   +-- ...
++-- REPLACE-BG/
++-- T1DiabetesGranada/
+\end{verbatim}
+
+% ---------------------------------------------------------
+\section{Marco de análisis de resultados
+         (\texttt{analysis\_relief/})}
+\label{sec:anexo_analisis}
+% ---------------------------------------------------------
+
+El paquete \texttt{analysis\_relief/} es el subsistema de análisis
+\textit{post-hoc}. Su función es agregar los resultados experimentales
+generados en el clúster, ejecutar las pruebas estadísticas y producir
+las figuras y tablas que se incorporan al capítulo de resultados de la
+memoria.
+
+\subsection{Configuración y carga de datos
+            (\texttt{analysis/config.py}, \texttt{loader.py})}
+\label{subsec:anexo_config}
+
+El módulo \texttt{config.py} define los nombres canónicos de
+\textit{datasets}, dimensiones demográficas, técnicas de balanceo y
+sus ordenaciones estándar. \texttt{loader.py} ingesta los Parquet de
+resultados distribuidos generados por el HPC y los unifica en
+estructuras \textit{pandas} limpias y alineadas, listas para el
+análisis.
+
+\subsection{Validación estadística (\texttt{stats.py})}
+\label{subsec:anexo_stats}
+
+Implementa la secuencia completa de validación estadística no
+paramétrica:
+
+\begin{enumerate}
+    \item \textbf{Test de Friedman}: contraste global de que al menos
+    una técnica difiere significativamente del resto en cada combinación
+    (\textit{dataset}, dimensión, métrica).
+    \item \textbf{Test \textit{post-hoc} de Nemenyi}: identifica qué
+    pares de técnicas difieren significativamente, con corrección por
+    comparaciones múltiples. Los resultados se visualizan como diagramas
+    de diferencia crítica (CD).
+    \item \textbf{Recuento de Borda}: agrega los rankings de las
+    técnicas a través de \textit{folds} y métricas para obtener un
+    ranking global robusto.
+    \item \textbf{Consistencia de Spearman}: mide la estabilidad del
+    ranking entre \textit{folds} de validación cruzada.
+\end{enumerate}
+
+\subsection{Módulos de visualización (\texttt{viz/})}
+\label{subsec:anexo_viz}
+
+El directorio \texttt{viz/} contiene módulos de \textit{plotting}
+especializados que generan el catálogo completo de figuras de la tesis:
+distribuciones de RMSE por técnica, diagramas CD de Nemenyi,
+\textit{bump charts} de estabilidad de ranking entre \textit{folds},
+\textit{lollipop charts} de Borda, y gráficos de tamaño de conjunto de
+entrenamiento por técnica.
+
+\subsection{Salidas clínicas (\texttt{outputs\_clinical/})}
+\label{subsec:anexo_clinical}
+
+Traduce las métricas predictivas en interpretaciones clínicamente
+relevantes: gráficos de error glucémico diferencial ($\Delta$RMSE
+respecto al baseline sin balanceo), \textit{heatmaps} de balanceo
+segmentados por edad y sexo, gráficos de compromiso TIR/TBR y análisis
+de los cambios en el tamaño del conjunto de entrenamiento inducidos por
+cada técnica de remuestreo.
+
+% ---------------------------------------------------------
+\section{Documento de la memoria (\texttt{memoria/})}
+\label{sec:anexo_memoria}
+% ---------------------------------------------------------
+
+El directorio \texttt{memoria/} contiene el documento \LaTeX\ completo
+del TFM. El fichero raíz es \texttt{tfm.tex}, que importa los capítulos
+desde \texttt{capitulos/}:
+
+\begin{verbatim}
+memoria/
++-- tfm.tex
++-- capitulos/
+|   +-- 01_Introduccion.tex
+|   +-- 02_Estado_del_Arte.tex
+|   +-- 03_Desarrollo_del_TFM.tex
+|   +-- 04_Resultados_y_Discusion.tex
+|   +-- 05_Conclusiones.tex
++-- EDA/
++-- tfm.pdf
+\end{verbatim}
+
+Los ficheros auxiliares de compilación (\texttt{*.aux}, \texttt{*.toc},
+\texttt{*.log}, \texttt{*.bbl}, \texttt{*.synctex.gz}) están excluidos
+del repositorio. Para compilar el documento se recomienda usar
+\texttt{latexmk}:
+
+\begin{verbatim}
+cd memoria/
+latexmk -pdf -interaction=nonstopmode tfm.tex
+\end{verbatim}

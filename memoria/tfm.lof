@@ -55,3 +55,4 @@
 \contentsline {figure}{\numberline {5.32}{\ignorespaces Ranking global de técnicas mediante el método Borda (suma de posiciones de ranking a través de \textit {datasets}, métricas y rangos glucémicos). Una puntuación Borda más baja indica mejor posicionamiento global. La línea discontinua vertical indica la puntuación del \textit {baseline} original en cada \textit {dataset}.}}{99}{figure.caption.154}%
 \contentsline {figure}{\numberline {5.33}{\ignorespaces \textit {Bump chart} mostrando la estabilidad del ranking de cada técnica entre RMSE y MAE para el conjunto completo (\textit {ENTIRE}), por \textit {dataset}. Líneas horizontales indican estabilidad del ranking entre métricas; líneas muy inclinadas indican que la técnica se comporta de forma diferente según la métrica utilizada.}}{100}{figure.caption.156}%
 \addvspace {10\p@ }
+\addvspace {10\p@ }
