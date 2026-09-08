@@ -1,8 +1,8 @@
 \babel@toc {spanish}{}\relax 
 \contentsline {chapter}{\numberline {1}Introducción}{1}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Motivación}{2}{section.1.1}%
-\contentsline {section}{\numberline {1.2}Objetivos}{3}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Estructura del trabajo}{4}{section.1.3}%
+\contentsline {section}{\numberline {1.2}Objetivos}{2}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Estructura del trabajo}{3}{section.1.3}%
 \contentsline {chapter}{\numberline {2}Fundamentación teórica}{5}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Contexto clínico: DM1 y monitorización continua de glucosa}{5}{section.2.1}%
 \contentsline {subsection}{\numberline {2.1.1}Diabetes mellitus tipo 1: fisiopatología y desafíos de gestión}{5}{subsection.2.1.1}%
@@ -47,7 +47,7 @@
 \contentsline {subsection}{\numberline {3.5.2}Balanceo demográfico en series temporales fisiológicas}{21}{subsection.3.5.2}%
 \contentsline {subsection}{\numberline {3.5.3}Generación sintética de series temporales fisiológicas}{22}{subsection.3.5.3}%
 \contentsline {section}{\numberline {3.6}Brechas en la literatura y motivación del trabajo}{23}{section.3.6}%
-\contentsline {chapter}{\numberline {4}Desarrollo del trabajo}{25}{chapter.4}%
+\contentsline {chapter}{\numberline {4}Metodología de trabajo}{25}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Recopilación y descripción de los datos}{27}{section.4.1}%
 \contentsline {subsection}{\numberline {4.1.1}Criterios de selección de los \textit {datasets}}{27}{subsection.4.1.1}%
 \contentsline {paragraph}{Disponibilidad pública y accesibilidad.}{27}{section*.18}%
@@ -70,125 +70,125 @@
 \contentsline {section}{\numberline {4.2}Análisis exploratorio de datos}{31}{section.4.2}%
 \contentsline {subsection}{\numberline {4.2.1}Distribución demográfica de los \textit {datasets}}{31}{subsection.4.2.1}%
 \contentsline {paragraph}{Distribución por grupo de edad.}{31}{section*.34}%
-\contentsline {paragraph}{Distribución por sexo.}{32}{section*.36}%
-\contentsline {paragraph}{Interacción edad~$\times $~sexo.}{32}{section*.37}%
-\contentsline {subsection}{\numberline {4.2.2}Distribución de la señal CGM}{32}{subsection.4.2.2}%
-\contentsline {paragraph}{Estadísticos descriptivos globales.}{33}{section*.39}%
-\contentsline {paragraph}{Diferencias entre rangos de sensor.}{33}{section*.40}%
-\contentsline {paragraph}{Variabilidad glucémica por subgrupo demográfico.}{34}{section*.43}%
+\contentsline {paragraph}{Distribución por sexo.}{32}{section*.37}%
+\contentsline {paragraph}{Interacción edad~$\times $~sexo.}{33}{section*.38}%
+\contentsline {subsection}{\numberline {4.2.2}Distribución de la señal CGM}{33}{subsection.4.2.2}%
+\contentsline {paragraph}{Estadísticos descriptivos globales.}{33}{section*.40}%
+\contentsline {paragraph}{Diferencias entre rangos de sensor.}{34}{section*.41}%
+\contentsline {paragraph}{Variabilidad glucémica por subgrupo demográfico.}{34}{section*.44}%
 \contentsline {subsection}{\numberline {4.2.3}Análisis de datos ausentes}{35}{subsection.4.2.3}%
-\contentsline {paragraph}{Heterogeneidad inter-paciente.}{35}{section*.46}%
-\contentsline {paragraph}{Patrón MNAR en T1DiabetesGranada.}{36}{section*.47}%
-\contentsline {paragraph}{Impacto sobre la generación de ventanas.}{36}{section*.48}%
+\contentsline {paragraph}{Heterogeneidad inter-paciente.}{35}{section*.47}%
+\contentsline {paragraph}{Patrón MNAR (Missing Not At Random) en T1DiabetesGranada.}{36}{section*.48}%
+\contentsline {paragraph}{Impacto sobre la generación de ventanas.}{36}{section*.49}%
 \contentsline {subsection}{\numberline {4.2.4}Análisis de separabilidad demográfica}{37}{subsection.4.2.4}%
-\contentsline {paragraph}{Variabilidad glucémica intra-grupo por edad.}{38}{section*.51}%
-\contentsline {paragraph}{Variabilidad glucémica intra-grupo por sexo.}{38}{section*.53}%
-\contentsline {paragraph}{Implicaciones para el diseño experimental.}{39}{section*.54}%
+\contentsline {paragraph}{Variabilidad glucémica intra-grupo por edad.}{38}{section*.52}%
+\contentsline {paragraph}{Variabilidad glucémica intra-grupo por sexo.}{38}{section*.54}%
+\contentsline {paragraph}{Implicaciones para el diseño experimental.}{39}{section*.55}%
 \contentsline {section}{\numberline {4.3}Detección y cuantificación del desequilibrio demográfico}{39}{section.4.3}%
 \contentsline {subsection}{\numberline {4.3.1}Desequilibrio a nivel de paciente frente a nivel de ventana}{39}{subsection.4.3.1}%
-\contentsline {paragraph}{Amplificación del desequilibrio demográfico al pasar de paciente a ventana.}{39}{section*.55}%
-\contentsline {paragraph}{Desequilibrio glucémico de clases dentro de cada grupo.}{40}{section*.56}%
-\contentsline {paragraph}{Implicación para la elección de la unidad de balanceo.}{43}{section*.60}%
-\contentsline {subsection}{\numberline {4.3.2}Desequilibrio por dimensión demográfica y \textit {fold}}{43}{subsection.4.3.2}%
-\contentsline {paragraph}{Variabilidad inter-\textit {fold} del desequilibrio.}{44}{section*.62}%
-\contentsline {paragraph}{Implicación para el protocolo de evaluación.}{44}{section*.63}%
-\contentsline {section}{\numberline {4.4}Investigación de técnicas de balanceo para series temporales}{45}{section.4.4}%
-\contentsline {subsection}{\numberline {4.4.1}Criterios de selección de técnicas}{45}{subsection.4.4.1}%
-\contentsline {subsection}{\numberline {4.4.2}Taxonomía de técnicas implementadas}{45}{subsection.4.4.2}%
-\contentsline {subsubsection}{Familia aleatoria}{46}{section*.65}%
-\contentsline {paragraph}{Random Under-Sampling (RUS).}{46}{section*.66}%
-\contentsline {paragraph}{Random Over-Sampling (ROS).}{46}{section*.67}%
-\contentsline {subsubsection}{Familia guiada}{47}{section*.68}%
-\contentsline {paragraph}{SMOTE (\emph {Synthetic Minority Oversampling TEchnique}).}{47}{section*.69}%
-\contentsline {paragraph}{Tomek Links.}{47}{section*.70}%
-\contentsline {paragraph}{Jittering.}{48}{section*.71}%
-\contentsline {paragraph}{Patient-aware undersampling.}{48}{section*.72}%
-\contentsline {subsubsection}{Familia híbrida}{49}{section*.73}%
-\contentsline {paragraph}{RUS + ROS.}{49}{section*.74}%
-\contentsline {paragraph}{RUS + SMOTE.}{49}{section*.75}%
-\contentsline {paragraph}{SMOTE + Tomek.}{49}{section*.76}%
-\contentsline {paragraph}{ROS + Tomek.}{49}{section*.77}%
-\contentsline {subsection}{\numberline {4.4.3}Validación formal del \emph {pipeline} de balanceo}{50}{subsection.4.4.3}%
-\contentsline {section}{\numberline {4.5}Transformación de datos: generación de ventanas deslizantes}{50}{section.4.5}%
-\contentsline {subsection}{\numberline {4.5.1}Parámetros de ventana}{51}{subsection.4.5.1}%
-\contentsline {subsection}{\numberline {4.5.2}Restricciones de continuidad temporal}{51}{subsection.4.5.2}%
-\contentsline {subsection}{\numberline {4.5.3}Esquema de partición: \emph {Group K-Fold} con $K=5$}{52}{subsection.4.5.3}%
-\contentsline {section}{\numberline {4.6}Arquitectura del modelo LSTM}{53}{section.4.6}%
-\contentsline {subsection}{\numberline {4.6.1}Especificación de la arquitectura}{53}{subsection.4.6.1}%
-\contentsline {subsection}{\numberline {4.6.2}Función de pérdida y optimizador}{55}{subsection.4.6.2}%
-\contentsline {subsection}{\numberline {4.6.3}Estrategia de entrenamiento}{57}{subsection.4.6.3}%
-\contentsline {subsection}{\numberline {4.6.4}Configuración del entorno de ejecución}{57}{subsection.4.6.4}%
-\contentsline {section}{\numberline {4.7}\emph {Pipeline} de entrenamiento y evaluación}{58}{section.4.7}%
-\contentsline {subsection}{\numberline {4.7.1}Modo original y modo balanceado}{58}{subsection.4.7.1}%
-\contentsline {paragraph}{Modo original.}{58}{section*.82}%
-\contentsline {paragraph}{Modo balanceado.}{58}{section*.83}%
-\contentsline {subsection}{\numberline {4.7.2}Flujo de datos por \emph {fold}}{58}{subsection.4.7.2}%
-\contentsline {subsection}{\numberline {4.7.3}Evaluación por rango glucémico}{59}{subsection.4.7.3}%
-\contentsline {subsection}{\numberline {4.7.4}Agregación de resultados y protocolo estadístico}{60}{subsection.4.7.4}%
-\contentsline {subsection}{\numberline {4.7.5}Trazabilidad y reproducibilidad}{61}{subsection.4.7.5}%
-\contentsline {paragraph}{Semillas fijas.}{61}{section*.87}%
-\contentsline {paragraph}{Versionado de experimentos.}{62}{section*.88}%
-\contentsline {paragraph}{Metadatos completos por \textit {fold}.}{62}{section*.89}%
-\contentsline {paragraph}{Invarianza de validación y test.}{62}{section*.90}%
-\contentsline {paragraph}{Estructura de directorios autoexplicativa.}{62}{section*.91}%
-\contentsline {chapter}{\numberline {5}Resultados y discusión}{63}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Efecto del balanceo sobre el conjunto de entrenamiento}{63}{section.5.1}%
-\contentsline {subsection}{\numberline {5.1.1}Impacto sobre el tamaño del conjunto de entrenamiento}{64}{subsection.5.1.1}%
-\contentsline {paragraph}{Técnicas de reducción (RUS y PA-Undersampling).}{64}{section*.93}%
-\contentsline {paragraph}{Técnicas de aumento (ROS, SMOTE, Jittering).}{64}{section*.94}%
-\contentsline {paragraph}{Técnicas híbridas (RUS+ROS, RUS+SMOTE, SMOTE+Tomek, ROS+Tomek).}{65}{section*.95}%
-\contentsline {paragraph}{Implicación metodológica.}{65}{section*.97}%
-\contentsline {subsection}{\numberline {5.1.2}Impacto sobre la distribución demográfica del entrenamiento}{65}{subsection.5.1.2}%
-\contentsline {subsection}{\numberline {5.1.3}Impacto sobre la distribución glucémica del entrenamiento}{69}{subsection.5.1.3}%
-\contentsline {paragraph}{T1DiabetesGranada.}{70}{figure.caption.102}%
-\contentsline {paragraph}{DiaTrend.}{72}{figure.caption.105}%
-\contentsline {paragraph}{REPLACE-BG.}{74}{figure.caption.108}%
-\contentsline {paragraph}{Síntesis y conexión con los resultados de predicción.}{75}{section*.110}%
-\contentsline {subsection}{\numberline {5.1.4}Trade-off clínico del balanceo: hipoglucemia, normoglucemia e hiperglucemia}{76}{subsection.5.1.4}%
-\contentsline {paragraph}{Trade-off TBR-2 (hipoglucemia severa, $<$54\,mg/dL) vs.\ TIR.}{76}{section*.111}%
-\contentsline {paragraph}{Trade-off TBR-1 (hipoglucemia leve, 54--69\,mg/dL) vs.\ TIR.}{77}{section*.113}%
-\contentsline {paragraph}{Trade-off TAR-1 (hiperglucemia leve, 181--250\,mg/dL) vs.\ TIR.}{78}{section*.115}%
-\contentsline {paragraph}{Trade-off TAR-2 (hiperglucemia severa, $>$250\,mg/dL) vs.\ TIR.}{78}{section*.117}%
-\contentsline {paragraph}{Síntesis del análisis de trade-off.}{79}{section*.119}%
-\contentsline {section}{\numberline {5.2}Impacto del balanceo sobre el rendimiento del modelo LSTM}{79}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}Distribución global de métricas por técnica}{80}{subsection.5.2.1}%
-\contentsline {paragraph}{RMSE global (ENTIRE).}{80}{section*.121}%
-\contentsline {paragraph}{RMSE en TBR-2 (hipoglucemia severa).}{81}{section*.123}%
-\contentsline {paragraph}{Consistencia inter-fold del ranking de técnicas.}{82}{section*.125}%
-\contentsline {subsection}{\numberline {5.2.2}Análisis de mejora y deterioro respecto al modelo original}{83}{subsection.5.2.2}%
-\contentsline {paragraph}{Panorama global (ENTIRE).}{83}{section*.126}%
-\contentsline {paragraph}{Perspectiva clínica: disociación ENTIRE vs.\ TBR-2.}{85}{section*.128}%
-\contentsline {paragraph}{Ranking por rango glucémico.}{85}{section*.130}%
-\contentsline {paragraph}{Ranking por técnica y rango glucémico.}{85}{section*.132}%
-\contentsline {paragraph}{Magnitud máxima de mejora alcanzable.}{88}{section*.134}%
-\contentsline {paragraph}{Efecto diferencial de la dimensión demográfica.}{89}{section*.136}%
-\contentsline {subsection}{\numberline {5.2.3}Análisis por familia de tamaño: desacoplando balanceo y volumen}{90}{subsection.5.2.3}%
-\contentsline {paragraph}{Comparación entre familias: el papel del volumen.}{90}{section*.137}%
-\contentsline {paragraph}{Perfil por rango glucémico entre familias.}{92}{section*.141}%
-\contentsline {paragraph}{Síntesis: ¿volumen o reequilibrio?}{94}{section*.145}%
-\contentsline {subsection}{\numberline {5.2.4}Análisis estadístico: prueba de Friedman y corrección de Nemenyi}{94}{subsection.5.2.4}%
-\contentsline {paragraph}{Resultado global del test de Friedman.}{94}{section*.146}%
-\contentsline {paragraph}{CD diagrams ENTIRE: significación global.}{95}{section*.149}%
-\contentsline {paragraph}{CD diagrams TBR-2: significación en hipoglucemia severa.}{96}{section*.151}%
-\contentsline {paragraph}{Ranking global mediante el método Borda.}{97}{section*.152}%
-\contentsline {paragraph}{Estabilidad del ranking entre métricas.}{97}{section*.154}%
-\contentsline {paragraph}{Ranking Borda y estabilidad entre métricas.}{97}{section*.156}%
-\contentsline {section}{\numberline {5.3}Discusión integradora}{98}{section.5.3}%
-\contentsline {paragraph}{¿Mejora el balanceo demográfico el rendimiento del modelo LSTM?}{99}{section*.157}%
-\contentsline {paragraph}{¿Por qué T1DiabetesGranada es insensible al balanceo?}{99}{section*.158}%
-\contentsline {paragraph}{¿Por qué REPLACE-BG es insensible al balanceo?}{99}{section*.159}%
-\contentsline {paragraph}{Tres regímenes de eficacia del balanceo}{100}{section*.160}%
-\contentsline {paragraph}{¿Qué familia de técnicas ofrece mejor relación beneficio/coste?}{100}{section*.161}%
-\contentsline {paragraph}{¿Es el efecto del balanceo \textit {dataset}-dependiente?}{100}{section*.162}%
-\contentsline {paragraph}{¿Qué dimensión demográfica ---edad o sexo--- es más relevante?}{101}{section*.163}%
-\contentsline {paragraph}{Limitaciones del análisis.}{101}{section*.164}%
-\contentsline {chapter}{\numberline {6}Conclusiones}{103}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Conclusiones principales}{103}{section.6.1}%
-\contentsline {paragraph}{El balanceo demográfico no mejora el rendimiento global de forma generalizable.}{103}{section*.165}%
-\contentsline {paragraph}{Existe un trade-off estructural entre rendimiento global y sensibilidad a hipoglucemia severa.}{103}{section*.166}%
-\contentsline {paragraph}{El efecto del balanceo es dataset-dependiente y explicable por propiedades estructurales.}{103}{section*.167}%
-\contentsline {paragraph}{El balanceo por edad supera al balanceo por sexo en magnitud de efecto.}{104}{section*.168}%
-\contentsline {paragraph}{Tomek Links es la técnica con mejor relación beneficio/coste en el repositorio más complejo.}{104}{section*.169}%
-\contentsline {section}{\numberline {6.2}Grado de cumplimiento de los objetivos}{104}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Trabajos futuros}{105}{section.6.3}%
-\contentsline {chapter}{Bibliografía}{112}{chapter*.170}%
+\contentsline {paragraph}{Amplificación del desequilibrio demográfico al pasar de paciente a ventana.}{39}{section*.56}%
+\contentsline {paragraph}{Desequilibrio glucémico de clases dentro de cada grupo.}{40}{section*.57}%
+\contentsline {paragraph}{Implicación para la elección de la unidad de balanceo.}{43}{section*.61}%
+\contentsline {subsection}{\numberline {4.3.2}Desequilibrio por dimensión demográfica y \textit {fold}}{44}{subsection.4.3.2}%
+\contentsline {paragraph}{Variabilidad inter-\textit {fold} del desequilibrio.}{45}{section*.63}%
+\contentsline {paragraph}{Implicación para el protocolo de evaluación.}{45}{section*.64}%
+\contentsline {section}{\numberline {4.4}Investigación de técnicas de balanceo para series temporales}{46}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Criterios de selección de técnicas}{46}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Taxonomía de técnicas implementadas}{46}{subsection.4.4.2}%
+\contentsline {subsubsection}{Familia aleatoria}{47}{section*.66}%
+\contentsline {paragraph}{Random Under-Sampling (RUS).}{47}{section*.67}%
+\contentsline {paragraph}{Random Over-Sampling (ROS).}{47}{section*.68}%
+\contentsline {subsubsection}{Familia guiada}{48}{section*.69}%
+\contentsline {paragraph}{SMOTE (\emph {Synthetic Minority Oversampling TEchnique}).}{48}{section*.70}%
+\contentsline {paragraph}{Tomek Links.}{48}{section*.71}%
+\contentsline {paragraph}{Jittering.}{49}{section*.72}%
+\contentsline {paragraph}{Patient-aware undersampling.}{49}{section*.73}%
+\contentsline {subsubsection}{Familia híbrida}{50}{section*.74}%
+\contentsline {paragraph}{RUS + ROS.}{50}{section*.75}%
+\contentsline {paragraph}{RUS + SMOTE.}{50}{section*.76}%
+\contentsline {paragraph}{SMOTE + Tomek.}{50}{section*.77}%
+\contentsline {paragraph}{ROS + Tomek.}{50}{section*.78}%
+\contentsline {subsection}{\numberline {4.4.3}Validación formal del \emph {pipeline} de balanceo}{51}{subsection.4.4.3}%
+\contentsline {section}{\numberline {4.5}Transformación de datos: generación de ventanas deslizantes}{51}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Parámetros de ventana}{52}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Restricciones de continuidad temporal}{52}{subsection.4.5.2}%
+\contentsline {subsection}{\numberline {4.5.3}Esquema de partición: \emph {Group K-Fold} con $K=5$}{53}{subsection.4.5.3}%
+\contentsline {section}{\numberline {4.6}Arquitectura del modelo LSTM}{54}{section.4.6}%
+\contentsline {subsection}{\numberline {4.6.1}Especificación de la arquitectura}{54}{subsection.4.6.1}%
+\contentsline {subsection}{\numberline {4.6.2}Función de pérdida y optimizador}{56}{subsection.4.6.2}%
+\contentsline {subsection}{\numberline {4.6.3}Estrategia de entrenamiento}{58}{subsection.4.6.3}%
+\contentsline {subsection}{\numberline {4.6.4}Configuración del entorno de ejecución}{58}{subsection.4.6.4}%
+\contentsline {section}{\numberline {4.7}\emph {Pipeline} de entrenamiento y evaluación}{59}{section.4.7}%
+\contentsline {subsection}{\numberline {4.7.1}Modo original y modo balanceado}{59}{subsection.4.7.1}%
+\contentsline {paragraph}{Modo original.}{59}{section*.83}%
+\contentsline {paragraph}{Modo balanceado.}{59}{section*.84}%
+\contentsline {subsection}{\numberline {4.7.2}Flujo de datos por \emph {fold}}{59}{subsection.4.7.2}%
+\contentsline {subsection}{\numberline {4.7.3}Evaluación por rango glucémico}{60}{subsection.4.7.3}%
+\contentsline {subsection}{\numberline {4.7.4}Agregación de resultados y protocolo estadístico}{61}{subsection.4.7.4}%
+\contentsline {subsection}{\numberline {4.7.5}Trazabilidad y reproducibilidad}{62}{subsection.4.7.5}%
+\contentsline {paragraph}{Semillas fijas.}{62}{section*.88}%
+\contentsline {paragraph}{Versionado de experimentos.}{63}{section*.89}%
+\contentsline {paragraph}{Metadatos completos por \textit {fold}.}{63}{section*.90}%
+\contentsline {paragraph}{Invarianza de validación y test.}{63}{section*.91}%
+\contentsline {paragraph}{Estructura de directorios autoexplicativa.}{63}{section*.92}%
+\contentsline {chapter}{\numberline {5}Resultados y discusión}{65}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Efecto del balanceo sobre el conjunto de entrenamiento}{65}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Impacto sobre el tamaño del conjunto de entrenamiento}{66}{subsection.5.1.1}%
+\contentsline {paragraph}{Técnicas de reducción (RUS y PA-Undersampling).}{66}{section*.94}%
+\contentsline {paragraph}{Técnicas de aumento (ROS, SMOTE, Jittering).}{66}{section*.95}%
+\contentsline {paragraph}{Técnicas híbridas (RUS+ROS, RUS+SMOTE, SMOTE+Tomek, ROS+Tomek).}{67}{section*.96}%
+\contentsline {paragraph}{Implicación metodológica.}{67}{section*.98}%
+\contentsline {subsection}{\numberline {5.1.2}Impacto sobre la distribución demográfica del entrenamiento}{67}{subsection.5.1.2}%
+\contentsline {subsection}{\numberline {5.1.3}Impacto sobre la distribución glucémica del entrenamiento}{71}{subsection.5.1.3}%
+\contentsline {paragraph}{T1DiabetesGranada.}{72}{figure.caption.103}%
+\contentsline {paragraph}{DiaTrend.}{74}{figure.caption.106}%
+\contentsline {paragraph}{REPLACE-BG.}{76}{figure.caption.109}%
+\contentsline {paragraph}{Síntesis y conexión con los resultados de predicción.}{77}{section*.111}%
+\contentsline {subsection}{\numberline {5.1.4}Trade-off clínico del balanceo: hipoglucemia, normoglucemia e hiperglucemia}{78}{subsection.5.1.4}%
+\contentsline {paragraph}{Trade-off TBR-2 (hipoglucemia severa, $<$54\,mg/dL) vs.\ TIR.}{78}{section*.112}%
+\contentsline {paragraph}{Trade-off TBR-1 (hipoglucemia leve, 54--69\,mg/dL) vs.\ TIR.}{79}{section*.114}%
+\contentsline {paragraph}{Trade-off TAR-1 (hiperglucemia leve, 181--250\,mg/dL) vs.\ TIR.}{80}{section*.116}%
+\contentsline {paragraph}{Trade-off TAR-2 (hiperglucemia severa, $>$250\,mg/dL) vs.\ TIR.}{80}{section*.118}%
+\contentsline {paragraph}{Síntesis del análisis de trade-off.}{81}{section*.120}%
+\contentsline {section}{\numberline {5.2}Impacto del balanceo sobre el rendimiento del modelo LSTM}{81}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Distribución global de métricas por técnica}{82}{subsection.5.2.1}%
+\contentsline {paragraph}{RMSE global (ENTIRE).}{82}{section*.122}%
+\contentsline {paragraph}{RMSE en TBR-2 (hipoglucemia severa).}{83}{section*.124}%
+\contentsline {paragraph}{Consistencia inter-fold del ranking de técnicas.}{84}{section*.126}%
+\contentsline {subsection}{\numberline {5.2.2}Análisis de mejora y deterioro respecto al modelo original}{85}{subsection.5.2.2}%
+\contentsline {paragraph}{Panorama global (ENTIRE).}{85}{section*.127}%
+\contentsline {paragraph}{Perspectiva clínica: disociación ENTIRE vs.\ TBR-2.}{87}{section*.129}%
+\contentsline {paragraph}{Ranking por rango glucémico.}{87}{section*.131}%
+\contentsline {paragraph}{Ranking por técnica y rango glucémico.}{87}{section*.133}%
+\contentsline {paragraph}{Magnitud máxima de mejora alcanzable.}{90}{section*.135}%
+\contentsline {paragraph}{Efecto diferencial de la dimensión demográfica.}{91}{section*.137}%
+\contentsline {subsection}{\numberline {5.2.3}Análisis por familia de tamaño: desacoplando balanceo y volumen}{92}{subsection.5.2.3}%
+\contentsline {paragraph}{Comparación entre familias: el papel del volumen.}{92}{section*.138}%
+\contentsline {paragraph}{Perfil por rango glucémico entre familias.}{94}{section*.142}%
+\contentsline {paragraph}{Síntesis: ¿volumen o reequilibrio?}{96}{section*.146}%
+\contentsline {subsection}{\numberline {5.2.4}Análisis estadístico: prueba de Friedman y corrección de Nemenyi}{96}{subsection.5.2.4}%
+\contentsline {paragraph}{Resultado global del test de Friedman.}{96}{section*.147}%
+\contentsline {paragraph}{CD diagrams ENTIRE: significación global.}{97}{section*.150}%
+\contentsline {paragraph}{CD diagrams TBR-2: significación en hipoglucemia severa.}{98}{section*.152}%
+\contentsline {paragraph}{Ranking global mediante el método Borda.}{99}{section*.153}%
+\contentsline {paragraph}{Estabilidad del ranking entre métricas.}{99}{section*.155}%
+\contentsline {paragraph}{Ranking Borda y estabilidad entre métricas.}{99}{section*.157}%
+\contentsline {section}{\numberline {5.3}Discusión integradora}{100}{section.5.3}%
+\contentsline {paragraph}{¿Mejora el balanceo demográfico el rendimiento del modelo LSTM?}{101}{section*.158}%
+\contentsline {paragraph}{¿Por qué T1DiabetesGranada es insensible al balanceo?}{101}{section*.159}%
+\contentsline {paragraph}{¿Por qué REPLACE-BG es insensible al balanceo?}{101}{section*.160}%
+\contentsline {paragraph}{Tres regímenes de eficacia del balanceo}{102}{section*.161}%
+\contentsline {paragraph}{¿Qué familia de técnicas ofrece mejor relación beneficio/coste?}{102}{section*.162}%
+\contentsline {paragraph}{¿Es el efecto del balanceo \textit {dataset}-dependiente?}{102}{section*.163}%
+\contentsline {paragraph}{¿Qué dimensión demográfica ---edad o sexo--- es más relevante?}{103}{section*.164}%
+\contentsline {paragraph}{Limitaciones del análisis.}{103}{section*.165}%
+\contentsline {chapter}{\numberline {6}Conclusiones}{105}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Conclusiones principales}{105}{section.6.1}%
+\contentsline {paragraph}{El balanceo demográfico no mejora el rendimiento global de forma generalizable.}{105}{section*.166}%
+\contentsline {paragraph}{Existe un trade-off estructural entre rendimiento global y sensibilidad a hipoglucemia severa.}{105}{section*.167}%
+\contentsline {paragraph}{El efecto del balanceo es dataset-dependiente y explicable por propiedades estructurales.}{105}{section*.168}%
+\contentsline {paragraph}{El balanceo por edad supera al balanceo por sexo en magnitud de efecto.}{106}{section*.169}%
+\contentsline {paragraph}{Tomek Links es la técnica con mejor relación beneficio/coste en el repositorio más complejo.}{106}{section*.170}%
+\contentsline {section}{\numberline {6.2}Grado de cumplimiento de los objetivos}{106}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Trabajos futuros}{107}{section.6.3}%
+\contentsline {chapter}{Bibliografía}{114}{chapter*.171}%

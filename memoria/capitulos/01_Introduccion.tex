@@ -69,20 +69,7 @@ y contribuir a entender sus propiedades estadísticas y sus implicaciones para e
 entrenamiento de modelos predictivos, añade una dimensión de relevancia territorial y
 clínica directa a la investigación.
 
-En este sentido, uno de los hallazgos más relevantes de este trabajo tiene un carácter
-en principio contraintuitivo: las técnicas de balanceo demográfico no producen mejoras
-significativas en el rendimiento del modelo cuando se entrena sobre T1DiabetesGranada.
-Lejos de constituir un resultado negativo, esta insensibilidad es en sí misma un
-descubrimiento de interés metodológico. Cuando una red LSTM se entrena sobre una
-cohorte de la envergadura de T1DiabetesGranada, la densidad y diversidad de las
-trayectorias temporales de glucosa es suficiente para mitigar de forma natural
-asimetrías demográficas moderadas ---como el ratio de 3{,}4:1 entre sexos observado en
-dicha cohorte--- sin necesidad de intervención explícita en el preprocesamiento. Este
-resultado apunta a la existencia de un umbral de volumen de datos a partir del cual
-el balanceo demográfico explícito deviene superfluo, con implicaciones directas para
-el diseño de sistemas de páncreas artificial o lazo cerrado que operen en tiempo real,
-donde la carga computacional del preprocesamiento es un factor crítico. El análisis
-detallado de este fenómeno se aborda en la Sección~\ref{subsec:discusion_granada}.
+
 % =========================================================
 \section{Objetivos}
 \label{section:objetivos}
@@ -98,7 +85,7 @@ De este objetivo general se derivan los siguientes objetivos específicos:
 
     \item \textbf{Implementar y validar una taxonomía de diez técnicas de balanceo}, clasificadas en tres familias: técnicas aleatorias (\emph{random undersampling}, \emph{random oversampling}), técnicas guiadas (\emph{SMOTE}, \emph{Tomek Links}) y combinaciones híbridas (\emph{patient-aware undersampling}, \emph{jittering}, \emph{undersampling} + \emph{oversampling}, \emph{undersampling} + \emph{SMOTE}, \emph{SMOTE} + \emph{Tomek}, \emph{oversampling} + \emph{Tomek Links}), aplicadas en dos variantes demográficas (edad y sexo) más una condición de control sin balanceo.
 
-    \item \textbf{Evaluar el efecto del balanceo demográfico sobre el rendimiento global del modelo LSTM}, medido mediante métricas de error de predicción (RMSE, MAE) y métricas de la \emph{Clarke Error Grid} (zonas A, B, A+B), desagregadas por rango glucémico (TBR-2, TBR-1, TIR, TAR-1, TAR-2, rango completo).
+    \item \textbf{Evaluar el efecto del balanceo demográfico sobre el rendimiento global del modelo de predicción}, medido mediante métricas de error de predicción (RMSE, MAE) y métricas de la \emph{Clarke Error Grid} (zonas A, B, A+B), desagregadas por rango glucémico (TBR-2, TBR-1, TIR, TAR-1, TAR-2, rango completo).
 
     \item \textbf{Comparar el impacto del balanceo por edad frente al balanceo por sexo} y determinar cuál de las dos dimensiones demográficas produce un efecto mayor y más consistente sobre el rendimiento predictivo.
 
