@@ -837,13 +837,13 @@ SMOTE~\cite{chawla2002smote} genera muestras sintéticas por interpolación line
   \end{equation}
   La interpolación se realiza en el espacio original (no escalado), tomando la fila completa del punto base y sustituyendo únicamente las columnas de feature.
 
-  \item \textbf{Clip a límites del sensor.} Todos los valores sintéticos se recortan al rango $[v_\text{min}, v_\text{max}]$ del dataset correspondiente, garantizando la plausibilidad fisiológica.
+  \item \textbf{Clip a límites del sensor.} Todos los valores sintéticos se recortan al rango $[v_\text{min}, v_\text{max}]$ del dataset correspondiente, garantizando la viabilidad fisiológica.
 \end{enumerate}
 
 El resultado es un conjunto de ventanas adicionales que mantienen la coherencia local del espacio de glucemia, sin duplicar ventanas existentes. SMOTE se usa como técnica de aumento puro: solo opera si el grupo actual tiene menos ventanas que el target.
 
 \paragraph{Tomek Links.}
-Los Tomek Links~\cite{tomek1976two} son pares de ejemplos $(i, j)$ de grupos distintos que son vecinos más cercanos mutuos, es decir, $\text{NN}(i) = j$ y $\text{NN}(j) = i$. Estos pares identifican ejemplos que se sitúan en la frontera de decisión entre grupos, precisamente donde el clasificador (en este caso, el modelo LSTM) tiene mayor dificultad para generalizar. La implementación (\texttt{find\_tomek\_links}) opera sobre el conjunto de entrenamiento completo (todos los grupos juntos):
+Los Tomek Links~\cite{tomek1976two} son pares de ejemplos $(i, j)$ de grupos distintos que son vecinos más cercanos mutuos, es decir, $\text{NN}(i) = j$ y $\text{NN}(j) = i$. Estos pares identifican ejemplos que se sitúan en la frontera de decisión entre grupos, precisamente donde el clasificador (en este caso, el modelo LSTM) tiene mayor dificultad para generalizar. La implementación propia de la función (\texttt{find\_tomek\_links}) opera sobre el conjunto de entrenamiento completo (todos los grupos juntos):
 
 \begin{enumerate}
   \item Se normaliza la matriz de features con z-score sobre el conjunto global.
@@ -858,7 +858,7 @@ Los Tomek Links~\cite{tomek1976two} son pares de ejemplos $(i, j)$ de grupos dis
 A diferencia de RUS, Tomek Links no persigue una proporción objetivo: elimina únicamente los ejemplos ruidosos o ambiguos en la frontera, sin alterar el resto del conjunto. El resultado es un conjunto de entrenamiento ligeramente más pequeño pero con una frontera de decisión más nítida. Esta técnica es la única de las diez que no recibe un target numérico sino que actúa de forma puramente selectiva.
 
 \paragraph{Jittering.}
-Jittering es una técnica de aumento basada en la adición de ruido gaussiano a ventanas existentes~\cite{um2017data}. A diferencia de SMOTE, no requiere búsqueda de vecinos y es especialmente adecuada para señales fisiológicas donde la variabilidad local es una propiedad intrínseca de la medida. La implementación (\texttt{jitter\_group}) genera $n^* - n_k$ ventanas sintéticas mediante el siguiente procedimiento:
+Jittering es una técnica de aumento basada en la adición de ruido gaussiano a ventanas existentes~\cite{um2017data}. A diferencia de SMOTE, no requiere búsqueda de vecinos y es especialmente adecuada para señales fisiológicas donde la variabilidad local es una propiedad intrínseca de la medida. Mi implementación de la función (\texttt{jitter\_group}) genera $n^* - n_k$ ventanas sintéticas mediante el siguiente procedimiento:
 
 \begin{enumerate}
   \item Se selecciona aleatoriamente una ventana base $\mathbf{x}_i$ del grupo.
@@ -1066,7 +1066,6 @@ La tabla~\ref{tab:hiperparametros_lstm} resume los hiperparámetros principales 
 \textbf{Hiperparámetro}   & \textbf{Valor} \\
 \hline
 Longitud de la secuencia de entrada & 8 pasos (120~min) \\
-Características por paso            & 1 (glucosa en mg/dL) \\
 Unidades ocultas LSTM               & 128 \\
 Dropout de entrada                  & 0,1 \\
 Recurrent dropout                   & 0,0 \\

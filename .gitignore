@@ -42,3 +42,4 @@ cache/
 /memoria/*.synctex.gz
 /memoria/*.lof
 /memoria/*.idx
+*.pptx

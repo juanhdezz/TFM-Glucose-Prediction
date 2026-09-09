@@ -139,76 +139,76 @@
 \contentsline {paragraph}{Técnicas híbridas (RUS+ROS, RUS+SMOTE, SMOTE+Tomek, ROS+Tomek).}{65}{section*.96}%
 \contentsline {paragraph}{Implicación metodológica.}{65}{section*.98}%
 \contentsline {subsection}{\numberline {5.1.2}Impacto sobre la distribución demográfica del entrenamiento}{65}{subsection.5.1.2}%
-\contentsline {subsection}{\numberline {5.1.3}Impacto sobre la distribución glucémica del entrenamiento}{70}{subsection.5.1.3}%
-\contentsline {paragraph}{T1DiabetesGranada.}{70}{figure.caption.103}%
-\contentsline {paragraph}{DiaTrend.}{73}{figure.caption.106}%
-\contentsline {paragraph}{REPLACE-BG.}{73}{figure.caption.109}%
-\contentsline {paragraph}{Síntesis y conexión con los resultados de predicción.}{73}{section*.111}%
-\contentsline {subsection}{\numberline {5.1.4}Trade-off clínico del balanceo: hipoglucemia, normoglucemia e hiperglucemia}{78}{subsection.5.1.4}%
-\contentsline {paragraph}{Trade-off TBR-2 (hipoglucemia severa, $<$54\,mg/dL) vs.\ TIR.}{78}{section*.112}%
-\contentsline {paragraph}{Trade-off TBR-1 (hipoglucemia leve, 54--69\,mg/dL) vs.\ TIR.}{79}{section*.114}%
-\contentsline {paragraph}{Trade-off TAR-1 (hiperglucemia leve, 181--250\,mg/dL) vs.\ TIR.}{80}{section*.116}%
-\contentsline {paragraph}{Trade-off TAR-2 (hiperglucemia severa, $>$250\,mg/dL) vs.\ TIR.}{80}{section*.118}%
-\contentsline {paragraph}{Síntesis del análisis de trade-off.}{81}{section*.120}%
-\contentsline {section}{\numberline {5.2}Impacto del balanceo sobre el rendimiento del modelo LSTM}{81}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}Distribución global de métricas por técnica}{82}{subsection.5.2.1}%
-\contentsline {paragraph}{RMSE global (ENTIRE).}{82}{section*.122}%
-\contentsline {paragraph}{RMSE en TBR-2 (hipoglucemia severa).}{83}{section*.124}%
-\contentsline {paragraph}{Consistencia inter-fold del ranking de técnicas.}{83}{section*.126}%
-\contentsline {subsection}{\numberline {5.2.2}Análisis de mejora y deterioro respecto al modelo original}{85}{subsection.5.2.2}%
-\contentsline {paragraph}{Panorama global (ENTIRE).}{85}{section*.127}%
-\contentsline {paragraph}{Perspectiva clínica: disociación ENTIRE vs.\ TBR-2.}{87}{section*.129}%
-\contentsline {paragraph}{Ranking por rango glucémico.}{87}{section*.131}%
-\contentsline {paragraph}{Ranking por técnica y rango glucémico.}{87}{section*.133}%
-\contentsline {paragraph}{Magnitud máxima de mejora alcanzable.}{89}{section*.135}%
-\contentsline {paragraph}{Efecto diferencial de la dimensión demográfica.}{91}{section*.137}%
-\contentsline {subsection}{\numberline {5.2.3}Análisis por familia de tamaño: desacoplando balanceo y volumen}{91}{subsection.5.2.3}%
-\contentsline {paragraph}{Comparación entre familias: el papel del volumen.}{91}{section*.138}%
-\contentsline {paragraph}{Perfil por rango glucémico entre familias.}{93}{section*.142}%
-\contentsline {paragraph}{Síntesis: ¿volumen o reequilibrio?}{95}{section*.146}%
-\contentsline {subsection}{\numberline {5.2.4}Análisis estadístico: prueba de Friedman y corrección de Nemenyi}{95}{subsection.5.2.4}%
-\contentsline {paragraph}{Resultado global del test de Friedman.}{95}{section*.147}%
-\contentsline {paragraph}{CD diagrams ENTIRE: significación global.}{97}{section*.150}%
-\contentsline {paragraph}{CD diagrams TBR-2: significación en hipoglucemia severa.}{97}{section*.152}%
-\contentsline {paragraph}{Ranking global mediante el método Borda.}{98}{section*.153}%
-\contentsline {paragraph}{Estabilidad del ranking entre métricas.}{98}{section*.155}%
-\contentsline {paragraph}{Ranking Borda y estabilidad entre métricas.}{98}{section*.157}%
-\contentsline {section}{\numberline {5.3}Discusión integradora}{100}{section.5.3}%
-\contentsline {paragraph}{¿Mejora el balanceo demográfico el rendimiento del modelo LSTM?}{100}{section*.158}%
-\contentsline {paragraph}{¿Por qué T1DiabetesGranada es insensible al balanceo?}{100}{section*.159}%
-\contentsline {paragraph}{¿Por qué REPLACE-BG es insensible al balanceo?}{100}{section*.160}%
-\contentsline {paragraph}{Tres regímenes de eficacia del balanceo}{101}{section*.161}%
-\contentsline {paragraph}{¿Qué familia de técnicas ofrece mejor relación beneficio/coste?}{101}{section*.162}%
-\contentsline {paragraph}{¿Es el efecto del balanceo \textit {dataset}-dependiente?}{102}{section*.163}%
-\contentsline {paragraph}{¿Qué dimensión demográfica ---edad o sexo--- es más relevante?}{102}{section*.164}%
-\contentsline {paragraph}{Limitaciones del análisis.}{102}{section*.165}%
-\contentsline {chapter}{\numberline {6}Conclusiones}{105}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Conclusiones principales}{105}{section.6.1}%
-\contentsline {paragraph}{El balanceo demográfico no mejora el rendimiento global de forma generalizable.}{105}{section*.166}%
-\contentsline {paragraph}{Existe un trade-off estructural entre rendimiento global y sensibilidad a hipoglucemia severa.}{105}{section*.167}%
-\contentsline {paragraph}{El efecto del balanceo es dataset-dependiente y explicable por propiedades estructurales.}{105}{section*.168}%
-\contentsline {paragraph}{El balanceo por edad supera al balanceo por sexo en magnitud de efecto.}{106}{section*.169}%
-\contentsline {paragraph}{Tomek Links es la técnica con mejor relación beneficio/coste en el repositorio más complejo.}{106}{section*.170}%
-\contentsline {section}{\numberline {6.2}Grado de cumplimiento de los objetivos}{106}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Trabajos futuros}{107}{section.6.3}%
-\contentsline {chapter}{Bibliografía}{114}{chapter*.171}%
-\contentsline {chapter}{\numberline {A}Repositorio de código: guía de navegación}{115}{appendix.Alph1}%
-\contentsline {section}{\numberline {A.1}Estructura general del repositorio}{115}{section.Alph1.1}%
-\contentsline {section}{\numberline {A.2}Configuración del entorno de desarrollo}{116}{section.Alph1.2}%
-\contentsline {subsection}{\numberline {A.2.1}Organización del directorio de datos}{116}{subsection.Alph1.2.1}%
-\contentsline {subsection}{\numberline {A.2.2}Ejecución local frente a clúster HPC}{116}{subsection.Alph1.2.2}%
-\contentsline {section}{\numberline {A.3}Pipeline experimental (\texttt {src/})}{117}{section.Alph1.3}%
-\contentsline {subsection}{\numberline {A.3.1}Paso 1: Generación de ventanas deslizantes (\texttt {1-generate\_windows.py})}{117}{subsection.Alph1.3.1}%
-\contentsline {subsection}{\numberline {A.3.2}Paso 2a: Partición Group K-Fold (\texttt {2-folds\_creation.py})}{117}{subsection.Alph1.3.2}%
-\contentsline {subsection}{\numberline {A.3.3}Paso 2b: Balanceo demográfico (\texttt {2-server\_balancing.py})}{117}{subsection.Alph1.3.3}%
-\contentsline {subsection}{\numberline {A.3.4}Paso 3: Entrenamiento LSTM (\texttt {3-train.py})}{117}{subsection.Alph1.3.4}%
-\contentsline {subsection}{\numberline {A.3.5}Paso 4: Evaluación e inferencia (\texttt {4-test\_predictions.py})}{118}{subsection.Alph1.3.5}%
-\contentsline {section}{\numberline {A.4}Análisis exploratorio de datos (\texttt {EDA/})}{118}{section.Alph1.4}%
-\contentsline {subsection}{\numberline {A.4.1}Inspección por \textit {dataset} (\texttt {notebooks/01\_EDA/})}{118}{subsection.Alph1.4.1}%
-\contentsline {subsection}{\numberline {A.4.2}Análisis cruzado entre \textit {datasets} (\texttt {EDA/cross/})}{118}{subsection.Alph1.4.2}%
-\contentsline {section}{\numberline {A.5}Marco de análisis de resultados (\texttt {analysis\_relief/})}{118}{section.Alph1.5}%
-\contentsline {subsection}{\numberline {A.5.1}Configuración y carga de datos (\texttt {analysis/config.py}, \texttt {loader.py})}{119}{subsection.Alph1.5.1}%
-\contentsline {subsection}{\numberline {A.5.2}Validación estadística (\texttt {stats.py})}{119}{subsection.Alph1.5.2}%
-\contentsline {subsection}{\numberline {A.5.3}Módulos de visualización (\texttt {viz/})}{119}{subsection.Alph1.5.3}%
-\contentsline {subsection}{\numberline {A.5.4}Salidas clínicas (\texttt {outputs\_clinical/})}{119}{subsection.Alph1.5.4}%
-\contentsline {section}{\numberline {A.6}Documento de la memoria (\texttt {memoria/})}{119}{section.Alph1.6}%
+\contentsline {subsection}{\numberline {5.1.3}Impacto sobre la distribución glucémica del entrenamiento}{68}{subsection.5.1.3}%
+\contentsline {paragraph}{T1DiabetesGranada.}{69}{section*.100}%
+\contentsline {paragraph}{DiaTrend.}{69}{figure.caption.102}%
+\contentsline {paragraph}{REPLACE-BG.}{72}{section*.104}%
+\contentsline {paragraph}{Síntesis y conexión con los resultados de predicción.}{72}{section*.105}%
+\contentsline {subsection}{\numberline {5.1.4}Trade-off clínico del balanceo: hipoglucemia, normoglucemia e hiperglucemia}{73}{subsection.5.1.4}%
+\contentsline {paragraph}{Trade-off TBR-2 (hipoglucemia severa, $<$54\,mg/dL) vs.\ TIR.}{73}{section*.106}%
+\contentsline {paragraph}{Trade-off TBR-1 (hipoglucemia leve, 54--69\,mg/dL) vs.\ TIR.}{74}{section*.108}%
+\contentsline {paragraph}{Trade-off TAR-1 (hiperglucemia leve, 181--250\,mg/dL) vs.\ TIR.}{74}{section*.110}%
+\contentsline {paragraph}{Trade-off TAR-2 (hiperglucemia severa, $>$250\,mg/dL) vs.\ TIR.}{75}{section*.112}%
+\contentsline {paragraph}{Síntesis del análisis de trade-off.}{76}{section*.114}%
+\contentsline {section}{\numberline {5.2}Impacto del balanceo sobre el rendimiento del modelo LSTM}{76}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Distribución global de métricas por técnica}{77}{subsection.5.2.1}%
+\contentsline {paragraph}{RMSE global (ENTIRE).}{77}{section*.116}%
+\contentsline {paragraph}{RMSE en TBR-2 (hipoglucemia severa).}{77}{section*.118}%
+\contentsline {paragraph}{Consistencia inter-fold del ranking de técnicas.}{78}{section*.120}%
+\contentsline {subsection}{\numberline {5.2.2}Análisis de mejora y deterioro respecto al modelo original}{80}{subsection.5.2.2}%
+\contentsline {paragraph}{Panorama global (ENTIRE).}{80}{section*.121}%
+\contentsline {paragraph}{Perspectiva clínica: disociación ENTIRE vs.\ TBR-2.}{82}{section*.123}%
+\contentsline {paragraph}{Ranking por rango glucémico.}{82}{section*.125}%
+\contentsline {paragraph}{Ranking por técnica y rango glucémico.}{82}{section*.127}%
+\contentsline {paragraph}{Magnitud máxima de mejora alcanzable.}{84}{section*.129}%
+\contentsline {paragraph}{Efecto diferencial de la dimensión demográfica.}{85}{section*.131}%
+\contentsline {subsection}{\numberline {5.2.3}Análisis por familia de tamaño: desacoplando balanceo y volumen}{87}{subsection.5.2.3}%
+\contentsline {paragraph}{Comparación entre familias: el papel del volumen.}{87}{section*.132}%
+\contentsline {paragraph}{Perfil por rango glucémico entre familias.}{88}{section*.136}%
+\contentsline {paragraph}{Síntesis: ¿volumen o reequilibrio?}{90}{section*.140}%
+\contentsline {subsection}{\numberline {5.2.4}Análisis estadístico: prueba de Friedman y corrección de Nemenyi}{91}{subsection.5.2.4}%
+\contentsline {paragraph}{Resultado global del test de Friedman.}{91}{section*.141}%
+\contentsline {paragraph}{CD diagrams: significación estadística.}{91}{section*.143}%
+\contentsline {paragraph}{CD diagram TBR-2: hipoglucemia severa en DiaTrend.}{92}{section*.145}%
+\contentsline {paragraph}{Ranking global mediante el método Borda.}{92}{section*.147}%
+\contentsline {paragraph}{Estabilidad del ranking entre métricas.}{92}{section*.149}%
+\contentsline {paragraph}{Ranking Borda y estabilidad entre métricas.}{92}{section*.151}%
+\contentsline {section}{\numberline {5.3}Discusión}{96}{section.5.3}%
+\contentsline {paragraph}{¿Mejora el balanceo demográfico el rendimiento del modelo LSTM?}{96}{section*.152}%
+\contentsline {paragraph}{¿Por qué T1DiabetesGranada es insensible al balanceo?}{97}{section*.153}%
+\contentsline {paragraph}{¿Por qué REPLACE-BG es insensible al balanceo?}{97}{section*.154}%
+\contentsline {paragraph}{Tres regímenes de eficacia del balanceo}{97}{section*.155}%
+\contentsline {paragraph}{¿Qué familia de técnicas ofrece mejor relación beneficio/coste?}{98}{section*.156}%
+\contentsline {paragraph}{¿Es el efecto del balanceo \textit {dataset}-dependiente?}{98}{section*.157}%
+\contentsline {paragraph}{¿Qué dimensión demográfica ---edad o sexo--- es más relevante?}{99}{section*.158}%
+\contentsline {paragraph}{Limitaciones del análisis.}{99}{section*.159}%
+\contentsline {chapter}{\numberline {6}Conclusiones}{101}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Conclusiones principales}{101}{section.6.1}%
+\contentsline {paragraph}{El balanceo demográfico no mejora el rendimiento global de forma generalizable.}{101}{section*.160}%
+\contentsline {paragraph}{Existe un trade-off estructural entre rendimiento global y sensibilidad a hipoglucemia severa.}{101}{section*.161}%
+\contentsline {paragraph}{El efecto del balanceo es dataset-dependiente y explicable por propiedades estructurales.}{101}{section*.162}%
+\contentsline {paragraph}{El balanceo por edad supera al balanceo por sexo en magnitud de efecto.}{102}{section*.163}%
+\contentsline {paragraph}{Tomek Links es la técnica con mejor relación beneficio/coste en el repositorio más complejo.}{102}{section*.164}%
+\contentsline {section}{\numberline {6.2}Grado de cumplimiento de los objetivos}{102}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Trabajos futuros}{103}{section.6.3}%
+\contentsline {chapter}{Bibliografía}{110}{chapter*.165}%
+\contentsline {chapter}{\numberline {A}Repositorio de código: guía de navegación}{111}{appendix.Alph1}%
+\contentsline {section}{\numberline {A.1}Estructura general del repositorio}{111}{section.Alph1.1}%
+\contentsline {section}{\numberline {A.2}Configuración del entorno de desarrollo}{112}{section.Alph1.2}%
+\contentsline {subsection}{\numberline {A.2.1}Organización del directorio de datos}{112}{subsection.Alph1.2.1}%
+\contentsline {subsection}{\numberline {A.2.2}Ejecución local frente a clúster HPC}{112}{subsection.Alph1.2.2}%
+\contentsline {section}{\numberline {A.3}Pipeline experimental (\texttt {src/})}{113}{section.Alph1.3}%
+\contentsline {subsection}{\numberline {A.3.1}Paso 1: Generación de ventanas deslizantes (\texttt {1-generate\_windows.py})}{113}{subsection.Alph1.3.1}%
+\contentsline {subsection}{\numberline {A.3.2}Paso 2a: Partición Group K-Fold (\texttt {2-folds\_creation.py})}{113}{subsection.Alph1.3.2}%
+\contentsline {subsection}{\numberline {A.3.3}Paso 2b: Balanceo demográfico (\texttt {2-server\_balancing.py})}{113}{subsection.Alph1.3.3}%
+\contentsline {subsection}{\numberline {A.3.4}Paso 3: Entrenamiento LSTM (\texttt {3-train.py})}{113}{subsection.Alph1.3.4}%
+\contentsline {subsection}{\numberline {A.3.5}Paso 4: Evaluación e inferencia (\texttt {4-test\_predictions.py})}{114}{subsection.Alph1.3.5}%
+\contentsline {section}{\numberline {A.4}Análisis exploratorio de datos (\texttt {EDA/})}{114}{section.Alph1.4}%
+\contentsline {subsection}{\numberline {A.4.1}Inspección por \textit {dataset} (\texttt {notebooks/01\_EDA/})}{114}{subsection.Alph1.4.1}%
+\contentsline {subsection}{\numberline {A.4.2}Análisis cruzado entre \textit {datasets} (\texttt {EDA/cross/})}{114}{subsection.Alph1.4.2}%
+\contentsline {section}{\numberline {A.5}Marco de análisis de resultados (\texttt {analysis\_relief/})}{114}{section.Alph1.5}%
+\contentsline {subsection}{\numberline {A.5.1}Configuración y carga de datos (\texttt {analysis/config.py}, \texttt {loader.py})}{115}{subsection.Alph1.5.1}%
+\contentsline {subsection}{\numberline {A.5.2}Validación estadística (\texttt {stats.py})}{115}{subsection.Alph1.5.2}%
+\contentsline {subsection}{\numberline {A.5.3}Módulos de visualización (\texttt {viz/})}{115}{subsection.Alph1.5.3}%
+\contentsline {subsection}{\numberline {A.5.4}Salidas clínicas (\texttt {outputs\_clinical/})}{115}{subsection.Alph1.5.4}%
+\contentsline {section}{\numberline {A.6}Documento de la memoria (\texttt {memoria/})}{115}{section.Alph1.6}%
