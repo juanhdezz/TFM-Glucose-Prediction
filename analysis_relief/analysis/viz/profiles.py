@@ -221,6 +221,10 @@ def plot_radar(master, metric="RMSE", dataset=None, dimension="age"):
 # ── F13: Small multiples facet ───────────────────────────────────────────────
 
 def plot_range_profile_facet(master, metric="RMSE"):
+    """
+    Small multiples: una fila por técnica, columna = rango glucémico.
+    Versión mejorada con fuentes más grandes y leyenda más grande.
+    """
     sub = master[
         (master["metric"] == metric) &
         (master["range"].isin(RANGES_FOR_PROFILE))
@@ -228,28 +232,58 @@ def plot_range_profile_facet(master, metric="RMSE"):
     if sub.empty:
         return
 
-    techniques  = [t for t in TECHNIQUE_ORDER if t != "original" and
-                   t in sub["technique"].unique()]
-    n_tech      = len(techniques)
-    n_ranges    = len(RANGES_FOR_PROFILE)
-    datasets    = [d for d in DATASET_ORDER if d in sub["dataset"].unique()]
-    ds_colors   = [DATASET_PALETTE.get(d, "#888") for d in datasets]
+    techniques = [t for t in TECHNIQUE_ORDER if t != "original" and
+                  t in sub["technique"].unique()]
+    # Limitar a técnicas que realmente tienen datos para todos los rangos
+    valid_techs = []
+    for tech in techniques:
+        tech_sub = sub[sub["technique"] == tech]
+        rngs_present = tech_sub["range"].unique()
+        if all(r in rngs_present for r in RANGES_FOR_PROFILE):
+            valid_techs.append(tech)
+    techniques = valid_techs
+
+    if not techniques:
+        log.warning("range_profile_facet: no hay técnicas completas para todos los rangos")
+        return
+
+    n_tech = len(techniques)
+    n_ranges = len(RANGES_FOR_PROFILE)
+    datasets = [d for d in DATASET_ORDER if d in sub["dataset"].unique()]
+    ds_colors = [DATASET_PALETTE.get(d, "#888") for d in datasets]
+
+    # Altura dinámica: más técnicas = más altura
+    fig_height = max(7, n_tech * 1.8 + 2.0)  # Aumentado para dar espacio a leyenda
+    fig_width = n_ranges * 3.2 + 2.0  # Espacio extra para etiquetas Y
 
     fig, axes = plt.subplots(n_tech, n_ranges,
-                             figsize=(n_ranges * 2.8, n_tech * 2.0 + 1.2),
+                             figsize=(fig_width, fig_height),
                              sharey="row", sharex=True)
-    if n_tech == 1:  axes = [axes]
-    if n_ranges == 1: axes = [[ax] for ax in axes]
+    if n_tech == 1:
+        axes = [axes]
+    if n_ranges == 1:
+        axes = [[ax] for ax in axes]
 
+    # Rango de valores para el eje Y (común por fila)
     for row_i, tech in enumerate(techniques):
+        y_max = 0
+        for rng in RANGES_FOR_PROFILE:
+            vals = sub[(sub["technique"] == tech) & (sub["range"] == rng)]["mean"].values
+            if len(vals) > 0:
+                y_max = max(y_max, vals.max())
+        # Añadir margen del 20%
+        y_max = y_max * 1.2 if y_max > 0 else 10
+
         for col_j, rng in enumerate(RANGES_FOR_PROFILE):
             ax = axes[row_i][col_j]
+            
+            # Obtener valores
             for k, (ds, color) in enumerate(zip(datasets, ds_colors)):
                 orig_val = sub[
                     (sub["dataset"] == ds) & (sub["range"] == rng) &
                     (sub["is_original"])
                 ]["mean"].values
-                bal_val  = sub[
+                bal_val = sub[
                     (sub["dataset"] == ds) & (sub["range"] == rng) &
                     (sub["technique"] == tech)
                 ]["mean"].values
@@ -257,42 +291,105 @@ def plot_range_profile_facet(master, metric="RMSE"):
                 if len(orig_val) == 0 or len(bal_val) == 0:
                     continue
 
-                ax.bar(k - 0.125, orig_val[0], 0.25,
-                       color=color, alpha=0.3, hatch="//", edgecolor=color, lw=0.8)
-                ax.bar(k + 0.125, bal_val[0], 0.25,
-                       color=color, alpha=0.85, edgecolor="white", lw=0.5)
+                # Barra baseline (original) - más transparente y con hatch
+                ax.bar(k - 0.15, orig_val[0], 0.25,
+                       color=color, alpha=0.25, hatch="///", 
+                       edgecolor=color, lw=0.8, zorder=1)
+                # Barra balanceada - más opaca
+                ax.bar(k + 0.15, bal_val[0], 0.25,
+                       color=color, alpha=0.8, edgecolor="white", lw=0.5, zorder=2)
 
-            ax.set_xticks([])
-            ax.tick_params(axis="y", labelsize=7)
-            ax.grid(axis="y", alpha=0.25)
+            # Configuración del subplot
+            ax.set_ylim(0, y_max)
+            ax.tick_params(axis="y", labelsize=10)
+            ax.tick_params(axis="x", labelsize=9)
+            ax.grid(axis="y", alpha=0.2, linestyle="--")
+            
+            # Eje X: solo etiquetas en la última fila
+            if row_i == n_tech - 1:
+                if len(datasets) <= 3:
+                    ax.set_xticks(np.arange(len(datasets)))
+                    ax.set_xticklabels([DATASET_LABELS.get(d, d) for d in datasets], 
+                                       fontsize=9, rotation=15, ha="right")
+                else:
+                    ax.set_xticks([])
+            else:
+                ax.set_xticks([])
 
-            if col_j == 0:
-                ax.set_ylabel(TECHNIQUE_LABELS.get(tech, tech), fontsize=8,
-                              rotation=0, ha="right", va="center", labelpad=60)
+            # Título de columna (rango glucémico) - solo en primera fila
             if row_i == 0:
-                ax.set_title(RANGE_LABELS.get(rng, rng), fontsize=9, fontweight="bold")
+                rng_label = RANGE_LABELS.get(rng, rng)
+                if len(rng_label) > 15:
+                    rng_label = rng_label[:12] + "…"
+                ax.set_title(rng_label, fontsize=12, fontweight="bold", pad=8)
 
-    ds_handles = [
-        mpatches.Patch(facecolor=DATASET_PALETTE.get(d,"#888"),
-                       label=DATASET_LABELS.get(d,d), alpha=0.85)
-        for d in datasets
+            # Etiqueta de técnica en el eje Y - MÁS GRANDE
+            if col_j == 0:
+                tech_label = TECHNIQUE_LABELS.get(tech, tech)
+                if len(tech_label) > 18:
+                    tech_label = tech_label[:15] + "…"
+                ax.set_ylabel(
+                    tech_label, 
+                    fontsize=11, 
+                    fontweight="bold",
+                    rotation=0, 
+                    ha="right", 
+                    va="center", 
+                    labelpad=55
+                )
+                ax.axvline(-0.5, color="0.7", lw=0.5, alpha=0.5)
+
+    # --- LEYENDA MÁS GRANDE Y A ANCHO COMPLETO ---
+    ds_handles = []
+    for d in datasets:
+        if d in sub["dataset"].unique():
+            ds_handles.append(
+                mpatches.Patch(
+                    facecolor=DATASET_PALETTE.get(d, "#888"),
+                    label=DATASET_LABELS.get(d, d),
+                    alpha=0.8,
+                    edgecolor="0.3",
+                    linewidth=0.5
+                )
+            )
+    
+    style_handles = [
+        mpatches.Patch(facecolor="0.7", hatch="///", edgecolor="0.5",
+                       label="Original (baseline)", alpha=0.3),
+        mpatches.Patch(facecolor="0.4", edgecolor="white",
+                       label="Balanced", alpha=0.8),
     ]
-    ds_handles += [
-        mpatches.Patch(facecolor="0.7", hatch="//", edgecolor="0.5",
-                       label="Baseline (hatched)"),
-        mpatches.Patch(facecolor="0.4", label="Balanced (solid)"),
-    ]
-    fig.legend(handles=ds_handles, loc="lower center", ncol=len(ds_handles),
-               bbox_to_anchor=(0.5, -0.02), fontsize=8, frameon=True)
+    
+    all_handles = ds_handles + style_handles
+    
+    # Leyenda más grande, a ancho completo, con más espacio
+    fig.legend(
+        handles=all_handles,
+        loc="lower center",
+        ncol=min(len(all_handles), 5),
+        bbox_to_anchor=(0.5, -0.03),
+        fontsize=12,                 # MUCHO MÁS GRANDE (antes 10)
+        frameon=True,
+        framealpha=0.95,
+        edgecolor="0.7",
+        handlelength=3.5,            # Handles más largos
+        handleheight=2.2,            # Handles más altos
+        borderpad=1.2,               # Más padding interno
+        labelspacing=0.8,            # Más espacio entre filas
+        columnspacing=1.5,           # Más espacio entre columnas
+    )
 
     fig.suptitle(
-        f"Small multiples — {metric} by technique × glucose range\n"
-        f"Row = technique  |  Column = glucose range  |  Hatched = baseline",
-        fontsize=12, fontweight="bold"
+        f"Performance profile by technique × glucose range — {metric}\n"
+        f"Row = technique  |  Column = glucose range  |  Hatched = baseline (original), Solid = balanced",
+        fontsize=14, fontweight="bold", y=1.01
     )
-    plt.tight_layout(rect=[0, 0.05, 1, 0.97])
+    
+    # Ajuste final con más espacio abajo para la leyenda
+    plt.tight_layout(rect=[0.02, 0.08, 0.98, 0.97])
     save_fig(fig, f"range_profile_facet_{metric}.pdf", subdir="profiles")
     plt.close(fig)
+
 
 
 # ── Intra‑family versions ────────────────────────────────────────────────────
@@ -424,86 +521,198 @@ def plot_radar_family(master, family_col="family_size", metric="RMSE"):
 
 
 def plot_range_profile_facet_family(master, family_col="family_size", metric="RMSE"):
+    """
+    Small multiples intra‑familia. Versión mejorada con fuentes más grandes.
+    """
     label_map = FAMILY_SIZE_LABELS if family_col == "family_size" else FAMILY_MECHANISM_LABELS
+    
     for fam in master[family_col].dropna().unique():
-        sub_bal = master[(master[family_col]==fam)&(master["metric"]==metric)&(master["range"].isin(RANGES_FOR_PROFILE))]
-        if sub_bal.empty: continue
-        sub_orig = master[(master["is_original"])&(master["metric"]==metric)&(master["range"].isin(RANGES_FOR_PROFILE))]
-        techniques = [t for t in TECHNIQUE_ORDER if t!="original" and t in sub_bal["technique"].unique()]
-        if not techniques: continue
+        sub_bal = master[
+            (master[family_col] == fam) & 
+            (master["metric"] == metric) &
+            (master["range"].isin(RANGES_FOR_PROFILE))
+        ]
+        if sub_bal.empty:
+            continue
+            
+        sub_orig = master[
+            (master["is_original"]) & 
+            (master["metric"] == metric) &
+            (master["range"].isin(RANGES_FOR_PROFILE))
+        ]
+        
+        techniques = [t for t in TECHNIQUE_ORDER if t != "original" and 
+                      t in sub_bal["technique"].unique()]
+        valid_techs = []
+        for tech in techniques:
+            tech_sub = sub_bal[sub_bal["technique"] == tech]
+            rngs_present = tech_sub["range"].unique()
+            if all(r in rngs_present for r in RANGES_FOR_PROFILE):
+                valid_techs.append(tech)
+        techniques = valid_techs
+        
+        if not techniques:
+            continue
+            
         n_tech = len(techniques)
         n_ranges = len(RANGES_FOR_PROFILE)
         datasets = [d for d in DATASET_ORDER if d in sub_bal["dataset"].unique()]
-        ds_colors = [DATASET_PALETTE.get(d,"#888") for d in datasets]
+        ds_colors = [DATASET_PALETTE.get(d, "#888") for d in datasets]
 
-        fig, axes = plt.subplots(n_tech, n_ranges, figsize=(n_ranges*2.8, n_tech*2.0+1.2), sharey="row", sharex=True)
-        if n_tech==1: axes = [axes]
-        if n_ranges==1: axes = [[ax] for ax in axes]
+        # Altura dinámica: más espacio para técnicas y leyenda
+        fig_height = max(6, n_tech * 2.0 + 2.0)
+        fig_width = n_ranges * 3.2 + 2.0
+
+        fig, axes = plt.subplots(n_tech, n_ranges,
+                                 figsize=(fig_width, fig_height),
+                                 sharey="row", sharex=True)
+        if n_tech == 1:
+            axes = [axes]
+        if n_ranges == 1:
+            axes = [[ax] for ax in axes]
+
+        # Obtener el rango de valores por fila
+        row_ymax = {}
+        for row_i, tech in enumerate(techniques):
+            y_max = 0
+            for rng in RANGES_FOR_PROFILE:
+                vals = sub_bal[(sub_bal["technique"] == tech) & (sub_bal["range"] == rng)]["mean"].values
+                if len(vals) > 0:
+                    y_max = max(y_max, vals.max())
+                orig_vals = sub_orig[(sub_orig["range"] == rng)]["mean"].values
+                if len(orig_vals) > 0:
+                    y_max = max(y_max, orig_vals.max())
+            row_ymax[row_i] = y_max * 1.2 if y_max > 0 else 10
+
         for row_i, tech in enumerate(techniques):
             for col_j, rng in enumerate(RANGES_FOR_PROFILE):
                 ax = axes[row_i][col_j]
+                
                 for k, (ds, color) in enumerate(zip(datasets, ds_colors)):
-                    orig_val = sub_orig[(sub_orig["dataset"]==ds)&(sub_orig["range"]==rng)]["mean"].values
-                    bal_val  = sub_bal[(sub_bal["dataset"]==ds)&(sub_bal["range"]==rng)&(sub_bal["technique"]==tech)]["mean"].values
-                    if len(orig_val)==0 or len(bal_val)==0: continue
-                    ax.bar(k-0.125, orig_val[0], 0.25, color=color, alpha=0.3, hatch="//")
-                    ax.bar(k+0.125, bal_val[0], 0.25, color=color, alpha=0.85, edgecolor="white")
-                ax.set_xticks([])
-                ax.grid(axis="y", alpha=0.25)
-                if col_j==0: ax.set_ylabel(TECHNIQUE_LABELS.get(tech,tech), fontsize=8, rotation=0, ha="right", labelpad=60)
-                if row_i==0: ax.set_title(RANGE_LABELS.get(rng,rng), fontsize=9, fontweight="bold")
-        # DESPUÉS
+                    orig_val = sub_orig[
+                        (sub_orig["dataset"] == ds) & (sub_orig["range"] == rng)
+                    ]["mean"].values
+                    bal_val = sub_bal[
+                        (sub_bal["dataset"] == ds) & (sub_bal["range"] == rng) &
+                        (sub_bal["technique"] == tech)
+                    ]["mean"].values
+
+                    if len(orig_val) == 0 or len(bal_val) == 0:
+                        continue
+
+                    ax.bar(k - 0.15, orig_val[0], 0.25,
+                           color=color, alpha=0.25, hatch="///",
+                           edgecolor=color, lw=0.8, zorder=1)
+                    ax.bar(k + 0.15, bal_val[0], 0.25,
+                           color=color, alpha=0.8, edgecolor="white", lw=0.5, zorder=2)
+
+                # Configuración
+                ax.set_ylim(0, row_ymax[row_i])
+                ax.tick_params(axis="y", labelsize=10)
+                ax.tick_params(axis="x", labelsize=9)
+                ax.grid(axis="y", alpha=0.2, linestyle="--")
+                
+                if row_i == n_tech - 1:
+                    if len(datasets) <= 3:
+                        ax.set_xticks(np.arange(len(datasets)))
+                        ax.set_xticklabels([DATASET_LABELS.get(d, d) for d in datasets],
+                                           fontsize=9, rotation=15, ha="right")
+                    else:
+                        ax.set_xticks([])
+                else:
+                    ax.set_xticks([])
+
+                if row_i == 0:
+                    rng_label = RANGE_LABELS.get(rng, rng)
+                    if len(rng_label) > 15:
+                        rng_label = rng_label[:12] + "…"
+                    ax.set_title(rng_label, fontsize=12, fontweight="bold", pad=8)
+
+                if col_j == 0:
+                    tech_label = TECHNIQUE_LABELS.get(tech, tech)
+                    if len(tech_label) > 18:
+                        tech_label = tech_label[:15] + "…"
+                    ax.set_ylabel(
+                        tech_label,
+                        fontsize=11,
+                        fontweight="bold",
+                        rotation=0,
+                        ha="right",
+                        va="center",
+                        labelpad=55
+                    )
+
+        # --- LEYENDA MÁS GRANDE A ANCHO COMPLETO ---
         ds_handles = [
             mpatches.Patch(
                 facecolor=DATASET_PALETTE.get(d, "#888"),
                 label=DATASET_LABELS.get(d, d),
-                alpha=0.85
+                alpha=0.8,
+                edgecolor="0.3",
+                linewidth=0.5
             )
-            for d in datasets
+            for d in datasets if d in sub_bal["dataset"].unique()
         ]
-        ds_handles += [
-            mpatches.Patch(
-                facecolor="0.7",
-                hatch="//",
-                edgecolor="0.5",
-                label="Baseline (original)"
-            ),
-            mpatches.Patch(
-                facecolor="0.4",
-                label="Balanced (técnica)"
-            ),
+        
+        style_handles = [
+            mpatches.Patch(facecolor="0.7", hatch="///", edgecolor="0.5",
+                           label="Original (baseline)", alpha=0.3),
+            mpatches.Patch(facecolor="0.4", edgecolor="white",
+                           label="Balanced", alpha=0.8),
         ]
+        
+        all_handles = ds_handles + style_handles
+        
         fig.legend(
-            handles=ds_handles,
+            handles=all_handles,
             loc="lower center",
-            ncol=len(ds_handles),
-            bbox_to_anchor=(0.5, -0.02),
-            fontsize=8,
-            frameon=True
+            ncol=min(len(all_handles), 5),
+            bbox_to_anchor=(0.5, -0.03),
+            fontsize=12,                 # MUCHO MÁS GRANDE
+            frameon=True,
+            framealpha=0.95,
+            edgecolor="0.7",
+            handlelength=3.5,            # Handles más largos
+            handleheight=2.2,            # Handles más altos
+            borderpad=1.2,
+            labelspacing=0.8,
+            columnspacing=1.5,
         )
 
-        fig.suptitle(f"Small multiples — {metric} | {label_map.get(fam,fam)}", fontsize=12, fontweight="bold")
-        plt.tight_layout(rect=[0, 0.08, 1, 0.97])
-        save_fig(fig, f"range_profile_facet_{metric}_{fam}.pdf", subdir=f"profiles/{family_col}/{fam}")
+        fam_label = label_map.get(fam, fam)
+        fig.suptitle(
+            f"Performance profile — {metric} | {fam_label}\n"
+            f"Row = technique  |  Column = glucose range",
+            fontsize=14, fontweight="bold", y=1.01
+        )
+
+        plt.tight_layout(rect=[0.02, 0.08, 0.98, 0.97])
+        save_fig(
+            fig, 
+            f"range_profile_facet_{metric}_{fam}.pdf", 
+            subdir=f"profiles/{family_col}/{fam}"
+        )
         plt.close(fig)
 
 
 def plot_all_profiles(master):
     log.info("  Generando perfiles glucémicos...")
-    # Globales
+    
     for metric in ["RMSE", "MAE"]:
         plot_parallel_coords(master, metric=metric)
         plot_range_profile_facet(master, metric=metric)
+    
     for ds in [d for d in DATASET_ORDER if d in master["dataset"].unique()]:
         for dim in ["age", "sex"]:
             plot_radar(master, metric="RMSE", dataset=ds, dimension=dim)
 
-    # Intra‑familia
     for family_col in ["family_size", "family_mechanism"]:
         for metric in ["RMSE", "MAE"]:
             plot_parallel_coords_family(master, family_col, metric=metric)
             plot_range_profile_facet_family(master, family_col, metric=metric)
+        
         for ds in [d for d in DATASET_ORDER if d in master["dataset"].unique()]:
             for dim in ["age", "sex"]:
                 plot_radar_family(master, family_col, metric="RMSE")
+    
     log.info("  Perfiles completados.")

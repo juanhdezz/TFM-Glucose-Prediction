@@ -381,6 +381,10 @@ INPUT ./imagenes_plantilla/../../EDA/cross/B4b_imbalance_ratio_age.pdf
 INPUT ./imagenes_plantilla/../../EDA/cross/B4b_imbalance_ratio_age.pdf
 INPUT ./imagenes_plantilla/../../EDA/cross/B4b_imbalance_ratio_age.pdf
 INPUT ./imagenes_plantilla/../../EDA/cross/B4b_imbalance_ratio_age.pdf
+INPUT ./imagenes_plantilla/../../EDA/cross/B4d_imbalance_ratio_sex.pdf
+INPUT ./imagenes_plantilla/../../EDA/cross/B4d_imbalance_ratio_sex.pdf
+INPUT ./imagenes_plantilla/../../EDA/cross/B4d_imbalance_ratio_sex.pdf
+INPUT ./imagenes_plantilla/../../EDA/cross/B4d_imbalance_ratio_sex.pdf
 INPUT ./imagenes_plantilla/../../EDA/cross/B4c_class_distribution_sex.pdf
 INPUT ./imagenes_plantilla/../../EDA/cross/B4c_class_distribution_sex.pdf
 INPUT ./imagenes_plantilla/../../EDA/cross/B4c_class_distribution_sex.pdf

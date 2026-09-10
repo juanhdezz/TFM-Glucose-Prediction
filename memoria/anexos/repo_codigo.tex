@@ -34,12 +34,24 @@ responsabilidades bien delimitadas:
     \item[\texttt{src/}] Pipeline experimental principal. Contiene los
     scripts numerados que ejecutan, en orden, la generación de ventanas,
     la partición por paciente, el balanceo demográfico, el entrenamiento
-    de los modelos LSTM y la evaluación de predicciones.
+    de los modelos LSTM y la evaluación de predicciones. Incluye también
+    los módulos auxiliares de EDA (\texttt{eda\_common.py},
+    \texttt{eda\_demographic.py}) utilizados por los \textit{notebooks}.
 
-    \item[\texttt{EDA/}] Análisis Exploratorio de Datos. Agrupa los
-    scripts Python y \textit{notebooks} Jupyter que generan las figuras
-    descriptivas de los tres \textit{datasets}, los \textit{heatmaps}
-    cruzados y los informes de desequilibrio por \textit{fold}.
+    \item[\texttt{notebooks/}] \textit{Notebooks} Jupyter organizados en
+    dos carpetas: \texttt{00\_Code\_availability/}, con los notebooks de
+    curación y preparación de los datos del dataset T1DiabetesGranada; y
+    \texttt{01\_EDA/}, con los notebooks de inspección individual de cada
+    uno de los tres \textit{datasets}.
+
+    \item[\texttt{EDA/}] Artefactos de salida del análisis exploratorio.
+    Contiene las figuras generadas (PNG/PDF) y tablas (CSV/\LaTeX)
+    organizadas en subdirectorios por \textit{dataset}
+    (\texttt{EDA/DIATREND/}, \texttt{EDA/REPLACE-BG/},
+    \texttt{EDA/T1DiabetesGranada/}) y un subdirectorio de análisis
+    cruzado (\texttt{EDA/cross/}) con los resúmenes comparativos entre
+    los tres \textit{datasets}. Estos artefactos son referenciados
+    directamente desde el documento \LaTeX.
 
     \item[\texttt{analysis\_relief/}] Marco de análisis de resultados
     \textit{post-hoc}. Implementa la carga de resultados, las pruebas
@@ -47,9 +59,11 @@ responsabilidades bien delimitadas:
     visualizaciones de publicación y la generación automática de tablas
     \LaTeX.
 
-    \item[\texttt{folds\_analysis/}] Informes de desequilibrio por
-    \textit{fold} y \textit{dataset}, en formato texto, generados como
-    \textit{proxy} del ratio de desbalanceo dinámico inter-\textit{fold}.
+    \item[\texttt{folds\_analysis/}] Informes de desequilibrio demográfico
+    por \textit{fold} y \textit{dataset}, en formato texto, generados por
+    \texttt{src/folds\_analysys\_report.py} como \textit{proxy} del ratio
+    de desbalanceo dinámico inter-\textit{fold}. Organizados en
+    subdirectorios por \textit{dataset}.
 
     \item[\texttt{batch\_scripts/}] Ficheros de cola SLURM para la
     ejecución en el clúster HPC. Automatizan el envío de trabajos de
@@ -115,10 +129,10 @@ data/
     +-- Glucose_measurements_DiaTrend_FILTERED.parquet
 \end{verbatim}
 
-La resolución de rutas se gestiona programáticamente en cada script
-mediante utilidades de búsqueda del directorio raíz del workspace, lo
-que hace el código portable independientemente de la ruta absoluta de
-instalación.
+La resolución de rutas se gestiona programáticamente mediante la función
+\texttt{find\_project\_root()}, definida en los módulos auxiliares de
+\texttt{src/}, lo que hace el código portable independientemente de la
+ruta absoluta de instalación.
 
 \subsection{Ejecución local frente a clúster HPC}
 \label{subsec:anexo_hpc}
@@ -127,7 +141,7 @@ El pipeline soporta dos modalidades de ejecución:
 
 \begin{enumerate}
     \item \textbf{Ejecución local}: adecuada para el análisis exploratorio
-    (\texttt{EDA/}), el \textit{testing} ligero de scripts y la
+    (\texttt{notebooks/}), el \textit{testing} ligero de scripts y la
     compilación del documento \LaTeX. Se ejecutan las sesiones Jupyter
     interactivas o los scripts directamente desde la línea de comandos.
 
@@ -223,16 +237,44 @@ resultados se compilan en ficheros de informe plano (formato MTA) y se
 agregan entre \textit{folds} para su análisis estadístico posterior.
 
 % ---------------------------------------------------------
-\section{Análisis exploratorio de datos (\texttt{EDA/})}
+\section{Análisis exploratorio de datos}
 \label{sec:anexo_eda}
 % ---------------------------------------------------------
 
-El directorio \texttt{EDA/} contiene \textit{notebooks} Jupyter y
-scripts Python organizados en dos niveles:
+El análisis exploratorio se reparte entre dos ubicaciones con roles
+distintos: los \textit{notebooks} Jupyter interactivos en
+\texttt{notebooks/}, donde se ejecutan las inspecciones y la curación, y
+el directorio \texttt{EDA/}, donde se almacenan los artefactos de salida
+(figuras y tablas) que se incorporan al documento \LaTeX.
 
-\subsection{Inspección por \textit{dataset}
+\subsection{\textit{Notebooks} de curación
+            (\texttt{notebooks/00\_Code\_availability/})}
+\label{subsec:anexo_curacion}
+
+Exclusivos del \textit{dataset} T1DiabetesGranada, estos \textit{notebooks}
+transforman los volcados clínicos en bruto en los ficheros
+estandarizados que consume el pipeline:
+
+\begin{itemize}
+    \item \texttt{Original\_patient\_info\_curation.ipynb}: normaliza el
+    fichero demográfico (\texttt{DatosPacientes.txt}), traduciendo nombres
+    de columnas al inglés y codificando el sexo de forma uniforme.
+    \item \texttt{Glucose\_measurements\_curation.ipynb}: procesa las
+    lecturas CGM en bruto, elimina nulos y exporta el Parquet de
+    mediciones.
+    \item \texttt{Biochemical\_paramaters\_curation.ipynb}: curada los
+    resultados de laboratorio (HbA1c, glucosa en sangre) y estandariza
+    nombres de analitos al inglés.
+    \item \texttt{Diagnostic\_curation.ipynb}: mapea los códigos de
+    diagnóstico locales (CIE-9MC) a descripciones ICD-9 estándar.
+    \item \texttt{Get\_patient\_info\_variables.ipynb}: agrega estadísticas
+    derivadas a nivel de paciente (rango de fechas, total de días y
+    lecturas válidas).
+\end{itemize}
+
+\subsection{\textit{Notebooks} de inspección
             (\texttt{notebooks/01\_EDA/})}
-\label{subsec:anexo_eda_individual}
+\label{subsec:anexo_inspeccion}
 
 Cada \textit{dataset} dispone de su propio \textit{notebook} de
 inspección inicial:
@@ -247,22 +289,39 @@ inspección inicial:
 Estos \textit{notebooks} verifican la cadencia de muestreo, detectan
 patrones MNAR (\textit{Missing Not At Random}), caracterizan la
 distribución demográfica y calculan métricas clínicas de referencia
-(TIR/TBR/TAR) sin balanceo.
+(TIR/TBR/TAR) sin balanceo. Se apoyan en los módulos auxiliares
+\texttt{src/eda\_common.py} y \texttt{src/eda\_demographic.py} para la
+resolución de rutas y la estratificación demográfica compartida.
 
-\subsection{Análisis cruzado entre \textit{datasets}
-            (\texttt{EDA/cross/})}
-\label{subsec:anexo_eda_cross}
+\subsection{Artefactos de salida (\texttt{EDA/})}
+\label{subsec:anexo_eda_artefactos}
 
-Los scripts de análisis cruzado generan las figuras comparativas que
-aparecen en el cuerpo del TFM: distribuciones de sexo y edad por
-\textit{dataset}, \textit{heatmaps} edad$\times$sexo, y diagramas de
-desequilibrio por \textit{fold}. Los artefactos se nombran con el
-prefijo \texttt{B1*} y se referencian directamente desde el documento
-\LaTeX.
+Las figuras y tablas generadas por los \textit{notebooks} se almacenan
+en \texttt{EDA/}, organizado en cuatro subdirectorios:
 
-El subdirectorio \texttt{folds\_analysis/} contiene informes en formato
-texto con los ratios de desequilibrio calculados para cada técnica de
-balanceo, \textit{dataset} y \textit{fold}, organizados por
+\begin{itemize}
+    \item \texttt{EDA/T1DiabetesGranada/}, \texttt{EDA/REPLACE-BG/},
+    \texttt{EDA/DIATREND/}: figuras de distribución demográfica (por
+    grupo de edad y sexo) y rangos glucémicos propias de cada
+    \textit{dataset}.
+    \item \texttt{EDA/cross/}: resúmenes comparativos entre los tres
+    \textit{datasets}, incluyendo la tabla de cohorte
+    (\texttt{B0\_cohort\_overview.csv}), \textit{heatmaps}
+    edad$\times$sexo y ratios de desequilibrio por \textit{fold}. Los
+    artefactos siguen la nomenclatura \texttt{B0*}--\texttt{B4*} y se
+    referencian directamente desde el documento \LaTeX.
+\end{itemize}
+
+% ---------------------------------------------------------
+\section{Informes de desequilibrio por \textit{fold}
+         (\texttt{folds\_analysis/})}
+\label{sec:anexo_folds_analysis}
+% ---------------------------------------------------------
+
+El script \texttt{src/folds\_analysys\_report.py} genera informes en
+formato texto con los ratios de desequilibrio demográfico calculados para
+cada combinación de técnica de balanceo, \textit{dataset} y
+\textit{fold}. Los informes se organizan en subdirectorios por
 \textit{dataset}:
 
 \begin{verbatim}
@@ -357,7 +416,6 @@ memoria/
 |   +-- 03_Desarrollo_del_TFM.tex
 |   +-- 04_Resultados_y_Discusion.tex
 |   +-- 05_Conclusiones.tex
-+-- EDA/
 +-- tfm.pdf
 \end{verbatim}
 

@@ -4,6 +4,13 @@ dumbbell.py — Dumbbell plots y slope charts.
 
 F3  dumbbell_{metric}_{rng}.pdf    baseline vs mejor técnica, por dataset
 F4  slope_{metric}_by_dim.pdf      pendiente original→balanceado por dimensión
+
+CAMBIOS v3:
+  - Aumentada altura de figura para evitar solapamiento de etiquetas Y
+  - Etiquetas del eje Y con ha='right' y mayor separación
+  - Abreviación automática de técnicas largas (>25 caracteres)
+  - Ajuste de márgenes izquierdo para dar espacio a etiquetas
+  - Leyenda a ancho completo con fuente más grande
 """
 import logging
 import numpy as np
@@ -23,6 +30,21 @@ log = logging.getLogger(__name__)
 apply_theme()
 
 
+def _abbreviate_label(label, max_len=28):
+    """Abrevia una etiqueta si supera max_len caracteres."""
+    if len(label) <= max_len:
+        return label
+    # Intentar abreviar de forma inteligente
+    parts = label.split(" · ")
+    if len(parts) == 2:
+        dim, tech = parts
+        # Si la técnica es muy larga, abreviar
+        if len(tech) > 20:
+            tech = tech[:18] + "…"
+        return f"{dim} · {tech}"
+    return label[:max_len-1] + "…"
+
+
 # ── F3: Dumbbell plot ─────────────────────────────────────────────────────────
 
 def plot_dumbbell(master, metric="RMSE", rng="ENTIRE"):
@@ -40,7 +62,19 @@ def plot_dumbbell(master, metric="RMSE", rng="ENTIRE"):
     datasets  = [d for d in DATASET_ORDER if d in sub["dataset"].unique()]
     n_ds      = len(datasets)
 
-    fig, axes = plt.subplots(1, n_ds, figsize=(n_ds * 5.5, 7), sharey=False)
+    # Calcular altura dinámica: más técnicas = más altura
+    max_techniques = 0
+    for ds in datasets:
+        ds_data = sub[sub["dataset"] == ds]
+        n_tech = len(ds_data[~ds_data["is_original"]])
+        if n_tech > max_techniques:
+            max_techniques = n_tech
+    
+    # Altura base: 1.2 unidades por técnica + margen
+    fig_height = max(8, max_techniques * 0.55 + 2.5)
+    fig_width = n_ds * 6.0
+
+    fig, axes = plt.subplots(1, n_ds, figsize=(fig_width, fig_height), sharey=False)
     if n_ds == 1:
         axes = [axes]
 
@@ -52,7 +86,11 @@ def plot_dumbbell(master, metric="RMSE", rng="ENTIRE"):
         orig_val   = orig_val[0]
 
         bal = ds_data[~ds_data["is_original"]].copy()
-        bal = bal.sort_values("mean", ascending=not ascending)  # worst at top, best at bottom
+        bal = bal[bal["mean"].notna()]
+        if bal.empty:
+            continue
+            
+        bal = bal.sort_values("mean", ascending=not ascending)
 
         y_pos = np.arange(len(bal))
 
@@ -62,10 +100,10 @@ def plot_dumbbell(master, metric="RMSE", rng="ENTIRE"):
             ax.plot([orig_val, row["mean"]], [y, y],
                     color="0.75", lw=1.5, zorder=1)
             # Baseline dot
-            ax.scatter(orig_val, y, color="#333333", s=55, zorder=3,
+            ax.scatter(orig_val, y, color="#333333", s=50, zorder=3,
                        marker="D", linewidths=0)
             # Technique dot
-            ax.scatter(row["mean"], y, color=color, s=90, zorder=4,
+            ax.scatter(row["mean"], y, color=color, s=80, zorder=4,
                        edgecolors="white", linewidths=0.8)
             # Std error bar
             if not np.isnan(row.get("std", np.nan)):
@@ -76,17 +114,22 @@ def plot_dumbbell(master, metric="RMSE", rng="ENTIRE"):
         # Baseline vertical line
         ax.axvline(orig_val, color="#333333", lw=1.2, ls="--", alpha=0.6, zorder=0)
 
-        # y-axis labels
+        # --- ETIQUETAS DEL EJE Y MEJORADAS ---
         cond_labels = []
         for _, row in bal.iterrows():
             dim  = DIMENSION_LABELS.get(row["dimension"], "")
             tech = TECHNIQUE_LABELS.get(row["technique"], row["technique"])
-            cond_labels.append(f"{dim} · {tech}" if dim else tech)
+            label = f"{dim} · {tech}" if dim else tech
+            label = _abbreviate_label(label, max_len=30)
+            cond_labels.append(label)
 
         ax.set_yticks(y_pos)
-        ax.set_yticklabels(cond_labels, fontsize=8)
-        ax.set_xlabel(f"{metric} (mg/dL)", fontsize=10)
-        ax.set_title(DATASET_LABELS.get(ds, ds), fontsize=12, fontweight="bold")
+        ax.set_yticklabels(cond_labels, fontsize=9, ha='right', va='center')
+        ax.tick_params(axis='y', pad=8)  # más separación entre etiqueta y eje
+        
+        # Ajustar margen izquierdo para que las etiquetas no se corten
+        ax.set_xlabel(f"{metric} (mg/dL)", fontsize=11)
+        ax.set_title(DATASET_LABELS.get(ds, ds), fontsize=13, fontweight="bold")
         ax.grid(axis="x", alpha=0.3)
         ax.set_axisbelow(True)
 
@@ -97,8 +140,11 @@ def plot_dumbbell(master, metric="RMSE", rng="ENTIRE"):
         else:
             ax.axvspan(orig_val, xlim[1], alpha=0.04, color="#009E73")
         ax.set_xlim(xlim)
+        
+        # Margen superior e inferior para que las etiquetas no se corten
+        ax.set_ylim(-0.8, len(bal) - 0.2)
 
-    # Shared legend for techniques
+    # --- LEYENDA A ANCHO COMPLETO ---
     handles = [mlines.Line2D([], [], color="#333333", marker="D", markersize=6,
                               linestyle="None", label="Original (baseline)")]
     seen = set()
@@ -110,13 +156,16 @@ def plot_dumbbell(master, metric="RMSE", rng="ENTIRE"):
                                           linestyle="None", label=technique_label(t)))
             seen.add(t)
 
-    fig.legend(handles=handles, loc="lower center", ncol=min(len(handles), 4),
-               bbox_to_anchor=(0.5, -0.04), frameon=True, fontsize=9)
+    fig.legend(handles=handles, loc="lower center", ncol=min(len(handles), 5),
+               bbox_to_anchor=(0.5, -0.02), frameon=True, fontsize=10,
+               handlelength=2.0, handleheight=1.5)
 
     range_lbl = RANGE_LABELS.get(rng, rng)
     fig.suptitle(f"Dumbbell plot — {metric} · {range_lbl}  |  ◆ = Original baseline",
-                 fontsize=13, fontweight="bold", y=1.01)
+                 fontsize=14, fontweight="bold", y=1.01)
 
+    # Ajuste final con más espacio a la izquierda para etiquetas Y
+    plt.tight_layout(rect=[0.03, 0.04, 1, 0.98])
     save_fig(fig, f"dumbbell_{metric}_{rng}.pdf", subdir="dumbbell")
 
 
@@ -144,8 +193,7 @@ def plot_slope_by_dimension(master, metric="RMSE", rng="ENTIRE"):
         techniques = [t for t in TECHNIQUE_ORDER if t != "original" and
                       t in bal["technique"].unique()]
 
-        # DESPUÉS
-        annotated_orig = set()   # para no repetir etiqueta si varios techs comparten baseline
+        annotated_orig = set()
         for tech in techniques:
             tech_data = bal[bal["technique"] == tech]
             for ds in DATASET_ORDER:
@@ -159,12 +207,11 @@ def plot_slope_by_dimension(master, metric="RMSE", rng="ENTIRE"):
                 ax.scatter([x_orig, x_bal], [ds_orig, ds_bal[0]],
                            color=color, s=50, zorder=3, edgecolors="white", lw=0.7)
 
-                # Etiqueta dataset junto al punto baseline (solo una vez por dataset)
                 if ds not in annotated_orig:
                     ax.text(
                         x_orig - 0.04, ds_orig,
                         DATASET_LABELS.get(ds, ds),
-                        fontsize=7, color="0.35",
+                        fontsize=8, color="0.35",
                         ha="right", va="center",
                         fontstyle="italic",
                     )
@@ -172,27 +219,27 @@ def plot_slope_by_dimension(master, metric="RMSE", rng="ENTIRE"):
 
         ax.set_xticks([x_orig, x_bal])
         ax.set_xticklabels(["Original", "Balanced"], fontsize=11, fontweight="bold")
-        ax.set_ylabel(f"{metric} (mg/dL)", fontsize=10) if dim == "age" else None
+        ax.set_ylabel(f"{metric} (mg/dL)", fontsize=11) if dim == "age" else None
         ax.set_title(f"Dimension: {DIMENSION_LABELS.get(dim, dim)}",
                      fontsize=12, fontweight="bold")
         ax.set_xlim(-0.55, 1.3)
         ax.grid(axis="y", alpha=0.3)
 
-        # Annotate direction
         arrow_dir = "↓ better" if metric in LOWER_IS_BETTER else "↑ better"
         ax.text(1.25, ax.get_ylim()[0], arrow_dir,
-                fontsize=8, color="0.5", va="bottom", ha="right")
+                fontsize=9, color="0.5", va="bottom", ha="right")
 
-    # Legend
+    # Leyenda
     handles = [mlines.Line2D([], [], color=technique_color(t), lw=2,
                               label=technique_label(t))
                for t in techniques]
     fig.legend(handles=handles, loc="lower center", ncol=min(len(handles), 4),
-               bbox_to_anchor=(0.5, -0.05), frameon=True, fontsize=9)
+               bbox_to_anchor=(0.5, -0.05), frameon=True, fontsize=10)
 
     range_lbl = RANGE_LABELS.get(rng, rng)
     fig.suptitle(f"Slope chart — {metric} · {range_lbl}",
                  fontsize=13, fontweight="bold", y=1.01)
+    plt.tight_layout()
     save_fig(fig, f"slope_{metric}_{rng}_by_dim.pdf", subdir="dumbbell")
 
 

@@ -531,11 +531,7 @@ def plot_heatmap_balancing(agg: DatasetAggregator, group: str, vmax: float):
         f"|  {scale_note}",
         fontsize=10, pad=14, loc="left"
     )
-    fig.text(0.01, -0.01,
-             "Values averaged across 5 cross-validation folds. "
-             "Positive = samples added (oversampling); negative = removed (undersampling). "
-             f"Color scale shared across all {len(DATASET_ORDER)} datasets for this dimension.",
-             fontsize=7, color="0.5")
+
 
     _save(fig, f"heatmap_balancing_{agg.ds_name}_{group}.pdf")
 
@@ -553,6 +549,11 @@ def plot_stacked_bars(agg: DatasetAggregator):
     dos escalas sean directamente comparables entre sí.
     Valores = MEDIA por fold (no la suma de los 5 folds), representando el
     tamaño real de un train set.
+
+    CAMBIOS:
+    - Leyenda mucho más grande (fontsize=12)
+    - Leyenda a ancho completo con handles más grandes
+    - Más espacio abajo para la leyenda
     """
     ds_lbl = DATASET_LABELS.get(agg.ds_name, agg.ds_name)
 
@@ -675,24 +676,39 @@ def plot_stacked_bars(agg: DatasetAggregator):
         # Eliminar spine izquierdo (las etiquetas de clase ya son suficiente separador)
         ax.spines["left"].set_visible(False)
 
-    # Leyenda compartida de rangos glucémicos en la parte inferior
+    # --- LEYENDA MÁS GRANDE Y A ANCHO COMPLETO ---
     patches = [mpatches.Patch(color=GLYCEMIC_COLORS[r], label=GLYCEMIC_LABELS[r])
                for r in GLYCEMIC_RANGES]
-    fig.legend(handles=patches, loc="lower center", ncol=5,
-               bbox_to_anchor=(0.5, -0.03), fontsize=10,
-               framealpha=0.95, edgecolor="0.8",
-               title="Glycemic range", title_fontsize=10)
+    
+    fig.legend(
+        handles=patches,
+        loc="lower center",
+        ncol=5,  # Un color por rango glucémico
+        bbox_to_anchor=(0.5, -0.02),
+        fontsize=13,                  # MUCHO MÁS GRANDE (antes 10)
+        framealpha=0.95,
+        edgecolor="0.8",
+        title="Glycemic range",
+        title_fontsize=13,            # Título de la leyenda también más grande
+        handlelength=3.5,             # Handles más largos
+        handleheight=2.5,             # Handles más altos
+        borderpad=1.2,                # Más padding interno
+        labelspacing=0.8,             # Más espacio entre filas
+        columnspacing=2.0,            # Más espacio entre columnas
+        frameon=True,
+    )
 
     fig.suptitle(
         f"{ds_lbl}  ·  Train set composition by glycemic range — Original vs. Balanced\n"
         f"Each bar = mean training samples per fold (averaged across {N_FOLDS} folds)  "
         f"|  Bold-border bar = original baseline  "
         f"|  X-axis shared between both panels",
-        fontsize=11, y=1.01
+        fontsize=12, y=1.01
     )
 
+    # Ajuste final con más espacio abajo para la leyenda
+    plt.tight_layout(rect=[0, 0.06, 1, 0.97])
     _save(fig, f"stacked_bars_{agg.ds_name}.pdf")
-
 
 # ===========================================================================
 # FIG-B3: Boxplot de tamaño de train  (2 figuras — una por dimensión)
@@ -941,7 +957,8 @@ def plot_tradeoff_scatter(aggregators: list, vs_range: str):
     datasets = [d for d in DATASET_ORDER if d in df["dataset"].unique()]
     n_ds = len(datasets)
 
-    fig, axes = plt.subplots(1, n_ds, figsize=(n_ds * 6.5, 6), sharey=True)
+    # Figura más grande para dar espacio a etiquetas
+    fig, axes = plt.subplots(1, n_ds, figsize=(n_ds * 7.0, 6.5), sharey=True)
     if n_ds == 1:
         axes = [axes]
 
@@ -951,40 +968,45 @@ def plot_tradeoff_scatter(aggregators: list, vs_range: str):
             marker = FAMILY_MARKER.get(row["dimension"], "o")
             color  = FAMILY_COLOR.get(row["technique"], "#888")
             ax.scatter(row["d_rng"], row["d_tir"],
-                       color=color, marker=marker, s=90,
-                       edgecolors="white", linewidths=0.7, zorder=3)
+                       color=color, marker=marker, s=100,  # s aumentado de 90 a 100
+                       edgecolors="white", linewidths=0.8, zorder=3)
             # Etiquetar solo la dimensión age para no saturar
             if row["dimension"] == "age":
                 ax.annotate(
                     TECHNIQUE_LABELS.get(row["technique"], row["technique"]),
                     (row["d_rng"], row["d_tir"]),
-                    fontsize=6.5, color="#333",
-                    xytext=(4, 3), textcoords="offset points"
+                    fontsize=7.5, color="#333",  # aumentado de 6.5 a 7.5
+                    xytext=(5, 4), textcoords="offset points"
                 )
 
         ax.axhline(0, color="#333", lw=1.0, ls="--", alpha=0.5)
         ax.axvline(0, color="#333", lw=1.0, ls="--", alpha=0.5)
-        ax.set_xlabel(f"Δ% {rng_lbl} ({rng_units})", fontsize=10)
+        ax.set_xlabel(f"Δ% {rng_lbl} ({rng_units})", fontsize=12)  # de 10 a 12
         if ax == axes[0]:
-            ax.set_ylabel("Δ% TIR (In Range, 70–180 mg/dL)", fontsize=10)
-        ax.set_title(DATASET_LABELS.get(ds, ds), fontsize=12, fontweight="bold")
+            ax.set_ylabel("Δ% TIR (In Range, 70–180 mg/dL)", fontsize=12)  # de 10 a 12
+        ax.set_title(DATASET_LABELS.get(ds, ds), fontsize=14, fontweight="bold")  # de 12 a 14
         ax.grid(alpha=0.2, linestyle="--")
 
         # Cuadrantes clínicos — más Δrango a la derecha siempre es peor
         # (más tiempo fuera de rango), tanto si el rango es hipo como hiper.
         risk_word = "hypo" if kind == "hypo" else "hyper"
         xlim, ylim = ax.get_xlim(), ax.get_ylim()
-        ax.text(xlim[1] * 0.95, ylim[1] * 0.95,
+        # Ajustar márgenes para que los textos no se corten
+        ax.set_xlim(xlim[0] - 0.1 * abs(xlim[0]), xlim[1] + 0.1 * abs(xlim[1]))
+        ax.set_ylim(ylim[0] - 0.1 * abs(ylim[0]), ylim[1] + 0.1 * abs(ylim[1]))
+        xlim, ylim = ax.get_xlim(), ax.get_ylim()
+        
+        ax.text(xlim[1] * 0.92, ylim[1] * 0.92,
                 f"↑ TIR\n→ more {risk_word}\n(worsens safety)",
-                ha="right", va="top", fontsize=7.5, color="#c0392b", alpha=0.7)
-        ax.text(xlim[1] * 0.95, ylim[0] * 0.95,
+                ha="right", va="top", fontsize=8.5, color="#c0392b", alpha=0.7)  # de 7.5 a 8.5
+        ax.text(xlim[1] * 0.92, ylim[0] * 0.92,
                 f"↓ TIR\n→ more {risk_word}\n(both worsen)",
-                ha="right", va="bottom", fontsize=7.5, color="#888", alpha=0.7)
-        ax.text(xlim[0] * 0.95, ylim[1] * 0.95,
+                ha="right", va="bottom", fontsize=8.5, color="#888", alpha=0.7)
+        ax.text(xlim[0] * 0.92, ylim[1] * 0.92,
                 f"↑ TIR\n← less {risk_word}\n(ideal)",
-                ha="left", va="top", fontsize=7.5, color="#27ae60", alpha=0.8)
+                ha="left", va="top", fontsize=8.5, color="#27ae60", alpha=0.8)
 
-    # Leyenda técnicas
+    # Leyenda técnicas — más grande y a ancho completo
     tech_handles = [
         mpatches.Patch(color=FAMILY_COLOR.get(t, "#888"),
                        label=TECHNIQUE_LABELS.get(t, t))
@@ -992,27 +1014,30 @@ def plot_tradeoff_scatter(aggregators: list, vs_range: str):
     ]
     # Leyenda dimensión
     dim_handles = [
-        plt.scatter([], [], marker="o", color="0.4", s=60, label="Age"),
-        plt.scatter([], [], marker="s", color="0.4", s=60, label="Sex"),
+        plt.scatter([], [], marker="o", color="0.4", s=70, label="Age"),  # s de 60 a 70
+        plt.scatter([], [], marker="s", color="0.4", s=70, label="Sex"),
     ]
 
+    # Leyenda a ancho completo
     fig.legend(handles=tech_handles + dim_handles,
-               loc="lower center", ncol=6,
-               bbox_to_anchor=(0.5, -0.08),
-               fontsize=8.5, framealpha=0.95,
+               loc="lower center", ncol=7,  # ncol de 6 a 7 para mejor distribución
+               bbox_to_anchor=(0.5, -0.12),  # más abajo para dar espacio
+               fontsize=10.5,                # de 8.5 a 10.5
+               framealpha=0.95,
                edgecolor="0.8", title="Technique  (○=Age, □=Sex)",
-               title_fontsize=8.5)
+               title_fontsize=10.5)
 
     fig.suptitle(
         f"Clinical trade-off: {rng_lbl} representation vs. In-Range after balancing\n"
         "Each point: one technique × dimension, averaged across folds and demographic classes  "
         f"|  Ideal quadrant: top-left  (↑ TIR, no increase in {rng_lbl})",
-        fontsize=10, y=1.02
+        fontsize=13, y=1.02  # de 10 a 13
     )
-    plt.tight_layout()
+    
+    # Ajustar para que la leyenda no se corte
+    plt.tight_layout(rect=[0, 0.05, 1, 0.95])
     fname = f"tradeoff_{vs_range.lower().replace('_', '')}_vs_tir.pdf"
     _save(fig, fname)
-
 
 # ===========================================================================
 # MAIN

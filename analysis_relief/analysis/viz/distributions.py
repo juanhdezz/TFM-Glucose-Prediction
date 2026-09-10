@@ -6,6 +6,12 @@ Genera violin plots para cada combinación dataset × range × metric,
 mostrando la dispersión de los 5 folds de cada condición.
 
 Versiones global e intra‑familia.
+
+CAMBIOS v2:
+  - plot_distribution: modo "solo DiaTrend" (only_diatrend=True por defecto)
+    para las figuras del capítulo de resultados, donde T1DiabetesGranada y
+    REPLACE-BG se omiten al no alcanzar significación en Friedman.
+  - Fuentes y leyenda ampliadas (fontsize mínimo 10, leyenda a ancho completo).
 """
 import logging
 import numpy as np
@@ -22,6 +28,9 @@ from analysis.viz.style import apply_theme, save_fig, technique_color, technique
 
 log = logging.getLogger(__name__)
 apply_theme()
+
+# Nombre interno de DiaTrend en DATASET_ORDER — ajusta si difiere
+_DIATREND_KEY = "DIATREND"
 
 
 def _cond_label(cond):
@@ -49,15 +58,15 @@ def _sort_conds(conds):
 def _violin_plot(ax, data, x_col, y_col, hue_col, palette_dict, title):
     """
     Dibuja un violin plot agrupado por x_col, con hue=hue_col.
+    Fuentes aumentadas respecto a v1.
     """
     sns.violinplot(
         ax=ax, data=data, x=x_col, y=y_col, hue=hue_col,
         palette=palette_dict, split=False, inner="quartile",
         linewidth=0.8, cut=0,
     )
-    ax.set_title(title, fontsize=11, fontweight="bold")
+    ax.set_title(title, fontsize=13, fontweight="bold")
     ax.grid(axis="y", alpha=0.3)
-    # Eliminar leyenda solo si existe
     legend = ax.get_legend()
     if legend is not None:
         legend.remove()
@@ -67,10 +76,18 @@ def _violin_plot(ax, data, x_col, y_col, hue_col, palette_dict, title):
 # Distribuciones globales
 # ──────────────────────────────────────────────────────────────────────────
 
-def plot_distribution(fold_long, metric="RMSE", rng="ENTIRE"):
+def plot_distribution(fold_long, metric="RMSE", rng="ENTIRE",
+                      only_diatrend=True):
     """
-    Un violin plot por dataset, mostrando la distribución de los folds
-    para cada condición.
+    Violin plot por dataset.
+
+    Parámetros
+    ----------
+    only_diatrend : bool (default True)
+        Si es True, genera una figura con un único panel (DiaTrend) y añade
+        una nota al pie explicando la omisión de los otros dos datasets por
+        no significación del test de Friedman.
+        Si es False, comportamiento original con los tres datasets.
     """
     sub = fold_long[
         (fold_long["metric"] == metric) &
@@ -79,9 +96,20 @@ def plot_distribution(fold_long, metric="RMSE", rng="ENTIRE"):
     if sub.empty:
         return
 
-    datasets = [d for d in DATASET_ORDER if d in sub["dataset"].unique()]
-    n_ds     = len(datasets)
-    fig, axes = plt.subplots(1, n_ds, figsize=(n_ds * 6, 6), sharey=True)
+    all_datasets = [d for d in DATASET_ORDER if d in sub["dataset"].unique()]
+
+    if only_diatrend:
+        datasets = [d for d in all_datasets if d == _DIATREND_KEY]
+        if not datasets:
+            log.warning(f"plot_distribution: DiaTrend no encontrado en datos ({metric}/{rng})")
+            return
+    else:
+        datasets = all_datasets
+
+    n_ds = len(datasets)
+    # Figura más alta cuando hay un solo panel para dar espacio a la nota al pie
+    fig_h = 7 if only_diatrend else 6
+    fig, axes = plt.subplots(1, n_ds, figsize=(n_ds * 7, fig_h), sharey=True)
     if n_ds == 1:
         axes = [axes]
 
@@ -100,14 +128,52 @@ def plot_distribution(fold_long, metric="RMSE", rng="ENTIRE"):
         _violin_plot(ax, ds_data, x_col="condition", y_col="value",
                      hue_col="condition", palette_dict=palette,
                      title=f"{DATASET_LABELS.get(ds, ds)} — {metric} · {RANGE_LABELS.get(rng, rng)}")
-        ax.set_xticklabels([_cond_label(c.get_text()) for c in ax.get_xticklabels()],
-                           rotation=45, ha="right", fontsize=8)
-        ax.set_xlabel("")
-        ax.set_ylabel(metric)
+        ax.set_xticklabels(
+            [_cond_label(c.get_text()) for c in ax.get_xticklabels()],
+            rotation=45, ha="right", fontsize=12,   # ← aumentado de 8
+        )
+        ax.set_xlabel("", fontsize=10)
+        ax.set_ylabel(metric, fontsize=11)
+        ax.tick_params(axis="y", labelsize=10)
+
 
     fig.suptitle(f"Distribución de folds — {metric} · {RANGE_LABELS.get(rng, rng)}",
-                 fontsize=13, fontweight="bold", y=1.02)
-    plt.tight_layout()
+                 fontsize=14, fontweight="bold", y=1.02)
+
+    # Leyenda a ancho completo debajo de la figura
+    handles_labels = axes[0].get_legend_handles_labels()
+    all_conds_in_plot = _sort_conds(
+        sub[sub["dataset"].isin(datasets)]["condition"].unique().tolist()
+    )
+    legend_handles = []
+    legend_labels  = []
+    seen = set()
+    for cond in all_conds_in_plot:
+        label = _cond_label(cond)
+        if label in seen:
+            continue
+        seen.add(label)
+        color = palette.get(cond, "#888")
+        import matplotlib.patches as mpatches
+        legend_handles.append(mpatches.Patch(facecolor=color, label=label))
+        legend_labels.append(label)
+
+    if legend_handles:
+        fig.legend(
+            legend_handles, legend_labels,
+            loc="lower center",
+            ncol=min(len(legend_handles), 5),   # hasta 5 por fila
+            bbox_to_anchor=(0.5, -0.12),
+            fontsize=10,
+            frameon=True,
+            framealpha=0.95,
+            edgecolor="0.8",
+            handlelength=1.5,
+            handleheight=1.2,
+        )
+        plt.subplots_adjust(bottom=0.22)
+
+    plt.tight_layout(rect=[0, 0.12, 1, 1])
     save_fig(fig, f"dist_{metric}_{rng}.pdf", subdir="distributions")
     plt.close(fig)
 
@@ -118,6 +184,13 @@ def plot_distribution(fold_long, metric="RMSE", rng="ENTIRE"):
 
 def plot_distribution_family(fold_long, family_col="family_size",
                              metric="RMSE", rng="ENTIRE"):
+    """
+    Violin plots por familia de técnicas.
+    Mantiene los tres datasets (las figuras de familia no se usan en
+    el capítulo principal de resultados, por lo que no se aplica el
+    filtrado de DiaTrend).
+    Fuentes y leyenda aumentadas respecto a v1.
+    """
     label_map = FAMILY_SIZE_LABELS if family_col == "family_size" else FAMILY_MECHANISM_LABELS
     for fam in fold_long[family_col].dropna().unique():
         sub = fold_long[
@@ -129,7 +202,7 @@ def plot_distribution_family(fold_long, family_col="family_size",
             continue
         datasets = [d for d in DATASET_ORDER if d in sub["dataset"].unique()]
         n_ds = len(datasets)
-        fig, axes = plt.subplots(1, n_ds, figsize=(n_ds * 6, 6), sharey=True)
+        fig, axes = plt.subplots(1, n_ds, figsize=(n_ds * 7, 6), sharey=True)
         if n_ds == 1:
             axes = [axes]
 
@@ -148,14 +221,17 @@ def plot_distribution_family(fold_long, family_col="family_size",
             _violin_plot(ax, ds_data, x_col="condition", y_col="value",
                          hue_col="condition", palette_dict=palette,
                          title=f"{DATASET_LABELS.get(ds, ds)} — {metric} · {RANGE_LABELS.get(rng, rng)}")
-            ax.set_xticklabels([_cond_label(c.get_text()) for c in ax.get_xticklabels()],
-                               rotation=45, ha="right", fontsize=8)
-            ax.set_xlabel("")
-            ax.set_ylabel(metric)
+            ax.set_xticklabels(
+                [_cond_label(c.get_text()) for c in ax.get_xticklabels()],
+                rotation=45, ha="right", fontsize=10,
+            )
+            ax.set_xlabel("", fontsize=10)
+            ax.set_ylabel(metric, fontsize=11)
+            ax.tick_params(axis="y", labelsize=10)
 
         fam_label = label_map.get(fam, fam)
         fig.suptitle(f"Distribución — {metric} · {RANGE_LABELS.get(rng, rng)}  |  {fam_label}",
-                     fontsize=13, fontweight="bold", y=1.02)
+                     fontsize=14, fontweight="bold", y=1.02)
         plt.tight_layout()
         subdir = f"distributions/{family_col}/{fam}"
         save_fig(fig, f"dist_{metric}_{rng}_{fam}.pdf", subdir=subdir)
@@ -164,17 +240,17 @@ def plot_distribution_family(fold_long, family_col="family_size",
 
 def plot_all_distributions(fold_long):
     log.info("  Generando distribuciones...")
-    # Globales
+    # Globales — solo DiaTrend (Friedman no significativo en T1D y REPLACE-BG)
     for metric in ["RMSE", "MAE"]:
         for rng in ["ENTIRE", "TBR_2", "TBR_1", "TIR"]:
-            plot_distribution(fold_long, metric=metric, rng=rng)
+            plot_distribution(fold_long, metric=metric, rng=rng, only_diatrend=True)
 
-    # Intra‑familia
+    # Intra‑familia — tres datasets (figuras de análisis secundario)
     for family_col in ["family_size", "family_mechanism"]:
         for metric in ["RMSE", "MAE"]:
             for rng in ["ENTIRE", "TBR_2", "TBR_1", "TIR"]:
                 plot_distribution_family(fold_long, family_col=family_col,
                                          metric=metric, rng=rng)
-    n_global = 2 * 4  # 8
-    n_family = 2 * 2 * 4  # 16
+    n_global = 2 * 4
+    n_family = 2 * 2 * 4
     log.info(f"  Distribuciones: {n_global} globales + {n_family} intra‑familia = {n_global+n_family} figuras.")

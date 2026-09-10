@@ -22,7 +22,17 @@ log = logging.getLogger(__name__)
 
 def apply_theme():
     """Aplica el tema global. Llamar UNA VEZ al importar cada módulo viz."""
+    # Aumentar tamaños de fuente globalmente
     mpl.rcParams.update(MPL_RC)
+    
+    # Sobrescribir tamaños para mejor legibilidad en figuras grandes
+    mpl.rcParams['font.size'] = 11
+    mpl.rcParams['legend.fontsize'] = 11
+    mpl.rcParams['axes.titlesize'] = 13
+    mpl.rcParams['axes.labelsize'] = 12
+    mpl.rcParams['xtick.labelsize'] = 10
+    mpl.rcParams['ytick.labelsize'] = 10
+    mpl.rcParams['figure.titlesize'] = 14
 
 
 apply_theme()
@@ -141,3 +151,32 @@ def improvement_cmap():
     from matplotlib.colors import LinearSegmentedColormap
     colors = ["#FFFFFF", "#009E73"]
     return LinearSegmentedColormap.from_list("improvement", colors, N=256)
+
+
+# ---------------------------------------------------------------------------
+# Leyenda a ancho completo (nueva utilidad)
+# ---------------------------------------------------------------------------
+
+def add_full_width_legend(fig, handles, labels=None, ncol=None, y_offset=-0.08, fontsize=11):
+    """
+    Añade una leyenda que ocupa todo el ancho de la figura, debajo de los ejes.
+    """
+    if labels is None and handles is not None:
+        labels = [h.get_label() if hasattr(h, 'get_label') else str(h) for h in handles]
+    
+    if ncol is None:
+        ncol = min(len(handles), 6)
+    
+    fig.legend(
+        handles=handles,
+        labels=labels,
+        loc="lower center",
+        ncol=ncol,
+        bbox_to_anchor=(0.5, y_offset),
+        fontsize=fontsize,
+        framealpha=0.95,
+        edgecolor="0.8",
+        handlelength=2.0,
+        handleheight=1.5,
+    )
+    return fig

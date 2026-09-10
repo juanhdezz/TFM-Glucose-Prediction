@@ -1236,7 +1236,87 @@ def block4_class_imbalance(datasets: dict, odirs: OutDirs):
                           ncol=len(CLASS_ORDER), y=-0.06)
         _savefig(fig, out_dir, "B4c_class_distribution_sex", extra_bottom=0.14)
 
+
+    
+    # ── 4d. Ratio por sexo (NUEVO) ─────────────────────────────────────────────
+    print("  [B4d] Plotting imbalance ratio by sex...")
+    plot_imbalance_ratio_sex(datasets, out_dir)
     print("  [B4] Class imbalance analysis saved.")
+
+    # ── 4d. Ratio de desbalanceo (normo/hipo) por sexo (NUEVO) ────────────────────
+
+def plot_imbalance_ratio_sex(datasets: dict, out_dir: Path):
+    """
+    Ratio de desbalanceo normoglucemia/hipoglucemia por sexo.
+    Análogo a B4b_imbalance_ratio_age pero para sexo.
+    """
+    ratio_rows = []
+    for ds_name, (pi, gl) in datasets.items():
+        sub = gl[gl["sex_label"].isin(["F", "M"]) & gl["Measurement"].notna()].copy()
+        sub["class_label"] = sub["Measurement"].apply(_class_label)
+        pat_cls = (sub.groupby(["Patient_ID", "sex_label", "class_label"])["Measurement"]
+                   .count().unstack(fill_value=0).reset_index())
+        for c in ["hypoglycemia", "normoglycemia"]:
+            if c not in pat_cls.columns:
+                pat_cls[c] = 0
+        pat_cls["imbalance_ratio"] = pat_cls["normoglycemia"] / pat_cls["hypoglycemia"].replace(0, np.nan)
+        for sx in ["F", "M"]:
+            sub_sx = pat_cls[(pat_cls["sex_label"] == sx) & pat_cls["imbalance_ratio"].notna()]
+            if len(sub_sx) < 2:
+                continue
+            ratio_rows.append({
+                "Dataset":      DATASET_LABELS[ds_name],
+                "Sex":          "Female" if sx == "F" else "Male",
+                "median_ratio": sub_sx["imbalance_ratio"].median(),
+                "q25_ratio":    sub_sx["imbalance_ratio"].quantile(0.25),
+                "q75_ratio":    sub_sx["imbalance_ratio"].quantile(0.75),
+                "n_patients":   len(sub_sx),
+            })
+    ratio_df = pd.DataFrame(ratio_rows)
+
+    if ratio_df.empty:
+        print("  [B4d] No hay datos para ratio por sexo.")
+        return
+
+    fig, ax = plt.subplots(figsize=(8, 4.5))
+    x      = np.arange(len(["Female", "Male"]))
+    n_ds   = len(datasets)
+    width  = 0.6 / n_ds
+    offsets = np.linspace(-(n_ds-1)/2, (n_ds-1)/2, n_ds) * width
+    
+    for i, ds_name in enumerate(datasets.keys()):
+        sub = ratio_df[ratio_df["Dataset"] == DATASET_LABELS[ds_name]]
+        def _val(col, sx):
+            v = sub[sub["Sex"] == sx][col].values
+            return v[0] if len(v) else np.nan
+        medians  = [_val("median_ratio", "Female"), _val("median_ratio", "Male")]
+        q25s     = [_val("q25_ratio", "Female"), _val("q25_ratio", "Male")]
+        q75s     = [_val("q75_ratio", "Female"), _val("q75_ratio", "Male")]
+        yerr_lo  = [m - q if not (np.isnan(m) or np.isnan(q)) else 0 
+                    for m, q in zip(medians, q25s)]
+        yerr_hi  = [q - m if not (np.isnan(m) or np.isnan(q)) else 0 
+                    for m, q in zip(medians, q75s)]
+        ax.bar(x + offsets[i], medians, width,
+               color=DATASET_PALETTE[ds_name], label=DATASET_LABELS[ds_name],
+               yerr=[yerr_lo, yerr_hi], capsize=3,
+               error_kw=dict(linewidth=0.9), alpha=0.85, edgecolor="white")
+
+    ax.set_xticks(x)
+    ax.set_xticklabels(["Female", "Male"], fontsize=11)
+    ax.set_xlabel("Sex", fontsize=12)
+    ax.set_ylabel("Imbalance ratio\n(normoglycemia / hypoglycemia) — Median ± IQR", fontsize=11)
+    ax.set_title("Class Imbalance Ratio by Sex", fontsize=13, fontweight="bold")
+    ax.grid(axis="y", alpha=0.3)
+    _legend_right(ax, fontsize=10)
+    
+    _savefig(fig, out_dir, "B4d_imbalance_ratio_sex")
+    _save_csv(ratio_df.set_index(["Dataset", "Sex"]), out_dir, "B4_imbalance_ratio_sex")
+    _save_latex(
+        ratio_df.set_index(["Dataset", "Sex"]), out_dir, "B4_imbalance_ratio_sex",
+        caption="Imbalance ratio (normoglycemia/hypoglycemia) by sex.",
+        label="imbalance_ratio_sex", float_fmt="%.1f"
+    )
+    print("  [B4d] Imbalance ratio by sex saved.")
 
 
 # ─────────────────────────────────────────────────────────────────────────────

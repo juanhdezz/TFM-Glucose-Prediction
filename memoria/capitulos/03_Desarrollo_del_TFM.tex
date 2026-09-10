@@ -616,6 +616,16 @@ La figura~\ref{fig:imbalance_ratio_age} cuantifica este desequilibrio mediante e
 
 Los ratios son sustanciales en todos los \textit{datasets}. En \textbf{T1DiabetesGranada} el ratio mediano oscila entre 13:1 en el grupo $<$31 años y 31:1 en el grupo $\geq$66, lo que evidencia que los pacientes de mayor edad generan ventanas con una proporción aún menor de hipoglucemia en relación a la normoglucemia. En \textbf{REPLACE-BG} el patrón es similar: de 14:1 en el grupo $<$31 a 36:1 en el grupo $\geq$66. En \textbf{DiaTrend} los ratios son extremos y de alta variabilidad: la mediana en el grupo 46--65 alcanza 111:1 (IQR 44--179), reflejo de que los pocos pacientes adultos de DiaTrend presentan poca hipoglucemia registrada. Esta alta variabilidad, visible en los amplios IQR de la figura, es consecuencia directa del reducido número de pacientes por grupo en este \textit{dataset}.
 
+El mismo análisis para la dimensión sexo se presenta en la figura~\ref{fig:imbalance_ratio_sex}.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{../../EDA/cross/B4d_imbalance_ratio_sex}
+    \caption{Ratio de desequilibrio glucémico (ventanas normoglucémicas / ventanas hipoglucémicas) por sexo y \textit{dataset}, expresado como mediana $\pm$ IQR entre pacientes del fold de referencia.}
+    \label{fig:imbalance_ratio_sex}
+\end{figure}
+
+A diferencia de lo observado por grupos de edad, el desequilibrio glucémico entre sexos es mucho menos pronunciado y homogéneo entre repositorios. En \textbf{T1DiabetesGranada} y \textbf{REPLACE-BG}, los ratios entre hombres y mujeres son prácticamente idénticos (diferencias inferiores al 15\,\%), con valores que oscilan entre 11:1 y 20:1 en ambos sexos. En \textbf{DiaTrend}, aunque el ratio es más elevado (entre 27:1 y 48:1), la diferencia entre sexos sigue siendo moderada y, dado el reducido tamaño muestral de este repositorio (54 pacientes), no puede interpretarse como evidencia de un desequilibrio glucémico sistemático asociado al sexo. Este resultado confirma que, en los tres repositorios evaluados, el sexo del paciente no es un factor determinante de la distribución de clases glucémicas, a diferencia de lo que sucede con la edad, donde se observan diferencias sistemáticas y de mayor magnitud.
 Finalmente, la figura~\ref{fig:class_dist_sex} muestra que el desequilibrio glucémico es prácticamente idéntico entre sexos en los tres \textit{datasets}.
 
 \begin{figure}[htbp]
@@ -1077,6 +1087,7 @@ Framework                           & TensorFlow/Keras \\
 \end{table}
 
 La Figura~\ref{fig:lstm_architecture} resume la arquitectura del modelo LSTM empleada en este trabajo para la predicción de glucosa con un horizonte de 60 minutos (PH4). En ella se representan de forma esquemática las distintas etapas del flujo de datos, desde la secuencia de entrada hasta la capa de salida, así como la estructura interna de la celda LSTM y las principales características de la configuración utilizada.
+
 
 
 \begin{figure}[htbp]

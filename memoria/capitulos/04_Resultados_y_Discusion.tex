@@ -17,6 +17,7 @@ Este capítulo presenta y discute los resultados del trabajo en dos bloques comp
 \label{sec:efecto_balanceo_trainset}
 % =========================================================
 
+
 Antes de evaluar el impacto de las técnicas de balanceo sobre el rendimiento
 predictivo del modelo LSTM, es necesario caracterizar con precisión qué hace
 cada técnica sobre el propio conjunto de entrenamiento. Esta caracterización
@@ -205,6 +206,7 @@ gracias a que el Tomek posterior modera el sobreajuste del ROS previo.
              documentado en la sección~\ref{subsec:eda_demografico}.}
     \label{fig:heatmap_age_diatrend}
 \end{figure}
+
 
 En DiaTrend el impacto del balanceo sobre la distribución demográfica es
 cualitativamente diferente al de T1DiabetesGranada: incluso a escala unificada,
@@ -506,6 +508,8 @@ revela patrones muy distintos según el repositorio.
              hipoglucemia severa.}
     \label{fig:tradeoff_tbr2}
 \end{figure}
+
+
 
 En \textbf{T1DiabetesGranada} todos los puntos se agrupan en torno al origen
 con desplazamientos $|\Delta\%| < 0{,}25\%$ en ambos ejes, pero el patrón
@@ -815,6 +819,7 @@ variabilidad clínicamente relevante entre técnicas en hipoglucemia severa.
              en otro.}
     \label{fig:consistency_folds}
 \end{figure}
+
 
 \paragraph{Consistencia inter-fold del ranking de técnicas.}
 La figura~\ref{fig:consistency_folds} completa el análisis de distribución
